@@ -1,0 +1,5 @@
+rootProject.name = 'parent'
+
+include 'api-common-library'
+include 'api-gateway-service'
+include 'api-sweepstake-engine'

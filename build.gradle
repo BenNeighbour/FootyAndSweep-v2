@@ -1,0 +1,53 @@
+plugins {
+    id 'java'
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url "https://repo.spring.io/milestone" }
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion")
+    }
+}
+
+subprojects {
+
+    apply plugin: "java"
+
+    targetCompatibility = '8'
+    sourceCompatibility = '8'
+
+    repositories {
+        mavenCentral()
+        jcenter()
+        maven { url "https://repo.spring.io/milestone" }
+        maven {
+            url "https://dl.bintray.com/eventuateio-oss/eventuate-maven-release"
+        }
+        eventuateMavenRepoUrl.split(',').each { repoUrl -> maven { url repoUrl } }
+    }
+
+    test {
+        forkEvery 1
+    }
+
+}
+
+
+group 'com.footyandsweep'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
