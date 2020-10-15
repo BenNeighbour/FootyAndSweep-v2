@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-sweepstake-engine-db
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-sweepstake-engine-db
+  template:
+    metadata:
+      labels:
+        app: api-sweepstake-engine-db
+    spec:
+      volumes:
+        - name: data
+          emptyDir: {}
+      containers:
+        - name: postgres
+          image: postgres:9.6.5
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: api-sweepstake-engine-credentials
+                  key: username
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: api-sweepstake-engine-credentials
+                  key: password
+            - name: POSTGRES_DB
+              value: 'api-sweepstake-engine'
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-sweepstake-engine-db
+  namespace: default
+spec:
+  type: NodePort
+  ports:
+    - port: 5432
+  selector:
+    app: api-sweepstake-engine-db

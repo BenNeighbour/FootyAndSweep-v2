@@ -1,23 +1,12 @@
-plugins {
-	id 'org.springframework.boot' version '2.3.4.RELEASE'
-	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
-	id 'java'
-}
-
-group = 'com.footyandsweep'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
-
-repositories {
-	mavenCentral()
-}
-
 dependencies {
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-	}
-}
+	compileOnly 'org.projectlombok:lombok:1.18.14'
+	annotationProcessor 'org.projectlombok:lombok:1.18.14'
 
-test {
-	useJUnitPlatform()
+	testCompileOnly 'org.projectlombok:lombok:1.18.14'
+	testAnnotationProcessor 'org.projectlombok:lombok:1.18.14'
+
+	compile "commons-lang:commons-lang:2.6"
+	compileOnly "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
+	compile "io.eventuate.tram.core:eventuate-tram-spring-events:0.24.0.RELEASE"
+
 }

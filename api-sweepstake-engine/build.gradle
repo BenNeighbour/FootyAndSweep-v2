@@ -1,7 +1,7 @@
 plugins {
-    id 'org.springframework.boot' version '2.3.4.RELEASE'
-    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
     id 'java'
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
 }
 
 group = 'com.footyandsweep'
@@ -13,8 +13,30 @@ repositories {
 }
 
 dependencies {
+    compile project(":api-common-library")
+
+    compileOnly 'org.projectlombok:lombok:1.18.14'
+    annotationProcessor 'org.projectlombok:lombok:1.18.14'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.14'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.14'
+
+    compileOnly "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
+
+    compileOnly "org.postgresql:postgresql"
+
+    compile 'commons-beanutils:commons-beanutils:1.9.4'
+    compile "io.eventuate.tram.core:eventuate-tram-spring-events:0.24.0.RELEASE"
+    compile "io.eventuate.tram.core:eventuate-tram-jdbc-redis:0.24.0.RELEASE"
+
+    implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
+
+    implementation "org.springframework.boot:spring-boot-starter-actuator:$springBootVersion"
+    implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
+
     implementation 'org.springframework.boot:spring-boot-starter'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }

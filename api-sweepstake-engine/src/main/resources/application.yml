@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: 'api-sweepstake-engine'
+
+  jpa:
+    generate-ddl: true
+
+    show-sql: true
+
+    properties:
+      hibernate:
+        ddl-auto: update
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+    hibernate:
+      default_batch_fetch_size: 16
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+eventuate:
+  redis:
+    servers: api-events-cdc:6379
+    partitions: 2
