@@ -35,7 +35,7 @@ dependencies {
 	implementation "org.springframework.boot:spring-boot-starter-actuator:$springBootVersion"
 	implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
 
-	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-zuul'
+	compile "org.springframework.cloud:spring-cloud-starter-netflix-zuul:2.2.5.RELEASE"
 
 	implementation 'org.springframework.boot:spring-boot-starter'
 

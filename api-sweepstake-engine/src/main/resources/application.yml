@@ -23,5 +23,5 @@ spring:
 
 eventuate:
   redis:
-    servers: api-event-cdc:6379
+    servers: api-event-redis:6379
     partitions: 2

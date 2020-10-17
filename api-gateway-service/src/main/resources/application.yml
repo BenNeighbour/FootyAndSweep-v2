@@ -25,3 +25,13 @@ eventuate:
   redis:
     servers: 192.168.1.135:31700
     partitions: 2
+
+
+zuul:
+  routes:
+    api-sweepstake-engine:
+      path: '/internal/sweepstake/**'
+      serviceId: 'api-sweepstake-engine'
+      url: 'http://192.168.1.135:32584/'
+      sensitiveHeaders:
+      stripPrefix: false

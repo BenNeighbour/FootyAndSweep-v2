@@ -17,13 +17,46 @@ spec:
         - name: data
           emptyDir: {}
       containers:
-        - name: redis
-          image: redis:5.0.7
+        - name: cdc-service
+          image: eventuateio/eventuate-cdc-service:0.6.1.RELEASE
           ports:
-            - containerPort: 6379
-          volumeMounts:
-            - name: data
-              mountPath: /var/lib/postgresql/
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: api-sweepstake-engine-credentials
+                  key: username
+
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: api-sweepstake-engine-credentials
+                  key: password
+
+            - name: SPRING_DATASOURCE_URL
+              value: 'jdbc:postgresql://api-sweepstake-engine-db:5432/api-sweepstake-engine'
+
+            - name: EVENTUATELOCAL_CDC_DB_USER_NAME
+              value: 'root'
+
+            - name: EVENTUATELOCAL_CDC_DB_PASSWORD
+              value: 'rootpassword'
+
+            - name: SPRING_DATASOURCE_VALIDATION_QUERY
+              value: 'SELECT 1'
+
+            - name: EVENTUATE_REDIS_SERVERS
+              value: api-event-redis:6379
+
+            - name: EVENTUATE_REDIS_PARTITIONS
+              value: "2"
+
+            - name: JAVA_OPTS
+              value: '-Xmx128m'
+
+            - name: EVENTUATELOCAL_CDC_READER_NAME
+              value: 'ClientEventuateTram'
 ---
 apiVersion: v1
 kind: Service
@@ -33,6 +66,6 @@ metadata:
 spec:
   type: NodePort
   ports:
-    - port: 6379
+    - port: 8080
   selector:
     app: api-events-cdc
