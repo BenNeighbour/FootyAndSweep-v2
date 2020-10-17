@@ -35,6 +35,8 @@ dependencies {
 	implementation "org.springframework.boot:spring-boot-starter-actuator:$springBootVersion"
 	implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
 
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-zuul'
+
 	implementation 'org.springframework.boot:spring-boot-starter'
 
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {

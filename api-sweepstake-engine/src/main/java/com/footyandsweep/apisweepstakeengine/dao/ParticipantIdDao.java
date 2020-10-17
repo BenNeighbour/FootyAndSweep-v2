@@ -8,4 +8,9 @@ import java.util.UUID;
 
 @Repository
 public interface ParticipantIdDao extends JpaRepository<ParticipantIds, UUID> {
+
+    ParticipantIds findParticipantIdsBySweepstakeId(UUID sweepstakeId);
+
+    ParticipantIds findParticipantIdsByParticipantId(UUID participantId);
+
 }

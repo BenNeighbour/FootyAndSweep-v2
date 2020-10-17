@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: gateway-config
+  name: api-sweepstake-engine-config
 data:
   application.yml: |-
     spring:
@@ -26,5 +26,5 @@ data:
 
     eventuate:
       redis:
-        servers: 'api-event-cdc:6379'
+        servers: api-event-cdc:6379
         partitions: 2

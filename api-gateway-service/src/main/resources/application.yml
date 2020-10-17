@@ -1,6 +1,6 @@
 spring:
   application:
-    name: 'api-sweepstake-engine'
+    name: 'api-gateway-service'
 
   jpa:
     generate-ddl: true
@@ -16,12 +16,12 @@ spring:
       default_batch_fetch_size: 16
 
   datasource:
-    url: ${SPRING_DATASOURCE_URL}
-    username: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}
+    url: 'jdbc:postgresql://192.168.1.135:30371/api-gateway-service'
+    username: '1fca2772-4c82-4653-a8eb-291db6f25679'
+    password: 'c7a25b8c-1dfb-4da3-a6f1-baee0afc21a6'
     driver-class-name: org.postgresql.Driver
 
 eventuate:
   redis:
-    servers: api-event-cdc:6379
+    servers: 192.168.1.135:31700
     partitions: 2

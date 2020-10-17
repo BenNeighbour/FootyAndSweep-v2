@@ -46,7 +46,7 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
       BeanUtils.copyProperties(sweepstakeCreated, sweepstake);
 
       /* TODO: This gets received by the gateway service, then that service adds the sweepstake and
-      user id into it's SweepstakeIds Junction Table */
+          user id into it's SweepstakeIds Junction Table */
       domainEventPublisher.publish(
           SweepstakeCommon.class,
           savedSweepstake.getSweepstakeId(),

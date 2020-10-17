@@ -1,7 +1,7 @@
 package com.footyandsweep.apigatewayservice.events;
 
 import com.footyandsweep.apicommonlibrary.events.SweepstakeCreated;
-import com.footyandsweep.apigatewayservice.service.UserService;
+import com.footyandsweep.apigatewayservice.service.UserServiceImpl;
 import io.eventuate.tram.events.subscriber.DomainEventEnvelope;
 import io.eventuate.tram.events.subscriber.DomainEventHandlers;
 import io.eventuate.tram.events.subscriber.DomainEventHandlersBuilder;
@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @NoArgsConstructor
 public class UserEventSubscriber {
 
-  @Autowired private UserService userService;
+  @Autowired private UserServiceImpl userService;
 
   public DomainEventHandlers domainEventHandlers() {
     return DomainEventHandlersBuilder.forAggregateType(
