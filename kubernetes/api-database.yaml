@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: api-sweepstake-engine-db
+  name: api-database
   namespace: default
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: api-sweepstake-engine-db
+      app: api-database
   template:
     metadata:
       labels:
-        app: api-sweepstake-engine-db
+        app: api-database
     spec:
       volumes:
         - name: data
           emptyDir: {}
       containers:
         - name: postgres
-          image: postgres:9.6.5
+          image: eventuateio/eventuate-postgres:0.12.0.RELEASE
           env:
             - name: POSTGRES_USER
               valueFrom:
@@ -41,11 +41,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: api-sweepstake-engine-db
+  name: api-database
   namespace: default
 spec:
   type: NodePort
   ports:
     - port: 5432
   selector:
-    app: api-sweepstake-engine-db
+    app: api-database

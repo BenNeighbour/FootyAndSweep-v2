@@ -26,5 +26,5 @@ data:
 
     eventuate:
       redis:
-        servers: api-event-redis:6379
+        servers: api-events-redis:6379
         partitions: 2

@@ -32,7 +32,7 @@ spec:
                   name: api-sweepstake-engine-credentials
                   key: password
             - name: SPRING_DATASOURCE_URL
-              value: 'jdbc:postgresql://api-sweepstake-engine-db:5432/api-sweepstake-engine'
+              value: 'jdbc:postgresql://api-database:5432/api-footyandsweep'
 
 ---
 apiVersion: v1

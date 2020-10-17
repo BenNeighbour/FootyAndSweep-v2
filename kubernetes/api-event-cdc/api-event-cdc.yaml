@@ -13,12 +13,9 @@ spec:
       labels:
         app: api-events-cdc
     spec:
-      volumes:
-        - name: data
-          emptyDir: {}
       containers:
         - name: cdc-service
-          image: eventuateio/eventuate-cdc-service:0.6.1.RELEASE
+          image: eventuateio/eventuate-cdc-service:0.9.0.RELEASE
           ports:
             - containerPort: 8080
           env:
@@ -34,20 +31,17 @@ spec:
                   name: api-sweepstake-engine-credentials
                   key: password
 
+            - name: SPRING_DATASOURCE_DRIVER_CLASS_NAME
+              value: org.postgresql.Driver
+
             - name: SPRING_DATASOURCE_URL
-              value: 'jdbc:postgresql://api-sweepstake-engine-db:5432/api-sweepstake-engine'
-
-            - name: EVENTUATELOCAL_CDC_DB_USER_NAME
-              value: 'root'
-
-            - name: EVENTUATELOCAL_CDC_DB_PASSWORD
-              value: 'rootpassword'
+              value: 'jdbc:postgresql://api-database:5432/api-footyandsweep'
 
             - name: SPRING_DATASOURCE_VALIDATION_QUERY
               value: 'SELECT 1'
 
             - name: EVENTUATE_REDIS_SERVERS
-              value: api-event-redis:6379
+              value: api-events-redis:6379
 
             - name: EVENTUATE_REDIS_PARTITIONS
               value: "2"
@@ -57,6 +51,10 @@ spec:
 
             - name: EVENTUATELOCAL_CDC_READER_NAME
               value: 'ClientEventuateTram'
+
+            - name: SPRING_PROFILES_ACTIVE
+              value: Redis, EventuatePolling
+
 ---
 apiVersion: v1
 kind: Service
