@@ -1,6 +1,6 @@
 package com.footyandsweep.apisweepstakeengine;
 
-import com.footyandsweep.apisweepstakeengine.config.RedisConfiguration;
+import com.footyandsweep.apisweepstakeengine.config.CommonConfig;
 import com.footyandsweep.apisweepstakeengine.config.WebConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -16,7 +16,7 @@ import org.springframework.web.filter.ForwardedHeaderFilter;
 
 @SpringBootApplication
 @EnableJpaRepositories
-@Import({WebConfiguration.class, RedisConfiguration.class})
+@Import({WebConfiguration.class, CommonConfig.class})
 @EnableDiscoveryClient
 public class ApiSweepstakeEngineApplication {
 

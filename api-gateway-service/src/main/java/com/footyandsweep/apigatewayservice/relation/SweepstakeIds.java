@@ -17,7 +17,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "sweepstake_participant_id")
+@Table(name = "participant_sweepstake_id")
 public class SweepstakeIds implements Serializable {
 
     private static final long serialVersionUID = 5778408986459720940L;

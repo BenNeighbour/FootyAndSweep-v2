@@ -24,7 +24,10 @@ data:
       datasource:
         driver-class-name: org.postgresql.Driver
 
-    eventuate:
-      redis:
-        servers: api-events-redis:6379
-        partitions: 2
+      kafka:
+        properties:
+          security:
+            protocol: "SSL"
+
+    security:
+      protocol: "SSL"

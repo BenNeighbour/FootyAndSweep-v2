@@ -21,11 +21,17 @@ import static java.util.Collections.singletonList;
 @Service
 public class SweepstakeEngineImpl implements SweepstakeEngine {
 
-  @Autowired private SweepstakeDao sweepstakeDao;
+  private final SweepstakeDao sweepstakeDao;
 
-  @Autowired private ParticipantIdDao participantIdDao;
+  @Autowired
+  private ParticipantIdDao participantIdDao;
 
-  @Autowired private DomainEventPublisher domainEventPublisher;
+  private final DomainEventPublisher domainEventPublisher;
+
+  public SweepstakeEngineImpl(SweepstakeDao sweepstakeDao, DomainEventPublisher domainEventPublisher) {
+    this.sweepstakeDao = sweepstakeDao;
+    this.domainEventPublisher = domainEventPublisher;
+  }
 
   @Override
   public Sweepstake saveProcessedTickets(UUID sweepstakeId, List<TicketCommon> tickets) {

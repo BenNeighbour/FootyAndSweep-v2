@@ -26,13 +26,21 @@ spec:
                 secretKeyRef:
                   name: api-sweepstake-engine-credentials
                   key: username
+
             - name: SPRING_DATASOURCE_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: api-sweepstake-engine-credentials
                   key: password
+
             - name: SPRING_DATASOURCE_URL
               value: 'jdbc:postgresql://api-database:5432/api-footyandsweep'
+
+            - name: EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS
+              value: api-kafka:9092
+
+            - name: EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING
+              value: zookeeper:2181
 
 ---
 apiVersion: v1

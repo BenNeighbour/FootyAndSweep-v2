@@ -37,23 +37,26 @@ spec:
             - name: SPRING_DATASOURCE_URL
               value: 'jdbc:postgresql://api-database:5432/api-footyandsweep'
 
+            - name: SPRING_DATASOURCE_TEST_ON_BORROW
+              value: "true"
+
             - name: SPRING_DATASOURCE_VALIDATION_QUERY
-              value: 'SELECT 1'
+              value: "SELECT 1"
 
-            - name: EVENTUATE_REDIS_SERVERS
-              value: api-events-redis:6379
+            - name: EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS
+              value: api-kafka:9092
 
-            - name: EVENTUATE_REDIS_PARTITIONS
-              value: "2"
-
-            - name: JAVA_OPTS
-              value: '-Xmx128m'
+            - name: EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING
+              value: zookeeper:2181
 
             - name: EVENTUATELOCAL_CDC_READER_NAME
-              value: 'ClientEventuateTram'
+              value: PostgresWalReader
 
             - name: SPRING_PROFILES_ACTIVE
-              value: Redis, EventuatePolling
+              value: PostgresWal
+
+            - name: JAVA_OPTS
+              value: "-Xmx64m"
 
 ---
 apiVersion: v1
