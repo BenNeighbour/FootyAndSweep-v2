@@ -64,6 +64,7 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
       Sweepstake savedSweepstake = sweepstakeDao.save(sweepstake);
       participantIdDao.save(new ParticipantIds(savedSweepstake.getSweepstakeId(), ownerId));
 
+      // Creating the sweepstake created object for other services to react to
       SweepstakeCreated sweepstakeCreated = new SweepstakeCreated();
       BeanUtils.copyProperties(sweepstakeCreated, sweepstake);
 
