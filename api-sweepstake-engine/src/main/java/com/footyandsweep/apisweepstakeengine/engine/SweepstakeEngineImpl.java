@@ -51,7 +51,6 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
 
   @Override
   public Sweepstake saveProcessedTickets(UUID sweepstakeId, List<TicketCommon> tickets) {
-    // Process those tickets and save them, linked to the sweepstake
     return new Sweepstake();
   }
 
