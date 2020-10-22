@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: api-kafka
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: kafka
@@ -23,7 +23,7 @@ spec:
             - name: KAFKA_ADVERTISED_PORT
               value: "30718"
             - name: KAFKA_ADVERTISED_HOST_NAME
-              value: api-kafka
+              value: "api-kafka"
             - name: KAFKA_ZOOKEEPER_CONNECT
               value: zookeeper:2181
             - name: KAFKA_BROKER_ID

@@ -23,11 +23,3 @@ data:
 
       datasource:
         driver-class-name: org.postgresql.Driver
-
-      kafka:
-        properties:
-          security:
-            protocol: "SSL"
-
-    security:
-      protocol: "SSL"

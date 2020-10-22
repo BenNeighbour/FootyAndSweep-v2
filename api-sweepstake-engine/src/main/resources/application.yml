@@ -21,21 +21,13 @@ spring:
     password: ${SPRING_DATASOURCE_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
-  kafka:
-    properties:
-      security:
-        protocol: "SSL"
-
-security:
-  protocol: "SSL"
-
 eventuatelocal:
   bootstrap:
-    servers: api-kafka:9092
+    servers: ["api-kafka:9092"]
 
   zookeeper:
     connection:
-      string: ${EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING}
+      string: zookeeper:2181
 
 
 cdc:
