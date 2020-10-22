@@ -1,15 +1,21 @@
+buildscript {
+	repositories {
+		mavenCentral()
+		jcenter()
+	}
+
+}
+
 plugins {
 	id 'java'
 	id 'org.springframework.boot'
 	id 'io.spring.dependency-management'
 }
 
-group = 'com.footyandsweep'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
-
-repositories {
-	mavenCentral()
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion"
+	}
 }
 
 dependencies {
@@ -36,8 +42,6 @@ dependencies {
 	implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
 
 	compile "org.springframework.cloud:spring-cloud-starter-netflix-zuul:2.2.5.RELEASE"
-
-	implementation 'org.springframework.boot:spring-boot-starter'
 
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'

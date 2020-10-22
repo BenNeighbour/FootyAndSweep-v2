@@ -15,28 +15,30 @@ buildscript {
 subprojects {
     apply plugin: "java"
 
+    group = 'com.footyandsweep'
+    version = '0.0.1-SNAPSHOT'
+
     targetCompatibility = 1.8
     sourceCompatibility = 1.8
 
     repositories {
+        eventuateMavenRepoUrl.split(',').each { repoUrl -> maven { url repoUrl } }
+
         mavenCentral()
         jcenter()
-        maven { url "https://repo.spring.io/milestone" }
-        maven {
-            url "https://dl.bintray.com/eventuateio-oss/eventuate-maven-release"
-        }
-        eventuateMavenRepoUrl.split(',').each { repoUrl -> maven { url repoUrl } }
-    }
 
-    test {
-        forkEvery 1
+        maven {
+            url 'https://repo.spring.io/libs-milestone'
+        }
+
+        maven {
+            url "${project.rootDir}/build/repo"
+        }
+
     }
 
 }
 
-
-group 'com.footyandsweep'
-version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
