@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: api-sweepstake-engine-config
 data:
-  application.yml: |-
+  application-kubernetes.yml: |-
     spring:
       application:
         name: 'api-sweepstake-engine'

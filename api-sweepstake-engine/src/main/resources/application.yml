@@ -23,7 +23,8 @@ spring:
 
 eventuatelocal:
   bootstrap:
-    servers: ${EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS}
+    servers:
+       ['api-kafka.default.svc.cluster.local:9092']
 
   zookeeper:
     connection:
