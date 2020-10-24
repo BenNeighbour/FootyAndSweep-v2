@@ -28,7 +28,7 @@ eventuatelocal:
 
   zookeeper:
     connection:
-      string: zookeeper:2181
+      string: "zookeeper:2181"
 
 
 cdc:

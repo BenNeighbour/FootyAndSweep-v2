@@ -16,18 +16,27 @@ spec:
     spec:
       containers:
         - name: kafka
-          image: eventuateio/eventuate-kafka:latest
+          image: wurstmeister/kafka
           ports:
-            - containerPort: 9092
+            - containerPort: 30035
           env:
-            - name: ADVERTISED_HOST_NAME
-              value: "localhost"
+            - name: KAFKA_ADVERTISED_HOST_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+
+            - name: KAFKA_ADVERTISED_PORT
+              value: "9092"
 
             - name: KAFKA_HEAP_OPTS
               value: -Xms320m
 
-            - name: ZOOKEEPER_SERVERS
-              value: zookeeper:2181
+            - name: KAFKA_ZOOKEEPER_CONNECT
+              value: "zookeeper:2181"
+
+#          command: ["/bin/sh", "-c"]
+#          args: ["export KAFKA_ADVERTISED_HOST_NAME=$(hostname).default.svc.cluster.local:9092  &&
+#                  start-kafka.sh"]
 ---
 apiVersion: v1
 kind: Service
@@ -44,3 +53,5 @@ spec:
   selector:
     app: kafka
     id: "0"
+
+  type: NodePort
