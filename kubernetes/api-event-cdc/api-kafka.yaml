@@ -34,9 +34,6 @@ spec:
             - name: KAFKA_ZOOKEEPER_CONNECT
               value: "zookeeper:2181"
 
-#          command: ["/bin/sh", "-c"]
-#          args: ["export KAFKA_ADVERTISED_HOST_NAME=$(hostname).default.svc.cluster.local:9092  &&
-#                  start-kafka.sh"]
 ---
 apiVersion: v1
 kind: Service
