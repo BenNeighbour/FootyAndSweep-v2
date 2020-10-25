@@ -22,9 +22,9 @@ spring:
     driver-class-name: org.postgresql.Driver
 
 eventuatelocal:
-  bootstrap:
-    servers:
-      ['192.168.1.135:30273']
+  kafka:
+    bootstrap:
+      servers: '192.168.1.135:30273'
 
   zookeeper:
     connection:
@@ -32,7 +32,7 @@ eventuatelocal:
 
 cdc:
   service:
-    url: http://api-events-cdc:8080
+    url: http://192.162.1.135:30740
 
 zuul:
   routes:

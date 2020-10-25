@@ -22,9 +22,10 @@ spring:
     driver-class-name: org.postgresql.Driver
 
 eventuatelocal:
-  bootstrap:
-    servers:
-       ['api-kafka.default.svc.cluster.local:9092']
+  kafka:
+    bootstrap:
+      servers:
+         ['api-kafka.default.svc.cluster.local:9092']
 
   zookeeper:
     connection:

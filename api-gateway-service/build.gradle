@@ -12,11 +12,11 @@ plugins {
 	id 'io.spring.dependency-management'
 }
 
-dependencyManagement {
-	imports {
-		mavenBom "org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion"
-	}
-}
+//dependencyManagement {
+//	imports {
+//		mavenBom "org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion"
+//	}
+//}
 
 dependencies {
 	compile project(":api-common-library")
