@@ -20,7 +20,7 @@ dependencyManagement {
 
 dependencies {
 	compile project(":api-common-library")
- 
+
 	compileOnly 'org.projectlombok:lombok:1.18.14'
 	annotationProcessor 'org.projectlombok:lombok:1.18.14'
 
@@ -32,15 +32,15 @@ dependencies {
 	compileOnly "org.postgresql:postgresql"
 
 	compile 'commons-beanutils:commons-beanutils:1.9.4'
+
+	compile "io.eventuate.tram.core:eventuate-tram-spring-jdbc-kafka:$eventuateTramVersion"
 	compile "io.eventuate.tram.core:eventuate-tram-spring-events:0.24.0.RELEASE"
-	compile "io.eventuate.tram.core:eventuate-tram-jdbc-redis:0.24.0.RELEASE"
 
 	implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
 	implementation "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
 
 	implementation "org.springframework.boot:spring-boot-starter-actuator:$springBootVersion"
 	implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
-
 	compile "org.springframework.cloud:spring-cloud-starter-netflix-zuul:2.2.5.RELEASE"
 
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {

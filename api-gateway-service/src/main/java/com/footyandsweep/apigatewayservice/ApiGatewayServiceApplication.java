@@ -16,22 +16,40 @@
 
 package com.footyandsweep.apigatewayservice;
 
-import com.footyandsweep.apigatewayservice.config.RedisConfiguration;
+import com.footyandsweep.apigatewayservice.config.CommonConfig;
 import com.footyandsweep.apigatewayservice.config.WebConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
+import org.springframework.core.Ordered;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.filter.ForwardedHeaderFilter;
 
 @SpringBootApplication
 @EnableZuulProxy
 @EnableJpaRepositories
-@Import({WebConfiguration.class, RedisConfiguration.class})
+@Import({WebConfiguration.class, CommonConfig.class})
 public class ApiGatewayServiceApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ApiGatewayServiceApplication.class, args);
-	}
+  @Bean
+  @LoadBalanced
+  public RestTemplate restTemplate() {
+    return new RestTemplate();
+  }
 
+  @Bean
+  public FilterRegistrationBean forwardHeadersFilterBean() {
+    FilterRegistrationBean bean = new FilterRegistrationBean(new ForwardedHeaderFilter());
+    bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
+    return bean;
+  }
+
+  public static void main(String[] args) {
+    SpringApplication.run(ApiGatewayServiceApplication.class, args);
+  }
 }

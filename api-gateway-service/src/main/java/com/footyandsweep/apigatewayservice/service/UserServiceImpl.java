@@ -21,6 +21,7 @@ import com.footyandsweep.apigatewayservice.dao.SweepstakeIdDao;
 import com.footyandsweep.apigatewayservice.dao.UserDao;
 import com.footyandsweep.apigatewayservice.model.User;
 import com.footyandsweep.apigatewayservice.relation.SweepstakeIds;
+import io.eventuate.tram.events.publisher.DomainEventPublisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,9 +30,16 @@ import java.util.UUID;
 @Service
 public class UserServiceImpl implements UserService {
 
-  @Autowired private UserDao userDao;
+  private final UserDao userDao;
+
+  private final DomainEventPublisher domainEventPublisher;
 
   @Autowired private SweepstakeIdDao sweepstakeIdDao;
+
+  public UserServiceImpl(final UserDao userDao, final DomainEventPublisher domainEventPublisher) {
+    this.userDao = userDao;
+    this.domainEventPublisher = domainEventPublisher;
+  }
 
   @Override
   public User addUserToSweepstake(UUID userId, SweepstakeCommon sweepstake) {
