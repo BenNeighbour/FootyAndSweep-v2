@@ -35,9 +35,9 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @MappedSuperclass
-@Access(AccessType.PROPERTY)
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-public abstract class SweepstakeCommon implements Serializable {
+//@Access(AccessType.PROPERTY)
+//@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+public class SweepstakeCommon implements Serializable {
 
     private static final long serialVersionUID = -771315870335755392L;
 
