@@ -34,7 +34,7 @@ spec:
                   key: password
 
             - name: SPRING_DATASOURCE_URL
-              value: 'jdbc:postgresql://api-database:5432/api-footyandsweep'
+              value: 'jdbc:postgresql://api-database:5432/api-footyandsweep?stringtype=unspecified'
 
             - name: EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS
               value: 'api-kafka.default.svc.cluster.local:9092'

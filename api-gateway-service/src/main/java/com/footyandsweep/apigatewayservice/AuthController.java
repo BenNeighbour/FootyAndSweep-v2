@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 
-package com.footyandsweep.apisweepstakeengine.model;
+package com.footyandsweep.apigatewayservice;
 
-import com.footyandsweep.apicommonlibrary.model.TicketCommon;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+@RestController
+@RequestMapping("/auth")
+public class AuthController {
 
-@Entity
-@Table(name = "sweepstake")
-public class Ticket extends TicketCommon {
 }

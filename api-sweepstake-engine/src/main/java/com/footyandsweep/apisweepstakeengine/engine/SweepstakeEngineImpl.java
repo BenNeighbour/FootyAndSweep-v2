@@ -61,7 +61,7 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
       sweepstake.setOwnerId(ownerId);
 
       Sweepstake savedSweepstake = sweepstakeDao.save(sweepstake);
-      participantIdDao.save(new ParticipantIds(savedSweepstake.getSweepstakeId(), ownerId));
+      participantIdDao.save(new ParticipantIds(savedSweepstake.getId(), ownerId));
 
       // Creating the sweepstake created object for other services to react to
       SweepstakeCreated sweepstakeCreated = new SweepstakeCreated();
@@ -71,7 +71,7 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
           user id into it's SweepstakeIds Junction Table */
       domainEventPublisher.publish(
           SweepstakeCommon.class,
-          savedSweepstake.getSweepstakeId(),
+          savedSweepstake.getId(),
           singletonList(sweepstakeCreated));
 
       return savedSweepstake;

@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
 
       if (addingParticipant != null) {
         if (sweepstakeIdDao.findSweepstakeIdsByParticipantId(userId) == null) {
-          sweepstakeIdDao.save(new SweepstakeIds(userId, sweepstake.getSweepstakeId()));
+          sweepstakeIdDao.save(new SweepstakeIds(userId, sweepstake.getId()));
           return addingParticipant;
         }
       }

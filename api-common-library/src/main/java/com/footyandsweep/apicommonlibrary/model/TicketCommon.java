@@ -33,7 +33,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @MappedSuperclass
-@Embeddable
 public class TicketCommon implements Serializable {
 
   private static final long serialVersionUID = -7269123358093904648L;
@@ -66,4 +65,10 @@ public class TicketCommon implements Serializable {
     TicketStatus(int code) {
     }
   }
+
+  @EmbeddedId
+  public UUID getTicketId() {
+    return ticketId;
+  }
+
 }

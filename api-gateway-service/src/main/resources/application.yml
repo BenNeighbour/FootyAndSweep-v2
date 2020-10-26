@@ -16,7 +16,7 @@ spring:
       default_batch_fetch_size: 16
 
   datasource:
-    url: 'jdbc:postgresql://192.168.1.135:31586/api-footyandsweep'
+    url: 'jdbc:postgresql://192.168.1.135:30977/api-footyandsweep?stringtype=unspecified'
     username: '1fca2772-4c82-4653-a8eb-291db6f25679'
     password: 'c7a25b8c-1dfb-4da3-a6f1-baee0afc21a6'
     driver-class-name: org.postgresql.Driver
@@ -32,13 +32,13 @@ eventuatelocal:
 
 cdc:
   service:
-    url: http://192.162.1.135:30740
+    url: http://192.162.1.135:31258
 
 zuul:
   routes:
     api-sweepstake-engine:
       path: '/internal/sweepstake/**'
       serviceId: 'api-sweepstake-engine'
-      url: 'http://192.168.1.135:30402/'
+      url: 'http://192.168.1.135:32513/'
       sensitiveHeaders:
       stripPrefix: false

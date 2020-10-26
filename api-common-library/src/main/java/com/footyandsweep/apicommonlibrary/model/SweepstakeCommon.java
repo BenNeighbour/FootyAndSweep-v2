@@ -35,17 +35,19 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @MappedSuperclass
-@Embeddable
-public class SweepstakeCommon implements Serializable {
+@Access(AccessType.PROPERTY)
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+public abstract class SweepstakeCommon implements Serializable {
 
     private static final long serialVersionUID = -771315870335755392L;
 
     @Id
     @GeneratedValue
-    @Column(columnDefinition = "uuid", updatable = false, name = "id")
-    private UUID sweepstakeId;
+    private UUID id;
 
     private String name;
+
+    @Version protected Integer version;
 
     private String code = generateSweepstakeCode();
 
@@ -110,6 +112,5 @@ public class SweepstakeCommon implements Serializable {
 
         return sb.toString();
     }
-
 
 }
