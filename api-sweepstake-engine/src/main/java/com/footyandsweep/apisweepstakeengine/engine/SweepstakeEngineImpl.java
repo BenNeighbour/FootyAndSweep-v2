@@ -35,6 +35,7 @@ import java.util.UUID;
 import static java.util.Collections.singletonList;
 
 @Service
+@Transactional
 public class SweepstakeEngineImpl implements SweepstakeEngine {
 
   private final SweepstakeDao sweepstakeDao;

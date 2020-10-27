@@ -25,9 +25,11 @@ import io.eventuate.tram.events.publisher.DomainEventPublisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.UUID;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
   private final UserDao userDao;
@@ -42,7 +44,9 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
+  @Transactional
   public User addUserToSweepstake(UUID userId, SweepstakeCommon sweepstake) {
+    System.out.println("HELLO!");
     try {
       User addingParticipant = userDao.findUserByUserId(userId);
 

@@ -39,6 +39,6 @@ zuul:
     api-sweepstake-engine:
       path: '/internal/sweepstake/**'
       serviceId: 'api-sweepstake-engine'
-      url: 'http://192.168.1.135:31997/'
+      url: 'http://192.168.1.135:32358/'
       sensitiveHeaders:
       stripPrefix: false
