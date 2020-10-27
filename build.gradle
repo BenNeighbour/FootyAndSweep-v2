@@ -28,15 +28,6 @@ allprojects {
     }
 }
 
-subprojects {
-    apply plugin: 'java'
-    apply plugin: 'org.springframework.boot'
-    apply plugin: 'io.spring.dependency-management'
-
-    targetCompatibility = 1.8
-    sourceCompatibility = 1.8
-}
-
 repositories {
     mavenCentral()
 }
