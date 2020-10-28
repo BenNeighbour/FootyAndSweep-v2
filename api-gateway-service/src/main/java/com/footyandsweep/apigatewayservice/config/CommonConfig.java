@@ -56,6 +56,6 @@ public class CommonConfig {
 
     @Bean
     public DomainEventDispatcher domainEventDispatcher(UserEventSubscriber userEventSubscriber, DomainEventDispatcherFactory domainEventDispatcherFactory) {
-        return domainEventDispatcherFactory.make("sweepstakeEngineEvents", userEventSubscriber.domainEventHandlers());
+        return domainEventDispatcherFactory.make("userServiceEvents", userEventSubscriber.domainEventHandlers());
     }
 }

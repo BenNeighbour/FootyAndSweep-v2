@@ -31,7 +31,7 @@ public class SweepstakeEventSubscriber {
 
   public DomainEventHandlers domainEventHandlers() {
     return DomainEventHandlersBuilder.forAggregateType(
-            "com.footyandsweep.apicommonlibrary.model.SweepstakeCommon")
+            "com.footyandsweep.apicommonlibrary.model.TicketCommon")
         .onEvent(TicketDecisioningSuccess.class, this::handleTicketDecisioningSuccess)
         .build();
   }

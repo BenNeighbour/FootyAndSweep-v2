@@ -24,11 +24,11 @@ spring:
 eventuatelocal:
   kafka:
     bootstrap:
-      servers: '192.168.1.135:32447'
+      servers: 'localhost:7000'
 
   zookeeper:
     connection:
-      string: "192.168.1.135:31487"
+      string: "localhost:8000"
 
 cdc:
   service:
@@ -39,6 +39,6 @@ zuul:
     api-sweepstake-engine:
       path: '/internal/sweepstake/**'
       serviceId: 'api-sweepstake-engine'
-      url: 'http://192.168.1.135:32358/'
+      url: 'http://192.168.1.135:31879/'
       sensitiveHeaders:
       stripPrefix: false
