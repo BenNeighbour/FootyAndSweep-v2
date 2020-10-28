@@ -45,22 +45,19 @@ public class UserServiceImpl implements UserService {
 
   @Override
   @Transactional
-  public User addUserToSweepstake(UUID userId, SweepstakeCommon sweepstake) {
-    System.out.println("HELLO!");
-    try {
-      User addingParticipant = userDao.findUserByUserId(userId);
+  public void addUserToSweepstake(SweepstakeCommon sweepstake) {
+    //    try {
+    System.out.println("Should be okay");
+    User addingParticipant = userDao.findUserByUserId(sweepstake.getOwnerId());
 
-      if (addingParticipant != null) {
-        if (sweepstakeIdDao.findSweepstakeIdsByParticipantId(userId) == null) {
-          sweepstakeIdDao.save(new SweepstakeIds(userId, sweepstake.getId()));
-          return addingParticipant;
-        }
+    if (addingParticipant != null) {
+      if (sweepstakeIdDao.findSweepstakeIdsByParticipantId(sweepstake.getOwnerId()) == null) {
+        sweepstakeIdDao.save(new SweepstakeIds(sweepstake.getOwnerId(), sweepstake.getId()));
       }
-    } catch (Exception e) {
-      // TODO: THROW BACK ERROR MESSGAE!!
-      return null;
     }
-
-    return null;
+    //    } catch (Exception e) {
+    //      // TODO: THROW BACK ERROR MESSGAE!!
+    //      return null;
+    //    }
   }
 }

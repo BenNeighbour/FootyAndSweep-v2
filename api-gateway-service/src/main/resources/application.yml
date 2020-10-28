@@ -9,36 +9,38 @@ spring:
 
     properties:
       hibernate:
-        ddl-auto: update
+        ddl-auto: create-drop
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
     hibernate:
       default_batch_fetch_size: 16
 
-  datasource:
-    url: 'jdbc:postgresql://192.168.1.135:30977/api-footyandsweep?stringtype=unspecified'
-    username: '1fca2772-4c82-4653-a8eb-291db6f25679'
-    password: 'c7a25b8c-1dfb-4da3-a6f1-baee0afc21a6'
-    driver-class-name: org.postgresql.Driver
+    datasource:
+      url: ${SPRING_DATASOURCE_URL}
+      username: ${SPRING_DATASOURCE_USERNAME}
+      password: ${SPRING_DATASOURCE_PASSWORD}
+      driver-class-name: org.postgresql.Driver
 
 eventuatelocal:
   kafka:
     bootstrap:
-      servers: 'localhost:7000'
+      servers:
+        [ 'api-kafka.default.svc.cluster.local:9092' ]
 
   zookeeper:
     connection:
-      string: "localhost:8000"
+      string: "zookeeper:2181"
+
 
 cdc:
   service:
-    url: http://192.162.1.135:31258
+    url: http://api-events-cdc:8080
 
 zuul:
   routes:
     api-sweepstake-engine:
       path: '/internal/sweepstake/**'
       serviceId: 'api-sweepstake-engine'
-      url: 'http://192.168.1.135:31879/'
+      url: 'http://api-sweepstake-engine:8080/'
       sensitiveHeaders:
       stripPrefix: false
