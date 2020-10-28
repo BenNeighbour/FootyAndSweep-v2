@@ -5,8 +5,8 @@ pluginManagement {
     }
 }
 
-rootProject.name = 'parent'
+rootProject.name = 'FootyAndSweep v2'
 
-include 'api-common-library'
-include 'api-gateway-service'
-include 'api-sweepstake-engine'
+include ':api-common-library'
+include ':api-gateway-service'
+include ':api-sweepstake-engine'

@@ -35,6 +35,7 @@ import java.util.UUID;
 import static java.util.Collections.singletonList;
 
 @Service
+@Transactional
 public class SweepstakeEngineImpl implements SweepstakeEngine {
 
   private final SweepstakeDao sweepstakeDao;
@@ -65,7 +66,7 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
 
       // Creating the sweepstake created object for other services to react to
       SweepstakeCreated sweepstakeCreated = new SweepstakeCreated();
-      BeanUtils.copyProperties(sweepstakeCreated, sweepstake);
+      sweepstakeCreated.setSweepstake(sweepstake);
 
       /* TODO: This gets received by the gateway service, then that service adds the sweepstake and
           user id into it's SweepstakeIds Junction Table */

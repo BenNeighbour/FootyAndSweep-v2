@@ -26,6 +26,8 @@ import io.eventuate.tram.events.subscriber.DomainEventDispatcherFactory;
 import io.eventuate.tram.spring.events.publisher.TramEventsPublisherConfiguration;
 import io.eventuate.tram.spring.events.subscriber.TramEventSubscriberConfiguration;
 import io.eventuate.tram.spring.jdbckafka.TramJdbcKafkaConfiguration;
+import io.eventuate.tram.spring.optimisticlocking.OptimisticLockingDecoratorConfiguration;
+import io.eventuate.tram.viewsupport.rebuild.SnapshotConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -37,7 +39,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableAutoConfiguration
 @Import({TramJdbcKafkaConfiguration.class,
         TramEventsPublisherConfiguration.class,
-        TramEventSubscriberConfiguration.class})
+        TramEventSubscriberConfiguration.class,
+        OptimisticLockingDecoratorConfiguration.class,
+        SnapshotConfiguration.class})
 public class CommonConfig {
 
     @Bean
@@ -52,6 +56,6 @@ public class CommonConfig {
 
     @Bean
     public DomainEventDispatcher domainEventDispatcher(UserEventSubscriber userEventSubscriber, DomainEventDispatcherFactory domainEventDispatcherFactory) {
-        return domainEventDispatcherFactory.make("customerServiceEvents", userEventSubscriber.domainEventHandlers());
+        return domainEventDispatcherFactory.make("userServiceEvents", userEventSubscriber.domainEventHandlers());
     }
 }

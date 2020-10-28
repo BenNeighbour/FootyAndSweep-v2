@@ -18,6 +18,17 @@ package com.footyandsweep.apicommonlibrary.events;
 
 import com.footyandsweep.apicommonlibrary.model.SweepstakeCommon;
 import io.eventuate.tram.events.common.DomainEvent;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-public class SweepstakeCreated extends SweepstakeCommon implements DomainEvent {
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+public class SweepstakeCreated implements DomainEvent {
+
+    private SweepstakeCommon sweepstake;
+
 }

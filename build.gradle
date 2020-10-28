@@ -12,14 +12,9 @@ buildscript {
     }
 }
 
-subprojects {
-    apply plugin: "java"
-
+allprojects {
     group = 'com.footyandsweep'
     version = '0.0.1-SNAPSHOT'
-
-    targetCompatibility = 1.8
-    sourceCompatibility = 1.8
 
     repositories {
         eventuateMavenRepoUrl.split(',').each { repoUrl -> maven { url repoUrl } }
@@ -28,17 +23,10 @@ subprojects {
         jcenter()
 
         maven {
-            url 'https://repo.spring.io/libs-milestone'
-        }
-
-        maven {
             url "${project.rootDir}/build/repo"
         }
-
     }
-
 }
-
 
 repositories {
     mavenCentral()

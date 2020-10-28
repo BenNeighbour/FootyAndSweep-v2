@@ -1,0 +1,15 @@
+spring:
+  cloud:
+    kubernetes:
+      reload:
+        period: 1000
+        enabled: true
+
+      secrets:
+        name: api-gateway-service-credentials
+
+      config:
+        enabled: true
+        sources:
+          - namespace: default
+            name: api-gateway-service-config

@@ -39,7 +39,6 @@ public class UserEventSubscriber {
   private void handleNewSweepstakeCreated(
       DomainEventEnvelope<SweepstakeCreated> domainEventEnvelope) {
     // Handle the sweepstake and user ids to be updated
-    userService.addUserToSweepstake(
-        domainEventEnvelope.getEvent().getOwnerId(), domainEventEnvelope.getEvent());
+    userService.addUserToSweepstake(domainEventEnvelope.getEvent().getSweepstake());
   }
 }
