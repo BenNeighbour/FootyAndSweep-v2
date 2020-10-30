@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-ticket-engine
+  labels:
+    app: api-ticket-engine
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-ticket-engine
+  template:
+    metadata:
+      labels:
+        app: api-ticket-engine
+    spec:
+      containers:
+        - name: api-ticket-engine
+          image: api-ticket-engine
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: api-ticket-engine-credentials
+                  key: username
+
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: api-ticket-engine-credentials
+                  key: password
+
+            - name: SPRING_DATASOURCE_URL
+              value: 'jdbc:postgresql://api-database:5432/api-footyandsweep?stringtype=unspecified'
+
+            - name: EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS
+              value: 'api-kafka.default.svc.cluster.local:9092'
+
+            - name: EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING
+              value: 'zookeeper:2181'
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-ticket-engine
+  labels:
+    app: api-ticket-engine
+spec:
+  ports:
+    - port: 8080
+      protocol: TCP
+  selector:
+    app: api-ticket-engine
+  type: NodePort
