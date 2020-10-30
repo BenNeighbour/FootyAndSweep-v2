@@ -1,0 +1,37 @@
+<!--
+  ~   Copyright 2020 FootyAndSweep
+  ~
+  ~   Licensed under the Apache License, Version 2.0 (the "License");
+  ~   you may not use this file except in compliance with the License.
+  ~   You may obtain a copy of the License at
+  ~
+  ~   http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~   Unless required by applicable law or agreed to in writing, software
+  ~   distributed under the License is distributed on an "AS IS" BASIS,
+  ~   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~   See the License for the specific language governing permissions and
+  ~   limitations under the License.
+  -->
+
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Develop on Kubernetes" type="google-container-tools-skaffold-run-config" factoryName="google-container-tools-skaffold-run-config-dev" singleton="false" show_console_on_std_err="false" show_console_on_std_out="false">
+    <option name="allowRunningInParallel" value="true" />
+    <option name="cleanupDeployments" value="true" />
+    <option name="envVariables" />
+    <option name="imageRepositoryOverride" />
+    <option name="kubernetesContext" />
+    <option name="mappings">
+      <list />
+    </option>
+    <option name="redeployOnChanges" value="true" />
+    <option name="selectedOptions">
+      <set />
+    </option>
+    <option name="skaffoldConfigurationFilePath" value="C:\Users\benne\Documents\FootyAndSweep v2\skaffold.yaml" />
+    <option name="skaffoldNamespace" />
+    <option name="skaffoldProfile" />
+    <option name="verbosity" />
+    <method v="2" />
+  </configuration>
+</component>

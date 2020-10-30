@@ -14,20 +14,21 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apisweepstakeengine.engine;
+package com.footyandsweep.apicommonlibrary.events;
 
 import com.footyandsweep.apicommonlibrary.model.TicketCommon;
-import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
+import io.eventuate.tram.events.common.DomainEvent;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.transaction.Transactional;
-import java.util.List;
-import java.util.UUID;
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+public class TicketBought implements DomainEvent {
 
-@Transactional
-public interface SweepstakeEngine {
-
-    Sweepstake saveProcessedTickets(UUID sweepstakeId, List<TicketCommon> tickets);
-
-    Sweepstake saveSweepstake(UUID ownerId, Sweepstake sweepstake);
+    private TicketCommon ticket;
 
 }
