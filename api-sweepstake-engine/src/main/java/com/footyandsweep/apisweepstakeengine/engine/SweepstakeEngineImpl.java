@@ -24,7 +24,6 @@ import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
 import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
 import com.footyandsweep.apisweepstakeengine.relation.ParticipantIds;
 import io.eventuate.tram.events.publisher.DomainEventPublisher;
-import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,7 +55,6 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
   }
 
   @Override
-  @Transactional
   public Sweepstake saveSweepstake(UUID ownerId, Sweepstake sweepstake) {
     try {
       sweepstake.setOwnerId(ownerId);
