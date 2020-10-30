@@ -40,11 +40,12 @@ public class TicketCommon implements Serializable {
 
   @Id
   @GeneratedValue
-  @Column(columnDefinition = "uuid", updatable = false, name = "id")
-  private UUID ticketId;
+  private UUID id;
 
   @Transient
   private TransactionStatus transactionStatus = TransactionStatus.PENDING;
+
+  @Version protected Integer version;
 
   private TicketStatus status = TicketStatus.PENDING;
 
@@ -71,8 +72,8 @@ public class TicketCommon implements Serializable {
   }
 
   @EmbeddedId
-  public UUID getTicketId() {
-    return ticketId;
+  public UUID getId() {
+    return id;
   }
 
 }
