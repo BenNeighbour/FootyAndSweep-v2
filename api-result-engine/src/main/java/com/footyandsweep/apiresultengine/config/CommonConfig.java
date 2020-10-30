@@ -14,12 +14,12 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apiticketengine.config;
+package com.footyandsweep.apiresultengine.config;
 
-import com.footyandsweep.apiticketengine.dao.TicketDao;
-import com.footyandsweep.apiticketengine.engine.TicketEngine;
-import com.footyandsweep.apiticketengine.engine.TicketEngineImpl;
-import com.footyandsweep.apiticketengine.events.TicketEventSubscriber;
+import com.footyandsweep.apiresultengine.dao.ResultDao;
+import com.footyandsweep.apiresultengine.engine.ResultEngine;
+import com.footyandsweep.apiresultengine.engine.ResultEngineImpl;
+import com.footyandsweep.apiresultengine.events.ResultEventSubscriber;
 import io.eventuate.tram.events.publisher.DomainEventPublisher;
 import io.eventuate.tram.events.subscriber.DomainEventDispatcher;
 import io.eventuate.tram.events.subscriber.DomainEventDispatcherFactory;
@@ -45,17 +45,17 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 public class CommonConfig {
 
     @Bean
-    public TicketEngine ticketEngine(DomainEventPublisher domainEventPublisher, TicketDao ticketDao) {
-        return new TicketEngineImpl(ticketDao, domainEventPublisher);
+    public ResultEngine resultEngine(DomainEventPublisher domainEventPublisher, ResultDao resultDao) {
+        return new ResultEngineImpl(resultDao, domainEventPublisher);
     }
 
     @Bean
-    public TicketEventSubscriber ticketEventSubscriber() {
-        return new TicketEventSubscriber();
+    public ResultEventSubscriber resultEventSubscriber() {
+        return new ResultEventSubscriber();
     }
 
     @Bean
-    public DomainEventDispatcher domainEventDispatcher(TicketEventSubscriber ticketEventSubscriber, DomainEventDispatcherFactory domainEventDispatcherFactory) {
-        return domainEventDispatcherFactory.make("ticketEngineEvents", ticketEventSubscriber.domainEventHandlers());
+    public DomainEventDispatcher domainEventDispatcher(ResultEventSubscriber resultEventSubscriber, DomainEventDispatcherFactory domainEventDispatcherFactory) {
+        return domainEventDispatcherFactory.make("resultEngineEvents", resultEventSubscriber.domainEventHandlers());
     }
 }
