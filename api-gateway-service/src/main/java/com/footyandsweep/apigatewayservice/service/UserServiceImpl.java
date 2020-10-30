@@ -16,6 +16,7 @@
 
 package com.footyandsweep.apigatewayservice.service;
 
+import com.footyandsweep.apicommonlibrary.events.SweepstakeRelationDeleted;
 import com.footyandsweep.apicommonlibrary.model.SweepstakeCommon;
 import com.footyandsweep.apigatewayservice.dao.SweepstakeIdDao;
 import com.footyandsweep.apigatewayservice.dao.UserDao;
@@ -26,6 +27,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+
+import static java.util.Collections.singletonList;
 
 @Service
 @Transactional
@@ -49,6 +52,16 @@ public class UserServiceImpl implements UserService {
 
     if (addingParticipant != null) {
       sweepstakeIdDao.save(new SweepstakeIds(sweepstake.getOwnerId(), sweepstake.getId()));
+    } else {
+      // Dispatch a sweepstake relation deleted event
+      SweepstakeRelationDeleted relationDeleted =
+          new SweepstakeRelationDeleted(sweepstake.getId(), "Owner is invalid!");
+
+      /* The sweepstake engine will consume this broadcast and delete it's relation with this
+      sweepstake, then it will remove the sweepstake with the message string given by the event
+      above */
+      domainEventPublisher.publish(
+          SweepstakeCommon.class, sweepstake.getId(), singletonList(relationDeleted));
     }
   }
 }

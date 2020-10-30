@@ -14,25 +14,24 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apisweepstakeengine.engine;
+package com.footyandsweep.apicommonlibrary.events;
 
-import com.footyandsweep.apicommonlibrary.model.TicketCommon;
-import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
-import com.footyandsweep.apisweepstakeengine.relation.ParticipantIds;
+import io.eventuate.tram.events.common.DomainEvent;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.transaction.Transactional;
-import java.util.List;
 import java.util.UUID;
 
-@Transactional
-public interface SweepstakeEngine {
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+public class SweepstakeRelationDeleted implements DomainEvent {
 
-    Sweepstake saveProcessedTickets(UUID sweepstakeId, List<TicketCommon> tickets);
+    private UUID sweepstakeId;
 
-    Sweepstake saveSweepstake(UUID ownerId, Sweepstake sweepstake);
-
-    void deleteParticipantRelation(UUID sweepstakeId);
-
-    Sweepstake deleteSweepstake(UUID sweepstakeId, String reason);
+    private String errorReason;
 
 }
