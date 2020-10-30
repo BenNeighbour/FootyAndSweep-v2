@@ -26,4 +26,7 @@ import javax.persistence.*;
         @AttributeOverride(name = "id", column = @Column(columnDefinition = "uuid", updatable = false, name = "id"))
 })
 public class Ticket extends TicketCommon {
+
+    private static final long serialVersionUID = 1017645614613418852L;
+
 }

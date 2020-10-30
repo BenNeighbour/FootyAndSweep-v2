@@ -71,9 +71,4 @@ public class TicketCommon implements Serializable {
     }
   }
 
-  @EmbeddedId
-  public UUID getId() {
-    return id;
-  }
-
 }
