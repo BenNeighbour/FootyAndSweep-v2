@@ -26,7 +26,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.UUID;
 
 @Service
 @Transactional
@@ -46,18 +45,10 @@ public class UserServiceImpl implements UserService {
   @Override
   @Transactional
   public void addUserToSweepstake(SweepstakeCommon sweepstake) {
-    //    try {
-    System.out.println("Should be okay");
     User addingParticipant = userDao.findUserByUserId(sweepstake.getOwnerId());
 
     if (addingParticipant != null) {
-      if (sweepstakeIdDao.findSweepstakeIdsByParticipantId(sweepstake.getOwnerId()) == null) {
-        sweepstakeIdDao.save(new SweepstakeIds(sweepstake.getOwnerId(), sweepstake.getId()));
-      }
+      sweepstakeIdDao.save(new SweepstakeIds(sweepstake.getOwnerId(), sweepstake.getId()));
     }
-    //    } catch (Exception e) {
-    //      // TODO: THROW BACK ERROR MESSGAE!!
-    //      return null;
-    //    }
   }
 }

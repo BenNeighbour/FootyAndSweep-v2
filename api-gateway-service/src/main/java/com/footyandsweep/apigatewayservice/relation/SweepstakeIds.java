@@ -39,10 +39,10 @@ public class SweepstakeIds implements Serializable {
     private static final long serialVersionUID = 5778408986459720940L;
 
     @Id
-    @Column(columnDefinition = "uuid", updatable = false)
+    @Column(columnDefinition = "uuid")
     private UUID participantId;
 
-    @Column(columnDefinition = "uuid", updatable = false)
+    @Column(columnDefinition = "uuid")
     private UUID sweepstakeId;
 
 
