@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: 'api-ticket-engine'
+
+  jpa:
+    generate-ddl: true
+
+    show-sql: true
+
+    properties:
+      hibernate:
+        ddl-auto: create-drop
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+    hibernate:
+      default_batch_fetch_size: 16
+
+    datasource:
+      url: ${SPRING_DATASOURCE_URL}
+      username: ${SPRING_DATASOURCE_USERNAME}
+      password: ${SPRING_DATASOURCE_PASSWORD}
+      driver-class-name: org.postgresql.Driver
+
+eventuatelocal:
+  kafka:
+    bootstrap:
+      servers:
+        [ 'api-kafka.default.svc.cluster.local:9092' ]
+
+  zookeeper:
+    connection:
+      string: "zookeeper:2181"
+
+
+cdc:
+  service:
+    url: http://api-events-cdc:8080
+
