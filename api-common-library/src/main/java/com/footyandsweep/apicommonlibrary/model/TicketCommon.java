@@ -16,6 +16,7 @@
 
 package com.footyandsweep.apicommonlibrary.model;
 
+import com.footyandsweep.apicommonlibrary.TransactionStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -41,6 +42,9 @@ public class TicketCommon implements Serializable {
   @GeneratedValue
   @Column(columnDefinition = "uuid", updatable = false, name = "id")
   private UUID ticketId;
+
+  @Transient
+  private TransactionStatus transactionStatus = TransactionStatus.PENDING;
 
   private TicketStatus status = TicketStatus.PENDING;
 
