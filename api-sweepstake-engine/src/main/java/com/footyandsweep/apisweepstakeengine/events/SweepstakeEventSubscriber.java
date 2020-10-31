@@ -16,6 +16,7 @@
 
 package com.footyandsweep.apisweepstakeengine.events;
 
+import com.footyandsweep.apicommonlibrary.events.SweepstakeRelationDeleted;
 import com.footyandsweep.apicommonlibrary.events.TicketDecisioningSuccess;
 import com.footyandsweep.apisweepstakeengine.engine.SweepstakeEngine;
 import io.eventuate.tram.events.subscriber.DomainEventEnvelope;
@@ -31,8 +32,10 @@ public class SweepstakeEventSubscriber {
 
   public DomainEventHandlers domainEventHandlers() {
     return DomainEventHandlersBuilder.forAggregateType(
-            "com.footyandsweep.apicommonlibrary.model.TicketCommon")
+            "com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon")
         .onEvent(TicketDecisioningSuccess.class, this::handleTicketDecisioningSuccess)
+        .andForAggregateType("com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon")
+        .onEvent(SweepstakeRelationDeleted.class, this::handleSweepstakeRelationDeleted)
         .build();
   }
 
@@ -42,5 +45,13 @@ public class SweepstakeEventSubscriber {
     sweepstakeEngine.saveProcessedTickets(
         domainEventEnvelope.getEvent().getSweepstakeId(),
         domainEventEnvelope.getEvent().getTickets());
+  }
+
+  private void handleSweepstakeRelationDeleted(
+      DomainEventEnvelope<SweepstakeRelationDeleted> domainEventEnvelope) {
+    // Handle this so that the sweepstake is deleted
+    sweepstakeEngine.deleteSweepstake(
+        domainEventEnvelope.getEvent().getSweepstakeId(),
+        domainEventEnvelope.getEvent().getErrorReason());
   }
 }

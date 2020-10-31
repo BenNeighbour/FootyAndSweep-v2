@@ -14,29 +14,21 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apicommonlibrary.events;
+package com.footyandsweep.apisweepstakeengine.model;
 
-import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
-import io.eventuate.tram.events.common.DomainEvent;
-import lombok.AllArgsConstructor;
+import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeEventCommon;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.io.Serializable;
-import java.util.List;
-import java.util.UUID;
+import javax.persistence.*;
 
 @Setter
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
-public class TicketDecisioningSuccess implements Serializable, DomainEvent {
-
-    private static final long serialVersionUID = 5234774270984284159L;
-
-    private UUID sweepstakeId;
-
-    private List<TicketCommon> tickets;
-
+@Entity
+@Table(name = "sweepstake_event")
+@Inheritance(strategy = InheritanceType.JOINED)
+@AttributeOverrides({
+        @AttributeOverride(name = "id", column = @Column(columnDefinition = "uuid", updatable = false, name = "id"))
+})
+public class SweepstakeEvent extends SweepstakeEventCommon {
 }

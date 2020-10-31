@@ -16,7 +16,7 @@
 
 package com.footyandsweep.apigatewayservice.model;
 
-import com.footyandsweep.apicommonlibrary.model.UserCommon;
+import com.footyandsweep.apicommonlibrary.model.user.UserCommon;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

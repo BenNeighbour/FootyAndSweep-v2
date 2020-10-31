@@ -16,21 +16,29 @@
 
 package com.footyandsweep.apisweepstakeengine.model;
 
-import com.footyandsweep.apicommonlibrary.model.SweepstakeCommon;
+import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
+import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
+import com.footyandsweep.apicommonlibrary.model.user.UserCommon;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "sweepstake")
 @AttributeOverrides({
-        @AttributeOverride(name = "id", column = @Column(columnDefinition = "uuid", updatable = false, name = "id"))
+  @AttributeOverride(
+      name = "id",
+      column = @Column(columnDefinition = "uuid", updatable = false, name = "id"))
 })
 public class Sweepstake extends SweepstakeCommon {
 
-//    @Transient
-//    private List<TicketCommon> tickets;
-//
-//    @Transient
-//    private UserCommon owner;
+  private static final long serialVersionUID = -706809544736918166L;
 
+  @Transient private List<TicketCommon> tickets;
+
+  @Transient private UserCommon owner;
 }

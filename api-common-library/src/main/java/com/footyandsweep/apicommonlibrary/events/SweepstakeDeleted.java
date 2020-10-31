@@ -14,45 +14,21 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apicommonlibrary.model;
+package com.footyandsweep.apicommonlibrary.events;
 
-import com.footyandsweep.apicommonlibrary.TransactionStatus;
+import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
+import io.eventuate.tram.events.common.DomainEvent;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.UUID;
-
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@MappedSuperclass
-@Embeddable
-public class UserCommon implements Serializable {
+public class SweepstakeDeleted implements DomainEvent {
 
-  private static final long serialVersionUID = -8782116311771480122L;
+    private SweepstakeCommon sweepstake;
 
-  @Id
-  @GeneratedValue
-  @Column(columnDefinition = "uuid", updatable = false, name = "id")
-  private UUID userId;
-
-  @Transient
-  private TransactionStatus transactionStatus = TransactionStatus.PENDING;
-
-  private String name;
-
-  private String password;
-
-  @Embedded private AuthProvider provider;
-
-  enum AuthProvider {
-    local,
-    facebook,
-    google
-  }
 }

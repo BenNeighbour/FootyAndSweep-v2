@@ -14,19 +14,16 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apicommonlibrary.model;
+package com.footyandsweep.apicommonlibrary.model.user;
 
 import com.footyandsweep.apicommonlibrary.TransactionStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.UUID;
 
 @Setter
@@ -34,46 +31,28 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @MappedSuperclass
-public class TicketCommon implements Serializable {
+@Embeddable
+public class UserCommon implements Serializable {
 
-  private static final long serialVersionUID = -7269123358093904648L;
+  private static final long serialVersionUID = -8782116311771480122L;
 
   @Id
   @GeneratedValue
-  private UUID id;
+  @Column(columnDefinition = "uuid", updatable = false, name = "id")
+  private UUID userId;
 
   @Transient
   private TransactionStatus transactionStatus = TransactionStatus.PENDING;
 
-  @Version protected Integer version;
+  private String name;
 
-  private TicketStatus status = TicketStatus.PENDING;
+  private String password;
 
-  private UUID sweepstakeId;
+  @Embedded private AuthProvider provider;
 
-  private UUID allocationId;
-
-  private UUID userId;
-
-  @CreationTimestamp private Date created;
-
-  @UpdateTimestamp private Date updated;
-
-  enum TicketStatus {
-    PENDING(0),
-    INPLAY(1),
-
-    REFUNDED(2),
-    WON(3),
-    LOST(4);
-
-    TicketStatus(int code) {
-    }
+  enum AuthProvider {
+    local,
+    facebook,
+    google
   }
-
-  @EmbeddedId
-  public UUID getId() {
-    return id;
-  }
-
 }

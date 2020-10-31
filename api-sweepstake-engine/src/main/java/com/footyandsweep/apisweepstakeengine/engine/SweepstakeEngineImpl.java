@@ -17,8 +17,8 @@
 package com.footyandsweep.apisweepstakeengine.engine;
 
 import com.footyandsweep.apicommonlibrary.events.SweepstakeCreated;
-import com.footyandsweep.apicommonlibrary.model.SweepstakeCommon;
-import com.footyandsweep.apicommonlibrary.model.TicketCommon;
+import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
+import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
 import com.footyandsweep.apisweepstakeengine.dao.ParticipantIdDao;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
 import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
@@ -39,12 +39,12 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
 
   private final SweepstakeDao sweepstakeDao;
 
-  @Autowired
-  private ParticipantIdDao participantIdDao;
+  @Autowired private ParticipantIdDao participantIdDao;
 
   private final DomainEventPublisher domainEventPublisher;
 
-  public SweepstakeEngineImpl(SweepstakeDao sweepstakeDao, DomainEventPublisher domainEventPublisher) {
+  public SweepstakeEngineImpl(
+      SweepstakeDao sweepstakeDao, DomainEventPublisher domainEventPublisher) {
     this.sweepstakeDao = sweepstakeDao;
     this.domainEventPublisher = domainEventPublisher;
   }
@@ -62,21 +62,41 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
       Sweepstake savedSweepstake = sweepstakeDao.save(sweepstake);
       participantIdDao.save(new ParticipantIds(savedSweepstake.getId(), ownerId));
 
-      // Creating the sweepstake created object for other services to react to
+      /* Creating the sweepstake created object for other services to react to
+       */
       SweepstakeCreated sweepstakeCreated = new SweepstakeCreated();
       sweepstakeCreated.setSweepstake(sweepstake);
 
-      /* TODO: This gets received by the gateway service, then that service adds the sweepstake and
-          user id into it's SweepstakeIds Junction Table */
+      /* This gets received by the gateway service, then that service adds the sweepstake and
+      user id into it's SweepstakeIds Junction Table */
       domainEventPublisher.publish(
-          SweepstakeCommon.class,
-          savedSweepstake.getId(),
-          singletonList(sweepstakeCreated));
+          SweepstakeCommon.class, savedSweepstake.getId(), singletonList(sweepstakeCreated));
 
       return savedSweepstake;
     } catch (Exception e) {
       // TODO: FIX THIS!
       return null;
     }
+  }
+
+  @Override
+  public void deleteParticipantRelation(UUID sweepstakeId) {
+    participantIdDao.delete(participantIdDao.findParticipantIdsBySweepstakeId(sweepstakeId));
+  }
+
+  @Override
+  public Sweepstake deleteSweepstake(UUID sweepstakeId, String reason) {
+    Sweepstake sweepstake = sweepstakeDao.findSweepstakeById(sweepstakeId);
+    try {
+      this.deleteParticipantRelation(sweepstakeId);
+      sweepstakeDao.delete(sweepstake);
+    } catch (Exception e) {
+      // Internal Server Error
+      throw new RuntimeException("Whoops! Something's not right on our end! Try again soon.");
+    }
+
+    // TODO: Broadcast websockets error message with the reason in it
+
+    return sweepstake;
   }
 }
