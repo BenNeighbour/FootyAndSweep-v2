@@ -16,6 +16,7 @@
 
 package com.footyandsweep.apicommonlibrary.model.sweepstake;
 
+import com.footyandsweep.apicommonlibrary.TransactionStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,7 @@ import lombok.Setter;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
@@ -41,7 +43,8 @@ public class SweepstakeEventCommon implements Serializable {
     @GeneratedValue
     private UUID id;
 
-    private Integer code;
+    @Transient
+    private TransactionStatus transactionStatus = TransactionStatus.PENDING;
 
     private String name;
 

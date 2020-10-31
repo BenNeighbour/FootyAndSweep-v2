@@ -25,7 +25,7 @@ import javax.persistence.*;
 @Setter
 @Getter
 @Entity
-@Table(name = "SweepstakeEvent")
+@Table(name = "sweepstake_event")
 @Inheritance(strategy = InheritanceType.JOINED)
 @AttributeOverrides({
         @AttributeOverride(name = "id", column = @Column(columnDefinition = "uuid", updatable = false, name = "id"))

@@ -30,16 +30,15 @@ import java.util.List;
 @Entity
 @Table(name = "sweepstake")
 @AttributeOverrides({
-        @AttributeOverride(name = "id", column = @Column(columnDefinition = "uuid", updatable = false, name = "id"))
+  @AttributeOverride(
+      name = "id",
+      column = @Column(columnDefinition = "uuid", updatable = false, name = "id"))
 })
 public class Sweepstake extends SweepstakeCommon {
 
-    private static final long serialVersionUID = -706809544736918166L;
+  private static final long serialVersionUID = -706809544736918166L;
 
-    @Transient
-    private List<TicketCommon> tickets;
+  @Transient private List<TicketCommon> tickets;
 
-    @Transient
-    private UserCommon owner;
-
+  @Transient private UserCommon owner;
 }
