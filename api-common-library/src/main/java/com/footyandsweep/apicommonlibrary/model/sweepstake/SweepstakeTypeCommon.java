@@ -14,24 +14,19 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apisweepstakeengine.engine;
+package com.footyandsweep.apicommonlibrary.model.sweepstake;
 
-import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
-import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
+import java.util.HashMap;
 
-import javax.transaction.Transactional;
-import java.util.List;
-import java.util.UUID;
+public enum SweepstakeTypeCommon {
+    Correct_Score_FT("Correct Score F/T"),
+    Correct_Score_HT("Correct Score H/T");
 
-@Transactional
-public interface SweepstakeEngine {
+    SweepstakeTypeCommon(String type) {
+    }
 
-    Sweepstake saveProcessedTickets(UUID sweepstakeId, List<TicketCommon> tickets);
-
-    Sweepstake saveSweepstake(UUID ownerId, Sweepstake sweepstake);
-
-    void deleteParticipantRelation(UUID sweepstakeId);
-
-    Sweepstake deleteSweepstake(UUID sweepstakeId, String reason);
-
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }

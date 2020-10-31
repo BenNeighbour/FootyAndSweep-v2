@@ -32,9 +32,9 @@ public class SweepstakeEventSubscriber {
 
   public DomainEventHandlers domainEventHandlers() {
     return DomainEventHandlersBuilder.forAggregateType(
-            "com.footyandsweep.apicommonlibrary.model.TicketCommon")
+            "com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon")
         .onEvent(TicketDecisioningSuccess.class, this::handleTicketDecisioningSuccess)
-        .andForAggregateType("com.footyandsweep.apicommonlibrary.model.SweepstakeCommon")
+        .andForAggregateType("com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon")
         .onEvent(SweepstakeRelationDeleted.class, this::handleSweepstakeRelationDeleted)
         .build();
   }

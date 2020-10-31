@@ -31,7 +31,7 @@ public class ResultEventSubscriber {
 
   public DomainEventHandlers domainEventHandlers() {
     return DomainEventHandlersBuilder.forAggregateType(
-            "com.footyandsweep.apicommonlibrary.model.TicketCommon")
+            "com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon")
         .onEvent(TicketDecisioningSuccess.class, this::handleTicketDecisioningSuccess)
         .build();
   }

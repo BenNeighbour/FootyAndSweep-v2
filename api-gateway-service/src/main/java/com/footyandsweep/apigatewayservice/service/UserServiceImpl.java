@@ -17,7 +17,7 @@
 package com.footyandsweep.apigatewayservice.service;
 
 import com.footyandsweep.apicommonlibrary.events.SweepstakeRelationDeleted;
-import com.footyandsweep.apicommonlibrary.model.SweepstakeCommon;
+import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apigatewayservice.dao.SweepstakeIdDao;
 import com.footyandsweep.apigatewayservice.dao.UserDao;
 import com.footyandsweep.apigatewayservice.model.User;

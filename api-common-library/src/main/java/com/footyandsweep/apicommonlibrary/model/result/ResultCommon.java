@@ -14,29 +14,37 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apicommonlibrary.events;
+package com.footyandsweep.apicommonlibrary.model.result;
 
-import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
-import io.eventuate.tram.events.common.DomainEvent;
+import com.footyandsweep.apicommonlibrary.TransactionStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
 import java.io.Serializable;
-import java.util.List;
 import java.util.UUID;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TicketDecisioningSuccess implements Serializable, DomainEvent {
+@MappedSuperclass
+public class ResultCommon implements Serializable {
 
-    private static final long serialVersionUID = 5234774270984284159L;
+    private static final long serialVersionUID = 519661879048243632L;
 
-    private UUID sweepstakeId;
+    @Id
+    @GeneratedValue
+    private UUID id;
 
-    private List<TicketCommon> tickets;
+    @Transient
+    private TransactionStatus transactionStatus = TransactionStatus.PENDING;
+
+    private boolean isProcessed = false;
 
 }

@@ -16,7 +16,7 @@
 
 package com.footyandsweep.apiresultengine.model;
 
-import com.footyandsweep.apicommonlibrary.model.ResultCommon;
+import com.footyandsweep.apicommonlibrary.model.result.ResultCommon;
 
 import javax.persistence.*;
 

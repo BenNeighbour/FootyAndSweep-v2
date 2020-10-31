@@ -16,7 +16,7 @@
 
 package com.footyandsweep.apiticketengine.model;
 
-import com.footyandsweep.apicommonlibrary.model.TicketCommon;
+import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
 
 import javax.persistence.*;
 

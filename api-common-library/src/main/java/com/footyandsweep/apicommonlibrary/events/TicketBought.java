@@ -16,7 +16,7 @@
 
 package com.footyandsweep.apicommonlibrary.events;
 
-import com.footyandsweep.apicommonlibrary.model.TicketCommon;
+import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
 import io.eventuate.tram.events.common.DomainEvent;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

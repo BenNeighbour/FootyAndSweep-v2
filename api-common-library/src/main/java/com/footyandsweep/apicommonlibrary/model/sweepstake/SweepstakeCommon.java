@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apicommonlibrary.model;
+package com.footyandsweep.apicommonlibrary.model.sweepstake;
 
 import com.footyandsweep.apicommonlibrary.TransactionStatus;
 import lombok.AllArgsConstructor;
@@ -29,6 +29,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.security.SecureRandom;
 import java.util.Date;
+import java.util.EnumMap;
 import java.util.UUID;
 
 @Setter
@@ -59,16 +60,17 @@ public class SweepstakeCommon implements Serializable {
 
     private UUID ownerId;
 
+    private UUID sweepstakeEventId;
+
+    @Transient
+    private EnumMap<SweepstakeTypeCommon, Long> sweepstakeType = this.generateSweepstakeTypes();
+
     @Transient
     private int sweepstakeListSize;
 
     private int minimumPlayers;
 
     private int maximumPlayerTickets;
-
-    //    private SweepstakeEvent events;
-
-    //    private SweepstakeType type;
 
     private BigDecimal stake;
 
@@ -113,6 +115,17 @@ public class SweepstakeCommon implements Serializable {
         }
 
         return sb.toString();
+    }
+
+
+    private EnumMap<SweepstakeTypeCommon, Long> generateSweepstakeTypes() {
+        EnumMap<SweepstakeTypeCommon, Long> typeMap = new EnumMap<>(SweepstakeTypeCommon.class);
+
+        for (long i = 0L; i < SweepstakeTypeCommon.values().length; i++) {
+            typeMap.put(SweepstakeTypeCommon.Correct_Score_FT, i);
+        }
+
+        return typeMap;
     }
 
 }

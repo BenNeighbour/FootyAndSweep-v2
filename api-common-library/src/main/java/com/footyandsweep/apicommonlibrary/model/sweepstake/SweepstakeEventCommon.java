@@ -14,9 +14,8 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apicommonlibrary.model;
+package com.footyandsweep.apicommonlibrary.model.sweepstake;
 
-import com.footyandsweep.apicommonlibrary.TransactionStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,8 +24,8 @@ import lombok.Setter;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Transient;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.UUID;
 
 @Setter
@@ -34,17 +33,22 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @MappedSuperclass
-public class ResultCommon implements Serializable {
+public class SweepstakeEventCommon implements Serializable {
 
-    private static final long serialVersionUID = 519661879048243632L;
+    private static final long serialVersionUID = 270875733575838844L;
 
     @Id
     @GeneratedValue
     private UUID id;
 
-    @Transient
-    private TransactionStatus transactionStatus = TransactionStatus.PENDING;
+    private Integer code;
 
-    private boolean isProcessed = false;
+    private String name;
+
+    private Date startDate;
+
+    private Date endDate;
+
+    private Integer status;
 
 }

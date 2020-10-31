@@ -31,7 +31,7 @@ public class UserEventSubscriber {
 
   public DomainEventHandlers domainEventHandlers() {
     return DomainEventHandlersBuilder.forAggregateType(
-            "com.footyandsweep.apicommonlibrary.model.SweepstakeCommon")
+            "com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon")
         .onEvent(SweepstakeCreated.class, this::handleNewSweepstakeCreated)
         .build();
   }

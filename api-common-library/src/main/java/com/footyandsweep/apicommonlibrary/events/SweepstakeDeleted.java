@@ -16,7 +16,7 @@
 
 package com.footyandsweep.apicommonlibrary.events;
 
-import com.footyandsweep.apicommonlibrary.model.SweepstakeCommon;
+import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import io.eventuate.tram.events.common.DomainEvent;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

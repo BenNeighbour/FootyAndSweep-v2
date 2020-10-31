@@ -16,7 +16,7 @@
 
 package com.footyandsweep.apigatewayservice.service;
 
-import com.footyandsweep.apicommonlibrary.model.SweepstakeCommon;
+import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 
 public interface UserService {
 
