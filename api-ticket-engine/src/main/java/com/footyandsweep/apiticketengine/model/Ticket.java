@@ -17,9 +17,13 @@
 package com.footyandsweep.apiticketengine.model;
 
 import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "ticket")
 @AttributeOverrides({

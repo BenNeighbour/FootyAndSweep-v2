@@ -24,7 +24,10 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
@@ -34,43 +37,21 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @MappedSuperclass
-public class TicketCommon implements Serializable {
+public class AllocationCommon implements Serializable {
 
-  private static final long serialVersionUID = -7269123358093904648L;
+  private static final long serialVersionUID = -7048642523349496292L;
 
-  @Id
-  @GeneratedValue
-  private UUID id;
+  @Id @GeneratedValue private UUID id;
 
-  @Transient
-  private TransactionStatus transactionStatus = TransactionStatus.PENDING;
+  @Transient private TransactionStatus transactionStatus = TransactionStatus.PENDING;
 
-  @Version protected Integer version;
+  private String description;
 
-  private TicketStatus status = TicketStatus.PENDING;
+  private UUID ticketId;
 
-  private UUID sweepstakeId;
-
-  private UUID allocationId;
-
-  private Boolean isWinner = false;
-
-  private UUID userId;
+  private UUID playerId;
 
   @CreationTimestamp private Date created;
 
   @UpdateTimestamp private Date updated;
-
-  enum TicketStatus {
-    PENDING(0),
-    INPLAY(1),
-
-    REFUNDED(2),
-    WON(3),
-    LOST(4);
-
-    TicketStatus(int code) {
-    }
-  }
-
 }
