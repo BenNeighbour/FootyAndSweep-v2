@@ -52,7 +52,7 @@ public class SweepstakeCommon implements Serializable {
 
     @Version protected Integer version;
 
-    private String code = generateSweepstakeCode();
+    private String joinCode = generateSweepstakeCode();
 
     private SweepstakeStatus status = SweepstakeStatus.OPEN;
 

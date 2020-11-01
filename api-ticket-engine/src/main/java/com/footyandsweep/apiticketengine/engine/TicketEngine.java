@@ -19,10 +19,12 @@ package com.footyandsweep.apiticketengine.engine;
 import com.footyandsweep.apiticketengine.model.Ticket;
 
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.UUID;
 
 @Transactional
 public interface TicketEngine {
 
-    Ticket saveTicket(Ticket ticket);
+    List<Ticket> buyTickets(UUID userId, int numberOfTickets, String joinCode);
 
 }

@@ -22,6 +22,8 @@ import io.eventuate.tram.events.publisher.DomainEventPublisher;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -37,7 +39,7 @@ public class TicketEngineImpl implements TicketEngine {
   }
 
   @Override
-  public Ticket saveTicket(Ticket ticket) {
-    return ticketDao.save(ticket);
+  public List<Ticket> buyTickets(UUID userId, int numberOfTickets, String joinCode) {
+    return null;
   }
 }
