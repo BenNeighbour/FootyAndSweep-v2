@@ -20,9 +20,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.UUID;
 
 @Setter
@@ -35,16 +39,25 @@ public class UserCommon implements Serializable {
 
   private static final long serialVersionUID = -8782116311771480122L;
 
-  @Id
-  @GeneratedValue
-  @Column(columnDefinition = "uuid", updatable = false, name = "id")
-  private UUID userId;
+  @Id @GeneratedValue private UUID userId;
 
   private String name;
 
   private String password;
 
   @Embedded private AuthProvider provider;
+
+  private String email;
+
+  private BigDecimal balance;
+
+  private boolean isSubscribedToEmails;
+
+  private Date dateOfBirth;
+
+  @CreationTimestamp private Date created;
+
+  @UpdateTimestamp private Date updated;
 
   enum AuthProvider {
     local,

@@ -25,11 +25,10 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.security.SecureRandom;
-import java.util.Date;
-import java.util.EnumMap;
-import java.util.UUID;
+import java.util.*;
 
 @Setter
 @Getter
@@ -117,9 +116,7 @@ public class SweepstakeCommon implements Serializable {
     private EnumMap<SweepstakeTypeCommon, Long> generateSweepstakeTypes() {
         EnumMap<SweepstakeTypeCommon, Long> typeMap = new EnumMap<>(SweepstakeTypeCommon.class);
 
-        for (long i = 0L; i < SweepstakeTypeCommon.values().length; i++) {
-            typeMap.put(SweepstakeTypeCommon.Correct_Score_FT, i);
-        }
+        /* TODO: Add each of the right keys to the type map */
 
         return typeMap;
     }
