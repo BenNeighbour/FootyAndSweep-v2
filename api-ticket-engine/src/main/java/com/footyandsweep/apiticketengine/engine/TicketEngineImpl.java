@@ -19,6 +19,7 @@ package com.footyandsweep.apiticketengine.engine;
 import com.footyandsweep.apicommonlibrary.events.TicketBought;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
+import com.footyandsweep.apicommonlibrary.model.user.UserCommon;
 import com.footyandsweep.apiticketengine.dao.TicketDao;
 import com.footyandsweep.apiticketengine.model.Ticket;
 import io.eventuate.tram.events.publisher.DomainEventPublisher;
@@ -27,6 +28,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -49,19 +51,33 @@ public class TicketEngineImpl implements TicketEngine {
 
   @Override
   public void buyTickets(UUID userId, int numberOfTickets, String joinCode) {
+
     try {
-      // Get the sweepstake object that has the joinCode
+      /* Get the user object by the id provided */
+      Optional<UserCommon> user =
+              Optional.ofNullable(
+                      restTemplate.getForObject(
+                              "http://api-gateway-service/internal/user/by/id/" + userId,
+                              UserCommon.class));
+
+      /* Check if the user sent back is not malformed or null */
+      if (!user.isPresent()) throw new Exception();
+
+      /* Get the sweepstake object that has the joinCode */
       Optional<SweepstakeCommon> parentSweepstake =
           Optional.ofNullable(
               restTemplate.getForObject(
                   "http://api-sweepstake-engine/internal/sweepstake/by/joinCode/" + joinCode,
                   SweepstakeCommon.class));
 
-      if (!parentSweepstake.isPresent()) {
-        throw new Exception();
-      }
+      /* Check if the sweepstake sent back is not malformed or null */
+      if (!parentSweepstake.isPresent()) throw new Exception();
 
+      /* Lock this thread */
       sweepstakeLockHelper();
+
+      /* If the user cannot afford tickets, throw an error/send error messgage to client via WebSocket */
+      if (!this.canUserAffordTickets(user.get().getBalance(), numberOfTickets, parentSweepstake.get().getStake())) throw new Exception();
 
       /* When valid, buy each of the tickets for the user */
       for (int i = 0; i < numberOfTickets; i++) {
@@ -86,6 +102,14 @@ public class TicketEngineImpl implements TicketEngine {
     } catch (Exception e) {
       // TODO: Handle errors here
     }
+  }
+
+  private boolean canUserAffordTickets(BigDecimal userBalance, int numberOfTickets, BigDecimal stake) {
+    /* Multiply the number of tickets by the stake */
+    BigDecimal total = stake.multiply(new BigDecimal(numberOfTickets));
+
+    /* Validate whether the user balance is greater than the total cost and return */
+    return userBalance.compareTo(total) >= 0;
   }
 
   private void sweepstakeLockHelper() {
