@@ -16,25 +16,40 @@
 
 package com.footyandsweep.apisweepstakeengine;
 
+import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
 import com.footyandsweep.apisweepstakeengine.engine.SweepstakeEngineImpl;
 import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/internal/sweepstake")
 public class SweepstakeController {
 
-    @Autowired
-    private SweepstakeEngineImpl sweepstakeEngine;
+    private final SweepstakeEngineImpl sweepstakeEngine;
+    private final SweepstakeDao sweepstakeDao;
+
+    public SweepstakeController(SweepstakeEngineImpl sweepstakeEngine, SweepstakeDao sweepstakeDao) {
+        this.sweepstakeEngine = sweepstakeEngine;
+        this.sweepstakeDao = sweepstakeDao;
+    }
 
     @PostMapping("/save")
     public ResponseEntity<Sweepstake> createSweepstake(@RequestBody Sweepstake sweepstake) {
         return ResponseEntity.ok(sweepstakeEngine.saveSweepstake(sweepstake.getOwnerId(), sweepstake));
+    }
+
+    @GetMapping("/by/joinCode/{joinCode}")
+    public Sweepstake findSweepstakeByJoinCode(@PathVariable("joinCode") String joinCode) {
+        return sweepstakeDao.findSweepstakeByJoinCode(joinCode);
+    }
+
+    @GetMapping("/by/id/{id}")
+    public Sweepstake findSweepstakeById(@PathVariable("id") UUID id) {
+        return sweepstakeDao.findSweepstakeById(id);
     }
 
 }

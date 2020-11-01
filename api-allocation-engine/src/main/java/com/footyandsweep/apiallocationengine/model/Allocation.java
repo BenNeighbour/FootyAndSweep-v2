@@ -14,9 +14,10 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apiticketengine.model;
+package com.footyandsweep.apiallocationengine.model;
 
 import com.footyandsweep.apicommonlibrary.model.ticket.AllocationCommon;
+import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -34,6 +35,6 @@ public class Allocation extends AllocationCommon {
     private static final long serialVersionUID = 672721687138663108L;
 
     @Transient
-    private Ticket ticket;
+    private TicketCommon ticket;
 
 }

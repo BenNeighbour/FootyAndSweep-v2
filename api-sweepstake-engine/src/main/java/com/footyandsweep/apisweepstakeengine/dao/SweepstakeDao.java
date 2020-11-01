@@ -27,4 +27,6 @@ public interface SweepstakeDao extends JpaRepository<Sweepstake, UUID> {
 
     Sweepstake findSweepstakeById(UUID id);
 
+    Sweepstake findSweepstakeByJoinCode(String joinCode);
+
 }

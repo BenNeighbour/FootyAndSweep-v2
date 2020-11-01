@@ -16,7 +16,6 @@
 
 package com.footyandsweep.apicommonlibrary.model.sweepstake;
 
-import com.footyandsweep.apicommonlibrary.TransactionStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -45,14 +44,11 @@ public class SweepstakeCommon implements Serializable {
     @GeneratedValue
     private UUID id;
 
-    @Transient
-    private TransactionStatus transactionStatus = TransactionStatus.PENDING;
-
     private String name;
 
     @Version protected Integer version;
 
-    private String code = generateSweepstakeCode();
+    private String joinCode = generateSweepstakeCode();
 
     private SweepstakeStatus status = SweepstakeStatus.OPEN;
 

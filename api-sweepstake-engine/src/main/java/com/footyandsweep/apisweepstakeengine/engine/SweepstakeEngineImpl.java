@@ -64,8 +64,7 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
 
       /* Creating the sweepstake created object for other services to react to
        */
-      SweepstakeCreated sweepstakeCreated = new SweepstakeCreated();
-      sweepstakeCreated.setSweepstake(sweepstake);
+      SweepstakeCreated sweepstakeCreated = new SweepstakeCreated(sweepstake);
 
       /* This gets received by the gateway service, then that service adds the sweepstake and
       user id into it's SweepstakeIds Junction Table */

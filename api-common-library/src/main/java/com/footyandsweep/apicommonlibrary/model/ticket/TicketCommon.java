@@ -16,7 +16,6 @@
 
 package com.footyandsweep.apicommonlibrary.model.ticket;
 
-import com.footyandsweep.apicommonlibrary.TransactionStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -42,9 +41,6 @@ public class TicketCommon implements Serializable {
   @GeneratedValue
   private UUID id;
 
-  @Transient
-  private TransactionStatus transactionStatus = TransactionStatus.PENDING;
-
   @Version protected Integer version;
 
   private TicketStatus status = TicketStatus.PENDING;
@@ -61,7 +57,7 @@ public class TicketCommon implements Serializable {
 
   @UpdateTimestamp private Date updated;
 
-  enum TicketStatus {
+  public enum TicketStatus {
     PENDING(0),
     INPLAY(1),
 

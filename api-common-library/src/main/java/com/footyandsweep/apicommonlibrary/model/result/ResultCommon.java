@@ -16,7 +16,6 @@
 
 package com.footyandsweep.apicommonlibrary.model.result;
 
-import com.footyandsweep.apicommonlibrary.TransactionStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,7 +24,6 @@ import lombok.Setter;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Transient;
 import java.io.Serializable;
 import java.util.UUID;
 
@@ -41,9 +39,6 @@ public class ResultCommon implements Serializable {
     @Id
     @GeneratedValue
     private UUID id;
-
-    @Transient
-    private TransactionStatus transactionStatus = TransactionStatus.PENDING;
 
     private boolean isProcessed = false;
 

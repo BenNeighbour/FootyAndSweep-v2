@@ -16,6 +16,7 @@
 
 package com.footyandsweep.apiticketengine.model;
 
+import com.footyandsweep.apicommonlibrary.model.ticket.AllocationCommon;
 import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,5 +33,8 @@ import javax.persistence.*;
 public class Ticket extends TicketCommon {
 
     private static final long serialVersionUID = 1017645614613418852L;
+
+    @Transient
+    private AllocationCommon allocation;
 
 }
