@@ -20,11 +20,15 @@ import com.footyandsweep.apiticketengine.model.Ticket;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
 public interface TicketDao extends JpaRepository<Ticket, UUID> {
 
     Ticket findTicketById(UUID id);
+
+    Optional<List<Ticket>> findAllTicketsBySweepstakeId(UUID sweepstakeId);
 
 }
