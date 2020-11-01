@@ -16,7 +16,6 @@
 
 package com.footyandsweep.apicommonlibrary.model.ticket;
 
-import com.footyandsweep.apicommonlibrary.TransactionStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,7 +26,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Transient;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
@@ -42,8 +40,6 @@ public class AllocationCommon implements Serializable {
   private static final long serialVersionUID = -7048642523349496292L;
 
   @Id @GeneratedValue private UUID id;
-
-  @Transient private TransactionStatus transactionStatus = TransactionStatus.PENDING;
 
   private String description;
 

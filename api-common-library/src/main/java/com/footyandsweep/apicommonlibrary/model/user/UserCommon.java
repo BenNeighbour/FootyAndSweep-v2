@@ -16,7 +16,6 @@
 
 package com.footyandsweep.apicommonlibrary.model.user;
 
-import com.footyandsweep.apicommonlibrary.TransactionStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -40,9 +39,6 @@ public class UserCommon implements Serializable {
   @GeneratedValue
   @Column(columnDefinition = "uuid", updatable = false, name = "id")
   private UUID userId;
-
-  @Transient
-  private TransactionStatus transactionStatus = TransactionStatus.PENDING;
 
   private String name;
 

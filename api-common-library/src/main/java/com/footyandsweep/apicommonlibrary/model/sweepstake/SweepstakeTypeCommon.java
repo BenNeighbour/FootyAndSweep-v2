@@ -16,8 +16,6 @@
 
 package com.footyandsweep.apicommonlibrary.model.sweepstake;
 
-import java.util.HashMap;
-
 public enum SweepstakeTypeCommon {
     Correct_Score_FT("Correct Score F/T"),
     Correct_Score_HT("Correct Score H/T");
