@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: api-allocation-engine-config
+data:
+  application-kubernetes.yml: |-
+    spring:
+      application:
+        name: 'api-allocation-engine'
+
+      jpa:
+        generate-ddl: true
+
+        show-sql: true
+
+        properties:
+          hibernate:
+            ddl-auto: update
+            dialect: org.hibernate.dialect.PostgreSQLDialect
+
+        hibernate:
+          default_batch_fetch_size: 16
+
+      datasource:
+        driver-class-name: org.postgresql.Driver
