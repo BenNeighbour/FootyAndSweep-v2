@@ -16,6 +16,7 @@
 
 package com.footyandsweep.apiticketengine.engine;
 
+import com.footyandsweep.apicommonlibrary.events.SweepstakeSoldOut;
 import com.footyandsweep.apicommonlibrary.events.TicketBought;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apicommonlibrary.model.ticket.AllocationCommon;
@@ -92,13 +93,17 @@ public class TicketEngineImpl implements TicketEngine {
       /* Checking if the tickets can be allocated already */
       if (allSweepstakeTickets.isPresent()) {
         if (allSweepstakeTickets.get().size() >= parentSweepstake.get().getTotalNumberOfTickets()) {
+          /* Creating the sweepstake sold out object for the other services to react to */
+          SweepstakeSoldOut sweepstakeSoldOut = new SweepstakeSoldOut(parentSweepstake.get());
+
+          /* Dispatch the sweepstake sold out event */
           domainEventPublisher.publish(
-              AllocationCommon.class, parentSweepstake.get().getId(), singletonList(null));
+              SweepstakeCommon.class, parentSweepstake.get().getId(), singletonList(sweepstakeSoldOut));
         }
       }
 
     } catch (Exception e) {
-      // TODO: Handle errors here
+      /* Get the error message and ping it back to the client */
     }
   }
 

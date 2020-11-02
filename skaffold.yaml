@@ -45,6 +45,6 @@ deploy:
       - kubernetes/api-result-engine/api-result-engine-config.yaml
       - kubernetes/api-result-engine/api-result-engine-secrets.yaml
       - kubernetes/api-result-engine/api-result-engine.yaml
-      - kubernetes/api-result-engine/api-allocation-engine-config.yaml
-      - kubernetes/api-result-engine/api-allocation-engine-secrets.yaml
-      - kubernetes/api-result-engine/api-allocation-engine.yaml
+      - kubernetes/api-allocation-engine/api-allocation-engine-config.yaml
+      - kubernetes/api-allocation-engine/api-allocation-engine-secrets.yaml
+      - kubernetes/api-allocation-engine/api-allocation-engine.yaml
