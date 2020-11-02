@@ -18,6 +18,7 @@ package com.footyandsweep.apiticketengine.engine;
 
 import com.footyandsweep.apicommonlibrary.events.TicketBought;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
+import com.footyandsweep.apicommonlibrary.model.ticket.AllocationCommon;
 import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
 import com.footyandsweep.apicommonlibrary.model.user.UserCommon;
 import com.footyandsweep.apiticketengine.dao.TicketDao;
@@ -29,6 +30,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -43,6 +45,7 @@ public class TicketEngineImpl implements TicketEngine {
 
   @Autowired private RestTemplate restTemplate;
 
+  /* Constructor for injecting spring beans/fields */
   public TicketEngineImpl(
       final TicketDao ticketDao, final DomainEventPublisher domainEventPublisher) {
     this.ticketDao = ticketDao;
@@ -51,14 +54,12 @@ public class TicketEngineImpl implements TicketEngine {
 
   @Override
   public void buyTickets(UUID userId, int numberOfTickets, String joinCode) {
-
     try {
       /* Get the user object by the id provided */
       Optional<UserCommon> user =
-              Optional.ofNullable(
-                      restTemplate.getForObject(
-                              "http://api-gateway-service/internal/user/by/id/" + userId,
-                              UserCommon.class));
+          Optional.ofNullable(
+              restTemplate.getForObject(
+                  "http://api-gateway-service/internal/user/by/id/" + userId, UserCommon.class));
 
       /* Check if the user sent back is not malformed or null */
       if (!user.isPresent()) throw new Exception();
@@ -73,30 +74,27 @@ public class TicketEngineImpl implements TicketEngine {
       /* Check if the sweepstake sent back is not malformed or null */
       if (!parentSweepstake.isPresent()) throw new Exception();
 
-      /* Lock this thread */
+      /* Force a lock this thread */
       sweepstakeLockHelper();
 
-      /* If the user cannot afford tickets, throw an error/send error messgage to client via WebSocket */
-      if (!this.canUserAffordTickets(user.get().getBalance(), numberOfTickets, parentSweepstake.get().getStake())) throw new Exception();
+      /* If the user cannot afford tickets, throw an error/send error message to client via WebSocket */
+      if (!this.canUserAffordTickets(
+          user.get().getBalance(), numberOfTickets, parentSweepstake.get().getStake()))
+        throw new Exception();
 
-      /* When valid, buy each of the tickets for the user */
-      for (int i = 0; i < numberOfTickets; i++) {
-        Ticket ticket = new Ticket();
+      /* Invoking the helper function to deal with database iterations/transactions */
+      this.ticketIteratorHelper(numberOfTickets, userId, parentSweepstake.get());
 
-        /* Fill in those properties in the new ticket object */
-        ticket.setUserId(userId);
-        ticket.setStatus(TicketCommon.TicketStatus.PENDING);
-        ticket.setSweepstakeId(parentSweepstake.get().getId());
+      /* Fetching all of the tickets with this sweepstake id from the database */
+      Optional<List<Ticket>> allSweepstakeTickets =
+          ticketDao.findAllTicketsBySweepstakeId(parentSweepstake.get().getId());
 
-        /* Persist that ticket while adding it onto the list of bought tickets for that user */
-        ticket = ticketDao.save(ticket);
-
-        /* Creating the sweepstake created object for the other services to react to */
-        TicketBought ticketBought = new TicketBought(ticket);
-
-        /* Dispatch tickets bought event */
-        domainEventPublisher.publish(
-            TicketCommon.class, ticket.getId(), singletonList(ticketBought));
+      /* Checking if the tickets can be allocated already */
+      if (allSweepstakeTickets.isPresent()) {
+        if (allSweepstakeTickets.get().size() >= parentSweepstake.get().getTotalNumberOfTickets()) {
+          domainEventPublisher.publish(
+              AllocationCommon.class, parentSweepstake.get().getId(), singletonList(null));
+        }
       }
 
     } catch (Exception e) {
@@ -104,7 +102,30 @@ public class TicketEngineImpl implements TicketEngine {
     }
   }
 
-  private boolean canUserAffordTickets(BigDecimal userBalance, int numberOfTickets, BigDecimal stake) {
+  private void ticketIteratorHelper(
+      int numberOfTickets, UUID userId, SweepstakeCommon parentSweepstake) {
+    /* When valid, buy each of the tickets for the user */
+    for (int i = 0; i < numberOfTickets; i++) {
+      Ticket ticket = new Ticket();
+
+      /* Fill in those properties in the new ticket object */
+      ticket.setUserId(userId);
+      ticket.setStatus(TicketCommon.TicketStatus.PENDING);
+      ticket.setSweepstakeId(parentSweepstake.getId());
+
+      /* Persist that ticket while adding it onto the list of bought tickets for that user */
+      ticket = ticketDao.save(ticket);
+
+      /* Creating the sweepstake created object for the other services to react to */
+      TicketBought ticketBought = new TicketBought(ticket);
+
+      /* Dispatch tickets bought event */
+      domainEventPublisher.publish(TicketCommon.class, ticket.getId(), singletonList(ticketBought));
+    }
+  }
+
+  private boolean canUserAffordTickets(
+      BigDecimal userBalance, int numberOfTickets, BigDecimal stake) {
     /* Multiply the number of tickets by the stake */
     BigDecimal total = stake.multiply(new BigDecimal(numberOfTickets));
 
@@ -113,7 +134,7 @@ public class TicketEngineImpl implements TicketEngine {
   }
 
   private void sweepstakeLockHelper() {
-    // TODO: Somehow leverage the locks in the sweepstake engine
+    // TODO: Somehow leverage the distributed locks in the sweepstake engine
     // Validate that the user has enough credits
     // Validate that the sweepstake has enough
   }

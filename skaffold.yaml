@@ -19,6 +19,11 @@ build:
     - image: api-result-engine
       context: api-result-engine
       docker: { }
+
+    - image: api-allocation-engine
+      context: api-allocation-engine
+      docker: { }
+
 deploy:
   kubectl:
     manifests:
@@ -40,3 +45,6 @@ deploy:
       - kubernetes/api-result-engine/api-result-engine-config.yaml
       - kubernetes/api-result-engine/api-result-engine-secrets.yaml
       - kubernetes/api-result-engine/api-result-engine.yaml
+      - kubernetes/api-result-engine/api-allocation-engine-config.yaml
+      - kubernetes/api-result-engine/api-allocation-engine-secrets.yaml
+      - kubernetes/api-result-engine/api-allocation-engine.yaml
