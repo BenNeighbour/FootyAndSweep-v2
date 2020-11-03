@@ -59,19 +59,19 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
     try {
       sweepstake.setOwnerId(ownerId);
 
-      Sweepstake savedSweepstake = sweepstakeDao.save(sweepstake);
-      participantIdDao.save(new ParticipantIds(savedSweepstake.getId(), ownerId));
+      /* Persist the sweepstake and it's participant junction table */
+      sweepstake = sweepstakeDao.save(sweepstake);
+      participantIdDao.save(new ParticipantIds(sweepstake.getId(), ownerId));
 
-      /* Creating the sweepstake created object for other services to react to
-       */
+      /* Creating the sweepstake created object for other services to react to */
       SweepstakeCreated sweepstakeCreated = new SweepstakeCreated(sweepstake);
 
       /* This gets received by the gateway service, then that service adds the sweepstake and
       user id into it's SweepstakeIds Junction Table */
       domainEventPublisher.publish(
-          SweepstakeCommon.class, savedSweepstake.getId(), singletonList(sweepstakeCreated));
+          SweepstakeCommon.class, sweepstake.getId(), singletonList(sweepstakeCreated));
 
-      return savedSweepstake;
+      return sweepstake;
     } catch (Exception e) {
       // TODO: FIX THIS!
       return null;
@@ -80,7 +80,7 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
 
   @Override
   public void deleteParticipantRelation(UUID sweepstakeId) {
-    participantIdDao.delete(participantIdDao.findParticipantIdsBySweepstakeId(sweepstakeId));
+    participantIdDao.delete(participantIdDao.findParticipantIdsByParticipantId(sweepstakeId).get().stream().filter(participantIds -> participantIds.getSweepstakeId().equals(sweepstakeId)).findFirst().get());
   }
 
   @Override

@@ -32,6 +32,8 @@ public class SweepstakeRelationDeleted implements DomainEvent {
 
     private UUID sweepstakeId;
 
+    private UUID participantId;
+
     private String errorReason;
 
 }

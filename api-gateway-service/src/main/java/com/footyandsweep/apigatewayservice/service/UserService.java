@@ -20,6 +20,6 @@ import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 
 public interface UserService {
 
-    void addUserToSweepstake(SweepstakeCommon sweepstake);
+    void addOwnerToSweepstake(SweepstakeCommon sweepstake);
 
 }

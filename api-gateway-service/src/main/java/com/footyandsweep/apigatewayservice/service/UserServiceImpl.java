@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   @Transactional
-  public void addUserToSweepstake(SweepstakeCommon sweepstake) {
+  public void addOwnerToSweepstake(SweepstakeCommon sweepstake) {
     User addingParticipant = userDao.findUserByUserId(sweepstake.getOwnerId());
 
     if (addingParticipant != null) {
@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
     } else {
       // Dispatch a sweepstake relation deleted event
       SweepstakeRelationDeleted relationDeleted =
-          new SweepstakeRelationDeleted(sweepstake.getId(), "Owner is invalid!");
+          new SweepstakeRelationDeleted(sweepstake.getId(), sweepstake.getOwnerId(), "Owner is invalid!");
 
       /* The sweepstake engine will consume this broadcast and delete it's relation with this
       sweepstake, then it will remove the sweepstake with the message string given by the event
