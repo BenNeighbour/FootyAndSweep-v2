@@ -80,7 +80,7 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
 
   @Override
   public void deleteParticipantRelation(UUID sweepstakeId) {
-    participantIdDao.delete(participantIdDao.findParticipantIdsBySweepstakeId(sweepstakeId));
+    participantIdDao.delete(participantIdDao.findParticipantIdsByParticipantId(sweepstakeId).get().stream().filter(participantIds -> participantIds.getSweepstakeId().equals(sweepstakeId)).findFirst().get());
   }
 
   @Override

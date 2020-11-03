@@ -19,7 +19,6 @@ package com.footyandsweep.apiticketengine.engine;
 import com.footyandsweep.apicommonlibrary.events.SweepstakeSoldOut;
 import com.footyandsweep.apicommonlibrary.events.TicketBought;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
-import com.footyandsweep.apicommonlibrary.model.ticket.AllocationCommon;
 import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
 import com.footyandsweep.apicommonlibrary.model.user.UserCommon;
 import com.footyandsweep.apiticketengine.dao.TicketDao;
@@ -98,7 +97,9 @@ public class TicketEngineImpl implements TicketEngine {
 
           /* Dispatch the sweepstake sold out event */
           domainEventPublisher.publish(
-              SweepstakeCommon.class, parentSweepstake.get().getId(), singletonList(sweepstakeSoldOut));
+              SweepstakeCommon.class,
+              parentSweepstake.get().getId(),
+              singletonList(sweepstakeSoldOut));
         }
       }
 
