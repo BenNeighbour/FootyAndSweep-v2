@@ -34,6 +34,7 @@ import java.util.List;
       name = "id",
       column = @Column(columnDefinition = "uuid", updatable = false, name = "id"))
 })
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Sweepstake extends SweepstakeCommon {
 
   private static final long serialVersionUID = -706809544736918166L;

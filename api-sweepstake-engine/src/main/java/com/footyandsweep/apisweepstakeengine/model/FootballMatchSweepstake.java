@@ -16,14 +16,16 @@
 
 package com.footyandsweep.apisweepstakeengine.model;
 
-import com.footyandsweep.apicommonlibrary.model.football.FootballMatchCommon;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import java.util.UUID;
 
 @Setter
 @Getter
@@ -35,26 +37,33 @@ public class FootballMatchSweepstake extends Sweepstake {
 
     private static final long serialVersionUID = -6345608862153991125L;
 
+    @Column(name = "numberOfRange")
     private int numberOfRange;
 
+    @Column(name = "numberOfMax")
     private int numberOfMax;
 
+    @Column(name = "maxNumberOfRanges")
     private int maxNumberOfRanges;
 
+    @Column(name = "correctScoreMax")
     private int correctScoreMax;
 
+    @Column(name = "minuteRange")
     private int minuteRange;
 
+    @Column(name = "includeBench")
     private Boolean includeBench = false;
 
+    @Column(name = "includeStartingGoalkeeper")
     private Boolean includeStartingGoalkeeper = false;
 
+    @Column(name = "includeNoGoalScorer")
     private Boolean includeNoGoalScorer = true;
 
+    @Column(name = "includeOwnGoals")
     private Boolean includeOwnGoals = false;
 
-    private FootballMatchCommon footballMatch;
-
-    private FootballMatchSweepstakeType footballMatchSweepstakeType;
+    private UUID footballMatchId;
 
 }
