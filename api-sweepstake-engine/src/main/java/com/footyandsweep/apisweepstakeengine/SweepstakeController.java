@@ -19,6 +19,7 @@ package com.footyandsweep.apisweepstakeengine;
 import com.footyandsweep.apisweepstakeengine.dao.ParticipantIdDao;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
 import com.footyandsweep.apisweepstakeengine.engine.SweepstakeEngineImpl;
+import com.footyandsweep.apisweepstakeengine.model.FootballMatchSweepstake;
 import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
 import com.footyandsweep.apisweepstakeengine.relation.ParticipantIds;
 import org.springframework.http.ResponseEntity;
@@ -47,7 +48,8 @@ public class SweepstakeController {
   }
 
   @PostMapping("/save")
-  public ResponseEntity<Sweepstake> createSweepstake(@RequestBody Sweepstake sweepstake) {
+  public ResponseEntity<Sweepstake> createSweepstake(
+      @RequestBody FootballMatchSweepstake sweepstake) {
     return ResponseEntity.ok(sweepstakeEngine.saveSweepstake(sweepstake.getOwnerId(), sweepstake));
   }
 
@@ -77,7 +79,7 @@ public class SweepstakeController {
         .forEach(
             participantIds ->
                 returnHashMap.put(
-                        participantIds.getParticipantId(), participantIds.getSweepstakeId()));
+                    participantIds.getParticipantId(), participantIds.getSweepstakeId()));
 
     return returnHashMap;
   }

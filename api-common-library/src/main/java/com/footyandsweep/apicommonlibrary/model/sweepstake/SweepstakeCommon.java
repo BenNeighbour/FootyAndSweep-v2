@@ -25,7 +25,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.security.SecureRandom;
 import java.util.*;
@@ -57,8 +56,10 @@ public class SweepstakeCommon implements Serializable {
 
     private UUID sweepstakeEventId;
 
+    private Long sweepstakeTypeCommonId;
+
     @Transient
-    private EnumMap<SweepstakeTypeCommon, Long> sweepstakeType = this.generateSweepstakeTypes();
+    private SweepstakeTypeCommon sweepstakeType = this.getSweepstakeType();
 
     @Transient
     private int sweepstakeListSize;
@@ -76,6 +77,10 @@ public class SweepstakeCommon implements Serializable {
 
     @UpdateTimestamp
     private Date updated;
+
+    public Map<Integer, String> getSweepstakeResultMap() {
+        return null;
+    }
 
     enum SweepstakeStatus {
         OPEN(0),
@@ -118,7 +123,8 @@ public class SweepstakeCommon implements Serializable {
 
         /* TODO: Add each of the right keys to the type map */
 
+
+
         return typeMap;
     }
-
 }
