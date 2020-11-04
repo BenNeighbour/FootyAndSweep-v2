@@ -17,10 +17,12 @@
 package com.footyandsweep.apisweepstakeengine.model;
 
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeTypeCommon;
+import com.footyandsweep.apisweepstakeengine.helper.ResultHelper;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.loader.plan.exec.process.internal.ResultSetProcessorHelper;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -72,6 +74,8 @@ public class FootballMatchSweepstake extends Sweepstake {
     for (SweepstakeTypeCommon i : SweepstakeTypeCommon.values()) {
       if (this.getSweepstakeType().equals(i)) {
         /* Call result helper to get the field and return a function that returns the right maps to back */
+        ResultHelper resultHelper = new ResultHelper();
+        resultHelper.buildResultsForSweepstakeType(i, this);
       }
     }
 

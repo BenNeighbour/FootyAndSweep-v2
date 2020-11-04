@@ -62,10 +62,11 @@ public class AllocationEngineImpl implements AllocationEngine {
       List<Integer> sweepstakeResultIdList = getSweepstakeResultIdList(sweepstakeResultMap.get());
 
       /* Get a list of tickets that belong to this sweepstake */
+      List<TicketCommon> allPurchasedTickets = this.getSweepstakeTicketsHelper(sweepstake.getId());
 
       /* Process each of the user bought tickets */
       this.processAllTickets(
-          new ArrayList<>(), uniqueUserList, sweepstakeResultMap.get(), sweepstakeResultIdList);
+          allPurchasedTickets, uniqueUserList, sweepstakeResultMap.get(), sweepstakeResultIdList);
     } catch (Exception e) {
       /* Throw error to WebSocket client */
     }
@@ -83,7 +84,7 @@ public class AllocationEngineImpl implements AllocationEngine {
     Optional<HashMap<UUID, UUID>> relationIdList =
         Optional.ofNullable(
             restTemplate.getForObject(
-                "http://api-sweepstake-service/internal/sweepstake/by/"
+                "http://api-sweepstake-engine/internal/sweepstake/by/"
                     + sweepstakeId
                     + "/participants",
                 HashMap.class));
@@ -95,6 +96,18 @@ public class AllocationEngineImpl implements AllocationEngine {
     /* Shuffle the user list and return it back to caller */
     Collections.shuffle(participantIds);
     return participantIds;
+  }
+
+  private List<TicketCommon> getSweepstakeTicketsHelper(UUID sweepstakeId) {
+    /* Get a list of tickets that belong to the requested sweepstake */
+    Optional<List<TicketCommon>> ticketList =
+        Optional.ofNullable(
+            restTemplate.getForObject(
+                "http://api-ticket-engine/internal/ticket/by/sweepstake/" + sweepstakeId,
+                List.class));
+
+    /* Return those tickets if they are valid, otherwise an empty array */
+    return ticketList.orElseGet(ArrayList::new);
   }
 
   private void processAllTickets(
