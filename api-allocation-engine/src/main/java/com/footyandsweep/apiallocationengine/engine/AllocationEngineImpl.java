@@ -55,12 +55,11 @@ public class AllocationEngineImpl implements AllocationEngine {
       Optional<Map<Integer, String>> sweepstakeResultMap =
           Optional.ofNullable(sweepstake.getSweepstakeResultMap());
 
-      /* If the result map is not valid, then throw an error  */
+      /* If the result map is not valid, then throw an error */
       if (!sweepstakeResultMap.isPresent()) throw new Exception();
 
       /* Build a randomized list of possible results */
-      List<Long> sweepstakeResultIdList =
-          getSweepstakeResultIdList(sweepstakeResultMap.get().keySet());
+      List<Integer> sweepstakeResultIdList = getSweepstakeResultIdList(sweepstakeResultMap.get());
 
       /* Get a list of tickets that belong to this sweepstake */
 
@@ -72,8 +71,8 @@ public class AllocationEngineImpl implements AllocationEngine {
     }
   }
 
-  private List<Long> getSweepstakeResultIdList(Map<Long, String> sweepstakeResultMap) {
-    List<Long> sweepstakeResultIdList = new ArrayList<>(sweepstakeResultMap.keySet());
+  private List<Integer> getSweepstakeResultIdList(Map<Integer, String> sweepstakeResultMap) {
+    List<Integer> sweepstakeResultIdList = new ArrayList<>(sweepstakeResultMap.keySet());
     Collections.shuffle(sweepstakeResultIdList);
 
     return sweepstakeResultIdList;

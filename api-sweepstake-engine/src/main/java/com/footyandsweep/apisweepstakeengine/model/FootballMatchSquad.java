@@ -37,6 +37,6 @@ public class FootballMatchSquad extends FootballMatchSquadCommon {
   private static final long serialVersionUID = -8212707326087935006L;
 
   @ManyToMany(targetEntity = FootballPlayer.class, cascade = CascadeType.ALL)
-  private List<FootballPlayer> player;
+  private List<FootballPlayer> players;
 
 }

@@ -71,7 +71,7 @@ public class FootballMatchSweepstake extends Sweepstake {
   public Map<Integer, String> getSweepstakeResultMap() {
     for (SweepstakeTypeCommon i : SweepstakeTypeCommon.values()) {
       if (this.getSweepstakeType().equals(i)) {
-        /* Call result helper to get the field and return the appropriate function back */
+        /* Call result helper to get the field and return a function that returns the right maps to back */
       }
     }
 
