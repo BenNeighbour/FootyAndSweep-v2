@@ -47,27 +47,51 @@ public class AllocationEngineImpl implements AllocationEngine {
   */
   @Override
   public void allocateSweepstakeTickets(SweepstakeCommon sweepstake) {
-    /* Get a unique shuffled list of unique user ids */
-    List<UUID> uniqueUserList = this.sweepstakeParticipantsHelper(sweepstake.getId());
+    try {
+      /* Get a unique shuffled list of unique user ids */
+      List<UUID> uniqueUserList = this.sweepstakeParticipantsHelper(sweepstake.getId());
 
-    /* Get the built possible result maps from the sweepstake type methods */
+      /* Get the built possible result maps from the sweepstake/result methods */
+      Optional<Map<Integer, String>> sweepstakeResultMap =
+          Optional.ofNullable(sweepstake.getSweepstakeResultMap());
 
-    /* Process each of the user bought tickets */
-    this.processAllTickets(new ArrayList<>(), uniqueUserList, null, null);
+      /* If the result map is not valid, then throw an error  */
+      if (!sweepstakeResultMap.isPresent()) throw new Exception();
+
+      /* Build a randomized list of possible results */
+      List<Long> sweepstakeResultIdList =
+          getSweepstakeResultIdList(sweepstakeResultMap.get().keySet());
+
+      /* Get a list of tickets that belong to this sweepstake */
+
+      /* Process each of the user bought tickets */
+      this.processAllTickets(
+          new ArrayList<>(), uniqueUserList, sweepstakeResultMap.get(), sweepstakeResultIdList);
+    } catch (Exception e) {
+      /* Throw error to WebSocket client */
+    }
+  }
+
+  private List<Long> getSweepstakeResultIdList(Map<Long, String> sweepstakeResultMap) {
+    List<Long> sweepstakeResultIdList = new ArrayList<>(sweepstakeResultMap.keySet());
+    Collections.shuffle(sweepstakeResultIdList);
+
+    return sweepstakeResultIdList;
   }
 
   private List<UUID> sweepstakeParticipantsHelper(UUID sweepstakeId) {
     /* Get a list of participants that might have purchased tickets */
-    HashMap<UUID, UUID> relationIdList =
-        restTemplate.getForObject(
-            "http://api-sweepstake-service/internal/sweepstake/by/"
-                + sweepstakeId
-                + "/participants",
-            HashMap.class);
+    Optional<HashMap<UUID, UUID>> relationIdList =
+        Optional.ofNullable(
+            restTemplate.getForObject(
+                "http://api-sweepstake-service/internal/sweepstake/by/"
+                    + sweepstakeId
+                    + "/participants",
+                HashMap.class));
 
     /* Put the result of those returned relations in an array */
-    assert relationIdList != null;
-    List<UUID> participantIds = new ArrayList<>(relationIdList.keySet());
+    assert relationIdList.isPresent();
+    List<UUID> participantIds = new ArrayList<>(relationIdList.get().keySet());
 
     /* Shuffle the user list and return it back to caller */
     Collections.shuffle(participantIds);
@@ -78,9 +102,7 @@ public class AllocationEngineImpl implements AllocationEngine {
       List<TicketCommon> tickets,
       List<UUID> participantIds,
       Map<Integer, String> sweepstakeResultMap,
-      List<Integer> sweepstakeResultIdList) {
-
-  }
+      List<Integer> sweepstakeResultIdList) {}
 
   private void allocateTicket() {}
 }

@@ -16,6 +16,7 @@
 
 package com.footyandsweep.apisweepstakeengine.model;
 
+import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeTypeCommon;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,8 +24,8 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import java.util.Map;
 import java.util.UUID;
 
 @Setter
@@ -35,35 +36,45 @@ import java.util.UUID;
 @Table(name = "football_match_sweepstake")
 public class FootballMatchSweepstake extends Sweepstake {
 
-    private static final long serialVersionUID = -6345608862153991125L;
+  private static final long serialVersionUID = -6345608862153991125L;
 
-    @Column(name = "numberOfRange")
-    private int numberOfRange;
+  @Column(name = "numberOfRange")
+  private int numberOfRange;
 
-    @Column(name = "numberOfMax")
-    private int numberOfMax;
+  @Column(name = "numberOfMax")
+  private int numberOfMax;
 
-    @Column(name = "maxNumberOfRanges")
-    private int maxNumberOfRanges;
+  @Column(name = "maxNumberOfRanges")
+  private int maxNumberOfRanges;
 
-    @Column(name = "correctScoreMax")
-    private int correctScoreMax;
+  @Column(name = "correctScoreMax")
+  private int correctScoreMax;
 
-    @Column(name = "minuteRange")
-    private int minuteRange;
+  @Column(name = "minuteRange")
+  private int minuteRange;
 
-    @Column(name = "includeBench")
-    private Boolean includeBench = false;
+  @Column(name = "includeBench")
+  private Boolean includeBench = false;
 
-    @Column(name = "includeStartingGoalkeeper")
-    private Boolean includeStartingGoalkeeper = false;
+  @Column(name = "includeStartingGoalkeeper")
+  private Boolean includeStartingGoalkeeper = false;
 
-    @Column(name = "includeNoGoalScorer")
-    private Boolean includeNoGoalScorer = true;
+  @Column(name = "includeNoGoalScorer")
+  private Boolean includeNoGoalScorer = true;
 
-    @Column(name = "includeOwnGoals")
-    private Boolean includeOwnGoals = false;
+  @Column(name = "includeOwnGoals")
+  private Boolean includeOwnGoals = false;
 
-    private UUID footballMatchId;
+  private UUID footballMatchId;
 
+  @Override
+  public Map<Integer, String> getSweepstakeResultMap() {
+    for (SweepstakeTypeCommon i : SweepstakeTypeCommon.values()) {
+      if (this.getSweepstakeType().equals(i)) {
+        /* Call result helper to get the field and return the appropriate function back */
+      }
+    }
+
+    return null;
+  }
 }
