@@ -43,6 +43,8 @@ public class AllocationCommon implements Serializable {
 
   private String description;
 
+  private int code;
+
   private UUID ticketId;
 
   private UUID playerId;
@@ -50,4 +52,5 @@ public class AllocationCommon implements Serializable {
   @CreationTimestamp private Date created;
 
   @UpdateTimestamp private Date updated;
+
 }

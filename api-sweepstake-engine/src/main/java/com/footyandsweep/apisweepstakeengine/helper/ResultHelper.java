@@ -18,11 +18,14 @@ package com.footyandsweep.apisweepstakeengine.helper;
 
 import com.footyandsweep.apicommonlibrary.model.TeamCommon;
 import com.footyandsweep.apicommonlibrary.model.football.FootballPlayerCommon;
+import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeTypeCommon;
 import com.footyandsweep.apisweepstakeengine.dao.FootballMatchDao;
 import com.footyandsweep.apisweepstakeengine.dao.FootballMatchSquadDao;
 import com.footyandsweep.apisweepstakeengine.model.FootballMatch;
 import com.footyandsweep.apisweepstakeengine.model.FootballMatchSquad;
 import com.footyandsweep.apisweepstakeengine.model.FootballMatchSweepstake;
+import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -31,16 +34,22 @@ import java.util.stream.Collectors;
 @Component
 public class ResultHelper {
 
-  private final FootballMatchDao footballMatchDao;
-  private final FootballMatchSquadDao footballMatchSquadDao;
+  @Autowired
+  private FootballMatchDao footballMatchDao;
 
-  public ResultHelper(
-      final FootballMatchDao footballMatchDao, final FootballMatchSquadDao footballMatchSquadDao) {
-    this.footballMatchDao = footballMatchDao;
-    this.footballMatchSquadDao = footballMatchSquadDao;
+  @Autowired
+  private FootballMatchSquadDao footballMatchSquadDao;
+
+  private Map<Integer, String> RESULT = new HashMap<>();
+
+  public void buildResultsForSweepstakeType(SweepstakeTypeCommon sweepstakeType, FootballMatchSweepstake sweepstake) {
+    switch (sweepstakeType) {
+      case Correct_Score_FT:
+        this.buildCorrectScoreAtMap(sweepstake.getCorrectScoreMax());
+      case Correct_Score_HT:
+        this.buildCorrectScoreAtMap(sweepstake.getCorrectScoreMax());
+    }
   }
-
-  private final Map<Integer, String> RESULT = new HashMap<>();
 
   public Map<Integer, String> buildCorrectScoreAtMap(int max) {
     RESULT.clear();

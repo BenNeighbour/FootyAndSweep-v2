@@ -17,6 +17,7 @@
 package com.footyandsweep.apiallocationengine.engine;
 
 import com.footyandsweep.apiallocationengine.dao.AllocationDao;
+import com.footyandsweep.apiallocationengine.model.Allocation;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
 import io.eventuate.tram.events.publisher.DomainEventPublisher;
@@ -26,6 +27,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Transactional
 @Service
@@ -62,10 +64,11 @@ public class AllocationEngineImpl implements AllocationEngine {
       List<Integer> sweepstakeResultIdList = getSweepstakeResultIdList(sweepstakeResultMap.get());
 
       /* Get a list of tickets that belong to this sweepstake */
+      List<TicketCommon> allPurchasedTickets = this.getSweepstakeTicketsHelper(sweepstake.getId());
 
       /* Process each of the user bought tickets */
       this.processAllTickets(
-          new ArrayList<>(), uniqueUserList, sweepstakeResultMap.get(), sweepstakeResultIdList);
+          allPurchasedTickets, uniqueUserList, sweepstakeResultMap.get(), sweepstakeResultIdList);
     } catch (Exception e) {
       /* Throw error to WebSocket client */
     }
@@ -83,7 +86,7 @@ public class AllocationEngineImpl implements AllocationEngine {
     Optional<HashMap<UUID, UUID>> relationIdList =
         Optional.ofNullable(
             restTemplate.getForObject(
-                "http://api-sweepstake-service/internal/sweepstake/by/"
+                "http://api-sweepstake-engine/internal/sweepstake/by/"
                     + sweepstakeId
                     + "/participants",
                 HashMap.class));
@@ -97,11 +100,93 @@ public class AllocationEngineImpl implements AllocationEngine {
     return participantIds;
   }
 
+  private List<TicketCommon> getSweepstakeTicketsHelper(UUID sweepstakeId) {
+    /* Get a list of tickets that belong to the requested sweepstake */
+    Optional<List<TicketCommon>> ticketList =
+        Optional.ofNullable(
+            restTemplate.getForObject(
+                "http://api-ticket-engine/internal/ticket/by/sweepstake/" + sweepstakeId,
+                List.class));
+
+    /* Return those tickets if they are valid, otherwise an empty array */
+    return ticketList.orElseGet(ArrayList::new);
+  }
+
   private void processAllTickets(
       List<TicketCommon> tickets,
       List<UUID> participantIds,
       Map<Integer, String> sweepstakeResultMap,
-      List<Integer> sweepstakeResultIdList) {}
+      List<Integer> sweepstakeResultIdList) {
+    /* Creating a ticket map that will be iterated over to allocate each ticket */
+    Map<UUID, List<TicketCommon>> userTicketsMap = new HashMap<>();
 
-  private void allocateTicket() {}
+    /* Adding the list of tickets that are linked to the user id and putting them into the user tickets ma[ */
+    participantIds.forEach(
+        uuid -> {
+          userTicketsMap.put(
+              uuid,
+              tickets.stream()
+                  .filter(ticket -> ticket.getUserId().equals(uuid))
+                  .collect(Collectors.toList()));
+        });
+
+    /* List that stores user ids to keep track of what user we are on - it's ordered and gets refilled */
+    ArrayList<UUID> userIdAllocationList = new ArrayList<>();
+
+    /* Iterating over the user tickets map */
+    while (!userTicketsMap.isEmpty()) {
+      /* Refill the user allocation list */
+      userIdAllocationList.addAll(participantIds);
+
+      /* Meanwhile there are still users left to allocate */
+      while (!userIdAllocationList.isEmpty()) {
+        /* Get the first user id of the list, then remove so it does not get allocated again during this round */
+        UUID userId = userIdAllocationList.remove(0);
+
+        /* Obtain the tickets for that user in the user tickets map */
+        Optional<List<TicketCommon>> userTickets = Optional.ofNullable(userTicketsMap.get(userId));
+
+        /* Checking if the tickets are void/null */
+        if (!userTickets.isPresent() || userTickets.get().isEmpty()) {
+          /* Remove those tickets from their maps */
+          userTicketsMap.remove(userId);
+          participantIds.remove(userId);
+
+          /* Logs here */
+          System.out.println("User: " + userId + " has no more tickets to allocate");
+        } else {
+          /* Otherwise, get the current ticket (popping each one off each time), and run it through the allocateTicket function */
+          TicketCommon ticket = userTickets.get().remove(0);
+
+          /* Logs here */
+          System.out.println("Allocate User: " + userId + " Ticket: " + ticket);
+          this.allocateTicket(sweepstakeResultMap, sweepstakeResultIdList, ticket);
+        }
+      }
+
+      /* Reverse the order of the 'random' shuffled user id list and go over it all again until there is nothing left to allocate */
+      Collections.reverse(participantIds);
+    }
+  }
+
+  private void allocateTicket(
+      Map<Integer, String> sweepstakeResultMap,
+      List<Integer> sweepstakeResultIdList,
+      TicketCommon ticket) {
+    Allocation allocation = new Allocation();
+
+    allocation.setCode(sweepstakeResultIdList.remove(0));
+    allocation.setDescription(sweepstakeResultMap.remove(allocation.getCode()));
+
+    allocation.setTicket(ticket);
+
+    ticket.setStatus(TicketCommon.TicketStatus.INPLAY);
+    ticket.setAllocationId(allocation.getId());
+    ticket.getSweepstakeId().setStatus(SweepstakeCommon.SweepstakeStatus.ALLOCATED);
+
+    allocationDao.save(allocation);
+
+    ticketDao.saveAndFlush(ticket);
+    sweepstakeDao.saveAndFlush(ticket.getSweepstake());
+  }
 }

@@ -82,7 +82,7 @@ public class SweepstakeCommon implements Serializable {
         return null;
     }
 
-    enum SweepstakeStatus {
+    public enum SweepstakeStatus {
         OPEN(0),
         ALLOCATED(1),
         CLOSED(2);
