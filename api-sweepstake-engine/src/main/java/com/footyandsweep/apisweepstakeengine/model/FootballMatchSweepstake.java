@@ -18,11 +18,8 @@ package com.footyandsweep.apisweepstakeengine.model;
 
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeTypeCommon;
 import com.footyandsweep.apisweepstakeengine.helper.ResultHelper;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.loader.plan.exec.process.internal.ResultSetProcessorHelper;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,8 +29,6 @@ import java.util.UUID;
 
 @Setter
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "football_match_sweepstake")
 public class FootballMatchSweepstake extends Sweepstake {

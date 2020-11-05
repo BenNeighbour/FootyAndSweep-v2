@@ -14,23 +14,27 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apisweepstakeengine.model;
+package com.footyandsweep.apicommonlibrary.events;
 
-import com.footyandsweep.apicommonlibrary.model.football.FootballMatchCommon;
+import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
+import com.footyandsweep.apicommonlibrary.model.ticket.AllocationCommon;
+import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
+import io.eventuate.tram.events.common.DomainEvent;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
 @Setter
 @Getter
-@Entity
-@Table(name = "football_match")
-public class FootballMatch extends FootballMatchCommon {
+@NoArgsConstructor
+@AllArgsConstructor
+public class TicketAllocated implements DomainEvent {
 
-    private static final long serialVersionUID = 5716442391392183227L;
+    private TicketCommon ticket;
+
+    private AllocationCommon allocation;
+
+    private SweepstakeCommon sweepstake;
 
 }
