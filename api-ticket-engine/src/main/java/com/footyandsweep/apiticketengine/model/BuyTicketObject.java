@@ -14,23 +14,28 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apisweepstakeengine.model;
+package com.footyandsweep.apiticketengine.model;
 
-import com.footyandsweep.apicommonlibrary.model.football.FootballMatchCommon;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import java.io.Serializable;
+import java.util.UUID;
 
-@Setter
 @Getter
-@Entity
-@Table(name = "football_match")
-public class FootballMatch extends FootballMatchCommon {
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class BuyTicketObject implements Serializable {
 
-    private static final long serialVersionUID = 5716442391392183227L;
+    private static final long serialVersionUID = -137905864975367114L;
+
+    private UUID ownerId;
+
+    private String joinCode;
+
+    private int numberOfTickets;
 
 }

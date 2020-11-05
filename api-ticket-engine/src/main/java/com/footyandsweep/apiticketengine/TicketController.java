@@ -17,11 +17,10 @@
 package com.footyandsweep.apiticketengine;
 
 import com.footyandsweep.apiticketengine.dao.TicketDao;
+import com.footyandsweep.apiticketengine.engine.TicketEngine;
+import com.footyandsweep.apiticketengine.model.BuyTicketObject;
 import com.footyandsweep.apiticketengine.model.Ticket;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,13 +31,23 @@ import java.util.UUID;
 public class TicketController {
 
   private final TicketDao ticketDao;
+  private final TicketEngine ticketEngine;
 
-  public TicketController(final TicketDao ticketDao) {
+  public TicketController(final TicketDao ticketDao, final TicketEngine ticketEngine) {
     this.ticketDao = ticketDao;
+    this.ticketEngine = ticketEngine;
   }
 
   @GetMapping("/by/sweepstake/{sweepstakeId}")
-  public Optional<List<Ticket>> findTicketBySweepstakeId(@PathVariable("sweepstakeId") UUID sweepstakeId) {
+  public Optional<List<Ticket>> findTicketBySweepstakeId(
+      @PathVariable("sweepstakeId") UUID sweepstakeId) {
     return ticketDao.findAllTicketsBySweepstakeId(sweepstakeId);
+  }
+
+  @PostMapping("/buy")
+  public BuyTicketObject buyTickets(@RequestBody BuyTicketObject buyTicket) {
+    ticketEngine.buyTickets(
+        buyTicket.getOwnerId(), buyTicket.getNumberOfTickets(), buyTicket.getJoinCode());
+    return buyTicket;
   }
 }

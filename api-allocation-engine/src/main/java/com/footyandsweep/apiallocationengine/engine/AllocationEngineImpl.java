@@ -18,6 +18,7 @@ package com.footyandsweep.apiallocationengine.engine;
 
 import com.footyandsweep.apiallocationengine.dao.AllocationDao;
 import com.footyandsweep.apiallocationengine.model.Allocation;
+import com.footyandsweep.apicommonlibrary.events.TicketAllocated;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
 import io.eventuate.tram.events.publisher.DomainEventPublisher;
@@ -28,6 +29,8 @@ import org.springframework.web.client.RestTemplate;
 import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static java.util.Collections.singletonList;
 
 @Transactional
 @Service
@@ -173,20 +176,45 @@ public class AllocationEngineImpl implements AllocationEngine {
       Map<Integer, String> sweepstakeResultMap,
       List<Integer> sweepstakeResultIdList,
       TicketCommon ticket) {
-    Allocation allocation = new Allocation();
+    try {
+      /* Creating a new instance of the allocation object that is about to be persisted */
+      Allocation allocation = new Allocation();
 
-    allocation.setCode(sweepstakeResultIdList.remove(0));
-    allocation.setDescription(sweepstakeResultMap.remove(allocation.getCode()));
+      /* Filling in fields of the allocation object based on the parameters passed into this function */
+      allocation.setCode(sweepstakeResultIdList.remove(0));
+      allocation.setDescription(sweepstakeResultMap.remove(allocation.getCode()));
+      allocation.setTicketId(ticket.getId());
 
-    allocation.setTicket(ticket);
+      /* Setting the ticket fields before broadcasting the event */
+      ticket.setStatus(TicketCommon.TicketStatus.INPLAY);
+      ticket.setAllocationId(allocation.getId());
 
-    ticket.setStatus(TicketCommon.TicketStatus.INPLAY);
-    ticket.setAllocationId(allocation.getId());
-    ticket.getSweepstakeId().setStatus(SweepstakeCommon.SweepstakeStatus.ALLOCATED);
+      /* Getting sweepstake by the id so that it can be modified here */
+      Optional<SweepstakeCommon> sweepstake =
+          Optional.ofNullable(
+              restTemplate.getForObject(
+                  "http://api-sweepstake-engine/internal/sweepstake/by/"
+                      + ticket.getSweepstakeId()
+                      + "/participants",
+                  SweepstakeCommon.class));
 
-    allocationDao.save(allocation);
+      /* If the sweepstake is not valid, then throw an error */
+      if (!sweepstake.isPresent()) throw new Exception();
 
-    ticketDao.saveAndFlush(ticket);
-    sweepstakeDao.saveAndFlush(ticket.getSweepstake());
+      /* Persisting the allocation and setting to itself so the generated id is filled in */
+      allocation = allocationDao.save(allocation);
+
+      /* Setting the sweepstake status to allocated */
+      sweepstake.get().setStatus(SweepstakeCommon.SweepstakeStatus.ALLOCATED);
+
+      /* Creating the ticket allocated event with the right metadata inside to be put into the message to the other services */
+      TicketAllocated ticketAllocated = new TicketAllocated(ticket, allocation, sweepstake.get());
+
+      /* Publish ticket allocated event */
+      domainEventPublisher.publish(
+          TicketCommon.class, ticket.getId(), singletonList(ticketAllocated));
+    } catch (Exception e) {
+      /* Throw error to WebSocket client */
+    }
   }
 }
