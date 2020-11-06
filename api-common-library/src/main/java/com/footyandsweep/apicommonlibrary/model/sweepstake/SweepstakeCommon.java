@@ -116,15 +116,4 @@ public class SweepstakeCommon implements Serializable {
 
         return sb.toString();
     }
-
-
-    private EnumMap<SweepstakeTypeCommon, Long> generateSweepstakeTypes() {
-        EnumMap<SweepstakeTypeCommon, Long> typeMap = new EnumMap<>(SweepstakeTypeCommon.class);
-
-        /* TODO: Add each of the right keys to the type map */
-
-
-
-        return typeMap;
-    }
 }

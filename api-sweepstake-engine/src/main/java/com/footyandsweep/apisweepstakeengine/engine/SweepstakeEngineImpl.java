@@ -50,11 +50,6 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
   }
 
   @Override
-  public Sweepstake saveProcessedTickets(UUID sweepstakeId, List<TicketCommon> tickets) {
-    return new Sweepstake();
-  }
-
-  @Override
   public Sweepstake saveSweepstake(UUID ownerId, Sweepstake sweepstake) {
     try {
       sweepstake.setOwnerId(ownerId);

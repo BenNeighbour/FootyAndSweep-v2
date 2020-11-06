@@ -16,7 +16,7 @@
 
 package com.footyandsweep.apiresultengine.events;
 
-import com.footyandsweep.apicommonlibrary.events.TicketDecisioningSuccess;
+import com.footyandsweep.apicommonlibrary.events.TicketBought;
 import com.footyandsweep.apiresultengine.engine.ResultEngine;
 import io.eventuate.tram.events.subscriber.DomainEventEnvelope;
 import io.eventuate.tram.events.subscriber.DomainEventHandlers;
@@ -32,12 +32,12 @@ public class ResultEventSubscriber {
   public DomainEventHandlers domainEventHandlers() {
     return DomainEventHandlersBuilder.forAggregateType(
             "com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon")
-        .onEvent(TicketDecisioningSuccess.class, this::handleTicketDecisioningSuccess)
+        .onEvent(TicketBought.class, this::handleTicketDecisioningSuccess)
         .build();
   }
 
   private void handleTicketDecisioningSuccess(
-      DomainEventEnvelope<TicketDecisioningSuccess> domainEventEnvelope) {
+      DomainEventEnvelope<TicketBought> domainEventEnvelope) {
     // Handle the bunch of tickets that have been changed
 //    ticketEngine.saveProcessedTickets(
 //        domainEventEnvelope.getEvent().getSweepstakeId(),

@@ -24,7 +24,6 @@ import com.footyandsweep.apisweepstakeengine.dao.FootballMatchSquadDao;
 import com.footyandsweep.apisweepstakeengine.model.FootballMatch;
 import com.footyandsweep.apisweepstakeengine.model.FootballMatchSquad;
 import com.footyandsweep.apisweepstakeengine.model.FootballMatchSweepstake;
-import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -42,13 +41,15 @@ public class ResultHelper {
 
   private Map<Integer, String> RESULT = new HashMap<>();
 
-  public void buildResultsForSweepstakeType(SweepstakeTypeCommon sweepstakeType, FootballMatchSweepstake sweepstake) {
+  public Map<Integer, String> buildResultsForSweepstakeType(SweepstakeTypeCommon sweepstakeType, FootballMatchSweepstake sweepstake) {
     switch (sweepstakeType) {
       case Correct_Score_FT:
-        this.buildCorrectScoreAtMap(sweepstake.getCorrectScoreMax());
+        return this.buildCorrectScoreAtMap(sweepstake.getCorrectScoreMax());
       case Correct_Score_HT:
-        this.buildCorrectScoreAtMap(sweepstake.getCorrectScoreMax());
+        return this.buildCorrectScoreAtMap(sweepstake.getCorrectScoreMax());
     }
+
+    return null;
   }
 
   public Map<Integer, String> buildCorrectScoreAtMap(int max) {

@@ -16,15 +16,12 @@
 
 package com.footyandsweep.apisweepstakeengine.model;
 
-import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeTypeCommon;
-import com.footyandsweep.apisweepstakeengine.helper.ResultHelper;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.util.Map;
 import java.util.UUID;
 
 @Setter
@@ -64,16 +61,4 @@ public class FootballMatchSweepstake extends Sweepstake {
 
   private UUID footballMatchId;
 
-  @Override
-  public Map<Integer, String> getSweepstakeResultMap() {
-    for (SweepstakeTypeCommon i : SweepstakeTypeCommon.values()) {
-      if (this.getSweepstakeType().equals(i)) {
-        /* Call result helper to get the field and return a function that returns the right maps to back */
-        ResultHelper resultHelper = new ResultHelper();
-        resultHelper.buildResultsForSweepstakeType(i, this);
-      }
-    }
-
-    return null;
-  }
 }
