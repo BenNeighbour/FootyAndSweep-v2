@@ -68,7 +68,7 @@ public class TicketEngineImpl implements TicketEngine {
       Optional<SweepstakeCommon> parentSweepstake =
           Optional.ofNullable(
               restTemplate.getForObject(
-                  "http://api-sweepstake-engine/internal/sweepstake/by/joinCode/" + joinCode,
+                  "http://api-sweepstake-engine:8080/internal/sweepstake/by/joinCode/" + joinCode,
                   SweepstakeCommon.class));
 
       /* Check if the sweepstake sent back is not malformed or null */

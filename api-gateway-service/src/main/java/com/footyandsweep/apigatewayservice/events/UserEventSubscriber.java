@@ -1,12 +1,12 @@
 /*
  *   Copyright 2020 FootyAndSweep
- *  
+ *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
  *   You may obtain a copy of the License at
- *  
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  *   Unless required by applicable law or agreed to in writing, software
  *   distributed under the License is distributed on an "AS IS" BASIS,
  *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,6 +17,8 @@
 package com.footyandsweep.apigatewayservice.events;
 
 import com.footyandsweep.apicommonlibrary.events.SweepstakeCreated;
+import com.footyandsweep.apicommonlibrary.events.TicketBought;
+import com.footyandsweep.apigatewayservice.dao.UserDao;
 import com.footyandsweep.apigatewayservice.service.UserServiceImpl;
 import io.eventuate.tram.events.subscriber.DomainEventEnvelope;
 import io.eventuate.tram.events.subscriber.DomainEventHandlers;
@@ -28,11 +30,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class UserEventSubscriber {
 
   @Autowired private UserServiceImpl userService;
+  @Autowired private UserDao userDao;
 
   public DomainEventHandlers domainEventHandlers() {
     return DomainEventHandlersBuilder.forAggregateType(
             "com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon")
         .onEvent(SweepstakeCreated.class, this::handleNewSweepstakeCreated)
+        .andForAggregateType("com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon")
+        .onEvent(TicketBought.class, this::handleTicketsBought)
         .build();
   }
 
@@ -40,5 +45,9 @@ public class UserEventSubscriber {
       DomainEventEnvelope<SweepstakeCreated> domainEventEnvelope) {
     // Handle the sweepstake and user ids to be updated
     userService.addOwnerToSweepstake(domainEventEnvelope.getEvent().getSweepstake());
+  }
+
+  private void handleTicketsBought(DomainEventEnvelope<TicketBought> domainEventEnvelope) {
+    domainEventEnvelope.getEvent().getTicket();
   }
 }

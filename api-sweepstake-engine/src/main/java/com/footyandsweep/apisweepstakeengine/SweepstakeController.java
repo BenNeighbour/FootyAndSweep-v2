@@ -19,16 +19,14 @@ package com.footyandsweep.apisweepstakeengine;
 import com.footyandsweep.apisweepstakeengine.dao.ParticipantIdDao;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
 import com.footyandsweep.apisweepstakeengine.engine.SweepstakeEngineImpl;
+import com.footyandsweep.apisweepstakeengine.helper.ResultHelper;
 import com.footyandsweep.apisweepstakeengine.model.FootballMatchSweepstake;
 import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
 import com.footyandsweep.apisweepstakeengine.relation.ParticipantIds;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @RequestMapping("/internal/sweepstake")
@@ -37,14 +35,17 @@ public class SweepstakeController {
   private final SweepstakeEngineImpl sweepstakeEngine;
   private final SweepstakeDao sweepstakeDao;
   private final ParticipantIdDao participantIdDao;
+  private final ResultHelper resultHelper;
 
   public SweepstakeController(
       final SweepstakeEngineImpl sweepstakeEngine,
       final SweepstakeDao sweepstakeDao,
-      final ParticipantIdDao participantIdDao) {
+      final ParticipantIdDao participantIdDao,
+      final ResultHelper resultHelper) {
     this.sweepstakeEngine = sweepstakeEngine;
     this.sweepstakeDao = sweepstakeDao;
     this.participantIdDao = participantIdDao;
+    this.resultHelper = resultHelper;
   }
 
   @PostMapping("/save")
@@ -82,5 +83,10 @@ public class SweepstakeController {
                     participantIds.getParticipantId(), participantIds.getSweepstakeId()));
 
     return returnHashMap;
+  }
+
+  @PostMapping("/result")
+  public Map<Integer, String> resultHelper(@RequestBody FootballMatchSweepstake sweepstake) {
+    return resultHelper.buildResultsForSweepstakeType(sweepstake.getSweepstakeType(), sweepstake);
   }
 }

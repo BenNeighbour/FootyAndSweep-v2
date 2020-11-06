@@ -20,6 +20,7 @@ import com.footyandsweep.apiallocationengine.dao.AllocationDao;
 import com.footyandsweep.apiallocationengine.model.Allocation;
 import com.footyandsweep.apicommonlibrary.events.TicketAllocated;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
+import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeTypeCommon;
 import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
 import io.eventuate.tram.events.publisher.DomainEventPublisher;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +59,7 @@ public class AllocationEngineImpl implements AllocationEngine {
 
       /* Get the built possible result maps from the sweepstake/result methods */
       Optional<Map<Integer, String>> sweepstakeResultMap =
-          Optional.ofNullable(sweepstake.getSweepstakeResultMap());
+          Optional.ofNullable(this.getSweepstakeResultMap(sweepstake));
 
       /* If the result map is not valid, then throw an error */
       if (!sweepstakeResultMap.isPresent()) throw new Exception();
@@ -89,7 +90,7 @@ public class AllocationEngineImpl implements AllocationEngine {
     Optional<HashMap<UUID, UUID>> relationIdList =
         Optional.ofNullable(
             restTemplate.getForObject(
-                "http://api-sweepstake-engine/internal/sweepstake/by/"
+                "http://api-sweepstake-engine:8080/internal/sweepstake/by/"
                     + sweepstakeId
                     + "/participants",
                 HashMap.class));
@@ -193,7 +194,7 @@ public class AllocationEngineImpl implements AllocationEngine {
       Optional<SweepstakeCommon> sweepstake =
           Optional.ofNullable(
               restTemplate.getForObject(
-                  "http://api-sweepstake-engine/internal/sweepstake/by/"
+                  "http://api-sweepstake-engine:8080/internal/sweepstake/by/"
                       + ticket.getSweepstakeId()
                       + "/participants",
                   SweepstakeCommon.class));
@@ -216,5 +217,24 @@ public class AllocationEngineImpl implements AllocationEngine {
     } catch (Exception e) {
       /* Throw error to WebSocket client */
     }
+  }
+
+  private Map<Integer, String> getSweepstakeResultMap(SweepstakeCommon sweepstake) {
+    Optional<Map<Integer, String>> resultMap = Optional.empty();
+
+    for (SweepstakeTypeCommon i : SweepstakeTypeCommon.values()) {
+      /* Call result helper to get the field and return a function that returns the right maps to back */
+      if (sweepstake.getSweepstakeType().equals(i))
+        resultMap =
+            Optional.ofNullable(
+                restTemplate
+                    .postForEntity(
+                        "http://api-sweepstake-engine:8080/internal/sweepstake/result",
+                        sweepstake,
+                        Map.class)
+                    .getBody());
+    }
+
+    return resultMap.orElse(new HashMap<>());
   }
 }
