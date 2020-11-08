@@ -57,7 +57,7 @@ public class SweepstakeEventSubscriber {
       DomainEventEnvelope<SweepstakeRelationDeleted> domainEventEnvelope) {
     // Handle this so that the sweepstake is deleted
     sweepstakeEngine.deleteSweepstake(
-        domainEventEnvelope.getEvent().getSweepstakeId(),
+        domainEventEnvelope.getEvent().getSweepstake().getId(),
         domainEventEnvelope.getEvent().getErrorReason());
   }
 }

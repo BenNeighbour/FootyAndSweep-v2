@@ -16,6 +16,8 @@
 
 package com.footyandsweep.apicommonlibrary.events;
 
+import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
+import com.footyandsweep.apicommonlibrary.model.user.UserCommon;
 import io.eventuate.tram.events.common.DomainEvent;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,9 +32,9 @@ import java.util.UUID;
 @AllArgsConstructor
 public class SweepstakeRelationDeleted implements DomainEvent {
 
-    private UUID sweepstakeId;
+    private SweepstakeCommon sweepstake;
 
-    private UUID participantId;
+    private UserCommon participant;
 
     private String errorReason;
 
