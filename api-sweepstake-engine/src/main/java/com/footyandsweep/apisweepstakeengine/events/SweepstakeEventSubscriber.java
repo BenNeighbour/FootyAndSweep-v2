@@ -34,10 +34,16 @@ public class SweepstakeEventSubscriber {
   @Autowired private SweepstakeDao sweepstakeDao;
 
   public DomainEventHandlers domainEventHandlers() {
+    //    return DomainEventHandlersBuilder.forAggregateType(
+    //            "com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon")
+    //        .onEvent(TicketAllocated.class, this::handleTicketAllocatedEvent)
+    //
+    // .andForAggregateType("com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon")
+    //        .onEvent(SweepstakeRelationDeleted.class, this::handleSweepstakeRelationDeleted)
+    //        .build();
+
     return DomainEventHandlersBuilder.forAggregateType(
-            "com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon")
-        .onEvent(TicketAllocated.class, this::handleTicketAllocatedEvent)
-        .andForAggregateType("com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon")
+            "com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon")
         .onEvent(SweepstakeRelationDeleted.class, this::handleSweepstakeRelationDeleted)
         .build();
   }

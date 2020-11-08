@@ -69,7 +69,7 @@ public class SweepstakeController {
       @PathVariable("sweepstakeId") UUID id) {
 
     Optional<List<ParticipantIds>> participantsInSweepstake =
-        participantIdDao.findParticipantIdsBySweepstakeId(id);
+        participantIdDao.findAllParticipantIdsBySweepstakeId(id);
 
     if (!participantsInSweepstake.isPresent()) return new HashMap<>();
 

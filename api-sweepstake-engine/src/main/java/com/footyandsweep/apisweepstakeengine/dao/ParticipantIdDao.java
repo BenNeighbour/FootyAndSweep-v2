@@ -27,8 +27,8 @@ import java.util.UUID;
 @Repository
 public interface ParticipantIdDao extends JpaRepository<ParticipantIds, UUID> {
 
-    Optional<List<ParticipantIds>> findParticipantIdsBySweepstakeId(UUID sweepstakeId);
+    Optional<List<ParticipantIds>> findAllParticipantIdsBySweepstakeId(UUID sweepstakeId);
 
-    Optional<List<ParticipantIds>> findParticipantIdsByParticipantId(UUID participantId);
+    Optional<List<ParticipantIds>> findAllParticipantIdsByParticipantId(UUID participantId);
 
 }

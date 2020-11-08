@@ -44,7 +44,6 @@ public class ResultHelper {
   public Map<Integer, String> buildResultsForSweepstakeType(SweepstakeTypeCommon sweepstakeType, FootballMatchSweepstake sweepstake) {
     switch (sweepstakeType) {
       case Correct_Score_FT:
-        return this.buildCorrectScoreAtMap(sweepstake.getCorrectScoreMax());
       case Correct_Score_HT:
         return this.buildCorrectScoreAtMap(sweepstake.getCorrectScoreMax());
     }

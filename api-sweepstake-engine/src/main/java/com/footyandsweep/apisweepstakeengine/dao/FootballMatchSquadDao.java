@@ -23,7 +23,7 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface FootballMatchSquadDao extends JpaRepository<FootballMatchSquadDao, UUID> {
+public interface FootballMatchSquadDao extends JpaRepository<FootballMatchSquad, UUID> {
 
     FootballMatchSquad findFootballMatchSquadById(UUID id);
 
