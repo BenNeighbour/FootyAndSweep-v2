@@ -59,7 +59,7 @@ public class TicketEngineImpl implements TicketEngine {
       Optional<UserCommon> user =
           Optional.ofNullable(
               restTemplate.getForObject(
-                  "http://api-gateway-service/internal/user/by/id/" + userId, UserCommon.class));
+                  "http://api-gateway-service:8080/internal/user/by/id/" + userId, UserCommon.class));
 
       /* Check if the user sent back is not malformed or null */
       if (!user.isPresent()) throw new Exception();
