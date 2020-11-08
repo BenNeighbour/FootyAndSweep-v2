@@ -56,8 +56,6 @@ public class SweepstakeCommon implements Serializable {
 
     private UUID sweepstakeEventId;
 
-    private Long sweepstakeTypeCommonId;
-
     @Transient
     private SweepstakeTypeCommon sweepstakeType = this.getSweepstakeType();
 

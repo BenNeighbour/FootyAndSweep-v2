@@ -220,8 +220,10 @@ public class AllocationEngineImpl implements AllocationEngine {
   }
 
   private Map<Integer, String> getSweepstakeResultMap(SweepstakeCommon sweepstake) {
+    /* Defining the result map so it can be modified in the iteration */
     Optional<Map<Integer, String>> resultMap = Optional.empty();
 
+    /* Going over all of the sweepstake types in the enum in order to programmatically determine what method will be invoked on the result helper */
     for (SweepstakeTypeCommon i : SweepstakeTypeCommon.values()) {
       /* Call result helper to get the field and return a function that returns the right maps to back */
       if (sweepstake.getSweepstakeType().equals(i))
