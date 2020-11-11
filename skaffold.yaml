@@ -27,8 +27,8 @@ build:
 deploy:
   kubectl:
     manifests:
-      - kubernetes/api-event-cdc/api-event-cdc.yaml
       - kubernetes/cluster-bindings.yaml
+      - kubernetes/api-event-cdc/api-event-cdc.yaml
       - kubernetes/api-event-cdc/api-kafka.yaml
       - kubernetes/api-event-cdc/zookeeper.yaml
       - kubernetes/api-gateway-service/api-gateway-service-config.yaml
@@ -36,8 +36,8 @@ deploy:
       - kubernetes/api-ticket-engine/api-ticket-engine-config.yaml
       - kubernetes/api-result-engine/api-result-engine-config.yaml
       - kubernetes/api-allocation-engine/api-allocation-engine-config.yaml
-      - kubernetes/api-gateway-service/api-gateway-service.yaml
       - kubernetes/api-sweepstake-engine/api-sweepstake-engine.yaml
       - kubernetes/api-ticket-engine/api-ticket-engine.yaml
       - kubernetes/api-result-engine/api-result-engine.yaml
       - kubernetes/api-allocation-engine/api-allocation-engine.yaml
+      - kubernetes/api-gateway-service/api-gateway-service.yaml

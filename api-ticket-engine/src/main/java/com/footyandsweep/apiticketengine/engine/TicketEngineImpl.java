@@ -18,6 +18,7 @@ package com.footyandsweep.apiticketengine.engine;
 
 import com.footyandsweep.apicommonlibrary.events.SweepstakeSoldOut;
 import com.footyandsweep.apicommonlibrary.events.TicketBought;
+import com.footyandsweep.apicommonlibrary.helper.SweepstakeLock;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
 import com.footyandsweep.apicommonlibrary.model.user.UserCommon;
@@ -71,41 +72,61 @@ public class TicketEngineImpl implements TicketEngine {
                   "http://api-sweepstake-engine:8080/internal/sweepstake/by/joinCode/" + joinCode,
                   SweepstakeCommon.class));
 
-      /* Check if the sweepstake sent back is not malformed or null */
+      /* Check if the sweepstake sent back is not malformed or null - meaning it's an invalid join code */
       if (!parentSweepstake.isPresent()) throw new Exception();
 
-      /* Force a lock this thread */
-      sweepstakeLockHelper();
+      /* Validate the sweepstake status */
+      if (!parentSweepstake.get().getStatus().equals(SweepstakeCommon.SweepstakeStatus.OPEN)) throw new Exception();
 
-      /* If the user cannot afford tickets, throw an error/send error message to client via WebSocket */
-      if (!this.canUserAffordTickets(
-          user.get().getBalance(), numberOfTickets, parentSweepstake.get().getStake()))
-        throw new Exception();
+      /* Locking condition */
+      boolean isSweepstakeLocked = false;
 
-      /* Invoking the helper function to deal with database iterations/transactions */
-      this.ticketIteratorHelper(numberOfTickets, userId, parentSweepstake.get());
+      try {
+        /* Lock the user */
+        SweepstakeLock.userLock(user.get().getUserId());
 
-      /* Fetching all of the tickets with this sweepstake id from the database */
-      Optional<List<Ticket>> allSweepstakeTickets =
-          ticketDao.findAllTicketsBySweepstakeId(parentSweepstake.get().getId());
+        /* If the user cannot afford tickets, throw an error/send error message to client via WebSocket */
+        if (!this.canUserAffordTickets(
+                user.get().getBalance(), numberOfTickets, parentSweepstake.get().getStake()))
+          throw new Exception();
 
-      /* Checking if the tickets can be allocated already */
-      if (allSweepstakeTickets.isPresent()) {
-        if (allSweepstakeTickets.get().size() >= parentSweepstake.get().getTotalNumberOfTickets()) {
-          /* Creating the sweepstake sold out object for the other services to react to */
-          SweepstakeSoldOut sweepstakeSoldOut = new SweepstakeSoldOut(parentSweepstake.get());
+        /* Lock the sweepstake - and all of the other participants*/
+        SweepstakeLock.lockSweepstake(parentSweepstake.get().getJoinCode());
+        isSweepstakeLocked = true;
 
-          /* Dispatch the sweepstake sold out event */
-          domainEventPublisher.publish(
-              SweepstakeCommon.class,
-              parentSweepstake.get().getId(),
-              singletonList(sweepstakeSoldOut));
+        /* Invoking the helper function to deal with database iterations/transactions */
+        this.ticketIteratorHelper(numberOfTickets, userId, parentSweepstake.get());
+
+        /* Fetching all of the tickets with this sweepstake id from the database */
+        Optional<List<Ticket>> allSweepstakeTickets =
+                ticketDao.findAllTicketsBySweepstakeId(parentSweepstake.get().getId());
+
+        /* Checking if the tickets can be allocated already */
+        if (allSweepstakeTickets.isPresent()) {
+          if (allSweepstakeTickets.get().size() >= parentSweepstake.get().getTotalNumberOfTickets()) {
+            /* Creating the sweepstake sold out object for the other services to react to */
+            SweepstakeSoldOut sweepstakeSoldOut = new SweepstakeSoldOut(parentSweepstake.get());
+
+            /* Dispatch the sweepstake sold out event */
+            domainEventPublisher.publish(
+                    SweepstakeCommon.class,
+                    parentSweepstake.get().getId(),
+                    singletonList(sweepstakeSoldOut));
+          }
         }
+      } catch (InterruptedException ignored) {
+      } finally {
+        if (isSweepstakeLocked) {
+          SweepstakeLock.unlockSweepstake(parentSweepstake.get().getJoinCode());
+        }
+
+        SweepstakeLock.userUnlock(userId);
       }
 
     } catch (Exception e) {
       /* Get the error message and ping it back to the client */
     }
+
   }
 
   private void ticketIteratorHelper(
@@ -139,9 +160,4 @@ public class TicketEngineImpl implements TicketEngine {
     return userBalance.compareTo(total) >= 0;
   }
 
-  private void sweepstakeLockHelper() {
-    // TODO: Somehow leverage the distributed locks in the sweepstake engine
-    // Validate that the user has enough credits
-    // Validate that the sweepstake has enough
-  }
 }
