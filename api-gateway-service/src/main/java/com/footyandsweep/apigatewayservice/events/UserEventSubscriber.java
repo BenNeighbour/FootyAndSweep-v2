@@ -54,7 +54,7 @@ public class UserEventSubscriber {
     /* Update the user's balance accordingly */
     Optional<User> ticketOwner =
         Optional.ofNullable(
-            userDao.findUserByUserId(domainEventEnvelope.getEvent().getTicket().getUserId()));
+            userDao.findUserById(domainEventEnvelope.getEvent().getTicket().getUserId()));
 
     if (ticketOwner.isPresent()) {
       ticketOwner

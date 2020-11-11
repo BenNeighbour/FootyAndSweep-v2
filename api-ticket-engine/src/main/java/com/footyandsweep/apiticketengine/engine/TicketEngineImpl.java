@@ -83,7 +83,7 @@ public class TicketEngineImpl implements TicketEngine {
 
       try {
         /* Lock the user */
-        SweepstakeLock.userLock(user.get().getUserId());
+        SweepstakeLock.userLock(user.get().getId());
 
         /* If the user cannot afford tickets, throw an error/send error message to client via WebSocket */
         if (!this.canUserAffordTickets(

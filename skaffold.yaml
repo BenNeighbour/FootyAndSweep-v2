@@ -28,6 +28,8 @@ deploy:
   kubectl:
     manifests:
       - kubernetes/cluster-bindings.yaml
+      - kubernetes/api-redis-cache/api-redis-cache.yaml
+      - kubernetes/api-redis-cache/api-redis-cache.yaml
       - kubernetes/api-event-cdc/api-event-cdc.yaml
       - kubernetes/api-event-cdc/api-kafka.yaml
       - kubernetes/api-event-cdc/zookeeper.yaml

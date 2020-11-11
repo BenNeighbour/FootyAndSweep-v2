@@ -21,6 +21,13 @@ spring:
     password: ${SPRING_DATASOURCE_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
+  redis:
+    host: "api-redis-cache"
+    port: 6379
+
+  cache:
+    type: redis
+
 eventuatelocal:
   kafka:
     bootstrap:
@@ -30,7 +37,6 @@ eventuatelocal:
   zookeeper:
     connection:
       string: "zookeeper:2181"
-
 
 cdc:
   service:

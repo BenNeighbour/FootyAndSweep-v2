@@ -18,6 +18,9 @@ package com.footyandsweep.apigatewayservice.service;
 
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 
+import javax.transaction.Transactional;
+
+@Transactional
 public interface UserService {
 
     void addOwnerToSweepstake(SweepstakeCommon sweepstake);
