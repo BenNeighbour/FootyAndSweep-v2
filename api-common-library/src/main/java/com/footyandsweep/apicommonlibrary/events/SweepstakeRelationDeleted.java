@@ -34,8 +34,4 @@ public class SweepstakeRelationDeleted implements DomainEvent {
 
     private SweepstakeCommon sweepstake;
 
-    private UserCommon participant;
-
-    private String errorReason;
-
 }

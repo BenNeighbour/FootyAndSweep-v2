@@ -34,14 +34,6 @@ public class SweepstakeEventSubscriber {
   @Autowired private SweepstakeDao sweepstakeDao;
 
   public DomainEventHandlers domainEventHandlers() {
-    //    return DomainEventHandlersBuilder.forAggregateType(
-    //            "com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon")
-    //        .onEvent(TicketAllocated.class, this::handleTicketAllocatedEvent)
-    //
-    // .andForAggregateType("com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon")
-    //        .onEvent(SweepstakeRelationDeleted.class, this::handleSweepstakeRelationDeleted)
-    //        .build();
-
     return DomainEventHandlersBuilder.forAggregateType(
             "com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon")
         .onEvent(SweepstakeRelationDeleted.class, this::handleSweepstakeRelationDeleted)
@@ -57,7 +49,6 @@ public class SweepstakeEventSubscriber {
       DomainEventEnvelope<SweepstakeRelationDeleted> domainEventEnvelope) {
     // Handle this so that the sweepstake is deleted
     sweepstakeEngine.deleteSweepstake(
-        domainEventEnvelope.getEvent().getSweepstake().getId(),
-        domainEventEnvelope.getEvent().getErrorReason());
+        domainEventEnvelope.getEvent().getSweepstake().getId());
   }
 }

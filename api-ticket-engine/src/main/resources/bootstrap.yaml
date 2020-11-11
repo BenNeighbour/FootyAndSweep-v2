@@ -6,7 +6,7 @@ spring:
         enabled: true
 
       secrets:
-        name: api-ticket-engine-credentials
+        name: api-sweepstake-engine-credentials
 
       config:
         enabled: true

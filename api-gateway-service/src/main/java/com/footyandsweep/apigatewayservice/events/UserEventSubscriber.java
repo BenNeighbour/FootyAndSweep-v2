@@ -19,12 +19,15 @@ package com.footyandsweep.apigatewayservice.events;
 import com.footyandsweep.apicommonlibrary.events.SweepstakeCreated;
 import com.footyandsweep.apicommonlibrary.events.TicketBought;
 import com.footyandsweep.apigatewayservice.dao.UserDao;
+import com.footyandsweep.apigatewayservice.model.User;
 import com.footyandsweep.apigatewayservice.service.UserServiceImpl;
 import io.eventuate.tram.events.subscriber.DomainEventEnvelope;
 import io.eventuate.tram.events.subscriber.DomainEventHandlers;
 import io.eventuate.tram.events.subscriber.DomainEventHandlersBuilder;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Optional;
 
 @NoArgsConstructor
 public class UserEventSubscriber {
@@ -43,11 +46,24 @@ public class UserEventSubscriber {
 
   private void handleNewSweepstakeCreated(
       DomainEventEnvelope<SweepstakeCreated> domainEventEnvelope) {
-    // Handle the sweepstake and user ids to be updated
+    /* Handle the sweepstake and user ids to be updated */
     userService.addOwnerToSweepstake(domainEventEnvelope.getEvent().getSweepstake());
   }
 
   private void handleTicketsBought(DomainEventEnvelope<TicketBought> domainEventEnvelope) {
-    domainEventEnvelope.getEvent().getTicket();
+    /* Update the user's balance accordingly */
+    Optional<User> ticketOwner =
+        Optional.ofNullable(
+            userDao.findUserByUserId(domainEventEnvelope.getEvent().getTicket().getUserId()));
+
+    if (ticketOwner.isPresent()) {
+      ticketOwner
+          .get()
+          .setBalance(
+              ticketOwner.get().getBalance().subtract(domainEventEnvelope.getEvent().getPrice()));
+      userDao.saveAndFlush(ticketOwner.get());
+    } else {
+      /* TODO: SOMETHING ISN'T RIGHT! */
+    }
   }
 }
