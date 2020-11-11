@@ -123,7 +123,7 @@ public class TicketEngineImpl implements TicketEngine {
       ticket = ticketDao.save(ticket);
 
       /* Creating the sweepstake created object for the other services to react to */
-      TicketBought ticketBought = new TicketBought(ticket);
+      TicketBought ticketBought = new TicketBought(ticket, parentSweepstake.getStake());
 
       /* Dispatch tickets bought event */
       domainEventPublisher.publish(TicketCommon.class, ticket.getId(), singletonList(ticketBought));

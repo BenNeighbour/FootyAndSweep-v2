@@ -28,6 +28,6 @@ public interface SweepstakeEngine {
 
     void deleteParticipantRelation(UUID sweepstakeId);
 
-    Sweepstake deleteSweepstake(UUID sweepstakeId, String reason);
+    Sweepstake deleteSweepstake(UUID sweepstakeId);
 
 }

@@ -81,7 +81,7 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
   }
 
   @Override
-  public Sweepstake deleteSweepstake(UUID sweepstakeId, String reason) {
+  public Sweepstake deleteSweepstake(UUID sweepstakeId) {
     Sweepstake sweepstake = sweepstakeDao.findSweepstakeById(sweepstakeId);
     this.deleteParticipantRelation(sweepstakeId);
     sweepstakeDao.delete(sweepstake);

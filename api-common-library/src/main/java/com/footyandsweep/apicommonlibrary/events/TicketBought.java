@@ -23,6 +23,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Setter
 @Getter
 @NoArgsConstructor
@@ -30,5 +32,7 @@ import lombok.Setter;
 public class TicketBought implements DomainEvent {
 
     private TicketCommon ticket;
+
+    private BigDecimal price;
 
 }

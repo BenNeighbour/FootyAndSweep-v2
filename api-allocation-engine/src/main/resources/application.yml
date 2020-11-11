@@ -9,7 +9,7 @@ spring:
 
     properties:
       hibernate:
-        ddl-auto: create-drop
+        ddl-auto: update
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
     hibernate:

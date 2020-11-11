@@ -24,13 +24,13 @@ spec:
             - name: SPRING_DATASOURCE_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: api-result-engine-credentials
+                  name: api-sweepstake-engine-credentials
                   key: username
 
             - name: SPRING_DATASOURCE_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: api-result-engine-credentials
+                  name: api-sweepstake-engine-credentials
                   key: password
 
             - name: SPRING_DATASOURCE_URL

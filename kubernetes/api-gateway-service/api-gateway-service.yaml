@@ -24,17 +24,17 @@ spec:
             - name: SPRING_DATASOURCE_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name:  api-gateway-service-credentials
+                  name:  api-sweepstake-engine-credentials
                   key: username
 
             - name: SPRING_DATASOURCE_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name:  api-gateway-service-credentials
+                  name:  api-sweepstake-engine-credentials
                   key: password
 
             - name: SPRING_DATASOURCE_URL
-              value: 'jdbc:postgresql://192.168.1.135:5432/api-footyandsweep?stringtype=unspecified'
+              value: 'jdbc:postgresql://api-database:5432/api-footyandsweep?stringtype=unspecified'
 
             - name: EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS
               value: 'api-kafka.default.svc.cluster.local:9092'
