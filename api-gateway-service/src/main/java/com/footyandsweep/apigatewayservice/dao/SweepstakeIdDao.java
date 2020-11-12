@@ -17,15 +17,31 @@
 package com.footyandsweep.apigatewayservice.dao;
 
 import com.footyandsweep.apigatewayservice.relation.SweepstakeIds;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
 public interface SweepstakeIdDao extends JpaRepository<SweepstakeIds, UUID> {
 
-  SweepstakeIds findSweepstakeIdsBySweepstakeId(UUID sweepstakeId);
+  @Transactional
+  @Cacheable(value = "sweepstakeParticipantCache", key = "#sweepstakeId")
+  Optional<SweepstakeIds> findSweepstakeIdsBySweepstakeId(UUID sweepstakeId);
 
-  SweepstakeIds findSweepstakeIdsByParticipantId(UUID participantId);
+  @Transactional
+  @Cacheable(value = "sweepstakeParticipantCache", key = "#result.get().getSweepstakeId()")
+  Optional<SweepstakeIds> findSweepstakeIdsByParticipantId(UUID participantId);
+
+  @Transactional
+  @CacheEvict(value = "sweepstakeParticipantCache", key = "#sweepstakeIds.getSweepstakeId()")
+  SweepstakeIds save(SweepstakeIds sweepstakeIds);
+
+  @Transactional
+  @CacheEvict(value = "sweepstakeParticipantCache", key = "#sweepstakeIds.getSweepstakeId()")
+  void delete(SweepstakeIds sweepstakeIds);
 }

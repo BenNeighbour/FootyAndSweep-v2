@@ -78,12 +78,14 @@ public class TicketEngineImpl implements TicketEngine {
       /* Validate the sweepstake status */
       if (!parentSweepstake.get().getStatus().equals(SweepstakeCommon.SweepstakeStatus.OPEN)) throw new Exception();
 
+      /* TODO: Validate whether the user is actually part of the sweepstake */
+
       /* Locking condition */
       boolean isSweepstakeLocked = false;
 
       try {
         /* Lock the user */
-        SweepstakeLock.userLock(user.get().getUserId());
+        SweepstakeLock.userLock(user.get().getId());
 
         /* If the user cannot afford tickets, throw an error/send error message to client via WebSocket */
         if (!this.canUserAffordTickets(

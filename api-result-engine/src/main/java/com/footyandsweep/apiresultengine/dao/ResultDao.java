@@ -1,12 +1,12 @@
 /*
  *   Copyright 2020 FootyAndSweep
- *  
+ *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
  *   You may obtain a copy of the License at
- *  
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  *   Unless required by applicable law or agreed to in writing, software
  *   distributed under the License is distributed on an "AS IS" BASIS,
  *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,11 +17,25 @@
 package com.footyandsweep.apiresultengine.dao;
 
 import com.footyandsweep.apiresultengine.model.Result;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.UUID;
 
 @Repository
 public interface ResultDao extends JpaRepository<Result, UUID> {
+
+  @Transactional
+  @CacheEvict(value = "resultCache", key = "#id")
+  Result findResultById(UUID id);
+
+  @Transactional
+  @CacheEvict(value = "resultCache", key = "#result.getId()")
+  Result save(Result result);
+
+  @Transactional
+  @CacheEvict(value = "resultCache", key = "#result.getId()")
+  void delete(Result result);
 }

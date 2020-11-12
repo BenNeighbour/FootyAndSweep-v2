@@ -17,9 +17,11 @@
 package com.footyandsweep.apiticketengine.dao;
 
 import com.footyandsweep.apiticketengine.model.Ticket;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -27,8 +29,12 @@ import java.util.UUID;
 @Repository
 public interface TicketDao extends JpaRepository<Ticket, UUID> {
 
+    @Transactional
+    @Cacheable(value = "ticketCache", key = "#id")
     Ticket findTicketById(UUID id);
 
+    @Transactional
+    @Cacheable(value = "ticketCache", key = "#sweepstakeId")
     Optional<List<Ticket>> findAllTicketsBySweepstakeId(UUID sweepstakeId);
 
 }

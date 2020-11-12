@@ -16,7 +16,6 @@
 
 package com.footyandsweep.apicommonlibrary.model.football;
 
-import com.footyandsweep.apicommonlibrary.model.TeamCommon;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeEventCommon;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,7 +23,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Transient;
 import java.io.Serializable;
 import java.util.UUID;
 

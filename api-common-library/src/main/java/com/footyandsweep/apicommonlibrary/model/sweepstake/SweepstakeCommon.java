@@ -114,4 +114,9 @@ public class SweepstakeCommon implements Serializable {
 
         return sb.toString();
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, version, joinCode, status, isPrivate, ownerId, sweepstakeEventId, sweepstakeType, sweepstakeListSize, minimumPlayers, maximumPlayerTickets, stake, totalNumberOfTickets, created, updated);
+    }
 }

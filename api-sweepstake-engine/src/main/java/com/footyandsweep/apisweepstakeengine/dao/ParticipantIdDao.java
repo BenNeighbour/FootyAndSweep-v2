@@ -17,9 +17,12 @@
 package com.footyandsweep.apisweepstakeengine.dao;
 
 import com.footyandsweep.apisweepstakeengine.relation.ParticipantIds;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -27,8 +30,20 @@ import java.util.UUID;
 @Repository
 public interface ParticipantIdDao extends JpaRepository<ParticipantIds, UUID> {
 
+    @Transactional
+    @Cacheable(value = "sweepstakeParticipantCache", key = "#sweepstakeId")
     Optional<List<ParticipantIds>> findAllParticipantIdsBySweepstakeId(UUID sweepstakeId);
 
+    @Transactional
+    @Cacheable(value = "sweepstakeParticipantCache", key = "#result.get().getSweepstakeId()")
     Optional<List<ParticipantIds>> findAllParticipantIdsByParticipantId(UUID participantId);
+
+    @Transactional
+    @CacheEvict(value = "sweepstakeParticipantCache", key = "#participantIds.getSweepstakeId()")
+    ParticipantIds save(ParticipantIds participantIds);
+
+    @Transactional
+    @CacheEvict(value = "sweepstakeParticipantCache", key = "#participantIds.getSweepstakeId()")
+    void delete(ParticipantIds participantIds);
 
 }

@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public void addOwnerToSweepstake(SweepstakeCommon sweepstake) {
-    User addingParticipant = userDao.findUserByUserId(sweepstake.getOwnerId());
+    User addingParticipant = userDao.findUserById(sweepstake.getOwnerId());
 
     if (addingParticipant != null) {
       sweepstakeIdDao.save(new SweepstakeIds(sweepstake.getOwnerId(), sweepstake.getId()));

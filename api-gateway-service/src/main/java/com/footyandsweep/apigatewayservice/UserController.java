@@ -37,7 +37,7 @@ public class UserController {
 
     @GetMapping("/by/id/{userId}")
     public User findUserById(@PathVariable("userId") UUID userId) {
-        return userDao.findUserByUserId(userId);
+        return userDao.findUserById(userId);
     }
 
 }
