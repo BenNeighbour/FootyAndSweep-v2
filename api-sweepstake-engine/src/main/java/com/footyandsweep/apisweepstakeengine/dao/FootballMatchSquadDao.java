@@ -17,14 +17,28 @@
 package com.footyandsweep.apisweepstakeengine.dao;
 
 import com.footyandsweep.apisweepstakeengine.model.FootballMatchSquad;
+import com.footyandsweep.apisweepstakeengine.relation.ParticipantIds;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.UUID;
 
 @Repository
 public interface FootballMatchSquadDao extends JpaRepository<FootballMatchSquad, UUID> {
 
+    @Transactional
+    @Cacheable(value = "footballMatchSquadCache", key = "#id")
     FootballMatchSquad findFootballMatchSquadById(UUID id);
+
+    @Transactional
+    @CacheEvict(value = "footballMatchSquadCache", key = "#footballMatchSquad.getId()")
+    FootballMatchSquad save(FootballMatchSquad footballMatchSquad);
+
+    @Transactional
+    @CacheEvict(value = "footballMatchSquadCache", key = "#footballMatchSquad.getId()")
+    void delete(FootballMatchSquad footballMatchSquad);
 
 }

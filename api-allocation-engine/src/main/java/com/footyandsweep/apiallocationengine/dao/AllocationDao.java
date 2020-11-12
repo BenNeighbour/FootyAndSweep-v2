@@ -17,14 +17,26 @@
 package com.footyandsweep.apiallocationengine.dao;
 
 import com.footyandsweep.apiallocationengine.model.Allocation;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.UUID;
 
 @Repository
 public interface AllocationDao extends JpaRepository<Allocation, UUID> {
 
+    @Transactional
+    @CacheEvict(value = "allocationCache", key = "#id")
     Allocation findAllocationById(UUID id);
+
+    @Transactional
+    @CacheEvict(value = "allocationCache", key = "#allocation.getId()")
+    Allocation save(Allocation allocation);
+
+    @Transactional
+    @CacheEvict(value = "allocationCache", key = "#allocation.getId()")
+    void delete(Allocation allocation);
 
 }

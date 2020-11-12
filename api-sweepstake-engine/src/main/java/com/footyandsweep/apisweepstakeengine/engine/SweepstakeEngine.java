@@ -17,7 +17,6 @@
 package com.footyandsweep.apisweepstakeengine.engine;
 
 import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
-import org.springframework.cache.annotation.Cacheable;
 
 import javax.transaction.Transactional;
 import java.util.UUID;
@@ -25,13 +24,10 @@ import java.util.UUID;
 @Transactional
 public interface SweepstakeEngine {
 
-    @Cacheable(cacheNames = "Sweepstake", key="#sweepstake.getId()")
     Sweepstake saveSweepstake(UUID ownerId, Sweepstake sweepstake);
 
-    @Cacheable(cacheNames = "Sweepstake", key="#sweepstakeId")
     void deleteParticipantRelation(UUID sweepstakeId);
 
-    @Cacheable(cacheNames = "Sweepstake", key="#sweepstakeId")
     Sweepstake deleteSweepstake(UUID sweepstakeId);
 
 }
