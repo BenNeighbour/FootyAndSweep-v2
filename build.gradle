@@ -33,8 +33,6 @@ allprojects {
     version = '0.0.1-SNAPSHOT'
 
     repositories {
-        eventuateMavenRepoUrl.split(',').each { repoUrl -> maven { url repoUrl } }
-
         mavenCentral()
         jcenter()
 

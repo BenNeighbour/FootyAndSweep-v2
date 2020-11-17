@@ -40,15 +40,13 @@ import static java.util.Collections.singletonList;
 public class TicketEngineImpl implements TicketEngine {
 
   private final TicketDao ticketDao;
-  private final DomainEventPublisher domainEventPublisher;
 
   @Autowired private RestTemplate restTemplate;
 
   /* Constructor for injecting spring beans/fields */
   public TicketEngineImpl(
-      final TicketDao ticketDao, final DomainEventPublisher domainEventPublisher) {
+      final TicketDao ticketDao) {
     this.ticketDao = ticketDao;
-    this.domainEventPublisher = domainEventPublisher;
   }
 
   @Override
@@ -108,10 +106,10 @@ public class TicketEngineImpl implements TicketEngine {
             SweepstakeSoldOut sweepstakeSoldOut = new SweepstakeSoldOut(parentSweepstake.get());
 
             /* Dispatch the sweepstake sold out event */
-            domainEventPublisher.publish(
-                    SweepstakeCommon.class,
-                    parentSweepstake.get().getId(),
-                    singletonList(sweepstakeSoldOut));
+//            domainEventPublisher.publish(
+//                    SweepstakeCommon.class,
+//                    parentSweepstake.get().getId(),
+//                    singletonList(sweepstakeSoldOut));
           }
         }
       } catch (InterruptedException ignored) {
@@ -147,7 +145,7 @@ public class TicketEngineImpl implements TicketEngine {
       TicketBought ticketBought = new TicketBought(ticket, parentSweepstake.getStake());
 
       /* Dispatch tickets bought event */
-      domainEventPublisher.publish(TicketCommon.class, ticket.getId(), singletonList(ticketBought));
+//      domainEventPublisher.publish(TicketCommon.class, ticket.getId(), singletonList(ticketBought));
     }
   }
 
