@@ -16,7 +16,6 @@
 
 package com.footyandsweep.apisweepstakeengine.engine;
 
-import com.footyandsweep.apicommonlibrary.events.SweepstakeCreated;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apisweepstakeengine.dao.ParticipantIdDao;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;

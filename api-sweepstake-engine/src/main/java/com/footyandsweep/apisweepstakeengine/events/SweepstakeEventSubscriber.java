@@ -16,8 +16,6 @@
 
 package com.footyandsweep.apisweepstakeengine.events;
 
-import com.footyandsweep.apicommonlibrary.events.SweepstakeRelationDeleted;
-import com.footyandsweep.apicommonlibrary.events.TicketAllocated;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
 import com.footyandsweep.apisweepstakeengine.engine.SweepstakeEngine;
 import com.footyandsweep.apisweepstakeengine.model.Sweepstake;

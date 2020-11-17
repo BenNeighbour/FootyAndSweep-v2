@@ -87,6 +87,10 @@ dependencies {
 	implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-config:1.1.0.RELEASE'
 	implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes:1.1.0.RELEASE'
 
+	implementation "org.springframework.kafka:spring-kafka:2.6.3"
+	implementation "org.springframework.cloud:spring-cloud-starter-sleuth:2.2.6.RELEASE"
+	implementation "org.springframework.cloud:spring-cloud-sleuth-zipkin:2.2.6.RELEASE"
+
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}

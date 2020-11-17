@@ -1,12 +1,12 @@
 /*
  *   Copyright 2020 FootyAndSweep
- *  
+ *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
  *   You may obtain a copy of the License at
- *  
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  *   Unless required by applicable law or agreed to in writing, software
  *   distributed under the License is distributed on an "AS IS" BASIS,
  *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,19 +16,22 @@
 
 package com.footyandsweep.apicommonlibrary.events;
 
-import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
-import io.eventuate.tram.events.common.DomainEvent;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.footyandsweep.apicommonlibrary.model.ticket.AllocationCommon;
+import lombok.*;
+
+import java.io.Serializable;
 
 @Setter
 @Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SweepstakeSoldOut implements DomainEvent {
+public class AllocationEvent implements Serializable {
 
-    private SweepstakeCommon sweepstake;
+    private static final long serialVersionUID = -6770516227326572001L;
+
+    private AllocationCommon allocation;
+
+    private EventType event;
 
 }
