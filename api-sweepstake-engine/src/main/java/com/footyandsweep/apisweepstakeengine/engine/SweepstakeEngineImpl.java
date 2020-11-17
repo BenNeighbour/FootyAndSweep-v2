@@ -38,12 +38,9 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
 
   @Autowired private ParticipantIdDao participantIdDao;
 
-  private final DomainEventPublisher domainEventPublisher;
-
   public SweepstakeEngineImpl(
-      SweepstakeDao sweepstakeDao, DomainEventPublisher domainEventPublisher) {
+      SweepstakeDao sweepstakeDao) {
     this.sweepstakeDao = sweepstakeDao;
-    this.domainEventPublisher = domainEventPublisher;
   }
 
   @Override
@@ -60,8 +57,8 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
 
       /* This gets received by the gateway service, then that service adds the sweepstake and
       user id into it's SweepstakeIds Junction Table */
-      domainEventPublisher.publish(
-          SweepstakeCommon.class, sweepstake.getId(), singletonList(sweepstakeCreated));
+//      domainEventPublisher.publish(
+//          SweepstakeCommon.class, sweepstake.getId(), singletonList(sweepstakeCreated));
 
       return sweepstake;
     } catch (Exception e) {

@@ -27,12 +27,10 @@ import javax.transaction.Transactional;
 public class ResultEngineImpl implements ResultEngine {
 
     private final ResultDao resultDao;
-    private final DomainEventPublisher domainEventPublisher;
 
     public ResultEngineImpl(
-            final ResultDao resultDao, final DomainEventPublisher domainEventPublisher) {
+            final ResultDao resultDao) {
         this.resultDao = resultDao;
-        this.domainEventPublisher = domainEventPublisher;
     }
 
 }

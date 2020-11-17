@@ -40,8 +40,6 @@ buildscript {
 }
 
 repositories {
-    eventuateMavenRepoUrl.split(',').each { repoUrl -> maven { url repoUrl } }
-
     mavenCentral()
     jcenter()
 
@@ -70,11 +68,6 @@ dependencies {
     compileOnly "org.postgresql:postgresql"
 
     compile 'commons-beanutils:commons-beanutils:1.9.4'
-
-    compile "io.eventuate.tram.core:eventuate-tram-spring-jdbc-kafka:$eventuateTramVersion"
-    compile "io.eventuate.tram.core:eventuate-tram-spring-events:0.24.0.RELEASE"
-    compile "io.eventuate.tram.view.support:eventuate-tram-view-support-rebuild:0.1.0.BUILD-SNAPSHOT"
-    compile "io.eventuate.tram.core:eventuate-tram-spring-optimistic-locking:$eventuateTramVersion"
 
     implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
     implementation "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"

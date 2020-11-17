@@ -16,6 +16,7 @@
 
 package com.footyandsweep.apiticketengine.events;
 
+import com.footyandsweep.apicommonlibrary.events.TicketAllocated;
 import com.footyandsweep.apiticketengine.dao.TicketDao;
 import com.footyandsweep.apiticketengine.engine.TicketEngine;
 import com.footyandsweep.apiticketengine.model.Ticket;

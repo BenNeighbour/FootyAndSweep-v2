@@ -17,6 +17,7 @@
 package com.footyandsweep.apiallocationengine.events;
 
 import com.footyandsweep.apiallocationengine.engine.AllocationEngine;
+import com.footyandsweep.apicommonlibrary.events.SweepstakeSoldOut;
 import io.eventuate.tram.events.subscriber.DomainEventEnvelope;
 import io.eventuate.tram.events.subscriber.DomainEventHandlers;
 import io.eventuate.tram.events.subscriber.DomainEventHandlersBuilder;
