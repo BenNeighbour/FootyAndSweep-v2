@@ -16,8 +16,6 @@
 
 package com.footyandsweep.apiticketengine.engine;
 
-import com.footyandsweep.apicommonlibrary.events.SweepstakeSoldOut;
-import com.footyandsweep.apicommonlibrary.events.TicketBought;
 import com.footyandsweep.apicommonlibrary.helper.SweepstakeLock;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;

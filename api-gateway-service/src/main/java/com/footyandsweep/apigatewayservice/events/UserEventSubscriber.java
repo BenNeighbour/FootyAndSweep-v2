@@ -16,8 +16,6 @@
 
 package com.footyandsweep.apigatewayservice.events;
 
-import com.footyandsweep.apicommonlibrary.events.SweepstakeCreated;
-import com.footyandsweep.apicommonlibrary.events.TicketBought;
 import com.footyandsweep.apigatewayservice.dao.UserDao;
 import com.footyandsweep.apigatewayservice.model.User;
 import com.footyandsweep.apigatewayservice.service.UserServiceImpl;

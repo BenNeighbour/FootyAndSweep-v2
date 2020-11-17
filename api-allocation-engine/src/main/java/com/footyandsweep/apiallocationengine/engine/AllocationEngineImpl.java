@@ -18,7 +18,6 @@ package com.footyandsweep.apiallocationengine.engine;
 
 import com.footyandsweep.apiallocationengine.dao.AllocationDao;
 import com.footyandsweep.apiallocationengine.model.Allocation;
-import com.footyandsweep.apicommonlibrary.events.TicketAllocated;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeTypeCommon;
 import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;

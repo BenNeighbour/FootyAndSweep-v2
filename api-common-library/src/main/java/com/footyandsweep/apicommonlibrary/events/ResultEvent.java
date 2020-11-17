@@ -16,25 +16,22 @@
 
 package com.footyandsweep.apicommonlibrary.events;
 
-import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
-import com.footyandsweep.apicommonlibrary.model.ticket.AllocationCommon;
-import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
-import io.eventuate.tram.events.common.DomainEvent;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.footyandsweep.apicommonlibrary.model.result.ResultCommon;
+import lombok.*;
+
+import java.io.Serializable;
 
 @Setter
 @Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TicketAllocated implements DomainEvent {
+public class ResultEvent implements Serializable {
 
-    private TicketCommon ticket;
+    private static final long serialVersionUID = 5858957075402531368L;
 
-    private AllocationCommon allocation;
+    private ResultCommon result;
 
-    private SweepstakeCommon sweepstake;
+    private EventType event;
 
 }
