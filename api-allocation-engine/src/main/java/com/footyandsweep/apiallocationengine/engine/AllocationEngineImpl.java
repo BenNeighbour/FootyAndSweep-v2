@@ -38,14 +38,12 @@ import static java.util.Collections.singletonList;
 public class AllocationEngineImpl implements AllocationEngine {
 
   private final AllocationDao allocationDao;
-  private final DomainEventPublisher domainEventPublisher;
 
   @Autowired private RestTemplate restTemplate;
 
   public AllocationEngineImpl(
-      final AllocationDao allocationDao, final DomainEventPublisher domainEventPublisher) {
+      final AllocationDao allocationDao) {
     this.allocationDao = allocationDao;
-    this.domainEventPublisher = domainEventPublisher;
   }
 
   /*
@@ -212,8 +210,8 @@ public class AllocationEngineImpl implements AllocationEngine {
       TicketAllocated ticketAllocated = new TicketAllocated(ticket, allocation, sweepstake.get());
 
       /* Publish ticket allocated event */
-      domainEventPublisher.publish(
-          TicketCommon.class, ticket.getId(), singletonList(ticketAllocated));
+//      domainEventPublisher.publish(
+//          TicketCommon.class, ticket.getId(), singletonList(ticketAllocated));
     } catch (Exception e) {
       /* Throw error to WebSocket client */
     }

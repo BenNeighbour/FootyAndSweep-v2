@@ -36,13 +36,10 @@ public class UserServiceImpl implements UserService {
 
   private final UserDao userDao;
 
-  private final DomainEventPublisher domainEventPublisher;
-
   @Autowired private SweepstakeIdDao sweepstakeIdDao;
 
-  public UserServiceImpl(final UserDao userDao, final DomainEventPublisher domainEventPublisher) {
+  public UserServiceImpl(final UserDao userDao) {
     this.userDao = userDao;
-    this.domainEventPublisher = domainEventPublisher;
   }
 
   @Override
@@ -59,8 +56,8 @@ public class UserServiceImpl implements UserService {
       /* The sweepstake engine will consume this broadcast and delete it's relation with this
       sweepstake, then it will remove the sweepstake with the message string given by the event
       above */
-      domainEventPublisher.publish(
-          SweepstakeCommon.class, sweepstake.getId(), singletonList(relationDeleted));
+//      domainEventPublisher.publish(
+//          SweepstakeCommon.class, sweepstake.getId(), singletonList(relationDeleted));
     }
   }
 }
