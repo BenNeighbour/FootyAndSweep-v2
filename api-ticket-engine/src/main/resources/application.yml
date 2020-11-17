@@ -28,18 +28,11 @@ spring:
     cache:
       type: redis
 
-eventuatelocal:
-  kafka:
-    bootstrap:
-      servers:
-        [ 'api-kafka.default.svc.cluster.local:9092' ]
+kafka:
+  bootstrapAddress: 'api-kafka.default.svc.cluster.local:9092'
 
-  zookeeper:
-    connection:
-      string: "zookeeper:2181"
-
-
-cdc:
-  service:
-    url: http://api-events-cdc:8080
-
+  racks: all
+  retries: 5
+  retry:
+    backoff:
+      ms: 1000
