@@ -1,12 +1,12 @@
 /*
  *   Copyright 2020 FootyAndSweep
- *  
+ *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
  *   You may obtain a copy of the License at
- *  
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  *   Unless required by applicable law or agreed to in writing, software
  *   distributed under the License is distributed on an "AS IS" BASIS,
  *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,13 +21,10 @@ import com.footyandsweep.apigatewayservice.dao.SweepstakeIdDao;
 import com.footyandsweep.apigatewayservice.dao.UserDao;
 import com.footyandsweep.apigatewayservice.model.User;
 import com.footyandsweep.apigatewayservice.relation.SweepstakeIds;
-import io.eventuate.tram.events.publisher.DomainEventPublisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-
-import static java.util.Collections.singletonList;
 
 @Service
 @Transactional
@@ -49,14 +46,14 @@ public class UserServiceImpl implements UserService {
       sweepstakeIdDao.save(new SweepstakeIds(sweepstake.getOwnerId(), sweepstake.getId()));
     } else {
       // Dispatch a sweepstake relation deleted event
-      SweepstakeRelationDeleted relationDeleted =
-          new SweepstakeRelationDeleted(sweepstake);
+      //      SweepstakeRelationDeleted relationDeleted =
+      //          new SweepstakeRelationDeleted(sweepstake);
 
       /* The sweepstake engine will consume this broadcast and delete it's relation with this
       sweepstake, then it will remove the sweepstake with the message string given by the event
       above */
-//      domainEventPublisher.publish(
-//          SweepstakeCommon.class, sweepstake.getId(), singletonList(relationDeleted));
+      //      domainEventPublisher.publish(
+      //          SweepstakeCommon.class, sweepstake.getId(), singletonList(relationDeleted));
     }
   }
 }

@@ -23,7 +23,10 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Version;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
@@ -36,13 +39,8 @@ import java.util.UUID;
 public class TicketCommon implements Serializable {
 
   private static final long serialVersionUID = -7269123358093904648L;
-
-  @Id
-  @GeneratedValue
-  private UUID id;
-
   @Version protected Integer version;
-
+  @Id @GeneratedValue private UUID id;
   private TicketStatus status = TicketStatus.PENDING;
 
   private UUID sweepstakeId;
@@ -65,8 +63,6 @@ public class TicketCommon implements Serializable {
     WON(3),
     LOST(4);
 
-    TicketStatus(int code) {
-    }
+    TicketStatus(int code) {}
   }
-
 }

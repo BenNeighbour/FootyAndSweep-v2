@@ -1,12 +1,12 @@
 /*
  *   Copyright 2020 FootyAndSweep
- *  
+ *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
  *   You may obtain a copy of the License at
- *  
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  *   Unless required by applicable law or agreed to in writing, software
  *   distributed under the License is distributed on an "AS IS" BASIS,
  *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,7 +17,6 @@
 package com.footyandsweep.apiresultengine.engine;
 
 import com.footyandsweep.apiresultengine.dao.ResultDao;
-import io.eventuate.tram.events.publisher.DomainEventPublisher;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -26,11 +25,9 @@ import javax.transaction.Transactional;
 @Transactional
 public class ResultEngineImpl implements ResultEngine {
 
-    private final ResultDao resultDao;
+  private final ResultDao resultDao;
 
-    public ResultEngineImpl(
-            final ResultDao resultDao) {
-        this.resultDao = resultDao;
-    }
-
+  public ResultEngineImpl(final ResultDao resultDao) {
+    this.resultDao = resultDao;
+  }
 }

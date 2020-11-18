@@ -34,10 +34,7 @@ import java.util.UUID;
 @MappedSuperclass
 public class FootballMatchSquadCommon implements Serializable {
 
-    private static final long serialVersionUID = 4323461917824574206L;
+  private static final long serialVersionUID = 4323461917824574206L;
 
-    @Id
-    @GeneratedValue
-    private UUID id;
-
+  @Id @GeneratedValue private UUID id;
 }

@@ -27,7 +27,10 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.security.SecureRandom;
-import java.util.*;
+import java.util.Date;
+import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
 
 @Setter
 @Getter
@@ -36,87 +39,93 @@ import java.util.*;
 @MappedSuperclass
 public class SweepstakeCommon implements Serializable {
 
-    private static final long serialVersionUID = -771315870335755392L;
+  private static final long serialVersionUID = -771315870335755392L;
+  @Version protected Integer version;
+  @Id @GeneratedValue private UUID id;
+  private String name;
+  private String joinCode = generateSweepstakeCode();
 
-    @Id
-    @GeneratedValue
-    private UUID id;
+  private SweepstakeStatus status = SweepstakeStatus.OPEN;
 
-    private String name;
+  private Boolean isPrivate;
 
-    @Version protected Integer version;
+  private UUID ownerId;
 
-    private String joinCode = generateSweepstakeCode();
+  private UUID sweepstakeEventId;
 
-    private SweepstakeStatus status = SweepstakeStatus.OPEN;
+  @Transient private SweepstakeTypeCommon sweepstakeType = this.getSweepstakeType();
 
-    private Boolean isPrivate;
+  @Transient private int sweepstakeListSize;
 
-    private UUID ownerId;
+  private int minimumPlayers;
 
-    private UUID sweepstakeEventId;
+  private int maximumPlayerTickets;
 
-    @Transient
-    private SweepstakeTypeCommon sweepstakeType = this.getSweepstakeType();
+  private BigDecimal stake;
 
-    @Transient
-    private int sweepstakeListSize;
+  private int totalNumberOfTickets;
 
-    private int minimumPlayers;
+  @CreationTimestamp private Date created;
 
-    private int maximumPlayerTickets;
+  @UpdateTimestamp private Date updated;
 
-    private BigDecimal stake;
+  public Map<Integer, String> getSweepstakeResultMap() {
+    return null;
+  }
 
-    private int totalNumberOfTickets;
+  private String generateSweepstakeCode() {
+    String alphabet = "abcdefghijklmnopqrstuvwxyz";
+    String alphabetUppercase = alphabet.toUpperCase();
+    String possibleNumbers = "0123456789";
 
-    @CreationTimestamp
-    private Date created;
+    String randomString = alphabet + alphabetUppercase + possibleNumbers;
+    SecureRandom random = new SecureRandom();
 
-    @UpdateTimestamp
-    private Date updated;
+    StringBuilder sb = new StringBuilder(8);
+    for (int i = 0; i < 8; i++) {
+      int rndCharAt = random.nextInt(randomString.length());
+      char rndChar = randomString.charAt(rndCharAt);
 
-    public Map<Integer, String> getSweepstakeResultMap() {
-        return null;
+      sb.append(rndChar);
     }
 
-    public enum SweepstakeStatus {
-        OPEN(0),
-        ALLOCATED(1),
-        CLOSED(2);
+    return sb.toString();
+  }
 
-        private int code;
+  @Override
+  public int hashCode() {
+    return Objects.hash(
+        id,
+        name,
+        version,
+        joinCode,
+        status,
+        isPrivate,
+        ownerId,
+        sweepstakeEventId,
+        sweepstakeType,
+        sweepstakeListSize,
+        minimumPlayers,
+        maximumPlayerTickets,
+        stake,
+        totalNumberOfTickets,
+        created,
+        updated);
+  }
 
-        SweepstakeStatus(int code) {
-            this.code = code;
-        }
+  public enum SweepstakeStatus {
+    OPEN(0),
+    ALLOCATED(1),
+    CLOSED(2);
 
-        public int getSweepstakeStatus() {
-            return this.code;
-        }
+    private int code;
+
+    SweepstakeStatus(int code) {
+      this.code = code;
     }
 
-    private String generateSweepstakeCode() {
-        String alphabet = "abcdefghijklmnopqrstuvwxyz";
-        String alphabetUppercase = alphabet.toUpperCase();
-        String possibleNumbers = "0123456789";
-
-        String randomString = alphabet + alphabetUppercase + possibleNumbers;
-        SecureRandom random = new SecureRandom();
-
-        StringBuilder sb = new StringBuilder(8);
-        for (int i = 0; i < 8; i++) {
-            int rndCharAt = random.nextInt(randomString.length());
-            char rndChar = randomString.charAt(rndCharAt);
-
-            sb.append(rndChar);
-        }
-
-        return sb.toString();
+    public int getSweepstakeStatus() {
+      return this.code;
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, version, joinCode, status, isPrivate, ownerId, sweepstakeEventId, sweepstakeType, sweepstakeListSize, minimumPlayers, maximumPlayerTickets, stake, totalNumberOfTickets, created, updated);
-    }
+  }
 }

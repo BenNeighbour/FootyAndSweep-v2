@@ -19,18 +19,17 @@ package com.footyandsweep.apicommonlibrary.model.sweepstake;
 import java.util.Map;
 
 public enum SweepstakeTypeCommon {
-    Correct_Score_FT("Correct Score F/T"),
-    Correct_Score_HT("Correct Score H/T");
+  Correct_Score_FT("Correct Score F/T"),
+  Correct_Score_HT("Correct Score H/T");
 
-    SweepstakeTypeCommon(String type) {
-    }
+  SweepstakeTypeCommon(String type) {}
 
-    @Override
-    public String toString() {
-        return super.toString();
-    }
+  @Override
+  public String toString() {
+    return super.toString();
+  }
 
-    public Map<Integer, String> getSweepstakeResultMap() {
-        return null;
-    }
+  public Map<Integer, String> getSweepstakeResultMap() {
+    return null;
+  }
 }

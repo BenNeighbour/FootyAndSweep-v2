@@ -15,7 +15,7 @@ spec:
     spec:
       volumes:
         - name: data
-          emptyDir: {}
+          emptyDir: { }
       containers:
         - name: postgres
           image: eventuateio/eventuate-postgres:0.12.0.RELEASE
