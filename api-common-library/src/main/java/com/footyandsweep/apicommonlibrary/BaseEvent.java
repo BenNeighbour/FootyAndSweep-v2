@@ -14,24 +14,10 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apicommonlibrary.events;
-
-import com.footyandsweep.apicommonlibrary.BaseEvent;
-import com.footyandsweep.apicommonlibrary.model.user.UserCommon;
-import lombok.*;
+package com.footyandsweep.apicommonlibrary;
 
 import java.io.Serializable;
 
-@Setter
-@Getter
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class UserEvent extends BaseEvent implements Serializable {
-
-  private static final long serialVersionUID = 2032351067327457721L;
-
-  private UserCommon user;
-
-  private EventType event;
+public class BaseEvent implements Serializable {
+    private static final long serialVersionUID = 5553093948715064231L;
 }

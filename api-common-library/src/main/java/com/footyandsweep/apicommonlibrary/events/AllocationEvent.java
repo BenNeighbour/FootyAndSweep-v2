@@ -16,6 +16,7 @@
 
 package com.footyandsweep.apicommonlibrary.events;
 
+import com.footyandsweep.apicommonlibrary.BaseEvent;
 import com.footyandsweep.apicommonlibrary.model.ticket.AllocationCommon;
 import lombok.*;
 
@@ -26,7 +27,7 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AllocationEvent implements Serializable {
+public class AllocationEvent extends BaseEvent implements Serializable {
 
     private static final long serialVersionUID = -6770516227326572001L;
 

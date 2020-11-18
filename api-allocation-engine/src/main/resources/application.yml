@@ -31,7 +31,7 @@ spring:
 kafka:
   bootstrapAddress: 'api-kafka.default.svc.cluster.local:9092'
 
-  racks: all
+  acks: all
   retries: 5
   retry:
     backoff:
