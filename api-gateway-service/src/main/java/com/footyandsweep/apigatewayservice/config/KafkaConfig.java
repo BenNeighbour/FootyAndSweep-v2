@@ -34,42 +34,38 @@ import java.util.Map;
 @Configuration
 public class KafkaConfig {
 
-    @Value(value = "${kafka.bootstrapAddress}")
-    private String bootstrapAddress;
+  @Value(value = "${kafka.bootstrapAddress}")
+  private String bootstrapAddress;
 
-    @Value(value = "${kafka.acks}")
-    private String acknowledges;
+  @Value(value = "${kafka.acks}")
+  private String acknowledges;
 
-    @Value(value = "${kafka.retries}")
-    private int retryAttempts;
+  @Value(value = "${kafka.retries}")
+  private int retryAttempts;
 
-    @Value(value = "${kafka.retry.backoff.ms}")
-    private int retryAttemptInterval;
+  @Value(value = "${kafka.retry.backoff.ms}")
+  private int retryAttemptInterval;
 
-    @Bean
-    public ProducerFactory<String, String> producerFactory() {
-        Map<String, Object> configProps = new HashMap<>();
-        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
-        configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
-        configProps.put(ProducerConfig.ACKS_CONFIG, acknowledges);
-        configProps.put(ProducerConfig.RETRIES_CONFIG, retryAttempts);
-        configProps.put(ProducerConfig.RETRY_BACKOFF_MS_CONFIG, retryAttemptInterval);
+  @Bean
+  public ProducerFactory<String, String> producerFactory() {
+    Map<String, Object> configProps = new HashMap<>();
+    configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
+    configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+    configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+    configProps.put(ProducerConfig.ACKS_CONFIG, acknowledges);
+    configProps.put(ProducerConfig.RETRIES_CONFIG, retryAttempts);
+    configProps.put(ProducerConfig.RETRY_BACKOFF_MS_CONFIG, retryAttemptInterval);
 
-        return new DefaultKafkaProducerFactory<>(configProps);
-    }
+    return new DefaultKafkaProducerFactory<>(configProps);
+  }
 
-    @Bean
-    public NewTopic userEvents() {
-        return TopicBuilder.name("api-user-events-topic")
-                .partitions(3)
-                .replicas(1)
-                .build();
-    }
+  @Bean
+  public NewTopic userEvents() {
+    return TopicBuilder.name("api-user-events-topic").partitions(3).replicas(1).build();
+  }
 
-
-    @Bean
-    public KafkaTemplate<String, String> customKafkaTemplate() {
-        return new KafkaTemplate<>(producerFactory());
-    }
+  @Bean
+  public KafkaTemplate<String, String> customKafkaTemplate() {
+    return new KafkaTemplate<>(producerFactory());
+  }
 }

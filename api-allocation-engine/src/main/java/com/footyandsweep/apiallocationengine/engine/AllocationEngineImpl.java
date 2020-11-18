@@ -1,12 +1,12 @@
 /*
  *   Copyright 2020 FootyAndSweep
- *  
+ *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
  *   You may obtain a copy of the License at
- *  
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  *   Unless required by applicable law or agreed to in writing, software
  *   distributed under the License is distributed on an "AS IS" BASIS,
  *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,7 +21,6 @@ import com.footyandsweep.apiallocationengine.model.Allocation;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeTypeCommon;
 import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
-import io.eventuate.tram.events.publisher.DomainEventPublisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -29,8 +28,6 @@ import org.springframework.web.client.RestTemplate;
 import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
-
-import static java.util.Collections.singletonList;
 
 @Transactional
 @Service
@@ -40,8 +37,7 @@ public class AllocationEngineImpl implements AllocationEngine {
 
   @Autowired private RestTemplate restTemplate;
 
-  public AllocationEngineImpl(
-      final AllocationDao allocationDao) {
+  public AllocationEngineImpl(final AllocationDao allocationDao) {
     this.allocationDao = allocationDao;
   }
 
@@ -206,11 +202,12 @@ public class AllocationEngineImpl implements AllocationEngine {
       sweepstake.get().setStatus(SweepstakeCommon.SweepstakeStatus.ALLOCATED);
 
       /* Creating the ticket allocated event with the right metadata inside to be put into the message to the other services */
-      TicketAllocated ticketAllocated = new TicketAllocated(ticket, allocation, sweepstake.get());
+      //      TicketAllocated ticketAllocated = new TicketAllocated(ticket, allocation,
+      // sweepstake.get());
 
       /* Publish ticket allocated event */
-//      domainEventPublisher.publish(
-//          TicketCommon.class, ticket.getId(), singletonList(ticketAllocated));
+      //      domainEventPublisher.publish(
+      //          TicketCommon.class, ticket.getId(), singletonList(ticketAllocated));
     } catch (Exception e) {
       /* Throw error to WebSocket client */
     }

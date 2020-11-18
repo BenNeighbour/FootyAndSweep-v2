@@ -5,7 +5,7 @@ build:
     - image: api-gateway-service
       docker:
         dockerfile: Dockerfile
-  local: {}
+  local: { }
 
 deploy:
   kubectl:

@@ -16,19 +16,15 @@
 
 package com.footyandsweep.apisweepstakeengine.engine;
 
-import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apisweepstakeengine.dao.ParticipantIdDao;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
 import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
 import com.footyandsweep.apisweepstakeengine.relation.ParticipantIds;
-import io.eventuate.tram.events.publisher.DomainEventPublisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.UUID;
-
-import static java.util.Collections.singletonList;
 
 @Service
 @Transactional
@@ -38,8 +34,7 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
 
   @Autowired private ParticipantIdDao participantIdDao;
 
-  public SweepstakeEngineImpl(
-      SweepstakeDao sweepstakeDao) {
+  public SweepstakeEngineImpl(SweepstakeDao sweepstakeDao) {
     this.sweepstakeDao = sweepstakeDao;
   }
 
@@ -53,12 +48,12 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
       participantIdDao.save(new ParticipantIds(sweepstake.getId(), ownerId));
 
       /* Creating the sweepstake created object for other services to react to */
-      SweepstakeCreated sweepstakeCreated = new SweepstakeCreated(sweepstake);
+      //      SweepstakeCreated sweepstakeCreated = new SweepstakeCreated(sweepstake);
 
       /* This gets received by the gateway service, then that service adds the sweepstake and
       user id into it's SweepstakeIds Junction Table */
-//      domainEventPublisher.publish(
-//          SweepstakeCommon.class, sweepstake.getId(), singletonList(sweepstakeCreated));
+      //      domainEventPublisher.publish(
+      //          SweepstakeCommon.class, sweepstake.getId(), singletonList(sweepstakeCreated));
 
       return sweepstake;
     } catch (Exception e) {

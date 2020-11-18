@@ -16,8 +16,11 @@
 
 package com.footyandsweep.apicommonlibrary;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
+@Data
 public class BaseEvent implements Serializable {
-    private static final long serialVersionUID = 5553093948715064231L;
+  private static final long serialVersionUID = 5553093948715064231L;
 }

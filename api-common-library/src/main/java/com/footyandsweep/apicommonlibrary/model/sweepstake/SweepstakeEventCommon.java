@@ -35,18 +35,15 @@ import java.util.UUID;
 @MappedSuperclass
 public class SweepstakeEventCommon implements Serializable {
 
-    private static final long serialVersionUID = 270875733575838844L;
+  private static final long serialVersionUID = 270875733575838844L;
 
-    @Id
-    @GeneratedValue
-    private UUID id;
+  @Id @GeneratedValue private UUID id;
 
-    private String name;
+  private String name;
 
-    private Date startDate;
+  private Date startDate;
 
-    private Date endDate;
+  private Date endDate;
 
-    private Integer status;
-
+  private Integer status;
 }

@@ -17,10 +17,10 @@
 package com.footyandsweep.apicommonlibrary.events;
 
 public enum EventType {
-    SOLD_OUT,
-    ALLOCATED,
-    PURCHASED,
-    CREATED,
-    DELETED,
-    UPDATED
+  SOLD_OUT,
+  ALLOCATED,
+  PURCHASED,
+  CREATED,
+  DELETED,
+  UPDATED
 }

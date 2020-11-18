@@ -18,21 +18,22 @@ package com.footyandsweep.apicommonlibrary.events;
 
 import com.footyandsweep.apicommonlibrary.BaseEvent;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 
 @Setter
 @Getter
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class SweepstakeEvent extends BaseEvent implements Serializable {
 
-    private static final long serialVersionUID = 7648254242158435976L;
+  private static final long serialVersionUID = 7648254242158435976L;
 
-    private SweepstakeCommon sweepstake;
+  private SweepstakeCommon sweepstake;
 
-    private EventType event;
-
+  private EventType event;
 }

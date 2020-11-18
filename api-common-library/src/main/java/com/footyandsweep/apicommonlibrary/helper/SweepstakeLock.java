@@ -22,38 +22,36 @@ import java.util.UUID;
 
 public class SweepstakeLock {
 
-    private static final Set<UUID> lockedUserKeys = new HashSet<>();
-    private static final Set<String> lockedSweepstakeKeys = new HashSet<>();
+  private static final Set<UUID> lockedUserKeys = new HashSet<>();
+  private static final Set<String> lockedSweepstakeKeys = new HashSet<>();
 
-
-    public static void userLock(UUID userKey) throws InterruptedException {
-        synchronized (lockedUserKeys) {
-            while (!lockedUserKeys.add(userKey)) {
-                lockedUserKeys.wait();
-            }
-        }
+  public static void userLock(UUID userKey) throws InterruptedException {
+    synchronized (lockedUserKeys) {
+      while (!lockedUserKeys.add(userKey)) {
+        lockedUserKeys.wait();
+      }
     }
+  }
 
-    public static void userUnlock(UUID userKey) {
-        synchronized (lockedUserKeys) {
-            lockedUserKeys.remove(userKey);
-            lockedUserKeys.notifyAll();
-        }
+  public static void userUnlock(UUID userKey) {
+    synchronized (lockedUserKeys) {
+      lockedUserKeys.remove(userKey);
+      lockedUserKeys.notifyAll();
     }
+  }
 
-
-    public static void lockSweepstake(String code) throws InterruptedException {
-        synchronized (lockedSweepstakeKeys) {
-            while (!lockedSweepstakeKeys.add(code)) {
-                lockedSweepstakeKeys.wait();
-            }
-        }
+  public static void lockSweepstake(String code) throws InterruptedException {
+    synchronized (lockedSweepstakeKeys) {
+      while (!lockedSweepstakeKeys.add(code)) {
+        lockedSweepstakeKeys.wait();
+      }
     }
+  }
 
-    public static void unlockSweepstake(String code) {
-        synchronized (lockedSweepstakeKeys) {
-            lockedSweepstakeKeys.remove(code);
-            lockedSweepstakeKeys.notifyAll();
-        }
+  public static void unlockSweepstake(String code) {
+    synchronized (lockedSweepstakeKeys) {
+      lockedSweepstakeKeys.remove(code);
+      lockedSweepstakeKeys.notifyAll();
     }
+  }
 }

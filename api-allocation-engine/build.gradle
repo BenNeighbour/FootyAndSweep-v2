@@ -26,68 +26,68 @@ group = 'com.footyandsweep'
 version = '0.0.1-SNAPSHOT'
 
 buildscript {
-	repositories {
-		mavenCentral()
-		maven { url "https://repo.spring.io/milestone" }
-		maven {
-			url "https://plugins.gradle.org/m2/"
-		}
-	}
-	dependencies {
-		classpath "io.spring.gradle:dependency-management-plugin:1.0.10.RELEASE"
-		classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion"
-	}
+    repositories {
+        mavenCentral()
+        maven { url "https://repo.spring.io/milestone" }
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.10.RELEASE"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion"
+    }
 }
 
 repositories {
-	mavenCentral()
-	jcenter()
+    mavenCentral()
+    jcenter()
 
-	maven {
-		url "${project.rootDir}/build/repo"
-	}
+    maven {
+        url "${project.rootDir}/build/repo"
+    }
 }
 
 dependencyManagement {
-	imports {
-		mavenBom "org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion"
-	}
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion"
+    }
 }
 
 dependencies {
-	implementation project(':api-common-library')
+    implementation project(':api-common-library')
 
-	compileOnly 'org.projectlombok:lombok:1.18.14'
-	annotationProcessor 'org.projectlombok:lombok:1.18.14'
+    compileOnly 'org.projectlombok:lombok:1.18.14'
+    annotationProcessor 'org.projectlombok:lombok:1.18.14'
 
-	testCompileOnly 'org.projectlombok:lombok:1.18.14'
-	testAnnotationProcessor 'org.projectlombok:lombok:1.18.14'
+    testCompileOnly 'org.projectlombok:lombok:1.18.14'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.14'
 
-	compileOnly "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
+    compileOnly "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
 
-	compileOnly "org.postgresql:postgresql"
+    compileOnly "org.postgresql:postgresql"
 
-	compile 'commons-beanutils:commons-beanutils:1.9.4'
+    compile 'commons-beanutils:commons-beanutils:1.9.4'
 
-	implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
-	implementation "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
+    implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
 
-	implementation "org.springframework.boot:spring-boot-starter-actuator:$springBootVersion"
-	implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
-	implementation "org.springframework.boot:spring-boot-starter-data-redis:$springBootVersion"
+    implementation "org.springframework.boot:spring-boot-starter-actuator:$springBootVersion"
+    implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
+    implementation "org.springframework.boot:spring-boot-starter-data-redis:$springBootVersion"
 
-	implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-config:1.1.0.RELEASE'
-	implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes:1.1.0.RELEASE'
+    implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-config:1.1.0.RELEASE'
+    implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes:1.1.0.RELEASE'
 
-	implementation "org.springframework.kafka:spring-kafka:2.6.3"
-	implementation "org.springframework.cloud:spring-cloud-starter-sleuth:2.2.6.RELEASE"
-	implementation "org.springframework.cloud:spring-cloud-sleuth-zipkin:2.2.6.RELEASE"
+    implementation "org.springframework.kafka:spring-kafka:2.6.3"
+    implementation "org.springframework.cloud:spring-cloud-starter-sleuth:2.2.6.RELEASE"
+    implementation "org.springframework.cloud:spring-cloud-sleuth-zipkin:2.2.6.RELEASE"
 
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-	}
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
 }
 
 test {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }

@@ -5,7 +5,7 @@ build:
     - image: api-ticket-engine
       docker:
         dockerfile: Dockerfile
-  local: {}
+  local: { }
 
 deploy:
   kubectl:

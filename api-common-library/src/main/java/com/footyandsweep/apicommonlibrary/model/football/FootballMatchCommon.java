@@ -33,14 +33,13 @@ import java.util.UUID;
 @MappedSuperclass
 public class FootballMatchCommon extends SweepstakeEventCommon implements Serializable {
 
-    private static final long serialVersionUID = -9169784048037914911L;
+  private static final long serialVersionUID = -9169784048037914911L;
 
-    private UUID homeFootballTeamId;
+  private UUID homeFootballTeamId;
 
-    private UUID homeMatchSquadId;
+  private UUID homeMatchSquadId;
 
-    private UUID awayFootballTeamId;
+  private UUID awayFootballTeamId;
 
-    private UUID awayMatchSquadId;
-
+  private UUID awayMatchSquadId;
 }

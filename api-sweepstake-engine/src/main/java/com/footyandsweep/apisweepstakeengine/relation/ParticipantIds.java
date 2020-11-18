@@ -1,12 +1,12 @@
 /*
  *   Copyright 2020 FootyAndSweep
- *  
+ *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
  *   You may obtain a copy of the License at
- *  
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  *   Unless required by applicable law or agreed to in writing, software
  *   distributed under the License is distributed on an "AS IS" BASIS,
  *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,7 +21,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.UUID;
 
@@ -33,13 +36,12 @@ import java.util.UUID;
 @Table(name = "sweepstake_participant_id")
 public class ParticipantIds implements Serializable {
 
-    private static final long serialVersionUID = 6784017128307902451L;
+  private static final long serialVersionUID = 6784017128307902451L;
 
-    @Id
-    @Column(columnDefinition = "uuid", updatable = false)
-    private UUID sweepstakeId;
+  @Id
+  @Column(columnDefinition = "uuid", updatable = false)
+  private UUID sweepstakeId;
 
-    @Column(columnDefinition = "uuid", updatable = false)
-    private UUID participantId;
-
+  @Column(columnDefinition = "uuid", updatable = false)
+  private UUID participantId;
 }

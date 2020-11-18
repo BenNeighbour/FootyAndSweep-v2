@@ -18,21 +18,22 @@ package com.footyandsweep.apicommonlibrary.events;
 
 import com.footyandsweep.apicommonlibrary.BaseEvent;
 import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 
 @Setter
 @Getter
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class TicketEvent extends BaseEvent implements Serializable {
 
-    private static final long serialVersionUID = 7269652913984634895L;
+  private static final long serialVersionUID = 7269652913984634895L;
 
-    private TicketCommon ticket;
+  private TicketCommon ticket;
 
-    private EventType event;
-
+  private EventType event;
 }
