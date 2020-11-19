@@ -38,7 +38,7 @@ public class UserMessageDispatcher {
     this.objectMapper = objectMapper;
   }
 
-  public void publishEvent(Class<BaseEvent> event, String topic) throws JsonProcessingException {
+  public void publishEvent(BaseEvent event, String topic) throws JsonProcessingException {
     /* Serializing the event object into a string to be sent as a message via kafka */
     String serializedMessage = objectMapper.writeValueAsString(event);
     objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);

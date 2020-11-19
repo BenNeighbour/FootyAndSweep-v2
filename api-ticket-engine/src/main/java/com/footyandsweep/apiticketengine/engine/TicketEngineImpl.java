@@ -16,13 +16,17 @@
 
 package com.footyandsweep.apiticketengine.engine;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.footyandsweep.apicommonlibrary.events.EventType;
+import com.footyandsweep.apicommonlibrary.events.SweepstakeEvent;
+import com.footyandsweep.apicommonlibrary.events.TicketEvent;
 import com.footyandsweep.apicommonlibrary.helper.SweepstakeLock;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
 import com.footyandsweep.apicommonlibrary.model.user.UserCommon;
 import com.footyandsweep.apiticketengine.dao.TicketDao;
+import com.footyandsweep.apiticketengine.event.TicketMessageDispatcher;
 import com.footyandsweep.apiticketengine.model.Ticket;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -37,12 +41,13 @@ import java.util.UUID;
 public class TicketEngineImpl implements TicketEngine {
 
   private final TicketDao ticketDao;
+  private final RestTemplate restTemplate;
+  private final TicketMessageDispatcher ticketMessageDispatcher;
 
-  @Autowired private RestTemplate restTemplate;
-
-  /* Constructor for injecting spring beans/fields */
-  public TicketEngineImpl(final TicketDao ticketDao) {
+  public TicketEngineImpl(final TicketDao ticketDao, final RestTemplate restTemplate, final TicketMessageDispatcher ticketMessageDispatcher) {
     this.ticketDao = ticketDao;
+    this.restTemplate = restTemplate;
+    this.ticketMessageDispatcher = ticketMessageDispatcher;
   }
 
   @Override
@@ -102,14 +107,10 @@ public class TicketEngineImpl implements TicketEngine {
           if (allSweepstakeTickets.get().size()
               >= parentSweepstake.get().getTotalNumberOfTickets()) {
             /* Creating the sweepstake sold out object for the other services to react to */
-            //            SweepstakeSoldOut sweepstakeSoldOut = new
-            // SweepstakeSoldOut(parentSweepstake.get());
+            SweepstakeEvent sweepstakeSoldOut = new SweepstakeEvent(parentSweepstake.get(), EventType.SOLD_OUT);
 
             /* Dispatch the sweepstake sold out event */
-            //            domainEventPublisher.publish(
-            //                    SweepstakeCommon.class,
-            //                    parentSweepstake.get().getId(),
-            //                    singletonList(sweepstakeSoldOut));
+            ticketMessageDispatcher.publishEvent(sweepstakeSoldOut, "api-sweepstake-event-topic");
           }
         }
       } catch (InterruptedException ignored) {
@@ -128,24 +129,27 @@ public class TicketEngineImpl implements TicketEngine {
 
   private void ticketIteratorHelper(
       int numberOfTickets, UUID userId, SweepstakeCommon parentSweepstake) {
-    /* When valid, buy each of the tickets for the user */
-    for (int i = 0; i < numberOfTickets; i++) {
-      Ticket ticket = new Ticket();
+    try{
+      /* When valid, buy each of the tickets for the user */
+      for (int i = 0; i < numberOfTickets; i++) {
+        Ticket ticket = new Ticket();
 
-      /* Fill in those properties in the new ticket object */
-      ticket.setUserId(userId);
-      ticket.setStatus(TicketCommon.TicketStatus.PENDING);
-      ticket.setSweepstakeId(parentSweepstake.getId());
+        /* Fill in those properties in the new ticket object */
+        ticket.setUserId(userId);
+        ticket.setStatus(TicketCommon.TicketStatus.PENDING);
+        ticket.setSweepstakeId(parentSweepstake.getId());
 
-      /* Persist that ticket while adding it onto the list of bought tickets for that user */
-      ticket = ticketDao.save(ticket);
+        /* Persist that ticket while adding it onto the list of bought tickets for that user */
+        ticket = ticketDao.save(ticket);
 
-      /* Creating the sweepstake created object for the other services to react to */
-      //      TicketBought ticketBought = new TicketBought(ticket, parentSweepstake.getStake());
+        /* Creating the sweepstake created object for the other services to react to */
+        TicketEvent ticketBought = new TicketEvent(ticket, EventType.PURCHASED);
 
-      /* Dispatch tickets bought event */
-      //      domainEventPublisher.publish(TicketCommon.class, ticket.getId(),
-      // singletonList(ticketBought));
+        /* Dispatch tickets bought event */
+        ticketMessageDispatcher.publishEvent(ticketBought, "api-ticket-event-topic");
+      }
+    } catch (Exception e) {
+      /* Get the error message and ping it back to the client */
     }
   }
 

@@ -17,11 +17,13 @@
 package com.footyandsweep.apiallocationengine.engine;
 
 import com.footyandsweep.apiallocationengine.dao.AllocationDao;
+import com.footyandsweep.apiallocationengine.event.AllocationMessageDispatcher;
 import com.footyandsweep.apiallocationengine.model.Allocation;
+import com.footyandsweep.apicommonlibrary.events.EventType;
+import com.footyandsweep.apicommonlibrary.events.TicketEvent;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeTypeCommon;
 import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -34,15 +36,17 @@ import java.util.stream.Collectors;
 public class AllocationEngineImpl implements AllocationEngine {
 
   private final AllocationDao allocationDao;
+  private final RestTemplate restTemplate;
+  private final AllocationMessageDispatcher allocationMessageDispatcher;
 
-  @Autowired private RestTemplate restTemplate;
-
-  public AllocationEngineImpl(final AllocationDao allocationDao) {
+  public AllocationEngineImpl(final AllocationDao allocationDao, final RestTemplate restTemplate, final AllocationMessageDispatcher allocationMessageDispatcher) {
     this.allocationDao = allocationDao;
+    this.restTemplate = restTemplate;
+    this.allocationMessageDispatcher = allocationMessageDispatcher;
   }
 
   /*
-    This method id called by either the sweepstake sold out event listener or by the cron job batch-processor
+    This method is called by either the sweepstake sold out event listener or by the cron job batch-processor
   */
   @Override
   public void allocateSweepstakeTickets(SweepstakeCommon sweepstake) {
@@ -185,12 +189,12 @@ public class AllocationEngineImpl implements AllocationEngine {
 
       /* Getting sweepstake by the id so that it can be modified here */
       Optional<SweepstakeCommon> sweepstake =
-          Optional.ofNullable(
-              restTemplate.getForObject(
-                  "http://api-sweepstake-engine:8080/internal/sweepstake/by/"
-                      + ticket.getSweepstakeId()
-                      + "/participants",
-                  SweepstakeCommon.class));
+              Optional.ofNullable(
+                      restTemplate.getForObject(
+                              "http://api-sweepstake-engine:8080/internal/sweepstake/by/"
+                                      + ticket.getSweepstakeId()
+                                      + "/participants",
+                              SweepstakeCommon.class));
 
       /* If the sweepstake is not valid, then throw an error */
       if (!sweepstake.isPresent()) throw new Exception();
@@ -201,13 +205,15 @@ public class AllocationEngineImpl implements AllocationEngine {
       /* Setting the sweepstake status to allocated */
       sweepstake.get().setStatus(SweepstakeCommon.SweepstakeStatus.ALLOCATED);
 
+      /* Setting the transient aggregate  */
+      ticket.setAllocationCommon(allocation);
+      ticket.setSweepstake(sweepstake.get());
+
       /* Creating the ticket allocated event with the right metadata inside to be put into the message to the other services */
-      //      TicketAllocated ticketAllocated = new TicketAllocated(ticket, allocation,
-      // sweepstake.get());
+      TicketEvent ticketAllocated = new TicketEvent(ticket, EventType.ALLOCATED);
 
       /* Publish ticket allocated event */
-      //      domainEventPublisher.publish(
-      //          TicketCommon.class, ticket.getId(), singletonList(ticketAllocated));
+      allocationMessageDispatcher.publishEvent(ticketAllocated, "api-ticket-event-topic");
     } catch (Exception e) {
       /* Throw error to WebSocket client */
     }

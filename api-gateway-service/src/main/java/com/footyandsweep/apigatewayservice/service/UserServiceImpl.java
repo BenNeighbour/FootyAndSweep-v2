@@ -16,12 +16,14 @@
 
 package com.footyandsweep.apigatewayservice.service;
 
+import com.footyandsweep.apicommonlibrary.events.EventType;
+import com.footyandsweep.apicommonlibrary.events.SweepstakeEvent;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apigatewayservice.dao.SweepstakeIdDao;
 import com.footyandsweep.apigatewayservice.dao.UserDao;
+import com.footyandsweep.apigatewayservice.event.UserMessageDispatcher;
 import com.footyandsweep.apigatewayservice.model.User;
 import com.footyandsweep.apigatewayservice.relation.SweepstakeIds;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -31,29 +33,34 @@ import javax.transaction.Transactional;
 public class UserServiceImpl implements UserService {
 
   private final UserDao userDao;
+  private final SweepstakeIdDao sweepstakeIdDao;
+  private final UserMessageDispatcher userMessageDispatcher;
 
-  @Autowired private SweepstakeIdDao sweepstakeIdDao;
-
-  public UserServiceImpl(final UserDao userDao) {
+  public UserServiceImpl(final UserDao userDao, final SweepstakeIdDao sweepstakeIdDao, UserMessageDispatcher userMessageDispatcher) {
     this.userDao = userDao;
+    this.sweepstakeIdDao = sweepstakeIdDao;
+    this.userMessageDispatcher = userMessageDispatcher;
   }
 
   @Override
   public void addOwnerToSweepstake(SweepstakeCommon sweepstake) {
-    User addingParticipant = userDao.findUserById(sweepstake.getOwnerId());
+    try {
+      User addingParticipant = userDao.findUserById(sweepstake.getOwnerId());
 
-    if (addingParticipant != null) {
-      sweepstakeIdDao.save(new SweepstakeIds(sweepstake.getOwnerId(), sweepstake.getId()));
-    } else {
-      // Dispatch a sweepstake relation deleted event
-      //      SweepstakeRelationDeleted relationDeleted =
-      //          new SweepstakeRelationDeleted(sweepstake);
+      if (addingParticipant != null) {
+        sweepstakeIdDao.save(new SweepstakeIds(sweepstake.getOwnerId(), sweepstake.getId()));
+      } else {
+        /* Dispatch a sweepstake relation deleted event */
+        SweepstakeEvent relationDeleted =
+                new SweepstakeEvent(sweepstake, EventType.RELATION_DELETED);
 
-      /* The sweepstake engine will consume this broadcast and delete it's relation with this
-      sweepstake, then it will remove the sweepstake with the message string given by the event
-      above */
-      //      domainEventPublisher.publish(
-      //          SweepstakeCommon.class, sweepstake.getId(), singletonList(relationDeleted));
+        /* The sweepstake engine will consume this broadcast and delete it's relation with this
+        sweepstake, then it will remove the sweepstake with the message string given by the event
+        above */
+        userMessageDispatcher.publishEvent(relationDeleted, "api-sweepstake-event-topic");
+      }
+    } catch (Exception e) {
+      /* Get the error message and ping it back to the client */
     }
   }
 }
