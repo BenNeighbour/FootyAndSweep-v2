@@ -30,9 +30,8 @@ deploy:
       - kubernetes/cluster-bindings.yaml
       - kubernetes/api-redis-cache/api-redis-cache.yaml
       - kubernetes/api-redis-cache/api-redis-cache.yaml
-      - kubernetes/api-event-cdc/api-event-cdc.yaml
-      - kubernetes/api-event-cdc/api-kafka.yaml
-      - kubernetes/api-event-cdc/zookeeper.yaml
+      - kubernetes/api-event-broker/api-kafka.yaml
+      - kubernetes/api-event-broker/zookeeper.yaml
       - kubernetes/api-gateway-service/api-gateway-service-config.yaml
       - kubernetes/api-sweepstake-engine/api-sweepstake-engine-config.yaml
       - kubernetes/api-ticket-engine/api-ticket-engine-config.yaml
