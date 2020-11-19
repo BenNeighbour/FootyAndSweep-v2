@@ -14,50 +14,31 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apisweepstakeengine.event;
+package com.footyandsweep.apiallocationengine.event;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.footyandsweep.apiallocationengine.dao.AllocationDao;
+import com.footyandsweep.apiallocationengine.engine.AllocationEngine;
 import com.footyandsweep.apicommonlibrary.events.EventType;
 import com.footyandsweep.apicommonlibrary.events.SweepstakeEvent;
-import com.footyandsweep.apicommonlibrary.events.TicketEvent;
-import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
-import com.footyandsweep.apisweepstakeengine.engine.SweepstakeEngine;
-import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SweepstakeMessageListener {
+public class AllocationMessageListener {
 
   private final ObjectMapper objectMapper;
-  private final SweepstakeEngine sweepstakeEngine;
-  private final SweepstakeDao sweepstakeDao;
+  private final AllocationEngine allocationEngine;
+  private final AllocationDao allocationDao;
 
-  public SweepstakeMessageListener(
+  public AllocationMessageListener(
       final ObjectMapper objectMapper,
-      final SweepstakeEngine sweepstakeEngine,
-      final SweepstakeDao sweepstakeDao) {
+      final AllocationEngine allocationEngine,
+      final AllocationDao allocationDao) {
     this.objectMapper = objectMapper;
-    this.sweepstakeEngine = sweepstakeEngine;
-    this.sweepstakeDao = sweepstakeDao;
-  }
-
-  @KafkaListener(
-      topics = "api-ticket-events-topic",
-      containerFactory = "SweepstakeEventKafkaListenerContainerFactory")
-  public void ticketEventListener(String serializedMessage) {
-    try {
-      /* Use JSON Object Mapper to read the message and reflect it into an object */
-      TicketEvent event = objectMapper.readValue(serializedMessage, TicketEvent.class);
-
-      /* Use relevant helper functions depending on the different event types */
-      if (event.getEvent().equals(EventType.ALLOCATED))
-        sweepstakeDao.saveAndFlush((Sweepstake) event.getTicket().getSweepstake());
-    } catch (JsonProcessingException e) {
-      /* TODO: Log or handle the exception here */
-      System.out.println("Error sending or receiving a valid message!");
-    }
+    this.allocationEngine = allocationEngine;
+    this.allocationDao = allocationDao;
   }
 
   @KafkaListener(
@@ -69,8 +50,8 @@ public class SweepstakeMessageListener {
       SweepstakeEvent event = objectMapper.readValue(serializedMessage, SweepstakeEvent.class);
 
       /* Use relevant helper functions depending on the different event types */
-      if (event.getEvent().equals(EventType.RELATION_DELETED))
-        sweepstakeEngine.deleteSweepstake(event.getSweepstake().getId());
+      if (event.getEvent().equals(EventType.SOLD_OUT))
+        allocationEngine.allocateSweepstakeTickets(event.getSweepstake());
     } catch (JsonProcessingException e) {
       /* TODO: Log or handle the exception here */
       System.out.println("Error sending or receiving a valid message!");

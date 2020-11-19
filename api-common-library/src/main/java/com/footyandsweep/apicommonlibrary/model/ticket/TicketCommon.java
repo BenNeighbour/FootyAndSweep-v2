@@ -16,6 +16,7 @@
 
 package com.footyandsweep.apicommonlibrary.model.ticket;
 
+import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,10 +24,7 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Version;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
@@ -54,6 +52,8 @@ public class TicketCommon implements Serializable {
   @CreationTimestamp private Date created;
 
   @UpdateTimestamp private Date updated;
+
+  @Transient private SweepstakeCommon sweepstake;
 
   public enum TicketStatus {
     PENDING(0),

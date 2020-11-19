@@ -14,46 +14,43 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apisweepstakeengine.event;
+package com.footyandsweep.apigatewayservice.event;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.footyandsweep.apicommonlibrary.events.EventType;
 import com.footyandsweep.apicommonlibrary.events.SweepstakeEvent;
 import com.footyandsweep.apicommonlibrary.events.TicketEvent;
-import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
-import com.footyandsweep.apisweepstakeengine.engine.SweepstakeEngine;
-import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
+import com.footyandsweep.apigatewayservice.dao.UserDao;
+import com.footyandsweep.apigatewayservice.service.UserService;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SweepstakeMessageListener {
+public class UserMessageListener {
 
   private final ObjectMapper objectMapper;
-  private final SweepstakeEngine sweepstakeEngine;
-  private final SweepstakeDao sweepstakeDao;
+  private final UserService userService;
+  private final UserDao userDao;
 
-  public SweepstakeMessageListener(
-      final ObjectMapper objectMapper,
-      final SweepstakeEngine sweepstakeEngine,
-      final SweepstakeDao sweepstakeDao) {
+  public UserMessageListener(
+      final ObjectMapper objectMapper, final UserService userService, final UserDao userDao) {
     this.objectMapper = objectMapper;
-    this.sweepstakeEngine = sweepstakeEngine;
-    this.sweepstakeDao = sweepstakeDao;
+    this.userService = userService;
+    this.userDao = userDao;
   }
 
   @KafkaListener(
-      topics = "api-ticket-events-topic",
-      containerFactory = "SweepstakeEventKafkaListenerContainerFactory")
-  public void ticketEventListener(String serializedMessage) {
+      topics = "api-sweepstake-events-topic",
+      containerFactory = "UserEventKafkaListenerContainerFactory")
+  public void sweepstakeEventListener(String serializedMessage) {
     try {
       /* Use JSON Object Mapper to read the message and reflect it into an object */
-      TicketEvent event = objectMapper.readValue(serializedMessage, TicketEvent.class);
+      SweepstakeEvent event = objectMapper.readValue(serializedMessage, SweepstakeEvent.class);
 
       /* Use relevant helper functions depending on the different event types */
-      if (event.getEvent().equals(EventType.ALLOCATED))
-        sweepstakeDao.saveAndFlush((Sweepstake) event.getTicket().getSweepstake());
+      if (event.getEvent().equals(EventType.CREATED))
+        userService.addOwnerToSweepstake(event.getSweepstake());
     } catch (JsonProcessingException e) {
       /* TODO: Log or handle the exception here */
       System.out.println("Error sending or receiving a valid message!");
@@ -61,16 +58,15 @@ public class SweepstakeMessageListener {
   }
 
   @KafkaListener(
-      topics = "api-sweepstake-events-topic",
-      containerFactory = "SweepstakeEventKafkaListenerContainerFactory")
-  public void sweepstakeEventListener(String serializedMessage) {
+      topics = "api-ticket-events-topic",
+      containerFactory = "UserEventKafkaListenerContainerFactory")
+  public void ticketEventListener(String serializedMessage) {
     try {
       /* Use JSON Object Mapper to read the message and reflect it into an object */
-      SweepstakeEvent event = objectMapper.readValue(serializedMessage, SweepstakeEvent.class);
+      TicketEvent event = objectMapper.readValue(serializedMessage, TicketEvent.class);
 
       /* Use relevant helper functions depending on the different event types */
-      if (event.getEvent().equals(EventType.RELATION_DELETED))
-        sweepstakeEngine.deleteSweepstake(event.getSweepstake().getId());
+      if (event.getEvent().equals(EventType.PURCHASED)) return;
     } catch (JsonProcessingException e) {
       /* TODO: Log or handle the exception here */
       System.out.println("Error sending or receiving a valid message!");
