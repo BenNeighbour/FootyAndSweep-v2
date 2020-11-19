@@ -55,6 +55,8 @@ public class TicketCommon implements Serializable {
 
   @Transient private SweepstakeCommon sweepstake;
 
+  @Transient private AllocationCommon allocationCommon;
+
   public enum TicketStatus {
     PENDING(0),
     INPLAY(1),

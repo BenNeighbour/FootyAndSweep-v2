@@ -16,11 +16,13 @@
 
 package com.footyandsweep.apisweepstakeengine.engine;
 
+import com.footyandsweep.apicommonlibrary.events.EventType;
+import com.footyandsweep.apicommonlibrary.events.SweepstakeEvent;
 import com.footyandsweep.apisweepstakeengine.dao.ParticipantIdDao;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
+import com.footyandsweep.apisweepstakeengine.event.SweepstakeMessageDispatcher;
 import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
 import com.footyandsweep.apisweepstakeengine.relation.ParticipantIds;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -31,11 +33,13 @@ import java.util.UUID;
 public class SweepstakeEngineImpl implements SweepstakeEngine {
 
   private final SweepstakeDao sweepstakeDao;
+  private final ParticipantIdDao participantIdDao;
+  private final SweepstakeMessageDispatcher sweepstakeMessageDispatcher;
 
-  @Autowired private ParticipantIdDao participantIdDao;
-
-  public SweepstakeEngineImpl(SweepstakeDao sweepstakeDao) {
+  public SweepstakeEngineImpl(final SweepstakeDao sweepstakeDao, final ParticipantIdDao participantIdDao, final SweepstakeMessageDispatcher sweepstakeMessageDispatcher) {
     this.sweepstakeDao = sweepstakeDao;
+    this.participantIdDao = participantIdDao;
+    this.sweepstakeMessageDispatcher = sweepstakeMessageDispatcher;
   }
 
   @Override
@@ -48,12 +52,11 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
       participantIdDao.save(new ParticipantIds(sweepstake.getId(), ownerId));
 
       /* Creating the sweepstake created object for other services to react to */
-      //      SweepstakeCreated sweepstakeCreated = new SweepstakeCreated(sweepstake);
+      SweepstakeEvent sweepstakeCreated = new SweepstakeEvent(sweepstake, EventType.CREATED);
 
       /* This gets received by the gateway service, then that service adds the sweepstake and
       user id into it's SweepstakeIds Junction Table */
-      //      domainEventPublisher.publish(
-      //          SweepstakeCommon.class, sweepstake.getId(), singletonList(sweepstakeCreated));
+      sweepstakeMessageDispatcher.publishEvent(sweepstakeCreated, "api-sweepstake-event-topic");
 
       return sweepstake;
     } catch (Exception e) {
