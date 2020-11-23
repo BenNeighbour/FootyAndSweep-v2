@@ -2,6 +2,9 @@ spring:
   application:
     name: 'api-sweepstake-engine'
 
+  kafka:
+    bootstrap-servers: api-kafka.default.svc.cluster.local:9092
+
   jpa:
     generate-ddl: true
 
@@ -15,11 +18,11 @@ spring:
     hibernate:
       default_batch_fetch_size: 16
 
-  datasource:
-    url: ${SPRING_DATASOURCE_URL}
-    username: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}
-    driver-class-name: org.postgresql.Driver
+    datasource:
+      url: ${SPRING_DATASOURCE_URL}
+      username: ${SPRING_DATASOURCE_USERNAME}
+      password: ${SPRING_DATASOURCE_PASSWORD}
+      driver-class-name: org.postgresql.Driver
 
   redis:
     host: "api-redis-cache"
@@ -29,10 +32,10 @@ spring:
     type: redis
 
 kafka:
-  bootstrapAddress: 'api-kafka.default.svc.cluster.local:9092'
+  bootstrapAddress: api-kafka.default.svc.cluster.local:9092
 
   acks: all
   retries: 5
   retry:
     backoff:
-      ms: 1000
+      ms: 5000

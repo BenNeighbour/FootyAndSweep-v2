@@ -2,6 +2,9 @@ spring:
   application:
     name: 'api-result-engine'
 
+  kafka:
+    bootstrap-servers: api-kafka.default.svc.cluster.local:9092
+
   jpa:
     generate-ddl: true
 
@@ -21,18 +24,18 @@ spring:
       password: ${SPRING_DATASOURCE_PASSWORD}
       driver-class-name: org.postgresql.Driver
 
-    redis:
-      host: "api-redis-cache"
-      port: 6379
+  redis:
+    host: "api-redis-cache"
+    port: 6379
 
-    cache:
-      type: redis
+  cache:
+    type: redis
 
 kafka:
-  bootstrapAddress: 'api-kafka.default.svc.cluster.local:9092'
+  bootstrapAddress: api-kafka.default.svc.cluster.local:9092
 
   acks: all
   retries: 5
   retry:
     backoff:
-      ms: 1000
+      ms: 5000

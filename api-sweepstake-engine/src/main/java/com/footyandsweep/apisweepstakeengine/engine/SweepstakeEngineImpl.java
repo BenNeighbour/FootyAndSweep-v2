@@ -56,7 +56,7 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
 
       /* This gets received by the gateway service, then that service adds the sweepstake and
       user id into it's SweepstakeIds Junction Table */
-      sweepstakeMessageDispatcher.publishEvent(sweepstakeCreated, "api-sweepstake-event-topic");
+      sweepstakeMessageDispatcher.publishEvent(sweepstakeCreated, "api-sweepstake-events-topic");
 
       return sweepstake;
     } catch (Exception e) {

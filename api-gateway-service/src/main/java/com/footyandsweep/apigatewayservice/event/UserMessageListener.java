@@ -23,22 +23,16 @@ import com.footyandsweep.apicommonlibrary.events.SweepstakeEvent;
 import com.footyandsweep.apicommonlibrary.events.TicketEvent;
 import com.footyandsweep.apigatewayservice.dao.UserDao;
 import com.footyandsweep.apigatewayservice.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UserMessageListener {
 
-  private final ObjectMapper objectMapper;
-  private final UserService userService;
-  private final UserDao userDao;
-
-  public UserMessageListener(
-      final ObjectMapper objectMapper, final UserService userService, final UserDao userDao) {
-    this.objectMapper = objectMapper;
-    this.userService = userService;
-    this.userDao = userDao;
-  }
+  @Autowired private ObjectMapper objectMapper;
+  @Autowired private UserService userService;
+  @Autowired private UserDao userDao;
 
   @KafkaListener(
       topics = "api-sweepstake-events-topic",

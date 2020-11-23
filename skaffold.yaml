@@ -29,7 +29,6 @@ deploy:
     manifests:
       - kubernetes/cluster-bindings.yaml
       - kubernetes/api-redis-cache/api-redis-cache.yaml
-      - kubernetes/api-redis-cache/api-redis-cache.yaml
       - kubernetes/api-event-broker/api-kafka.yaml
       - kubernetes/api-event-broker/zookeeper.yaml
       - kubernetes/api-gateway-service/api-gateway-service-config.yaml
