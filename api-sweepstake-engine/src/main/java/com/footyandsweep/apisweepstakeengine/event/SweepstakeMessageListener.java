@@ -24,24 +24,16 @@ import com.footyandsweep.apicommonlibrary.events.TicketEvent;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
 import com.footyandsweep.apisweepstakeengine.engine.SweepstakeEngine;
 import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 @Component
 public class SweepstakeMessageListener {
 
-  private final ObjectMapper objectMapper;
-  private final SweepstakeEngine sweepstakeEngine;
-  private final SweepstakeDao sweepstakeDao;
-
-  public SweepstakeMessageListener(
-      final ObjectMapper objectMapper,
-      final SweepstakeEngine sweepstakeEngine,
-      final SweepstakeDao sweepstakeDao) {
-    this.objectMapper = objectMapper;
-    this.sweepstakeEngine = sweepstakeEngine;
-    this.sweepstakeDao = sweepstakeDao;
-  }
+  @Autowired private ObjectMapper objectMapper;
+  @Autowired private SweepstakeEngine sweepstakeEngine;
+  @Autowired private SweepstakeDao sweepstakeDao;
 
   @KafkaListener(
       topics = "api-ticket-events-topic",
@@ -70,6 +62,7 @@ public class SweepstakeMessageListener {
 
       /* Use relevant helper functions depending on the different event types */
       if (event.getEvent().equals(EventType.RELATION_DELETED))
+        sweepstakeEngine.deleteParticipantRelation(event.getSweepstake().getId());
         sweepstakeEngine.deleteSweepstake(event.getSweepstake().getId());
     } catch (JsonProcessingException e) {
       /* TODO: Log or handle the exception here */

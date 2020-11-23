@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
         /* The sweepstake engine will consume this broadcast and delete it's relation with this
         sweepstake, then it will remove the sweepstake with the message string given by the event
         above */
-        userMessageDispatcher.publishEvent(relationDeleted, "api-sweepstake-event-topic");
+        userMessageDispatcher.publishEvent(relationDeleted, "api-sweepstake-events-topic");
       }
     } catch (Exception e) {
       /* Get the error message and ping it back to the client */

@@ -22,28 +22,20 @@ import com.footyandsweep.apiallocationengine.dao.AllocationDao;
 import com.footyandsweep.apiallocationengine.engine.AllocationEngine;
 import com.footyandsweep.apicommonlibrary.events.EventType;
 import com.footyandsweep.apicommonlibrary.events.SweepstakeEvent;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 @Component
 public class AllocationMessageListener {
 
-  private final ObjectMapper objectMapper;
-  private final AllocationEngine allocationEngine;
-  private final AllocationDao allocationDao;
-
-  public AllocationMessageListener(
-      final ObjectMapper objectMapper,
-      final AllocationEngine allocationEngine,
-      final AllocationDao allocationDao) {
-    this.objectMapper = objectMapper;
-    this.allocationEngine = allocationEngine;
-    this.allocationDao = allocationDao;
-  }
+  @Autowired private ObjectMapper objectMapper;
+  @Autowired private AllocationEngine allocationEngine;
+  @Autowired private AllocationDao allocationDao;
 
   @KafkaListener(
       topics = "api-sweepstake-events-topic",
-      containerFactory = "SweepstakeEventKafkaListenerContainerFactory")
+      containerFactory = "AllocationEventKafkaListenerContainerFactory")
   public void sweepstakeEventListener(String serializedMessage) {
     try {
       /* Use JSON Object Mapper to read the message and reflect it into an object */

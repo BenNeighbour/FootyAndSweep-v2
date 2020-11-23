@@ -16,16 +16,26 @@
 
 package com.footyandsweep.apiallocationengine.config;
 
+import com.footyandsweep.apiallocationengine.event.AllocationMessageListener;
+import com.footyandsweep.apicommonlibrary.BaseEvent;
+import com.footyandsweep.apicommonlibrary.events.AllocationEvent;
 import org.apache.kafka.clients.admin.NewTopic;
+import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.kafka.annotation.EnableKafka;
+import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.config.TopicBuilder;
+import org.springframework.kafka.core.ConsumerFactory;
+import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
+import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
 import java.util.HashMap;
@@ -61,11 +71,26 @@ public class KafkaConfig {
 
   @Bean
   public NewTopic allocationEvents() {
-    return TopicBuilder.name("api-allocation-events-topic").partitions(3).replicas(1).build();
+    return TopicBuilder.name("api-allocation-events-topic").replicas(1).build();
   }
 
   @Bean
   public KafkaTemplate<String, String> customKafkaTemplate() {
     return new KafkaTemplate<>(producerFactory());
+  }
+
+  private ConsumerFactory<String, BaseEvent> allocationEventConsumerFactory() {
+    Map<String, Object> props = new HashMap<>();
+    props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
+    props.put(ConsumerConfig.GROUP_ID_CONFIG, "api-event");
+    return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(), new JsonDeserializer<>(BaseEvent.class));
+  }
+
+  @Bean
+  public ConcurrentKafkaListenerContainerFactory<String, BaseEvent> AllocationEventKafkaListenerContainerFactory() {
+    ConcurrentKafkaListenerContainerFactory<String, BaseEvent> factory = new ConcurrentKafkaListenerContainerFactory<>();
+    factory.setConsumerFactory(allocationEventConsumerFactory());
+    factory.setBatchListener(true);
+    return factory;
   }
 }

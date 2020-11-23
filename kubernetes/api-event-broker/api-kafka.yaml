@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: kafka
-          image: wurstmeister/kafka
+          image: wurstmeister/kafka:latest
           ports:
             - containerPort: 30035
           env:

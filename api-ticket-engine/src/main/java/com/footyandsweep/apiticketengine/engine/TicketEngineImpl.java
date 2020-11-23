@@ -110,7 +110,7 @@ public class TicketEngineImpl implements TicketEngine {
             SweepstakeEvent sweepstakeSoldOut = new SweepstakeEvent(parentSweepstake.get(), EventType.SOLD_OUT);
 
             /* Dispatch the sweepstake sold out event */
-            ticketMessageDispatcher.publishEvent(sweepstakeSoldOut, "api-sweepstake-event-topic");
+            ticketMessageDispatcher.publishEvent(sweepstakeSoldOut, "api-sweepstake-events-topic");
           }
         }
       } catch (InterruptedException ignored) {
