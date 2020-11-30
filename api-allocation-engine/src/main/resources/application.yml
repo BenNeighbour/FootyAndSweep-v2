@@ -4,6 +4,17 @@ spring:
 
   kafka:
     bootstrap-servers: api-kafka.default.svc.cluster.local:9092
+    consumer:
+      bootstrap-servers: api-kafka.default.svc.cluster.local:9092
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      group-id: api-event
+
+    producer:
+      bootstrap-servers: api-kafka.default.svc.cluster.local:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
   jpa:
     generate-ddl: true

@@ -16,6 +16,9 @@
 
 package com.footyandsweep.apiticketengine.config;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.MapperFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.footyandsweep.apicommonlibrary.BaseEvent;
 import com.footyandsweep.apicommonlibrary.events.TicketEvent;
 import com.footyandsweep.apiticketengine.event.TicketMessageListener;
@@ -44,53 +47,62 @@ import java.util.Map;
 @Configuration
 public class KafkaConfig {
 
-  @Value(value = "${kafka.bootstrapAddress}")
-  private String bootstrapAddress;
+    @Value(value = "${kafka.bootstrapAddress}")
+    private String bootstrapAddress;
 
-  @Value(value = "${kafka.acks}")
-  private String acknowledges;
+    @Value(value = "${kafka.acks}")
+    private String acknowledges;
 
-  @Value(value = "${kafka.retries}")
-  private int retryAttempts;
+    @Value(value = "${kafka.retries}")
+    private int retryAttempts;
 
-  @Value(value = "${kafka.retry.backoff.ms}")
-  private int retryAttemptInterval;
+    @Value(value = "${kafka.retry.backoff.ms}")
+    private int retryAttemptInterval;
 
-  @Bean
-  public ProducerFactory<String, String> producerFactory() {
-    Map<String, Object> configProps = new HashMap<>();
-    configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
-    configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-    configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
-    configProps.put(ProducerConfig.ACKS_CONFIG, acknowledges);
-    configProps.put(ProducerConfig.RETRIES_CONFIG, retryAttempts);
-    configProps.put(ProducerConfig.RETRY_BACKOFF_MS_CONFIG, retryAttemptInterval);
+    @Bean
+    public ObjectMapper objectMapper() {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
+        mapper.configure(MapperFeature.DEFAULT_VIEW_INCLUSION, true);
 
-    return new DefaultKafkaProducerFactory<>(configProps);
-  }
+        return mapper;
+    }
 
-  @Bean
-  public NewTopic ticketEvents() {
-    return TopicBuilder.name("api-ticket-events-topic").replicas(1).build();
-  }
+    @Bean
+    public ProducerFactory<String, String> producerFactory() {
+        Map<String, Object> configProps = new HashMap<>();
+        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
+        configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+        configProps.put(ProducerConfig.ACKS_CONFIG, acknowledges);
+        configProps.put(ProducerConfig.RETRIES_CONFIG, retryAttempts);
+        configProps.put(ProducerConfig.RETRY_BACKOFF_MS_CONFIG, retryAttemptInterval);
 
-  @Bean
-  public KafkaTemplate<String, String> customKafkaTemplate() {
-    return new KafkaTemplate<>(producerFactory());
-  }
+        return new DefaultKafkaProducerFactory<>(configProps);
+    }
 
-  private ConsumerFactory<String, BaseEvent> ticketEventConsumerFactory() {
-    Map<String, Object> props = new HashMap<>();
-    props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
-    props.put(ConsumerConfig.GROUP_ID_CONFIG, "api-event");
-    return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(), new JsonDeserializer<>(BaseEvent.class));
-  }
+    @Bean
+    public NewTopic ticketEvents() {
+        return TopicBuilder.name("api-ticket-events-topic").replicas(1).partitions(5).build();
+    }
 
-  @Bean
-  public ConcurrentKafkaListenerContainerFactory<String, BaseEvent> TicketEventKafkaListenerContainerFactory() {
-    ConcurrentKafkaListenerContainerFactory<String, BaseEvent> factory = new ConcurrentKafkaListenerContainerFactory<>();
-    factory.setConsumerFactory(ticketEventConsumerFactory());
-    factory.setBatchListener(true);
-    return factory;
-  }
+    @Bean
+    public KafkaTemplate<String, String> customKafkaTemplate() {
+        return new KafkaTemplate<>(producerFactory());
+    }
+
+    private ConsumerFactory<String, BaseEvent> ticketEventConsumerFactory() {
+        Map<String, Object> props = new HashMap<>();
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, "api-event");
+        return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(), new JsonDeserializer<>(BaseEvent.class));
+    }
+
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, BaseEvent> TicketEventKafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, BaseEvent> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(ticketEventConsumerFactory());
+        factory.getContainerProperties().setPollTimeout(3000);
+        return factory;
+    }
 }

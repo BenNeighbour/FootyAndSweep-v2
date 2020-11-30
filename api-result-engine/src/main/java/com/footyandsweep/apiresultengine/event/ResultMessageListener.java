@@ -31,7 +31,7 @@ public class ResultMessageListener {
   @Autowired private ResultDao resultDao;
 
   @KafkaListener(
-      topics = "api-result-events-topic",
-      containerFactory = "ResultEventKafkaListenerContainerFactory")
+          topics = "api-result-events-topic"
+  )
   public void allocationEventListener(String serializedMessage) {}
 }

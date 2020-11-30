@@ -36,4 +36,6 @@ public class SweepstakeEvent extends BaseEvent implements Serializable {
   private SweepstakeCommon sweepstake;
 
   private EventType event;
+
+
 }

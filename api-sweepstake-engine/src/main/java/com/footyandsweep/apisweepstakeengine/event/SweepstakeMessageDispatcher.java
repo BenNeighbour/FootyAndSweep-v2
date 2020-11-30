@@ -41,7 +41,7 @@ public class SweepstakeMessageDispatcher {
   public void publishEvent(BaseEvent event, String topic) throws JsonProcessingException {
     /* Serializing the event object into a string to be sent as a message via kafka */
     String serializedMessage = objectMapper.writeValueAsString(event);
-    objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+//    objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
     /* Adding listenable future to listen for a success or failure in sending the message to the kafka topic */
     ListenableFuture<SendResult<String, String>> future =

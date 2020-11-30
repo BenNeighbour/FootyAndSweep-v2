@@ -40,9 +40,13 @@ import java.util.UUID;
 public class SweepstakeCommon implements Serializable {
 
   private static final long serialVersionUID = -771315870335755392L;
+
   @Version protected Integer version;
+
   @Id @GeneratedValue private UUID id;
+
   private String name;
+
   private String joinCode = generateSweepstakeCode();
 
   private SweepstakeStatus status = SweepstakeStatus.OPEN;
@@ -90,27 +94,6 @@ public class SweepstakeCommon implements Serializable {
     }
 
     return sb.toString();
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(
-        id,
-        name,
-        version,
-        joinCode,
-        status,
-        isPrivate,
-        ownerId,
-        sweepstakeEventId,
-        sweepstakeType,
-        sweepstakeListSize,
-        minimumPlayers,
-        maximumPlayerTickets,
-        stake,
-        totalNumberOfTickets,
-        created,
-        updated);
   }
 
   public enum SweepstakeStatus {

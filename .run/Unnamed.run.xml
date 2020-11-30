@@ -1,0 +1,30 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Unnamed" type="CloudCodeCloudRunConfigurationType" factoryName="CloudCodeCloudRunDevelopConfigurationFactory" singleton="false" show_console_on_std_err="false" show_console_on_std_out="false" imageBuilder="{&quot;name&quot;:&quot;Buildpacks&quot;,&quot;payload&quot;:{&quot;path&quot;:&quot;build.gradle&quot;,&quot;builder&quot;:&quot;gcr.io/buildpacks/builder:v1&quot;}}">
+    <option name="allowRunningInParallel" value="true" />
+    <option name="buildpacksEnv">
+      <map />
+    </option>
+    <option name="cloudSqlConnections">
+      <list />
+    </option>
+    <option name="cpuAllocated" value="NO_LIMIT" />
+    <option name="dockerBuildArgs">
+      <map />
+    </option>
+    <option name="dockerTarget" value="" />
+    <option name="environmentVariables">
+      <map />
+    </option>
+    <option name="loadingAvailableBuilders" value="false" />
+    <option name="mappings">
+      <list />
+    </option>
+    <option name="memoryAllocated" value="MIB_256" />
+    <option name="selectedOptions">
+      <set />
+    </option>
+    <option name="serviceAccount" value="" />
+    <option name="serviceName" value="footyandsweep-v2" />
+    <method v="2" />
+  </configuration>
+</component>
