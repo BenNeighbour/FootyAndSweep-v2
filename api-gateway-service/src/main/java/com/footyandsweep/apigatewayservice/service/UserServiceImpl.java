@@ -36,7 +36,10 @@ public class UserServiceImpl implements UserService {
   private final SweepstakeIdDao sweepstakeIdDao;
   private final UserMessageDispatcher userMessageDispatcher;
 
-  public UserServiceImpl(final UserDao userDao, final SweepstakeIdDao sweepstakeIdDao, UserMessageDispatcher userMessageDispatcher) {
+  public UserServiceImpl(
+      final UserDao userDao,
+      final SweepstakeIdDao sweepstakeIdDao,
+      UserMessageDispatcher userMessageDispatcher) {
     this.userDao = userDao;
     this.sweepstakeIdDao = sweepstakeIdDao;
     this.userMessageDispatcher = userMessageDispatcher;
@@ -52,7 +55,7 @@ public class UserServiceImpl implements UserService {
       } else {
         /* Dispatch a sweepstake relation deleted event */
         SweepstakeEvent relationDeleted =
-                new SweepstakeEvent(sweepstake, EventType.RELATION_DELETED);
+            new SweepstakeEvent(sweepstake, EventType.RELATION_DELETED);
 
         /* The sweepstake engine will consume this broadcast and delete it's relation with this
         sweepstake, then it will remove the sweepstake with the message string given by the event

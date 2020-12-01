@@ -38,7 +38,10 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
   private final ParticipantIdDao participantIdDao;
   private final SweepstakeMessageDispatcher sweepstakeMessageDispatcher;
 
-  public SweepstakeEngineImpl(final SweepstakeDao sweepstakeDao, final ParticipantIdDao participantIdDao, final SweepstakeMessageDispatcher sweepstakeMessageDispatcher) {
+  public SweepstakeEngineImpl(
+      final SweepstakeDao sweepstakeDao,
+      final ParticipantIdDao participantIdDao,
+      final SweepstakeMessageDispatcher sweepstakeMessageDispatcher) {
     this.sweepstakeDao = sweepstakeDao;
     this.participantIdDao = participantIdDao;
     this.sweepstakeMessageDispatcher = sweepstakeMessageDispatcher;
@@ -69,7 +72,8 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
 
   @Override
   public void deleteParticipantRelation(UUID sweepstakeId) {
-    Optional<List<ParticipantIds>> optionalParticipantIds = participantIdDao.findAllParticipantIdsBySweepstakeId(sweepstakeId);
+    Optional<List<ParticipantIds>> optionalParticipantIds =
+        participantIdDao.findAllParticipantIdsBySweepstakeId(sweepstakeId);
 
     optionalParticipantIds.ifPresent(
         ids ->

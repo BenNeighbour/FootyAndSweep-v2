@@ -34,8 +34,7 @@ public class TicketMessageListener {
   @Autowired private TicketEngine ticketEngine;
   @Autowired private TicketDao ticketDao;
 
-  @KafkaListener(
-      topics = "api-ticket-events-topic")
+  @KafkaListener(topics = "api-ticket-events-topic")
   public void ticketEventListener(String serializedMessage) {
     try {
       /* Use JSON Object Mapper to read the message and reflect it into an object */
