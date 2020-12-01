@@ -26,6 +26,8 @@ import com.footyandsweep.apisweepstakeengine.relation.ParticipantIds;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -36,7 +38,10 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
   private final ParticipantIdDao participantIdDao;
   private final SweepstakeMessageDispatcher sweepstakeMessageDispatcher;
 
-  public SweepstakeEngineImpl(final SweepstakeDao sweepstakeDao, final ParticipantIdDao participantIdDao, final SweepstakeMessageDispatcher sweepstakeMessageDispatcher) {
+  public SweepstakeEngineImpl(
+      final SweepstakeDao sweepstakeDao,
+      final ParticipantIdDao participantIdDao,
+      final SweepstakeMessageDispatcher sweepstakeMessageDispatcher) {
     this.sweepstakeDao = sweepstakeDao;
     this.participantIdDao = participantIdDao;
     this.sweepstakeMessageDispatcher = sweepstakeMessageDispatcher;
@@ -67,17 +72,21 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
 
   @Override
   public void deleteParticipantRelation(UUID sweepstakeId) {
-    participantIdDao.delete(
-        participantIdDao.findAllParticipantIdsBySweepstakeId(sweepstakeId).get().stream()
-            .filter(participantIds -> participantIds.getSweepstakeId().equals(sweepstakeId))
-            .findFirst()
-            .get());
+    Optional<List<ParticipantIds>> optionalParticipantIds =
+        participantIdDao.findAllParticipantIdsBySweepstakeId(sweepstakeId);
+
+    optionalParticipantIds.ifPresent(
+        ids ->
+            participantIdDao.delete(
+                ids.stream()
+                    .filter(participantIds -> participantIds.getSweepstakeId().equals(sweepstakeId))
+                    .findAny()
+                    .get()));
   }
 
   @Override
   public Sweepstake deleteSweepstake(UUID sweepstakeId) {
     Sweepstake sweepstake = sweepstakeDao.findSweepstakeById(sweepstakeId);
-    this.deleteParticipantRelation(sweepstakeId);
     sweepstakeDao.delete(sweepstake);
 
     // TODO: Broadcast websockets error message with the reason in it

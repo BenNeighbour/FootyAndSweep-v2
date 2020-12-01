@@ -19,7 +19,6 @@ package com.footyandsweep.apigatewayservice.event;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.footyandsweep.apicommonlibrary.events.EventType;
-import com.footyandsweep.apicommonlibrary.events.SweepstakeEvent;
 import com.footyandsweep.apicommonlibrary.events.TicketEvent;
 import com.footyandsweep.apigatewayservice.dao.UserDao;
 import com.footyandsweep.apigatewayservice.service.UserService;
@@ -35,25 +34,27 @@ public class UserMessageListener {
   @Autowired private UserDao userDao;
 
   @KafkaListener(
+      id = "userSweepstakeListener",
       topics = "api-sweepstake-events-topic",
-      containerFactory = "UserEventKafkaListenerContainerFactory")
+      groupId = "userConsumerGroup")
   public void sweepstakeEventListener(String serializedMessage) {
-    try {
-      /* Use JSON Object Mapper to read the message and reflect it into an object */
-      SweepstakeEvent event = objectMapper.readValue(serializedMessage, SweepstakeEvent.class);
-
-      /* Use relevant helper functions depending on the different event types */
-      if (event.getEvent().equals(EventType.CREATED))
-        userService.addOwnerToSweepstake(event.getSweepstake());
-    } catch (JsonProcessingException e) {
-      /* TODO: Log or handle the exception here */
-      System.out.println("Error sending or receiving a valid message!");
-    }
+    System.out.println("This is the gateway service");
+    //    try {
+    //      /* Use JSON Object Mapper to read the message and reflect it into an object */
+    //      SweepstakeEvent event = (SweepstakeEvent) objectMapper.readValue(serializedMessage,
+    //              BaseEvent.class);
+    //
+    //      /* Use relevant helper functions depending on the different event types */
+    //      if (event.getEvent().equals(EventType.CREATED)) {
+    //        userService.addOwnerToSweepstake(event.getSweepstake());
+    //      }
+    //    } catch (JsonProcessingException e) {
+    //      /* TODO: Log or handle the exception here */
+    //      System.out.println("Error sending or receiving a valid message!");
+    //    }
   }
 
-  @KafkaListener(
-      topics = "api-ticket-events-topic",
-      containerFactory = "UserEventKafkaListenerContainerFactory")
+  @KafkaListener(topics = "api-ticket-events-topic")
   public void ticketEventListener(String serializedMessage) {
     try {
       /* Use JSON Object Mapper to read the message and reflect it into an object */

@@ -16,7 +16,6 @@
 
 package com.footyandsweep.apiticketengine.engine;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.footyandsweep.apicommonlibrary.events.EventType;
 import com.footyandsweep.apicommonlibrary.events.SweepstakeEvent;
 import com.footyandsweep.apicommonlibrary.events.TicketEvent;
@@ -44,7 +43,10 @@ public class TicketEngineImpl implements TicketEngine {
   private final RestTemplate restTemplate;
   private final TicketMessageDispatcher ticketMessageDispatcher;
 
-  public TicketEngineImpl(final TicketDao ticketDao, final RestTemplate restTemplate, final TicketMessageDispatcher ticketMessageDispatcher) {
+  public TicketEngineImpl(
+      final TicketDao ticketDao,
+      final RestTemplate restTemplate,
+      final TicketMessageDispatcher ticketMessageDispatcher) {
     this.ticketDao = ticketDao;
     this.restTemplate = restTemplate;
     this.ticketMessageDispatcher = ticketMessageDispatcher;
@@ -107,7 +109,8 @@ public class TicketEngineImpl implements TicketEngine {
           if (allSweepstakeTickets.get().size()
               >= parentSweepstake.get().getTotalNumberOfTickets()) {
             /* Creating the sweepstake sold out object for the other services to react to */
-            SweepstakeEvent sweepstakeSoldOut = new SweepstakeEvent(parentSweepstake.get(), EventType.SOLD_OUT);
+            SweepstakeEvent sweepstakeSoldOut =
+                new SweepstakeEvent(parentSweepstake.get(), EventType.SOLD_OUT);
 
             /* Dispatch the sweepstake sold out event */
             ticketMessageDispatcher.publishEvent(sweepstakeSoldOut, "api-sweepstake-events-topic");
@@ -129,7 +132,7 @@ public class TicketEngineImpl implements TicketEngine {
 
   private void ticketIteratorHelper(
       int numberOfTickets, UUID userId, SweepstakeCommon parentSweepstake) {
-    try{
+    try {
       /* When valid, buy each of the tickets for the user */
       for (int i = 0; i < numberOfTickets; i++) {
         Ticket ticket = new Ticket();

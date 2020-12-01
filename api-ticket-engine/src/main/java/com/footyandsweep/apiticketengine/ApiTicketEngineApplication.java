@@ -16,7 +16,6 @@
 
 package com.footyandsweep.apiticketengine;
 
-import com.footyandsweep.apiticketengine.config.KafkaConfig;
 import com.footyandsweep.apiticketengine.config.WebConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -37,7 +36,7 @@ import org.springframework.web.filter.ForwardedHeaderFilter;
 @EnableJpaRepositories
 @EnableDiscoveryClient
 @EnableKafka
-@Import({WebConfiguration.class, KafkaConfig.class})
+@Import({WebConfiguration.class})
 public class ApiTicketEngineApplication {
 
   public static void main(String[] args) {

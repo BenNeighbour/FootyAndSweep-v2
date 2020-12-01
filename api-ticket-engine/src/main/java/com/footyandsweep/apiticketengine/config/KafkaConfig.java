@@ -16,9 +16,10 @@
 
 package com.footyandsweep.apiticketengine.config;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.MapperFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.footyandsweep.apicommonlibrary.BaseEvent;
-import com.footyandsweep.apicommonlibrary.events.TicketEvent;
-import com.footyandsweep.apiticketengine.event.TicketMessageListener;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -27,14 +28,9 @@ import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.config.TopicBuilder;
-import org.springframework.kafka.core.ConsumerFactory;
-import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
-import org.springframework.kafka.core.DefaultKafkaProducerFactory;
-import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.kafka.core.ProducerFactory;
+import org.springframework.kafka.core.*;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
@@ -44,17 +40,26 @@ import java.util.Map;
 @Configuration
 public class KafkaConfig {
 
-  @Value(value = "${kafka.bootstrapAddress}")
+  @Value(value = "${spring.kafka.bootstrap-servers}")
   private String bootstrapAddress;
 
-  @Value(value = "${kafka.acks}")
+  @Value(value = "${spring.kafka.acks}")
   private String acknowledges;
 
-  @Value(value = "${kafka.retries}")
+  @Value(value = "${spring.kafka.retries}")
   private int retryAttempts;
 
-  @Value(value = "${kafka.retry.backoff.ms}")
+  @Value(value = "${spring.kafka.retry.backoff.ms}")
   private int retryAttemptInterval;
+
+  @Bean
+  public ObjectMapper objectMapper() {
+    ObjectMapper mapper = new ObjectMapper();
+    mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
+    mapper.configure(MapperFeature.DEFAULT_VIEW_INCLUSION, true);
+
+    return mapper;
+  }
 
   @Bean
   public ProducerFactory<String, String> producerFactory() {
@@ -71,7 +76,7 @@ public class KafkaConfig {
 
   @Bean
   public NewTopic ticketEvents() {
-    return TopicBuilder.name("api-ticket-events-topic").replicas(1).build();
+    return TopicBuilder.name("api-ticket-events-topic").replicas(1).partitions(5).build();
   }
 
   @Bean
@@ -83,14 +88,17 @@ public class KafkaConfig {
     Map<String, Object> props = new HashMap<>();
     props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
     props.put(ConsumerConfig.GROUP_ID_CONFIG, "api-event");
-    return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(), new JsonDeserializer<>(BaseEvent.class));
+    return new DefaultKafkaConsumerFactory<>(
+        props, new StringDeserializer(), new JsonDeserializer<>(BaseEvent.class));
   }
 
   @Bean
-  public ConcurrentKafkaListenerContainerFactory<String, BaseEvent> TicketEventKafkaListenerContainerFactory() {
-    ConcurrentKafkaListenerContainerFactory<String, BaseEvent> factory = new ConcurrentKafkaListenerContainerFactory<>();
+  public ConcurrentKafkaListenerContainerFactory<String, BaseEvent>
+      TicketEventKafkaListenerContainerFactory() {
+    ConcurrentKafkaListenerContainerFactory<String, BaseEvent> factory =
+        new ConcurrentKafkaListenerContainerFactory<>();
     factory.setConsumerFactory(ticketEventConsumerFactory());
-    factory.setBatchListener(true);
+    factory.getContainerProperties().setPollTimeout(3000);
     return factory;
   }
 }

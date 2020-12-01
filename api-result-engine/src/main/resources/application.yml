@@ -3,12 +3,28 @@ spring:
     name: 'api-result-engine'
 
   kafka:
-    bootstrap-servers: api-kafka.default.svc.cluster.local:9092
+    bootstrap-servers: ${KAFKA_CONNECT}
+    consumer:
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      group-id: api-event
+      enable-auto-commit: true
+
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+    acks: all
+    retries: 5
+    retry:
+      backoff:
+        ms: 5000
 
   jpa:
     generate-ddl: true
 
-    show-sql: true
+    show-sql: false
 
     properties:
       hibernate:
@@ -30,12 +46,3 @@ spring:
 
   cache:
     type: redis
-
-kafka:
-  bootstrapAddress: api-kafka.default.svc.cluster.local:9092
-
-  acks: all
-  retries: 5
-  retry:
-    backoff:
-      ms: 5000

@@ -39,7 +39,10 @@ public class AllocationEngineImpl implements AllocationEngine {
   private final RestTemplate restTemplate;
   private final AllocationMessageDispatcher allocationMessageDispatcher;
 
-  public AllocationEngineImpl(final AllocationDao allocationDao, final RestTemplate restTemplate, final AllocationMessageDispatcher allocationMessageDispatcher) {
+  public AllocationEngineImpl(
+      final AllocationDao allocationDao,
+      final RestTemplate restTemplate,
+      final AllocationMessageDispatcher allocationMessageDispatcher) {
     this.allocationDao = allocationDao;
     this.restTemplate = restTemplate;
     this.allocationMessageDispatcher = allocationMessageDispatcher;
@@ -189,12 +192,12 @@ public class AllocationEngineImpl implements AllocationEngine {
 
       /* Getting sweepstake by the id so that it can be modified here */
       Optional<SweepstakeCommon> sweepstake =
-              Optional.ofNullable(
-                      restTemplate.getForObject(
-                              "http://api-sweepstake-engine:8080/internal/sweepstake/by/"
-                                      + ticket.getSweepstakeId()
-                                      + "/participants",
-                              SweepstakeCommon.class));
+          Optional.ofNullable(
+              restTemplate.getForObject(
+                  "http://api-sweepstake-engine:8080/internal/sweepstake/by/"
+                      + ticket.getSweepstakeId()
+                      + "/participants",
+                  SweepstakeCommon.class));
 
       /* If the sweepstake is not valid, then throw an error */
       if (!sweepstake.isPresent()) throw new Exception();
