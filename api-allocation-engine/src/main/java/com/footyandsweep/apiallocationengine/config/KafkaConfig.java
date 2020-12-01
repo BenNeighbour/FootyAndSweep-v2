@@ -44,16 +44,16 @@ import java.util.Map;
 @Configuration
 public class KafkaConfig {
 
-    @Value(value = "${kafka.bootstrapAddress}")
+    @Value(value = "${spring.kafka.bootstrap-servers}")
     private String bootstrapAddress;
 
-    @Value(value = "${kafka.acks}")
+    @Value(value = "${spring.kafka.acks}")
     private String acknowledges;
 
-    @Value(value = "${kafka.retries}")
+    @Value(value = "${spring.kafka.retries}")
     private int retryAttempts;
 
-    @Value(value = "${kafka.retry.backoff.ms}")
+    @Value(value = "${spring.kafka.retry.backoff.ms}")
     private int retryAttemptInterval;
 
     @Bean
