@@ -19,7 +19,7 @@ spring:
   jpa:
     generate-ddl: true
 
-    show-sql: true
+    show-sql: false
 
     properties:
       hibernate:

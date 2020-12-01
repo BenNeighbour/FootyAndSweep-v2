@@ -10,7 +10,7 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       group-id: api-event
-      enable-auto-commit: false
+      enable-auto-commit: true
 
     producer:
       bootstrap-servers: api-kafka.default.svc.cluster.local:9092
@@ -20,7 +20,7 @@ spring:
   jpa:
     generate-ddl: true
 
-    show-sql: true
+    show-sql: false
 
     properties:
       hibernate:

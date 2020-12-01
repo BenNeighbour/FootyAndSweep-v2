@@ -36,10 +36,10 @@ spec:
             - name: SPRING_DATASOURCE_URL
               value: 'jdbc:postgresql://api-database:5432/api-footyandsweep?stringtype=unspecified'
 
-            - name: EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS
+            - name: KAFKA_CONNECT
               value: 'api-kafka.default.svc.cluster.local:9092'
 
-            - name: EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING
+            - name: ZOOKEEPER_CONNECT
               value: 'zookeeper:2181'
 
 ---

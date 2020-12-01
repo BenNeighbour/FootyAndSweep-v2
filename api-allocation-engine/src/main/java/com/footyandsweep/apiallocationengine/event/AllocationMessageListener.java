@@ -20,7 +20,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.footyandsweep.apiallocationengine.dao.AllocationDao;
 import com.footyandsweep.apiallocationengine.engine.AllocationEngine;
-import com.footyandsweep.apicommonlibrary.BaseEvent;
 import com.footyandsweep.apicommonlibrary.events.EventType;
 import com.footyandsweep.apicommonlibrary.events.SweepstakeEvent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,20 +34,19 @@ public class AllocationMessageListener {
   @Autowired private AllocationDao allocationDao;
 
   @KafkaListener(
-      topics = "api-sweepstake-events-topic", groupId = "allocationConsumerGroup")
+      id = "allocationSweepstakeListener", topics = "api-sweepstake-events-topic", groupId = "allocationConsumerGroup")
   public void sweepstakeEventListener(String serializedMessage) {
-    //    try {
-    //      /* Use JSON Object Mapper to read the message and reflect it into an object */
-    //      SweepstakeEvent event = objectMapper.readValue(serializedMessage,
-    // SweepstakeEvent.class);
-    //
-    //      /* Use relevant helper functions depending on the different event types */
-    //      if (event.getEvent().equals(EventType.SOLD_OUT))
-    //        allocationEngine.allocateSweepstakeTickets(event.getSweepstake());
-    //    } catch (JsonProcessingException e) {
-    //      /* TODO: Log or handle the exception here */
-    //      System.out.println("Error sending or receiving a valid message!");
-    //    }
     System.out.println("This is the allocation service");
+//        try {
+//          /* Use JSON Object Mapper to read the message and reflect it into an object */
+//          SweepstakeEvent event = objectMapper.readValue(serializedMessage, SweepstakeEvent.class);
+//
+//          /* Use relevant helper functions depending on the different event types */
+//          if (event.getEvent().equals(EventType.SOLD_OUT))
+//            allocationEngine.allocateSweepstakeTickets(event.getSweepstake());
+//        } catch (JsonProcessingException e) {
+//          /* TODO: Log or handle the exception here */
+//          System.out.println("Error sending or receiving a valid message!");
+//        }
   }
 }
