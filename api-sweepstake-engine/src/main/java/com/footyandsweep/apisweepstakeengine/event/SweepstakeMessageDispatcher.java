@@ -28,39 +28,34 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 @Service
 public class SweepstakeMessageDispatcher {
 
-  private final KafkaTemplate<String, String> kafkaTemplate;
-  private final ObjectMapper objectMapper;
+  private final KafkaTemplate<String, BaseEvent> kafkaTemplate;
+    private final ObjectMapper objectMapper;
 
-  public SweepstakeMessageDispatcher(
-      final KafkaTemplate<String, String> kafkaTemplate, final ObjectMapper objectMapper) {
-    this.kafkaTemplate = kafkaTemplate;
-    this.objectMapper = objectMapper;
-  }
+    public SweepstakeMessageDispatcher(
+            final KafkaTemplate<String, BaseEvent> kafkaTemplate, final ObjectMapper objectMapper) {
+        this.kafkaTemplate = kafkaTemplate;
+        this.objectMapper = objectMapper;
+    }
 
   public void publishEvent(BaseEvent event, String topic) throws JsonProcessingException {
-    /* Serializing the event object into a string to be sent as a message via kafka */
-    String serializedMessage = objectMapper.writeValueAsString(event);
-    //    objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+      /* Adding listenable future to listen for a success or failure in sending the message to the kafka topic */
+      ListenableFuture<SendResult<String, BaseEvent>> future =
+              kafkaTemplate.send(topic, event);
+      /* Adding callbacks that will be hit once the message is successfully/unsuccessfully */
+      future.addCallback(
+              new ListenableFutureCallback<SendResult<String, BaseEvent>>() {
 
-    /* Adding listenable future to listen for a success or failure in sending the message to the kafka topic */
-    ListenableFuture<SendResult<String, String>> future =
-        kafkaTemplate.send(topic, serializedMessage);
+                  /* Logging/caching a failure */
+                  @Override
+                  public void onFailure(Throwable ex) {
+                      System.out.println("Send message failed");
+                  }
 
-    /* Adding callbacks that will be hit once the message is successfully/unsuccessfully */
-    future.addCallback(
-        new ListenableFutureCallback<SendResult<String, String>>() {
-
-          /* Logging/caching a failure */
-          @Override
-          public void onFailure(Throwable ex) {
-            System.out.println("Send message failed");
-          }
-
-          /* Logging/handling success */
-          @Override
-          public void onSuccess(SendResult<String, String> result) {
-            System.out.println("Send message success!");
-          }
+                  /* Logging/handling success */
+                  @Override
+                  public void onSuccess(SendResult<String, BaseEvent> result) {
+                      System.out.println("Send message success!");
+                  }
         });
   }
 }

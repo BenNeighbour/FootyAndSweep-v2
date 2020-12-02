@@ -18,6 +18,7 @@ package com.footyandsweep.apisweepstakeengine.event;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.footyandsweep.apicommonlibrary.BaseEvent;
 import com.footyandsweep.apicommonlibrary.events.EventType;
 import com.footyandsweep.apicommonlibrary.events.SweepstakeEvent;
 import com.footyandsweep.apicommonlibrary.events.TicketEvent;
@@ -50,24 +51,24 @@ public class SweepstakeMessageListener {
     }
   }
 
-  @KafkaListener(
-      id = "sweepstakeSweepstakeListener",
-      topics = "api-sweepstake-events-topic",
-      groupId = "sweepstakeConsumerGroup")
-  public void sweepstakeEventListener(String serializedMessage) {
-    System.out.println("This is the sweepstake service");
-    try {
-          /* Use JSON Object Mapper to read the message and reflect it into an object */
-          SweepstakeEvent event = objectMapper.readValue(serializedMessage, SweepstakeEvent.class);
+    @KafkaListener(
+            id = "sweepstakeSweepstakeListener",
+            topics = "api-sweepstake-events-topic",
+            groupId = "sweepstakeConsumerGroup",
+            containerFactory = "SweepstakeEventKafkaListenerContainerFactory")
+    public void sweepstakeEventListener(BaseEvent message) {
+        try {
+            /* Use JSON Object Mapper to read the message and reflect it into an object */
+            SweepstakeEvent event = (SweepstakeEvent) message;
 
-          /* Use relevant helper functions depending on the different event types */
-          if (event.getEvent().equals(EventType.RELATION_DELETED)) {
-            sweepstakeEngine.deleteParticipantRelation(event.getSweepstake().getId());
-          }
-          sweepstakeEngine.deleteSweepstake(event.getSweepstake().getId());
-        } catch (JsonProcessingException e) {
-          /* TODO: Log or handle the exception here */
-          System.out.println("Error sending or receiving a valid message!");
+            /* Use relevant helper functions depending on the different event types */
+            if (event.getEvent().equals(EventType.RELATION_DELETED)) {
+                sweepstakeEngine.deleteParticipantRelation(event.getSweepstake().getId());
+            }
+            sweepstakeEngine.deleteSweepstake(event.getSweepstake().getId());
+        } catch (Exception e) {
+            /* TODO: Log or handle the exception here */
+            System.out.println("Error sending or receiving a valid message!");
         }
   }
 }
