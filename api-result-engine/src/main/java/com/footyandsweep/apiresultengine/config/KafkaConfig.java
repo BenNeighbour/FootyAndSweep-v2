@@ -43,13 +43,13 @@ public class KafkaConfig {
   @Value(value = "${spring.kafka.bootstrap-servers}")
   private String bootstrapAddress;
 
-  @Value(value = "$spring.kafka.acks}")
+  @Value(value = "${spring.kafka.acks}")
   private String acknowledges;
 
-  @Value(value = "$spring.kafka.retries}")
+  @Value(value = "${spring.kafka.retries}")
   private int retryAttempts;
 
-  @Value(value = "$spring.kafka.retry.backoff.ms}")
+  @Value(value = "${spring.kafka.retry.backoff.ms}")
   private int retryAttemptInterval;
 
   @Bean
@@ -62,7 +62,7 @@ public class KafkaConfig {
   }
 
   @Bean
-  public ProducerFactory<String, String> producerFactory() {
+  public ProducerFactory<String, BaseEvent> producerFactory() {
     Map<String, Object> configProps = new HashMap<>();
     configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
     configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -80,7 +80,7 @@ public class KafkaConfig {
   }
 
   @Bean
-  public KafkaTemplate<String, String> customKafkaTemplate() {
+  public KafkaTemplate<String, BaseEvent> customKafkaTemplate() {
     return new KafkaTemplate<>(producerFactory());
   }
 

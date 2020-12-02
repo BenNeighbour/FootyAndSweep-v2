@@ -62,7 +62,7 @@ public class KafkaConfig {
   }
 
   @Bean
-  public ProducerFactory<String, String> producerFactory() {
+  public ProducerFactory<String, BaseEvent> producerFactory() {
     Map<String, Object> configProps = new HashMap<>();
     configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
     configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -80,8 +80,8 @@ public class KafkaConfig {
   }
 
   @Bean
-  public KafkaTemplate<String, String> customKafkaTemplate() {
-    return new KafkaTemplate<>(producerFactory());
+  public KafkaTemplate<String, BaseEvent> customKafkaTemplate() {
+    return new KafkaTemplate<String, BaseEvent>(producerFactory());
   }
 
   private ConsumerFactory<String, BaseEvent> sweepstakeEventConsumerFactory() {

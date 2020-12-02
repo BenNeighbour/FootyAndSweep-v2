@@ -6,13 +6,7 @@ spring:
     bootstrap-servers: ${KAFKA_CONNECT}
     consumer:
       auto-offset-reset: earliest
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       group-id: api-event
-
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
     acks: all
     retries: 5
@@ -21,18 +15,6 @@ spring:
         ms: 5000
 
   jpa:
-    generate-ddl: true
-
-    show-sql: false
-
-    properties:
-      hibernate:
-        ddl-auto: update
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-
-    hibernate:
-      default_batch_fetch_size: 16
-
     datasource:
       url: ${SPRING_DATASOURCE_URL}
       username: ${SPRING_DATASOURCE_USERNAME}
@@ -40,7 +22,7 @@ spring:
       driver-class-name: org.postgresql.Driver
 
   redis:
-    host: "api-redis-cache"
+    host: ${REDIS_CONNECT}
     port: 6379
 
   cache:

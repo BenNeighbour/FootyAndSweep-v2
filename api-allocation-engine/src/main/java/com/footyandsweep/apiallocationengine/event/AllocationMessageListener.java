@@ -19,6 +19,9 @@ package com.footyandsweep.apiallocationengine.event;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.footyandsweep.apiallocationengine.dao.AllocationDao;
 import com.footyandsweep.apiallocationengine.engine.AllocationEngine;
+import com.footyandsweep.apicommonlibrary.BaseEvent;
+import com.footyandsweep.apicommonlibrary.events.EventType;
+import com.footyandsweep.apicommonlibrary.events.SweepstakeEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
@@ -33,20 +36,19 @@ public class AllocationMessageListener {
   @KafkaListener(
       id = "allocationSweepstakeListener",
       topics = "api-sweepstake-events-topic",
-      groupId = "allocationConsumerGroup")
-  public void sweepstakeEventListener(String serializedMessage) {
-    System.out.println("This is the allocation service");
-    //        try {
-    //          /* Use JSON Object Mapper to read the message and reflect it into an object */
-    //          SweepstakeEvent event = objectMapper.readValue(serializedMessage,
-    // SweepstakeEvent.class);
-    //
-    //          /* Use relevant helper functions depending on the different event types */
-    //          if (event.getEvent().equals(EventType.SOLD_OUT))
-    //            allocationEngine.allocateSweepstakeTickets(event.getSweepstake());
-    //        } catch (JsonProcessingException e) {
-    //          /* TODO: Log or handle the exception here */
-    //          System.out.println("Error sending or receiving a valid message!");
-    //        }
+      groupId = "allocationConsumerGroup",
+      containerFactory = "AllocationEventKafkaListenerContainerFactory")
+  public void sweepstakeEventListener(BaseEvent message) {
+    try {
+      /* Use JSON Object Mapper to read the message and reflect it into an object */
+      SweepstakeEvent event = (SweepstakeEvent) message;
+
+      /* Use relevant helper functions depending on the different event types */
+      if (event.getEvent().equals(EventType.SOLD_OUT))
+        allocationEngine.allocateSweepstakeTickets(event.getSweepstake());
+    } catch (Exception e) {
+      /* TODO: Log or handle the exception here */
+      System.out.println("Error sending or receiving a valid message!");
+    }
   }
 }
