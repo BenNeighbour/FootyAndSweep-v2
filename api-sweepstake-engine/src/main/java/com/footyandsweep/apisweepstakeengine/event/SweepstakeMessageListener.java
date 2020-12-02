@@ -51,24 +51,24 @@ public class SweepstakeMessageListener {
     }
   }
 
-    @KafkaListener(
-            id = "sweepstakeSweepstakeListener",
-            topics = "api-sweepstake-events-topic",
-            groupId = "sweepstakeConsumerGroup",
-            containerFactory = "SweepstakeEventKafkaListenerContainerFactory")
-    public void sweepstakeEventListener(BaseEvent message) {
-        try {
-            /* Use JSON Object Mapper to read the message and reflect it into an object */
-            SweepstakeEvent event = (SweepstakeEvent) message;
+  @KafkaListener(
+      id = "sweepstakeSweepstakeListener",
+      topics = "api-sweepstake-events-topic",
+      groupId = "sweepstakeConsumerGroup",
+      containerFactory = "SweepstakeEventKafkaListenerContainerFactory")
+  public void sweepstakeEventListener(BaseEvent message) {
+    try {
+      /* Use JSON Object Mapper to read the message and reflect it into an object */
+      SweepstakeEvent event = (SweepstakeEvent) message;
 
-            /* Use relevant helper functions depending on the different event types */
-            if (event.getEvent().equals(EventType.RELATION_DELETED)) {
-                sweepstakeEngine.deleteParticipantRelation(event.getSweepstake().getId());
-            }
-            sweepstakeEngine.deleteSweepstake(event.getSweepstake().getId());
-        } catch (Exception e) {
-            /* TODO: Log or handle the exception here */
-            System.out.println("Error sending or receiving a valid message!");
-        }
+      /* Use relevant helper functions depending on the different event types */
+      if (event.getEvent().equals(EventType.RELATION_DELETED)) {
+        sweepstakeEngine.deleteParticipantRelation(event.getSweepstake().getId());
+      }
+      sweepstakeEngine.deleteSweepstake(event.getSweepstake().getId());
+    } catch (Exception e) {
+      /* TODO: Log or handle the exception here */
+      System.out.println("Error sending or receiving a valid message!");
+    }
   }
 }

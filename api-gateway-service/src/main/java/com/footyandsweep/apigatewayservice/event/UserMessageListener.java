@@ -38,7 +38,8 @@ public class UserMessageListener {
   @KafkaListener(
       id = "userSweepstakeListener",
       topics = "api-sweepstake-events-topic",
-      groupId = "userConsumerGroup", containerFactory = "UserEventKafkaListenerContainerFactory")
+      groupId = "userConsumerGroup",
+      containerFactory = "UserEventKafkaListenerContainerFactory")
   public void sweepstakeEventListener(BaseEvent message) {
     try {
       /* Use JSON Object Mapper to read the message and reflect it into an object */
