@@ -42,6 +42,9 @@ spec:
             - name: ZOOKEEPER_CONNECT
               value: 'zookeeper:2181'
 
+            - name: REDIS_CONNECT
+              value: "api-redis-cache"
+
 ---
 apiVersion: v1
 kind: Service

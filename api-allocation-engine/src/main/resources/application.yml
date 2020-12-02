@@ -21,18 +21,6 @@ spring:
         ms: 5000
 
   jpa:
-    generate-ddl: true
-
-    show-sql: false
-
-    properties:
-      hibernate:
-        ddl-auto: update
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-
-    hibernate:
-      default_batch_fetch_size: 16
-
     datasource:
       url: ${SPRING_DATASOURCE_URL}
       username: ${SPRING_DATASOURCE_USERNAME}
@@ -40,7 +28,7 @@ spring:
       driver-class-name: org.postgresql.Driver
 
   redis:
-    host: "api-redis-cache"
+    host: ${REDIS_CONNECT}
     port: 6379
 
   cache:

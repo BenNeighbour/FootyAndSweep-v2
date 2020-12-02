@@ -43,13 +43,13 @@ public class KafkaConfig {
   @Value(value = "${spring.kafka.bootstrap-servers}")
   private String bootstrapAddress;
 
-  @Value(value = "$spring.kafka.acks}")
+  @Value(value = "${spring.kafka.acks}")
   private String acknowledges;
 
-  @Value(value = "$spring.kafka.retries}")
+  @Value(value = "${spring.kafka.retries}")
   private int retryAttempts;
 
-  @Value(value = "$spring.kafka.retry.backoff.ms}")
+  @Value(value = "${spring.kafka.retry.backoff.ms}")
   private int retryAttemptInterval;
 
   @Bean
