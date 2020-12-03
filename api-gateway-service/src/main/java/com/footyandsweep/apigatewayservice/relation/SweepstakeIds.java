@@ -21,10 +21,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.UUID;
 
@@ -39,9 +36,18 @@ public class SweepstakeIds implements Serializable {
   private static final long serialVersionUID = 5778408986459720940L;
 
   @Id
+  @GeneratedValue
+  @Column(columnDefinition = "uuid", updatable = false, name = "id")
+  private UUID id;
+
   @Column(columnDefinition = "uuid")
   private UUID participantId;
 
   @Column(columnDefinition = "uuid")
   private UUID sweepstakeId;
+
+  public SweepstakeIds(UUID participantId, UUID sweepstakeId) {
+    this.participantId = participantId;
+    this.sweepstakeId = sweepstakeId;
+  }
 }
