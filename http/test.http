@@ -2,7 +2,7 @@ POST http://localhost:8081/internal/sweepstake/save
 Content-Type: application/json
 
 {
-  "name": "Ben's Stuff",
+  "name": "This is a sweepstake",
   "isPrivate": true,
   "ownerId": "045a5642-68a0-4d14-b19c-29e51ec9c9ee",
   "numberOfRange": 5,
