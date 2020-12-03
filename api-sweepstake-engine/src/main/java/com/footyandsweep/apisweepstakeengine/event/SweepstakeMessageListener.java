@@ -64,8 +64,8 @@ public class SweepstakeMessageListener {
       /* Use relevant helper functions depending on the different event types */
       if (event.getEvent().equals(EventType.RELATION_DELETED)) {
         sweepstakeEngine.deleteParticipantRelation(event.getSweepstake().getId());
+        sweepstakeEngine.deleteSweepstake(event.getSweepstake().getId());
       }
-      sweepstakeEngine.deleteSweepstake(event.getSweepstake().getId());
     } catch (Exception e) {
       /* TODO: Log or handle the exception here */
       System.out.println("Error sending or receiving a valid message!");
