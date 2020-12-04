@@ -16,12 +16,16 @@
 
 package com.footyandsweep.apiresultengine.engine;
 
+import com.footyandsweep.apicommonlibrary.events.EventType;
+import com.footyandsweep.apicommonlibrary.events.UserEvent;
 import com.footyandsweep.apicommonlibrary.helper.SweepstakeLock;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeTypeCommon;
 import com.footyandsweep.apicommonlibrary.model.ticket.AllocationCommon;
 import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
+import com.footyandsweep.apicommonlibrary.model.user.UserCommon;
 import com.footyandsweep.apiresultengine.dao.ResultDao;
+import com.footyandsweep.apiresultengine.event.ResultMessageDispatcher;
 import com.footyandsweep.apiresultengine.model.FootballMatchResult;
 import com.footyandsweep.apiresultengine.model.Result;
 import org.springframework.stereotype.Service;
@@ -37,10 +41,12 @@ public class ResultEngineImpl implements ResultEngine {
 
   private final ResultDao resultDao;
   private final RestTemplate restTemplate;
+  private final ResultMessageDispatcher resultMessageDispatcher;
 
-  public ResultEngineImpl(final ResultDao resultDao, final RestTemplate restTemplate) {
+  public ResultEngineImpl(final ResultDao resultDao, final RestTemplate restTemplate, final ResultMessageDispatcher resultMessageDispatcher) {
     this.resultDao = resultDao;
     this.restTemplate = restTemplate;
+    this.resultMessageDispatcher = resultMessageDispatcher;
   }
 
   @Override
@@ -137,7 +143,11 @@ public class ResultEngineImpl implements ResultEngine {
       /* Locking the user from buying more tickets */
       SweepstakeLock.userLock(userId);
 
+      UserCommon user = restTemplate.getForObject("http://api-gateway-service:8080/internal/user/by/id/" + userId, UserCommon.class);
+      UserEvent userEvent = new UserEvent(user, EventType.UPDATED);
+
       /* Dispatch message to gateway service to set the user's balance to itself + the credit amount */
+      resultMessageDispatcher.publishEvent(userEvent, "api-user-events-topic");
     } catch (InterruptedException ie) {
       ie.getMessage();
     } finally {
