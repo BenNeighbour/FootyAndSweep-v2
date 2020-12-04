@@ -143,7 +143,13 @@ public class ResultEngineImpl implements ResultEngine {
       /* Locking the user from buying more tickets */
       SweepstakeLock.userLock(userId);
 
+      /* Get the user and set it's new balance */
       UserCommon user = restTemplate.getForObject("http://api-gateway-service:8080/internal/user/by/id/" + userId, UserCommon.class);
+
+      assert user != null;
+      user.setBalance(user.getBalance().subtract(creditAmount));
+
+      /* Creating the event object to be sent to the kafka stream */
       UserEvent userEvent = new UserEvent(user, EventType.UPDATED);
 
       /* Dispatch message to gateway service to set the user's balance to itself + the credit amount */
