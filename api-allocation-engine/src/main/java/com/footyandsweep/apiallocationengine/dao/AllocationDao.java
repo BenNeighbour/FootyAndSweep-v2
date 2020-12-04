@@ -32,6 +32,10 @@ public interface AllocationDao extends JpaRepository<Allocation, UUID> {
   Allocation findAllocationById(UUID id);
 
   @Transactional
+  @CacheEvict(value = "allocationCache", key = "#id")
+  Allocation findAllocationByTicketId(UUID ticketId);
+
+  @Transactional
   @CacheEvict(value = "allocationCache", key = "#allocation.getId()")
   Allocation save(Allocation allocation);
 

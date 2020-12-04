@@ -16,13 +16,14 @@
 
 package com.footyandsweep.apigatewayservice.event;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.footyandsweep.apicommonlibrary.BaseEvent;
 import com.footyandsweep.apicommonlibrary.events.EventType;
 import com.footyandsweep.apicommonlibrary.events.SweepstakeEvent;
 import com.footyandsweep.apicommonlibrary.events.TicketEvent;
+import com.footyandsweep.apicommonlibrary.events.UserEvent;
 import com.footyandsweep.apigatewayservice.dao.UserDao;
+import com.footyandsweep.apigatewayservice.model.User;
 import com.footyandsweep.apigatewayservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -54,15 +55,44 @@ public class UserMessageListener {
     }
   }
 
-  @KafkaListener(topics = "api-ticket-events-topic")
-  public void ticketEventListener(String serializedMessage) {
+  @KafkaListener(
+          id = "userTicketListener",
+          topics = "api-ticket-events-topic",
+          groupId = "userConsumerGroup",
+          containerFactory = "UserEventKafkaListenerContainerFactory")
+  public void ticketEventListener(BaseEvent message) {
     try {
       /* Use JSON Object Mapper to read the message and reflect it into an object */
-      TicketEvent event = objectMapper.readValue(serializedMessage, TicketEvent.class);
+      TicketEvent event = (TicketEvent) message;
 
       /* Use relevant helper functions depending on the different event types */
-      if (event.getEvent().equals(EventType.PURCHASED)) return;
-    } catch (JsonProcessingException e) {
+      if (event.getEvent().equals(EventType.PURCHASED)) {
+        /* Deduct credits from user account */
+        User user = userDao.findUserById(event.getTicket().getUserId());
+        user.setBalance(user.getBalance().subtract(event.getTicket().getSweepstake().getStake()));
+
+        /* Update that user */
+        userDao.saveAndFlush(user);
+      }
+    } catch (Exception e) {
+      /* TODO: Log or handle the exception here */
+      System.out.println("Error sending or receiving a valid message!");
+    }
+  }
+
+  @KafkaListener(
+          id = "userUserListener",
+          topics = "api-user-events-topic",
+          groupId = "userConsumerGroup",
+          containerFactory = "UserEventKafkaListenerContainerFactory")
+  public void userEventListener(BaseEvent message) {
+    try {
+      /* Use JSON Object Mapper to read the message and reflect it into an object */
+      UserEvent event = (UserEvent) message;
+
+      /* Use relevant helper functions depending on the different event types */
+      if (event.getEvent().equals(EventType.UPDATED)) userDao.saveAndFlush((User) event.getUser());
+    } catch (Exception e) {
       /* TODO: Log or handle the exception here */
       System.out.println("Error sending or receiving a valid message!");
     }

@@ -38,13 +38,9 @@ public class ResultMessageDispatcher {
     this.objectMapper = objectMapper;
   }
 
-  public void publishEvent(BaseEvent event, String topic) throws JsonProcessingException {
-    /* Serializing the event object into a string to be sent as a message via kafka */
-    String serializedMessage = objectMapper.writeValueAsString(event);
-    objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-
-    /* Adding listenable future to listen for a success or failure in sending the message to the kafka topic */
-    ListenableFuture<SendResult<String, BaseEvent>> future = kafkaTemplate.send(topic, event);
+  public void publishEvent(BaseEvent event, String topic) {
+      /* Adding listenable future to listen for a success or failure in sending the message to the kafka topic */
+      ListenableFuture<SendResult<String, BaseEvent>> future = kafkaTemplate.send(topic, event);
 
     /* Adding callbacks that will be hit once the message is successfully/unsuccessfully */
     future.addCallback(

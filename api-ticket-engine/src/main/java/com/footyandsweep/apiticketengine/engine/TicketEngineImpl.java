@@ -141,6 +141,7 @@ public class TicketEngineImpl implements TicketEngine {
         ticket.setUserId(userId);
         ticket.setStatus(TicketCommon.TicketStatus.PENDING);
         ticket.setSweepstakeId(parentSweepstake.getId());
+        ticket.setSweepstake(parentSweepstake);
 
         /* Persist that ticket while adding it onto the list of bought tickets for that user */
         ticket = ticketDao.save(ticket);
