@@ -23,6 +23,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.UUID;
 
 @Repository
@@ -43,4 +44,7 @@ public interface SweepstakeDao extends JpaRepository<Sweepstake, UUID> {
   @Transactional
   @CacheEvict(value = "sweepstakeCache", key = "#sweepstake.getId()")
   void delete(Sweepstake sweepstake);
+
+  @Transactional
+  List<Sweepstake> findSweepstakesByFootballMatchId(UUID footballMatchId);
 }
