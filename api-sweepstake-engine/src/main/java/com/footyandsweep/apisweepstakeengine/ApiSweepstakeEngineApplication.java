@@ -28,6 +28,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.core.Ordered;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.kafka.annotation.EnableKafka;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.ForwardedHeaderFilter;
 
@@ -36,6 +37,7 @@ import org.springframework.web.filter.ForwardedHeaderFilter;
 @EnableJpaRepositories
 @EnableDiscoveryClient
 @EnableKafka
+@EnableScheduling
 @Import({WebConfiguration.class})
 public class ApiSweepstakeEngineApplication {
 

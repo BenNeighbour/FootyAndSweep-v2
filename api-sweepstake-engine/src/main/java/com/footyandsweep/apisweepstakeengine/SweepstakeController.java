@@ -71,13 +71,15 @@ public class SweepstakeController {
 
   @GetMapping("/by/footballMatch/{id}")
   public List<Sweepstake> findSweepstakeByFootballMatchId(@PathVariable("id") UUID id) {
-    return sweepstakeDao.findSweepstakesByFootballMatchId(id).stream()
-        .filter(
-            sweepstake ->
-                footballMatchDao
-                    .findFootballMatchById(sweepstake.getSweepstakeEventId())
-                    .equals(footballMatchDao.findFootballMatchById(id)))
-        .collect(Collectors.toList());
+    return sweepstakeDao.findAll().stream()
+            .filter(sweepstake -> sweepstake instanceof FootballMatchSweepstake)
+            .filter(sweepstake -> ((FootballMatchSweepstake) sweepstake).getFootballMatchId().equals(id))
+            .filter(
+                    sweepstake ->
+                            footballMatchDao
+                                    .findFootballMatchById(sweepstake.getSweepstakeEventId())
+                                    .equals(footballMatchDao.findFootballMatchById(id)))
+            .collect(Collectors.toList());
   }
 
   @GetMapping("/by/{sweepstakeId}/participants")

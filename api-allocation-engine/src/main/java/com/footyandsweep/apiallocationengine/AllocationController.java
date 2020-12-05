@@ -17,11 +17,10 @@
 package com.footyandsweep.apiallocationengine;
 
 import com.footyandsweep.apiallocationengine.dao.AllocationDao;
+import com.footyandsweep.apiallocationengine.engine.AllocationEngine;
 import com.footyandsweep.apiallocationengine.model.Allocation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -30,13 +29,20 @@ import java.util.UUID;
 public class AllocationController {
 
   private final AllocationDao allocationDao;
+  private final AllocationEngine allocationEngine;
 
-  public AllocationController(final AllocationDao allocationDao) {
+  public AllocationController(AllocationDao allocationDao, AllocationEngine allocationEngine) {
     this.allocationDao = allocationDao;
+    this.allocationEngine = allocationEngine;
   }
 
   @GetMapping("/by/ticket/{id}")
   public Allocation findAllocationByTicketId(@PathVariable("id") UUID id) {
     return allocationDao.findAllocationByTicketId(id);
+  }
+
+  @PostMapping("/save")
+  public Allocation createAllocation(@RequestBody Allocation allocation) {
+    return allocationDao.save(allocation);
   }
 }
