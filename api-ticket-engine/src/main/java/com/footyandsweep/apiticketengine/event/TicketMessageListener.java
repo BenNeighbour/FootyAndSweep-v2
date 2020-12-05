@@ -23,16 +23,22 @@ import com.footyandsweep.apicommonlibrary.events.TicketEvent;
 import com.footyandsweep.apiticketengine.dao.TicketDao;
 import com.footyandsweep.apiticketengine.engine.TicketEngine;
 import com.footyandsweep.apiticketengine.model.Ticket;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 @Component
 public class TicketMessageListener {
 
-  @Autowired private ObjectMapper objectMapper;
-  @Autowired private TicketEngine ticketEngine;
-  @Autowired private TicketDao ticketDao;
+  private final ObjectMapper objectMapper;
+  private final TicketEngine ticketEngine;
+  private final TicketDao ticketDao;
+
+  public TicketMessageListener(
+      ObjectMapper objectMapper, TicketEngine ticketEngine, TicketDao ticketDao) {
+    this.objectMapper = objectMapper;
+    this.ticketEngine = ticketEngine;
+    this.ticketDao = ticketDao;
+  }
 
   @KafkaListener(topics = "api-ticket-events-topic")
   public void ticketEventListener(String serializedMessage) {

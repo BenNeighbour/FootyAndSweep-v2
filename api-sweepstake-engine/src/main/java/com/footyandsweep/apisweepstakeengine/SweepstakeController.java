@@ -41,11 +41,11 @@ public class SweepstakeController {
   private final FootballMatchDao footballMatchDao;
 
   public SweepstakeController(
-          final SweepstakeEngineImpl sweepstakeEngine,
-          final SweepstakeDao sweepstakeDao,
-          final ParticipantIdDao participantIdDao,
-          final ResultHelper resultHelper,
-          final FootballMatchDao footballMatchDao) {
+      final SweepstakeEngineImpl sweepstakeEngine,
+      final SweepstakeDao sweepstakeDao,
+      final ParticipantIdDao participantIdDao,
+      final ResultHelper resultHelper,
+      final FootballMatchDao footballMatchDao) {
     this.sweepstakeEngine = sweepstakeEngine;
     this.sweepstakeDao = sweepstakeDao;
     this.participantIdDao = participantIdDao;
@@ -71,25 +71,28 @@ public class SweepstakeController {
 
   @GetMapping("/by/footballMatch/{id}")
   public List<Sweepstake> findSweepstakeByFootballMatchId(@PathVariable("id") UUID id) {
-    return sweepstakeDao.findSweepstakesByFootballMatchId(id)
-            .stream()
-            .filter(sweepstake -> footballMatchDao.findFootballMatchById(sweepstake.getSweepstakeEventId()).equals(footballMatchDao.findFootballMatchById(id)))
-            .collect(Collectors.toList());
+    return sweepstakeDao.findSweepstakesByFootballMatchId(id).stream()
+        .filter(
+            sweepstake ->
+                footballMatchDao
+                    .findFootballMatchById(sweepstake.getSweepstakeEventId())
+                    .equals(footballMatchDao.findFootballMatchById(id)))
+        .collect(Collectors.toList());
   }
 
   @GetMapping("/by/{sweepstakeId}/participants")
   public HashMap<UUID, UUID> findAllSweepstakeParticipantRelations(
-          @PathVariable("sweepstakeId") UUID id) {
+      @PathVariable("sweepstakeId") UUID id) {
 
     Optional<List<ParticipantIds>> participantsInSweepstake =
-            participantIdDao.findAllParticipantIdsBySweepstakeId(id);
+        participantIdDao.findAllParticipantIdsBySweepstakeId(id);
 
     if (!participantsInSweepstake.isPresent()) return new HashMap<>();
 
     HashMap<UUID, UUID> returnHashMap = new HashMap<>();
 
     participantsInSweepstake
-            .get()
+        .get()
         .forEach(
             participantIds ->
                 returnHashMap.put(

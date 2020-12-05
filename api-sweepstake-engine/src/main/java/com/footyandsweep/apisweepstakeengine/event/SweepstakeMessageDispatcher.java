@@ -16,7 +16,6 @@
 
 package com.footyandsweep.apisweepstakeengine.event;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.footyandsweep.apicommonlibrary.BaseEvent;
 import org.springframework.kafka.core.KafkaTemplate;

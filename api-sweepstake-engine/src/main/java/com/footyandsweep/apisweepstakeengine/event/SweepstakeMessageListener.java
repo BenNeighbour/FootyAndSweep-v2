@@ -25,16 +25,22 @@ import com.footyandsweep.apicommonlibrary.events.TicketEvent;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
 import com.footyandsweep.apisweepstakeengine.engine.SweepstakeEngine;
 import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 @Component
 public class SweepstakeMessageListener {
 
-  @Autowired private ObjectMapper objectMapper;
-  @Autowired private SweepstakeEngine sweepstakeEngine;
-  @Autowired private SweepstakeDao sweepstakeDao;
+  private final ObjectMapper objectMapper;
+  private final SweepstakeEngine sweepstakeEngine;
+  private final SweepstakeDao sweepstakeDao;
+
+  public SweepstakeMessageListener(
+      ObjectMapper objectMapper, SweepstakeEngine sweepstakeEngine, SweepstakeDao sweepstakeDao) {
+    this.objectMapper = objectMapper;
+    this.sweepstakeEngine = sweepstakeEngine;
+    this.sweepstakeDao = sweepstakeDao;
+  }
 
   @KafkaListener(topics = "api-ticket-events-topic")
   public void ticketEventListener(String serializedMessage) {

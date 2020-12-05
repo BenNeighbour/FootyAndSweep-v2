@@ -17,11 +17,8 @@
 package com.footyandsweep.apiresultengine.model;
 
 import com.footyandsweep.apicommonlibrary.model.result.ResultCommon;
-import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 
 import javax.persistence.*;
-import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Table(name = "result")

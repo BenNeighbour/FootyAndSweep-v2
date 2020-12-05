@@ -16,7 +16,6 @@
 
 package com.footyandsweep.apigatewayservice.event;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.footyandsweep.apicommonlibrary.BaseEvent;
 import com.footyandsweep.apicommonlibrary.events.EventType;
 import com.footyandsweep.apicommonlibrary.events.SweepstakeEvent;
@@ -25,16 +24,19 @@ import com.footyandsweep.apicommonlibrary.events.UserEvent;
 import com.footyandsweep.apigatewayservice.dao.UserDao;
 import com.footyandsweep.apigatewayservice.model.User;
 import com.footyandsweep.apigatewayservice.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UserMessageListener {
 
-  @Autowired private ObjectMapper objectMapper;
-  @Autowired private UserService userService;
-  @Autowired private UserDao userDao;
+  private final UserService userService;
+  private final UserDao userDao;
+
+  public UserMessageListener(UserService userService, UserDao userDao) {
+    this.userService = userService;
+    this.userDao = userDao;
+  }
 
   @KafkaListener(
       id = "userSweepstakeListener",
@@ -56,10 +58,10 @@ public class UserMessageListener {
   }
 
   @KafkaListener(
-          id = "userTicketListener",
-          topics = "api-ticket-events-topic",
-          groupId = "userConsumerGroup",
-          containerFactory = "UserEventKafkaListenerContainerFactory")
+      id = "userTicketListener",
+      topics = "api-ticket-events-topic",
+      groupId = "userConsumerGroup",
+      containerFactory = "UserEventKafkaListenerContainerFactory")
   public void ticketEventListener(BaseEvent message) {
     try {
       /* Use JSON Object Mapper to read the message and reflect it into an object */
@@ -81,10 +83,10 @@ public class UserMessageListener {
   }
 
   @KafkaListener(
-          id = "userUserListener",
-          topics = "api-user-events-topic",
-          groupId = "userConsumerGroup",
-          containerFactory = "UserEventKafkaListenerContainerFactory")
+      id = "userUserListener",
+      topics = "api-user-events-topic",
+      groupId = "userConsumerGroup",
+      containerFactory = "UserEventKafkaListenerContainerFactory")
   public void userEventListener(BaseEvent message) {
     try {
       /* Use JSON Object Mapper to read the message and reflect it into an object */

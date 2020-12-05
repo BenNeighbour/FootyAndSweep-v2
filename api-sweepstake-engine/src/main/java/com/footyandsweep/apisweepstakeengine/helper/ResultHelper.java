@@ -24,7 +24,6 @@ import com.footyandsweep.apisweepstakeengine.dao.FootballMatchSquadDao;
 import com.footyandsweep.apisweepstakeengine.model.FootballMatch;
 import com.footyandsweep.apisweepstakeengine.model.FootballMatchSquad;
 import com.footyandsweep.apisweepstakeengine.model.FootballMatchSweepstake;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -33,11 +32,16 @@ import java.util.stream.Collectors;
 @Component
 public class ResultHelper {
 
-  @Autowired private FootballMatchDao footballMatchDao;
-
-  @Autowired private FootballMatchSquadDao footballMatchSquadDao;
+  private final FootballMatchDao footballMatchDao;
+  private final FootballMatchSquadDao footballMatchSquadDao;
 
   private Map<Integer, String> RESULT = new HashMap<>();
+
+  public ResultHelper(
+      FootballMatchDao footballMatchDao, FootballMatchSquadDao footballMatchSquadDao) {
+    this.footballMatchDao = footballMatchDao;
+    this.footballMatchSquadDao = footballMatchSquadDao;
+  }
 
   public Map<Integer, String> buildResultsForSweepstakeType(
       SweepstakeTypeCommon sweepstakeType, FootballMatchSweepstake sweepstake) {
