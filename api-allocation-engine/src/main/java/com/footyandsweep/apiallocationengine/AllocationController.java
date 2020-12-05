@@ -29,15 +29,14 @@ import java.util.UUID;
 @RequestMapping("/internal/allocation")
 public class AllocationController {
 
-    private final AllocationDao allocationDao;
+  private final AllocationDao allocationDao;
 
-    public AllocationController(final AllocationDao allocationDao) {
-        this.allocationDao = allocationDao;
-    }
+  public AllocationController(final AllocationDao allocationDao) {
+    this.allocationDao = allocationDao;
+  }
 
-    @GetMapping("/by/ticket/{id}")
-    public Allocation findAllocationByTicketId(@PathVariable("id") UUID id) {
-        return allocationDao.findAllocationByTicketId(id);
-    }
-
+  @GetMapping("/by/ticket/{id}")
+  public Allocation findAllocationByTicketId(@PathVariable("id") UUID id) {
+    return allocationDao.findAllocationByTicketId(id);
+  }
 }

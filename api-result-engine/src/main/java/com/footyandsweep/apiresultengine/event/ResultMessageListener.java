@@ -19,16 +19,22 @@ package com.footyandsweep.apiresultengine.event;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.footyandsweep.apiresultengine.dao.ResultDao;
 import com.footyandsweep.apiresultengine.engine.ResultEngine;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ResultMessageListener {
 
-  @Autowired private ObjectMapper objectMapper;
-  @Autowired private ResultEngine resultEngine;
-  @Autowired private ResultDao resultDao;
+  private final ObjectMapper objectMapper;
+  private final ResultEngine resultEngine;
+  private final ResultDao resultDao;
+
+  public ResultMessageListener(
+      ObjectMapper objectMapper, ResultEngine resultEngine, ResultDao resultDao) {
+    this.objectMapper = objectMapper;
+    this.resultEngine = resultEngine;
+    this.resultDao = resultDao;
+  }
 
   @KafkaListener(topics = "api-result-events-topic")
   public void allocationEventListener(String serializedMessage) {}

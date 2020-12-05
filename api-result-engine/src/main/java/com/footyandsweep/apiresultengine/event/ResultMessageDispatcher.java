@@ -16,8 +16,6 @@
 
 package com.footyandsweep.apiresultengine.event;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.footyandsweep.apicommonlibrary.BaseEvent;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -39,8 +37,8 @@ public class ResultMessageDispatcher {
   }
 
   public void publishEvent(BaseEvent event, String topic) {
-      /* Adding listenable future to listen for a success or failure in sending the message to the kafka topic */
-      ListenableFuture<SendResult<String, BaseEvent>> future = kafkaTemplate.send(topic, event);
+    /* Adding listenable future to listen for a success or failure in sending the message to the kafka topic */
+    ListenableFuture<SendResult<String, BaseEvent>> future = kafkaTemplate.send(topic, event);
 
     /* Adding callbacks that will be hit once the message is successfully/unsuccessfully */
     future.addCallback(

@@ -22,16 +22,22 @@ import com.footyandsweep.apiallocationengine.engine.AllocationEngine;
 import com.footyandsweep.apicommonlibrary.BaseEvent;
 import com.footyandsweep.apicommonlibrary.events.EventType;
 import com.footyandsweep.apicommonlibrary.events.SweepstakeEvent;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 @Component
 public class AllocationMessageListener {
 
-  @Autowired private ObjectMapper objectMapper;
-  @Autowired private AllocationEngine allocationEngine;
-  @Autowired private AllocationDao allocationDao;
+  private final ObjectMapper objectMapper;
+  private final AllocationEngine allocationEngine;
+  private final AllocationDao allocationDao;
+
+  public AllocationMessageListener(
+      ObjectMapper objectMapper, AllocationEngine allocationEngine, AllocationDao allocationDao) {
+    this.objectMapper = objectMapper;
+    this.allocationEngine = allocationEngine;
+    this.allocationDao = allocationDao;
+  }
 
   @KafkaListener(
       id = "allocationSweepstakeListener",

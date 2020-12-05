@@ -43,7 +43,10 @@ public class ResultEngineImpl implements ResultEngine {
   private final RestTemplate restTemplate;
   private final ResultMessageDispatcher resultMessageDispatcher;
 
-  public ResultEngineImpl(final ResultDao resultDao, final RestTemplate restTemplate, final ResultMessageDispatcher resultMessageDispatcher) {
+  public ResultEngineImpl(
+      ResultDao resultDao,
+      RestTemplate restTemplate,
+      ResultMessageDispatcher resultMessageDispatcher) {
     this.resultDao = resultDao;
     this.restTemplate = restTemplate;
     this.resultMessageDispatcher = resultMessageDispatcher;
@@ -53,7 +56,9 @@ public class ResultEngineImpl implements ResultEngine {
   @Transactional
   public void processWinningTickets() {
     /* For each result that is not processed, process it! */
-    resultDao.findAll().stream().filter(result -> !result.isProcessed()).forEach(this::processSweepstakeResult);
+    resultDao.findAll().stream()
+        .filter(result -> !result.isProcessed())
+        .forEach(this::processSweepstakeResult);
   }
 
   private void processSweepstakeResult(Result result) {
@@ -62,12 +67,16 @@ public class ResultEngineImpl implements ResultEngine {
 
     /* Get a list of sweepstakes that are linked to the result event, and are of the right type */
     List<SweepstakeCommon> sweepstakesWithResult =
-            Arrays.asList(Objects.requireNonNull(restTemplate.getForObject(
-                    "http://api-sweepstake-engine:8080/internal/sweepstake/by/footballMatch/" + footballMatchResult.getFootballMatchId(),
+        Arrays.asList(
+            Objects.requireNonNull(
+                restTemplate.getForObject(
+                    "http://api-sweepstake-engine:8080/internal/sweepstake/by/footballMatch/"
+                        + footballMatchResult.getFootballMatchId(),
                     SweepstakeCommon[].class)));
 
     /* For each sweepstake, process the tickets for it */
-    sweepstakesWithResult.forEach(sweepstake -> this.processTickets(sweepstake.getStake(), sweepstake));
+    sweepstakesWithResult.forEach(
+        sweepstake -> this.processTickets(sweepstake.getStake(), sweepstake));
 
     /* Make this result processed so it doesn't get attempted again , and persist it */
     result.setProcessed(true);
@@ -80,37 +89,51 @@ public class ResultEngineImpl implements ResultEngine {
 
     /* Get a list of tickets that belong to the sweepstake */
     Optional<List<TicketCommon>> ticketList =
-            Optional.of(Arrays.asList(
-                    Objects.requireNonNull(restTemplate.getForObject(
-                            "http://api-ticket-engine/internal/ticket/by/sweepstake/" + sweepstake.getId(),
-                            TicketCommon[].class))));
+        Optional.of(
+            Arrays.asList(
+                Objects.requireNonNull(
+                    restTemplate.getForObject(
+                        "http://api-ticket-engine/internal/ticket/by/sweepstake/"
+                            + sweepstake.getId(),
+                        TicketCommon[].class))));
 
     /* Seeing if the winning ticket is present */
     boolean isWinningTicketPresent =
-            ticketList.get().stream().anyMatch(ticket -> winningResultMap.containsKey(this.getTicketAllocation(ticket.getId()).getCode()));
+        ticketList.get().stream()
+            .anyMatch(
+                ticket ->
+                    winningResultMap.containsKey(
+                        this.getTicketAllocation(ticket.getId()).getCode()));
 
-    ticketList.get().forEach(ticket -> {
-      if (isWinningTicketPresent) {
-        if (winningResultMap.containsKey(this.getTicketAllocation(ticket.getId()).getCode())) {
-          ticket.setStatus(TicketCommon.TicketStatus.WON);
-          BigDecimal totalPot = sweepstake.getStake().multiply(new BigDecimal(ticketList.get().size()));
+    ticketList
+        .get()
+        .forEach(
+            ticket -> {
+              if (isWinningTicketPresent) {
+                if (winningResultMap.containsKey(
+                    this.getTicketAllocation(ticket.getId()).getCode())) {
+                  ticket.setStatus(TicketCommon.TicketStatus.WON);
+                  BigDecimal totalPot =
+                      sweepstake.getStake().multiply(new BigDecimal(ticketList.get().size()));
 
-          if (winningResultMap.values().size() > 1) {
-            totalPot = totalPot.divide(new BigDecimal(winningResultMap.values().size()), RoundingMode.DOWN);
-            totalPot = totalPot.setScale(2, RoundingMode.DOWN);
-          }
+                  if (winningResultMap.values().size() > 1) {
+                    totalPot =
+                        totalPot.divide(
+                            new BigDecimal(winningResultMap.values().size()), RoundingMode.DOWN);
+                    totalPot = totalPot.setScale(2, RoundingMode.DOWN);
+                  }
 
-          /* Update user balance */
-          this.updateUserBalance(ticket.getUserId(), totalPot);
-        } else {
-          ticket.setStatus(TicketCommon.TicketStatus.LOST);
-        }
-      } else {
-        ticket.setStatus(TicketCommon.TicketStatus.REFUNDED);
-        /* Update the user balance */
-        this.updateUserBalance(ticket.getUserId(), sweepstake.getStake());
-      }
-    });
+                  /* Update user balance */
+                  this.updateUserBalance(ticket.getUserId(), totalPot);
+                } else {
+                  ticket.setStatus(TicketCommon.TicketStatus.LOST);
+                }
+              } else {
+                ticket.setStatus(TicketCommon.TicketStatus.REFUNDED);
+                /* Update the user balance */
+                this.updateUserBalance(ticket.getUserId(), sweepstake.getStake());
+              }
+            });
   }
 
   private Map<Integer, String> getSweepstakeResultMap(SweepstakeCommon sweepstake) {
@@ -122,20 +145,24 @@ public class ResultEngineImpl implements ResultEngine {
       /* Call result helper to get the field and return a function that returns the right maps to back */
       if (sweepstake.getSweepstakeType().equals(i))
         resultMap =
-                Optional.ofNullable(
-                        restTemplate
-                                .postForEntity(
-                                        "http://api-sweepstake-engine:8080/internal/sweepstake/result",
-                                        sweepstake,
-                                        Map.class)
-                                .getBody());
+            Optional.ofNullable(
+                restTemplate
+                    .postForEntity(
+                        "http://api-sweepstake-engine:8080/internal/sweepstake/result",
+                        sweepstake,
+                        Map.class)
+                    .getBody());
     }
 
     return resultMap.orElse(new HashMap<>());
   }
 
   private AllocationCommon getTicketAllocation(UUID ticketId) {
-    return restTemplate.getForEntity("http://api-allocation-engine:8080/internal/allocation/by/ticket/" + ticketId, AllocationCommon.class).getBody();
+    return restTemplate
+        .getForEntity(
+            "http://api-allocation-engine:8080/internal/allocation/by/ticket/" + ticketId,
+            AllocationCommon.class)
+        .getBody();
   }
 
   private void updateUserBalance(UUID userId, BigDecimal creditAmount) {
@@ -144,7 +171,9 @@ public class ResultEngineImpl implements ResultEngine {
       SweepstakeLock.userLock(userId);
 
       /* Get the user and set it's new balance */
-      UserCommon user = restTemplate.getForObject("http://api-gateway-service:8080/internal/user/by/id/" + userId, UserCommon.class);
+      UserCommon user =
+          restTemplate.getForObject(
+              "http://api-gateway-service:8080/internal/user/by/id/" + userId, UserCommon.class);
 
       assert user != null;
       user.setBalance(user.getBalance().subtract(creditAmount));

@@ -20,5 +20,5 @@ import javax.transaction.Transactional;
 
 @Transactional
 public interface ResultEngine {
-    void processWinningTickets();
+  void processWinningTickets();
 }

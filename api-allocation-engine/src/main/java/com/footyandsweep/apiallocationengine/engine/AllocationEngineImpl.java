@@ -107,10 +107,12 @@ public class AllocationEngineImpl implements AllocationEngine {
   private List<TicketCommon> getSweepstakeTicketsHelper(UUID sweepstakeId) {
     /* Get a list of tickets that belong to the sweepstake */
     Optional<List<TicketCommon>> ticketList =
-            Optional.of(Arrays.asList(
-                    Objects.requireNonNull(restTemplate.getForObject(
-                            "http://api-ticket-engine/internal/ticket/by/sweepstake/" + sweepstakeId,
-                            TicketCommon[].class))));
+        Optional.of(
+            Arrays.asList(
+                Objects.requireNonNull(
+                    restTemplate.getForObject(
+                        "http://api-ticket-engine/internal/ticket/by/sweepstake/" + sweepstakeId,
+                        TicketCommon[].class))));
 
     /* Return those tickets if they are valid, otherwise an empty array */
     return ticketList.orElseGet(ArrayList::new);
