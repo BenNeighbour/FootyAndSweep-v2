@@ -45,7 +45,7 @@ public class AllocationSchedulerConfig {
   }
 
   /* Scheduled for every 4 minutes */
-  @Scheduled(fixedRate = 480000)
+  @Scheduled(fixedRate = 60000)
   public void checkAndAllocateSweepstakes() {
     /* Logging the periodic check */
     log.info("Periodic check for unallocated sweepstakes at {}", dateFormat.format(new Date()));

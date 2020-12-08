@@ -32,7 +32,7 @@ import java.util.Date;
 @Component
 public class ResultSchedulerConfig {
 
-  private static final Logger log = LoggerFactory.getLogger(AllocationSchedulerConfig.class);
+  private static final Logger log = LoggerFactory.getLogger(ResultSchedulerConfig.class);
   private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ");
 
   private final SweepstakeDao sweepstakeDao;
@@ -44,9 +44,9 @@ public class ResultSchedulerConfig {
     this.sweepstakeMessageDispatcher = sweepstakeMessageDispatcher;
   }
 
-  /* Scheduled for every 4 minutes */
-  @Scheduled(fixedRate = 480000)
-  public void checkAndAllocateSweepstakes() {
+  /* Scheduled for every 4 minutes (480000) */
+  @Scheduled(fixedRate = 120000)
+  public void fetchAndDecisionSweepstakes() {
     /* Logging the periodic check */
     log.info(
         "Periodic scrape for results and decisioning sweepstakes at {}",

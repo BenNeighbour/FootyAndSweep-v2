@@ -75,6 +75,7 @@ public class AllocationEngineImpl implements AllocationEngine {
           allPurchasedTickets, uniqueUserList, sweepstakeResultMap.get(), sweepstakeResultIdList);
     } catch (Exception e) {
       /* Throw error to WebSocket client */
+      e.getCause();
     }
   }
 
@@ -107,12 +108,12 @@ public class AllocationEngineImpl implements AllocationEngine {
   private List<TicketCommon> getSweepstakeTicketsHelper(UUID sweepstakeId) {
     /* Get a list of tickets that belong to the sweepstake */
     Optional<List<TicketCommon>> ticketList =
-        Optional.of(
-            Arrays.asList(
-                Objects.requireNonNull(
-                    restTemplate.getForObject(
-                        "http://api-ticket-engine/internal/ticket/by/sweepstake/" + sweepstakeId,
-                        TicketCommon[].class))));
+            Optional.of(
+                    Arrays.asList(
+                            Objects.requireNonNull(
+                                    restTemplate.getForObject(
+                                            "http://api-ticket-engine:8080/internal/ticket/by/sweepstake/" + sweepstakeId,
+                                            TicketCommon[].class))));
 
     /* Return those tickets if they are valid, otherwise an empty array */
     return ticketList.orElseGet(ArrayList::new);
@@ -126,15 +127,15 @@ public class AllocationEngineImpl implements AllocationEngine {
     /* Creating a ticket map that will be iterated over to allocate each ticket */
     Map<UUID, List<TicketCommon>> userTicketsMap = new HashMap<>();
 
-    /* Adding the list of tickets that are linked to the user id and putting them into the user tickets ma[ */
-    participantIds.forEach(
-        uuid -> {
-          userTicketsMap.put(
-              uuid,
-              tickets.stream()
-                  .filter(ticket -> ticket.getUserId().equals(uuid))
-                  .collect(Collectors.toList()));
-        });
+    /* Adding the list of tickets that are linked to the user id and putting them into the user tickets map */
+    for (int i = 0; i < participantIds.size(); i++) {
+      final int finalI = i;
+      List<TicketCommon> userTickets = tickets.stream()
+              .filter(ticketCommon -> ticketCommon.getUserId().equals(participantIds.get(finalI)))
+              .collect(Collectors.toList());
+
+      userTicketsMap.put(participantIds.get(finalI), userTickets);
+    }
 
     /* List that stores user ids to keep track of what user we are on - it's ordered and gets refilled */
     ArrayList<UUID> userIdAllocationList = new ArrayList<>();
@@ -150,10 +151,10 @@ public class AllocationEngineImpl implements AllocationEngine {
         UUID userId = userIdAllocationList.remove(0);
 
         /* Obtain the tickets for that user in the user tickets map */
-        Optional<List<TicketCommon>> userTickets = Optional.ofNullable(userTicketsMap.get(userId));
+        List<TicketCommon> userTickets = userTicketsMap.get(userId);
 
         /* Checking if the tickets are void/null */
-        if (!userTickets.isPresent() || userTickets.get().isEmpty()) {
+        if (userTickets.isEmpty()) {
           /* Remove those tickets from their maps */
           userTicketsMap.remove(userId);
           participantIds.remove(userId);
@@ -162,7 +163,7 @@ public class AllocationEngineImpl implements AllocationEngine {
           System.out.println("User: " + userId + " has no more tickets to allocate");
         } else {
           /* Otherwise, get the current ticket (popping each one off each time), and run it through the allocateTicket function */
-          TicketCommon ticket = userTickets.get().remove(0);
+          TicketCommon ticket = userTickets.remove(0);
 
           /* Logs here */
           System.out.println("Allocate User: " + userId + " Ticket: " + ticket);

@@ -4,7 +4,7 @@ Content-Type: application/json
 {
   "name": "Ben's Sweepstake",
   "isPrivate": true,
-  "ownerId": "123e4567-e89b-42d3-a456-556642440000",
+  "ownerId": "f76a74ae-83b6-389c-82ca-8ac0b9febd33",
   "numberOfRange": 5,
   "numberOfMax": 5,
   "maxNumberOfRanges": 5,
@@ -23,8 +23,8 @@ POST http://localhost:8081/internal/ticket/buy
 Content-Type: application/json
 
 {
-  "ownerId": "123e4567-e89b-42d3-a456-556642440000",
-  "joinCode": "PYul48oe",
+  "ownerId": "f76a74ae-83b6-389c-82ca-8ac0b9febd33",
+  "joinCode": "xWwAvg9M",
   "numberOfTickets": 1
 }
 
