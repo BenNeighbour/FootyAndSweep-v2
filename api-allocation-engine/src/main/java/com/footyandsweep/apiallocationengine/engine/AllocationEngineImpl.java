@@ -224,6 +224,9 @@ public class AllocationEngineImpl implements AllocationEngine {
 
       /* Publish ticket allocated event */
       allocationMessageDispatcher.publishEvent(ticketAllocated, "api-ticket-event-topic");
+
+      /* Log the event */
+      log.info("Sweepstake {} ticket {} has been allocated! {}", ticket.getSweepstakeId(), ticket.getId(), dateFormat.format(new Date()));
     } catch (Exception e) {
       /* Throw error to WebSocket client */
     }
