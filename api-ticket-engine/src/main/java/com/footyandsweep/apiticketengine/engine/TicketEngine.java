@@ -19,7 +19,6 @@ package com.footyandsweep.apiticketengine.engine;
 import javax.transaction.Transactional;
 import java.util.UUID;
 
-@Transactional
 public interface TicketEngine {
 
   void buyTickets(UUID userId, int numberOfTickets, String joinCode);

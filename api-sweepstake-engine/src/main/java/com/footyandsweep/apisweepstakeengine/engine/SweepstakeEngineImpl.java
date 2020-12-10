@@ -18,21 +18,28 @@ package com.footyandsweep.apisweepstakeengine.engine;
 
 import com.footyandsweep.apicommonlibrary.events.EventType;
 import com.footyandsweep.apicommonlibrary.events.SweepstakeEvent;
+import com.footyandsweep.apisweepstakeengine.config.ResultSchedulerConfig;
 import com.footyandsweep.apisweepstakeengine.dao.ParticipantIdDao;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
 import com.footyandsweep.apisweepstakeengine.event.SweepstakeMessageDispatcher;
 import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
 import com.footyandsweep.apisweepstakeengine.relation.ParticipantIds;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
-@Transactional
 public class SweepstakeEngineImpl implements SweepstakeEngine {
+
+  private static final Logger log = LoggerFactory.getLogger(SweepstakeEngineImpl.class);
+  private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ");
 
   private final SweepstakeDao sweepstakeDao;
   private final ParticipantIdDao participantIdDao;
@@ -63,6 +70,9 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
       user id into it's SweepstakeIds Junction Table */
       sweepstakeMessageDispatcher.publishEvent(sweepstakeCreated, "api-sweepstake-events-topic");
 
+      /* Log the event */
+      log.info("Sweepstake {} has been created! {}", sweepstakeCreated.getSweepstake().getId(), dateFormat.format(new Date()));
+
       return sweepstake;
     } catch (Exception e) {
       // TODO: FIX THIS!
@@ -88,6 +98,9 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
   public Sweepstake deleteSweepstake(UUID sweepstakeId) {
     Sweepstake sweepstake = sweepstakeDao.findSweepstakeById(sweepstakeId);
     sweepstakeDao.delete(sweepstake);
+
+    /* Log the event */
+    log.info("Sweepstake {} has been purged! {}", sweepstake.getId(), dateFormat.format(new Date()));
 
     // TODO: Broadcast websockets error message with the reason in it
 

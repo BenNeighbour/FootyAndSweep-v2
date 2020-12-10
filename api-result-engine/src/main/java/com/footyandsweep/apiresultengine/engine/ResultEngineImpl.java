@@ -28,16 +28,22 @@ import com.footyandsweep.apiresultengine.dao.ResultDao;
 import com.footyandsweep.apiresultengine.event.ResultMessageDispatcher;
 import com.footyandsweep.apiresultengine.model.FootballMatchResult;
 import com.footyandsweep.apiresultengine.model.Result;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
 public class ResultEngineImpl implements ResultEngine {
+
+  private static final Logger log = LoggerFactory.getLogger(ResultEngineImpl.class);
+  private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ");
 
   private final ResultDao resultDao;
   private final RestTemplate restTemplate;
@@ -68,19 +74,23 @@ public class ResultEngineImpl implements ResultEngine {
     /* Get a list of sweepstakes that are linked to the result event, and are of the right type */
     List<SweepstakeCommon> sweepstakesWithResult =
         Arrays.asList(
+
             Objects.requireNonNull(
                 restTemplate.getForObject(
-                    "http://api-sweepstake-engine:8080/internal/sweepstake/by/footballMatch/"
-                        + footballMatchResult.getFootballMatchId(),
-                    SweepstakeCommon[].class)));
+                        "http://api-sweepstake-engine:8080/internal/sweepstake/by/footballMatch/"
+                                + footballMatchResult.getFootballMatchId(),
+                        SweepstakeCommon[].class)));
 
     /* For each sweepstake, process the tickets for it */
     sweepstakesWithResult.forEach(
-        sweepstake -> this.processTickets(sweepstake.getStake(), sweepstake));
+            sweepstake -> this.processTickets(sweepstake.getStake(), sweepstake));
 
     /* Make this result processed so it doesn't get attempted again , and persist it */
     result.setProcessed(true);
-    resultDao.saveAndFlush(result);
+    result = resultDao.saveAndFlush(result);
+
+    /* Log the event */
+    log.info("Result {} for football match {} has been created! {}", result.getId(), footballMatchResult.getFootballMatchId(), dateFormat.format(new Date()));
   }
 
   private void processTickets(BigDecimal stake, SweepstakeCommon sweepstake) {
@@ -183,6 +193,9 @@ public class ResultEngineImpl implements ResultEngine {
 
       /* Dispatch message to gateway service to set the user's balance to itself + the credit amount */
       resultMessageDispatcher.publishEvent(userEvent, "api-user-events-topic");
+
+      /* Log the event */
+      log.info("Attempt to update user {} balance {}", user.getName(), dateFormat.format(new Date()));
     } catch (InterruptedException ie) {
       ie.getMessage();
     } finally {

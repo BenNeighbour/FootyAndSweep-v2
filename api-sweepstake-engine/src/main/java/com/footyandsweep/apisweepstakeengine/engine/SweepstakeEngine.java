@@ -21,7 +21,6 @@ import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
 import javax.transaction.Transactional;
 import java.util.UUID;
 
-@Transactional
 public interface SweepstakeEngine {
 
   Sweepstake saveSweepstake(UUID ownerId, Sweepstake sweepstake);

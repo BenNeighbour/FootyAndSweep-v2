@@ -24,13 +24,18 @@ import com.footyandsweep.apigatewayservice.dao.UserDao;
 import com.footyandsweep.apigatewayservice.event.UserMessageDispatcher;
 import com.footyandsweep.apigatewayservice.model.User;
 import com.footyandsweep.apigatewayservice.relation.SweepstakeIds;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Service
-@Transactional
 public class UserServiceImpl implements UserService {
+
+  private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
+  private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ");
 
   private final UserDao userDao;
   private final SweepstakeIdDao sweepstakeIdDao;
@@ -61,6 +66,9 @@ public class UserServiceImpl implements UserService {
         sweepstake, then it will remove the sweepstake with the message string given by the event
         above */
         userMessageDispatcher.publishEvent(relationDeleted, "api-sweepstake-events-topic");
+
+        /* Log the event */
+        log.info("Sweepstake relation {} has been purged! {}", relationDeleted.getSweepstake().getId(), dateFormat.format(new Date()));
       }
     } catch (Exception e) {
       /* Get the error message and ping it back to the client */
