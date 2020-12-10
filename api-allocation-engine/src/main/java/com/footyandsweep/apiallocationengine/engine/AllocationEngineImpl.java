@@ -88,17 +88,15 @@ public class AllocationEngineImpl implements AllocationEngine {
 
   private List<UUID> sweepstakeParticipantsHelper(UUID sweepstakeId) {
     /* Get a list of participants that might have purchased tickets */
-    Optional<HashMap<UUID, UUID>> relationIdList =
-        Optional.ofNullable(
-            restTemplate.getForObject(
-                "http://api-sweepstake-engine:8080/internal/sweepstake/by/"
-                    + sweepstakeId
-                    + "/participants",
-                HashMap.class));
+    HashMap<UUID, UUID> relationIdList =
+        restTemplate.getForObject(
+            "http://api-sweepstake-engine:8080/internal/sweepstake/by/"
+                + sweepstakeId
+                + "/participants",
+            HashMap.class);
 
     /* Put the result of those returned relations in an array */
-    assert relationIdList.isPresent();
-    List<UUID> participantIds = new ArrayList<>(relationIdList.get().keySet());
+    List<UUID> participantIds = new ArrayList<>(relationIdList.keySet());
 
     /* Shuffle the user list and return it back to caller */
     Collections.shuffle(participantIds);
@@ -108,12 +106,13 @@ public class AllocationEngineImpl implements AllocationEngine {
   private List<TicketCommon> getSweepstakeTicketsHelper(UUID sweepstakeId) {
     /* Get a list of tickets that belong to the sweepstake */
     Optional<List<TicketCommon>> ticketList =
-            Optional.of(
-                    Arrays.asList(
-                            Objects.requireNonNull(
-                                    restTemplate.getForObject(
-                                            "http://api-ticket-engine:8080/internal/ticket/by/sweepstake/" + sweepstakeId,
-                                            TicketCommon[].class))));
+        Optional.of(
+            Arrays.asList(
+                Objects.requireNonNull(
+                    restTemplate.getForObject(
+                        "http://api-ticket-engine:8080/internal/ticket/by/sweepstake/"
+                            + sweepstakeId,
+                        TicketCommon[].class))));
 
     /* Return those tickets if they are valid, otherwise an empty array */
     return ticketList.orElseGet(ArrayList::new);
@@ -130,7 +129,8 @@ public class AllocationEngineImpl implements AllocationEngine {
     /* Adding the list of tickets that are linked to the user id and putting them into the user tickets map */
     for (int i = 0; i < participantIds.size(); i++) {
       final int finalI = i;
-      List<TicketCommon> userTickets = tickets.stream()
+      List<TicketCommon> userTickets =
+          tickets.stream()
               .filter(ticketCommon -> ticketCommon.getUserId().equals(participantIds.get(finalI)))
               .collect(Collectors.toList());
 
@@ -138,7 +138,7 @@ public class AllocationEngineImpl implements AllocationEngine {
     }
 
     /* List that stores user ids to keep track of what user we are on - it's ordered and gets refilled */
-    ArrayList<UUID> userIdAllocationList = new ArrayList<>();
+    List<UUID> userIdAllocationList = new ArrayList<>();
 
     /* Iterating over the user tickets map */
     while (!userTicketsMap.isEmpty()) {
@@ -148,7 +148,7 @@ public class AllocationEngineImpl implements AllocationEngine {
       /* Meanwhile there are still users left to allocate */
       while (!userIdAllocationList.isEmpty()) {
         /* Get the first user id of the list, then remove so it does not get allocated again during this round */
-        UUID userId = userIdAllocationList.remove(0);
+        UUID userId = userIdAllocationList.get(0);
 
         /* Obtain the tickets for that user in the user tickets map */
         List<TicketCommon> userTickets = userTicketsMap.get(userId);

@@ -19,7 +19,6 @@ package com.footyandsweep.apiallocationengine.event;
 import com.footyandsweep.apiallocationengine.dao.AllocationDao;
 import com.footyandsweep.apiallocationengine.engine.AllocationEngine;
 import com.footyandsweep.apicommonlibrary.BaseEvent;
-import com.footyandsweep.apicommonlibrary.events.AllocationEvent;
 import com.footyandsweep.apicommonlibrary.events.EventType;
 import com.footyandsweep.apicommonlibrary.events.SweepstakeEvent;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -31,8 +30,7 @@ public class AllocationMessageListener {
   private final AllocationEngine allocationEngine;
   private final AllocationDao allocationDao;
 
-  public AllocationMessageListener(
-      AllocationEngine allocationEngine, AllocationDao allocationDao) {
+  public AllocationMessageListener(AllocationEngine allocationEngine, AllocationDao allocationDao) {
     this.allocationEngine = allocationEngine;
     this.allocationDao = allocationDao;
   }
@@ -48,7 +46,8 @@ public class AllocationMessageListener {
       SweepstakeEvent event = (SweepstakeEvent) message;
 
       /* Use relevant helper functions depending on the different event types */
-      if (event.getEvent().equals(EventType.SOLD_OUT) || event.getEvent().equals(EventType.NEEDS_ALLOCATING))
+      if (event.getEvent().equals(EventType.SOLD_OUT)
+          || event.getEvent().equals(EventType.NEEDS_ALLOCATING))
         allocationEngine.allocateSweepstakeTickets(event.getSweepstake());
     } catch (Exception e) {
       /* TODO: Log or handle the exception here */

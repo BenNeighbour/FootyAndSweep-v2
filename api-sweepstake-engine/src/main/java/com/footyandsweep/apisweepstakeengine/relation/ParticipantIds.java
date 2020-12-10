@@ -16,6 +16,7 @@
 
 package com.footyandsweep.apisweepstakeengine.relation;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -41,9 +42,11 @@ public class ParticipantIds implements Serializable {
   private UUID id;
 
   @Column(columnDefinition = "uuid", updatable = false)
+  @JsonProperty
   private UUID sweepstakeId;
 
   @Column(columnDefinition = "uuid", updatable = false)
+  @JsonProperty
   private UUID participantId;
 
   public ParticipantIds(UUID sweepstakeId, UUID participantId) {

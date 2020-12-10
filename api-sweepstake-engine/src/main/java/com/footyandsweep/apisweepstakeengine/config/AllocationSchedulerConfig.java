@@ -33,7 +33,7 @@ import java.util.Date;
 public class AllocationSchedulerConfig {
 
   private static final Logger log = LoggerFactory.getLogger(AllocationSchedulerConfig.class);
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ");
+  private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ");
 
   private final SweepstakeDao sweepstakeDao;
   private final SweepstakeMessageDispatcher sweepstakeMessageDispatcher;
@@ -60,7 +60,8 @@ public class AllocationSchedulerConfig {
                   new SweepstakeEvent(sweepstake, EventType.NEEDS_ALLOCATING);
 
               /* Send a sweepstake needs allocating message */
-              sweepstakeMessageDispatcher.publishEvent(sweepstakeEvent, "api-sweepstake-events-topic");
+              sweepstakeMessageDispatcher.publishEvent(
+                  sweepstakeEvent, "api-sweepstake-events-topic");
             });
   }
 }
