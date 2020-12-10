@@ -28,16 +28,22 @@ import com.footyandsweep.apiresultengine.dao.ResultDao;
 import com.footyandsweep.apiresultengine.event.ResultMessageDispatcher;
 import com.footyandsweep.apiresultengine.model.FootballMatchResult;
 import com.footyandsweep.apiresultengine.model.Result;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
 public class ResultEngineImpl implements ResultEngine {
+
+  private static final Logger log = LoggerFactory.getLogger(ResultEngineImpl.class);
+  private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ");
 
   private final ResultDao resultDao;
   private final RestTemplate restTemplate;

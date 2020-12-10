@@ -24,13 +24,17 @@ import com.footyandsweep.apigatewayservice.dao.UserDao;
 import com.footyandsweep.apigatewayservice.event.UserMessageDispatcher;
 import com.footyandsweep.apigatewayservice.model.User;
 import com.footyandsweep.apigatewayservice.relation.SweepstakeIds;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+import java.text.SimpleDateFormat;
 
 @Service
-@Transactional
 public class UserServiceImpl implements UserService {
+
+  private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
+  private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ");
 
   private final UserDao userDao;
   private final SweepstakeIdDao sweepstakeIdDao;

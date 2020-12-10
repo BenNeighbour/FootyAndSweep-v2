@@ -20,7 +20,6 @@ import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 
 import javax.transaction.Transactional;
 
-@Transactional
 public interface AllocationEngine {
 
   void allocateSweepstakeTickets(SweepstakeCommon sweepstake);
