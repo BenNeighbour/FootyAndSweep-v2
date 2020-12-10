@@ -37,3 +37,10 @@ zuul:
       url: 'http://api-sweepstake-engine:8080/'
       sensitiveHeaders:
       stripPrefix: false
+
+    api-ticket-engine:
+      path: '/internal/ticket/**'
+      serviceId: 'api-ticket-engine'
+      url: 'http://api-ticket-engine:8080/'
+      sensitiveHeaders:
+      stripPrefix: false

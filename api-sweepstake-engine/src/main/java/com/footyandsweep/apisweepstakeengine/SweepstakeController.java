@@ -71,7 +71,10 @@ public class SweepstakeController {
 
   @GetMapping("/by/footballMatch/{id}")
   public List<Sweepstake> findSweepstakeByFootballMatchId(@PathVariable("id") UUID id) {
-    return sweepstakeDao.findSweepstakesByFootballMatchId(id).stream()
+    return sweepstakeDao.findAll().stream()
+        .filter(sweepstake -> sweepstake instanceof FootballMatchSweepstake)
+        .filter(
+            sweepstake -> ((FootballMatchSweepstake) sweepstake).getFootballMatchId().equals(id))
         .filter(
             sweepstake ->
                 footballMatchDao

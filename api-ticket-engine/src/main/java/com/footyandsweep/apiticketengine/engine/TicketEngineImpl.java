@@ -150,7 +150,7 @@ public class TicketEngineImpl implements TicketEngine {
         TicketEvent ticketBought = new TicketEvent(ticket, EventType.PURCHASED);
 
         /* Dispatch tickets bought event */
-        ticketMessageDispatcher.publishEvent(ticketBought, "api-ticket-event-topic");
+        ticketMessageDispatcher.publishEvent(ticketBought, "api-ticket-events-topic");
       }
     } catch (Exception e) {
       /* Get the error message and ping it back to the client */

@@ -16,7 +16,6 @@
 
 package com.footyandsweep.apiallocationengine.event;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.footyandsweep.apiallocationengine.dao.AllocationDao;
 import com.footyandsweep.apiallocationengine.engine.AllocationEngine;
 import com.footyandsweep.apicommonlibrary.BaseEvent;
@@ -28,13 +27,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class AllocationMessageListener {
 
-  private final ObjectMapper objectMapper;
   private final AllocationEngine allocationEngine;
   private final AllocationDao allocationDao;
 
-  public AllocationMessageListener(
-      ObjectMapper objectMapper, AllocationEngine allocationEngine, AllocationDao allocationDao) {
-    this.objectMapper = objectMapper;
+  public AllocationMessageListener(AllocationEngine allocationEngine, AllocationDao allocationDao) {
     this.allocationEngine = allocationEngine;
     this.allocationDao = allocationDao;
   }
@@ -50,7 +46,8 @@ public class AllocationMessageListener {
       SweepstakeEvent event = (SweepstakeEvent) message;
 
       /* Use relevant helper functions depending on the different event types */
-      if (event.getEvent().equals(EventType.SOLD_OUT))
+      if (event.getEvent().equals(EventType.SOLD_OUT)
+          || event.getEvent().equals(EventType.NEEDS_ALLOCATING))
         allocationEngine.allocateSweepstakeTickets(event.getSweepstake());
     } catch (Exception e) {
       /* TODO: Log or handle the exception here */
