@@ -30,6 +30,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -69,6 +70,9 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
       user id into it's SweepstakeIds Junction Table */
       sweepstakeMessageDispatcher.publishEvent(sweepstakeCreated, "api-sweepstake-events-topic");
 
+      /* Log the event */
+      log.info("Sweepstake {} has been created! {}", sweepstakeCreated.getSweepstake().getId(), dateFormat.format(new Date()));
+
       return sweepstake;
     } catch (Exception e) {
       // TODO: FIX THIS!
@@ -94,6 +98,9 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
   public Sweepstake deleteSweepstake(UUID sweepstakeId) {
     Sweepstake sweepstake = sweepstakeDao.findSweepstakeById(sweepstakeId);
     sweepstakeDao.delete(sweepstake);
+
+    /* Log the event */
+    log.info("Sweepstake {} has been purged! {}", sweepstake.getId(), dateFormat.format(new Date()));
 
     // TODO: Broadcast websockets error message with the reason in it
 

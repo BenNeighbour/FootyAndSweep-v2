@@ -29,6 +29,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -65,6 +66,9 @@ public class UserServiceImpl implements UserService {
         sweepstake, then it will remove the sweepstake with the message string given by the event
         above */
         userMessageDispatcher.publishEvent(relationDeleted, "api-sweepstake-events-topic");
+
+        /* Log the event */
+        log.info("Sweepstake relation {} has been purged! {}", relationDeleted.getSweepstake().getId(), dateFormat.format(new Date()));
       }
     } catch (Exception e) {
       /* Get the error message and ping it back to the client */

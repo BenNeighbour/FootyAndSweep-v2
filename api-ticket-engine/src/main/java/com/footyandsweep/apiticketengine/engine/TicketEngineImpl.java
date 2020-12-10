@@ -34,6 +34,7 @@ import org.springframework.web.client.RestTemplate;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -119,6 +120,9 @@ public class TicketEngineImpl implements TicketEngine {
 
             /* Dispatch the sweepstake sold out event */
             ticketMessageDispatcher.publishEvent(sweepstakeSoldOut, "api-sweepstake-events-topic");
+
+            /* Log the event */
+            log.info("Sweepstake {} has been sold out! {}", sweepstakeSoldOut.getSweepstake().getId(), dateFormat.format(new Date()));
           }
         }
       } catch (InterruptedException ignored) {
@@ -156,6 +160,9 @@ public class TicketEngineImpl implements TicketEngine {
 
         /* Dispatch tickets bought event */
         ticketMessageDispatcher.publishEvent(ticketBought, "api-ticket-events-topic");
+
+        /* Log the event */
+        log.info("Ticket {} on sweepstake {} has been bought! {}", ticketBought.getTicket().getId(), ticketBought.getTicket().getSweepstakeId(), dateFormat.format(new Date()));
       }
     } catch (Exception e) {
       /* Get the error message and ping it back to the client */
