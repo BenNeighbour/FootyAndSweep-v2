@@ -84,24 +84,20 @@ public class SweepstakeController {
   }
 
   @GetMapping("/by/{sweepstakeId}/participants")
-  public HashMap<UUID, UUID> findAllSweepstakeParticipantRelations(
+  public List<UUID> findAllSweepstakeParticipantRelations(
       @PathVariable("sweepstakeId") UUID id) {
 
     Optional<List<ParticipantIds>> participantsInSweepstake =
         participantIdDao.findAllParticipantIdsBySweepstakeId(id);
 
-    if (!participantsInSweepstake.isPresent()) return new HashMap<>();
+    List<UUID> returnList = new ArrayList<>();
 
-    HashMap<UUID, UUID> returnHashMap = new HashMap<>();
+    assert participantsInSweepstake.isPresent();
+    participantsInSweepstake.get().forEach(participantIds -> {
+      returnList.add(participantIds.getParticipantId());
+    });
 
-    participantsInSweepstake
-        .get()
-        .forEach(
-            participantIds ->
-                returnHashMap.put(
-                    participantIds.getParticipantId(), participantIds.getSweepstakeId()));
-
-    return returnHashMap;
+    return returnList;
   }
 
   @PostMapping("/result")

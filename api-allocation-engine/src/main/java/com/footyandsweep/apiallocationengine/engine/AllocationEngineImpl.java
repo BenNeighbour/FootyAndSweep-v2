@@ -92,15 +92,12 @@ public class AllocationEngineImpl implements AllocationEngine {
 
   private List<UUID> sweepstakeParticipantsHelper(UUID sweepstakeId) {
     /* Get a list of participants that might have purchased tickets */
-    HashMap<UUID, UUID> relationIdList =
-        restTemplate.getForObject(
-            "http://api-sweepstake-engine:8080/internal/sweepstake/by/"
-                + sweepstakeId
-                + "/participants",
-            HashMap.class);
-
-    /* Put the result of those returned relations in an array */
-    List<UUID> participantIds = new ArrayList<>(relationIdList.keySet());
+    List<UUID> participantIds =
+            Arrays.asList(Objects.requireNonNull(restTemplate.getForObject(
+                    "http://api-sweepstake-engine:8080/internal/sweepstake/by/"
+                            + sweepstakeId
+                            + "/participants",
+                    UUID[].class)));
 
     /* Shuffle the user list and return it back to caller */
     Collections.shuffle(participantIds);
@@ -170,7 +167,7 @@ public class AllocationEngineImpl implements AllocationEngine {
           TicketCommon ticket = userTickets.remove(0);
 
           /* Logs here */
-          System.out.println("Allocate User: " + userId + " Ticket: " + ticket);
+          System.out.println("Allocate User: " + userId + " Ticket: " + ticket.getId());
           this.allocateTicket(sweepstakeResultMap, sweepstakeResultIdList, ticket);
         }
       }
