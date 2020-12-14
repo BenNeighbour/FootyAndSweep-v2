@@ -76,7 +76,7 @@ public class KafkaConfig {
 
   @Bean
   public NewTopic sweepstakeEvents() {
-    return TopicBuilder.name("api-sweepstake-events-topic").replicas(1).partitions(5).build();
+    return TopicBuilder.name("api-sweepstake-events-topic").replicas(1).partitions(7).build();
   }
 
   @Bean

@@ -14,20 +14,16 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apicommonlibrary.model.ticket;
+package com.footyandsweep.apicommonlibrary.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.UUID;
 
 @Setter
@@ -35,21 +31,14 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @MappedSuperclass
-public class AllocationCommon implements Serializable {
+public class LeagueCommon implements Serializable {
 
-  private static final long serialVersionUID = -7048642523349496292L;
+    private static final long serialVersionUID = 4620865235440152025L;
 
-  @Id @GeneratedValue private UUID id;
+    @Id private UUID id;
 
-  private String description;
+    private Integer code;
 
-  private Integer code;
+    private String name;
 
-  private UUID ticketId;
-
-  private UUID playerId;
-
-  @CreationTimestamp private Date created;
-
-  @UpdateTimestamp private Date updated;
 }

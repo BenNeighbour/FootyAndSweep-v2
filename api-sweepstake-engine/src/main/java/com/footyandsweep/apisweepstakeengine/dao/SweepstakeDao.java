@@ -17,6 +17,7 @@
 package com.footyandsweep.apisweepstakeengine.dao;
 
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
+import com.footyandsweep.apisweepstakeengine.model.FootballMatchSweepstake;
 import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -33,6 +34,10 @@ public interface SweepstakeDao extends JpaRepository<Sweepstake, UUID> {
   @Transactional
   @CachePut(value = "sweepstakeCache", key = "#id")
   Sweepstake findSweepstakeById(UUID id);
+
+  @Transactional
+  @CachePut(value = "sweepstakeCache", key = "#id")
+  FootballMatchSweepstake findFootballMatchSweepstakeById(UUID id);
 
   @Transactional
   @CachePut(value = "sweepstakeCache", key = "#result.getId()")
