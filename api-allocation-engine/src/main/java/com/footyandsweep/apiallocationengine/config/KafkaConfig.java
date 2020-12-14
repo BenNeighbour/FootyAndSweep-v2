@@ -76,7 +76,7 @@ public class KafkaConfig {
 
   @Bean
   public NewTopic allocationEvents() {
-    return TopicBuilder.name("api-allocation-events-topic").replicas(1).partitions(5).build();
+    return TopicBuilder.name("api-allocation-events-topic").replicas(1).partitions(7).build();
   }
 
   @Bean

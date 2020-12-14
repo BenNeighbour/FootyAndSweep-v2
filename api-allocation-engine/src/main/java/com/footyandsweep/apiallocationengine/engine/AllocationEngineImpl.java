@@ -21,6 +21,7 @@ import com.footyandsweep.apiallocationengine.event.AllocationMessageDispatcher;
 import com.footyandsweep.apiallocationengine.model.Allocation;
 import com.footyandsweep.apicommonlibrary.events.EventType;
 import com.footyandsweep.apicommonlibrary.events.TicketEvent;
+import com.footyandsweep.apicommonlibrary.model.football.FootballMatchSweepstakeCommon;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeTypeCommon;
 import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
@@ -167,7 +168,6 @@ public class AllocationEngineImpl implements AllocationEngine {
           TicketCommon ticket = userTickets.remove(0);
 
           /* Logs here */
-          System.out.println("Allocate User: " + userId + " Ticket: " + ticket.getId());
           this.allocateTicket(sweepstakeResultMap, sweepstakeResultIdList, ticket);
         }
       }

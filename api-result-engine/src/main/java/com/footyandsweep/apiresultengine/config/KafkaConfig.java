@@ -76,7 +76,7 @@ public class KafkaConfig {
 
   @Bean
   public NewTopic resultEvents() {
-    return TopicBuilder.name("api-result-events-topic").replicas(1).partitions(5).build();
+    return TopicBuilder.name("api-result-events-topic").replicas(1).partitions(7).build();
   }
 
   @Bean

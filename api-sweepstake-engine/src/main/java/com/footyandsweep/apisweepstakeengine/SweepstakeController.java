@@ -16,6 +16,8 @@
 
 package com.footyandsweep.apisweepstakeengine;
 
+import com.footyandsweep.apicommonlibrary.model.football.FootballMatchSweepstakeCommon;
+import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apisweepstakeengine.dao.FootballMatchDao;
 import com.footyandsweep.apisweepstakeengine.dao.ParticipantIdDao;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
@@ -24,9 +26,11 @@ import com.footyandsweep.apisweepstakeengine.helper.ResultHelper;
 import com.footyandsweep.apisweepstakeengine.model.FootballMatchSweepstake;
 import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
 import com.footyandsweep.apisweepstakeengine.relation.ParticipantIds;
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -101,7 +105,9 @@ public class SweepstakeController {
   }
 
   @PostMapping("/result")
-  public Map<Integer, String> resultHelper(@RequestBody FootballMatchSweepstake sweepstake) {
-    return resultHelper.buildResultsForSweepstakeType(sweepstake.getSweepstakeType(), sweepstake);
+  public Map<Integer, String> resultHelper(@RequestBody SweepstakeCommon sweepstake) {
+    FootballMatchSweepstake footballMatchSweepstake = sweepstakeDao.findFootballMatchSweepstakeById(sweepstake.getId());
+
+    return resultHelper.buildResultsForSweepstakeType(footballMatchSweepstake.getSweepstakeType(), footballMatchSweepstake);
   }
 }

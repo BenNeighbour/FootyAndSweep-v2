@@ -35,7 +35,7 @@ public class ResultHelper {
   private final FootballMatchDao footballMatchDao;
   private final FootballMatchSquadDao footballMatchSquadDao;
 
-  private Map<Integer, String> RESULT = new HashMap<>();
+  private final Map<Integer, String> RESULT = new HashMap<>();
 
   public ResultHelper(
       FootballMatchDao footballMatchDao, FootballMatchSquadDao footballMatchSquadDao) {
@@ -47,6 +47,7 @@ public class ResultHelper {
       SweepstakeTypeCommon sweepstakeType, FootballMatchSweepstake sweepstake) {
     switch (sweepstakeType) {
       case Correct_Score_FT:
+        return this.buildCorrectScoreAtMap(sweepstake.getCorrectScoreMax());
       case Correct_Score_HT:
         return this.buildCorrectScoreAtMap(sweepstake.getCorrectScoreMax());
     }
