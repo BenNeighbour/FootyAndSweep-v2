@@ -194,7 +194,6 @@ public class AllocationEngineImpl implements AllocationEngine {
 
       /* Setting the ticket fields before broadcasting the event */
       ticket.setStatus(TicketCommon.TicketStatus.INPLAY);
-      ticket.setAllocationId(allocation.getId());
 
       /* Getting sweepstake by the id so that it can be modified here */
       Optional<SweepstakeCommon> sweepstake =
