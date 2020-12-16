@@ -18,6 +18,7 @@ package com.footyandsweep.apisweepstakeengine;
 
 import com.footyandsweep.apicommonlibrary.model.football.FootballMatchSweepstakeCommon;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
+import com.footyandsweep.apicommonlibrary.other.CustomMap;
 import com.footyandsweep.apisweepstakeengine.dao.FootballMatchDao;
 import com.footyandsweep.apisweepstakeengine.dao.ParticipantIdDao;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
@@ -105,9 +106,15 @@ public class SweepstakeController {
   }
 
   @PostMapping("/result")
-  public Map<Integer, String> resultHelper(@RequestBody SweepstakeCommon sweepstake) {
+  public List<CustomMap> resultHelper(@RequestBody SweepstakeCommon sweepstake) {
+    List<CustomMap> customMap = new ArrayList<>();
+
     FootballMatchSweepstake footballMatchSweepstake = sweepstakeDao.findFootballMatchSweepstakeById(sweepstake.getId());
 
-    return resultHelper.buildResultsForSweepstakeType(footballMatchSweepstake.getSweepstakeType(), footballMatchSweepstake);
+    resultHelper.buildResultsForSweepstakeType(footballMatchSweepstake.getSweepstakeType(), footballMatchSweepstake).forEach((integer, s) -> {
+      customMap.add(new CustomMap(integer, s));
+    });
+
+    return customMap;
   }
 }
