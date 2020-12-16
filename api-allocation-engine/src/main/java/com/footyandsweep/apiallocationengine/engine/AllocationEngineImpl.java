@@ -217,6 +217,9 @@ public class AllocationEngineImpl implements AllocationEngine {
       ticket.setAllocationCommon(allocation);
       ticket.setSweepstake(sweepstake.get());
 
+      /* Join the allocation id with the ticket */
+      ticket.setAllocationId(allocation.getId());
+
       /* Creating the ticket allocated event with the right metadata inside to be put into the message to the other services */
       TicketEvent ticketAllocated = new TicketEvent(ticket, EventType.ALLOCATED);
 
