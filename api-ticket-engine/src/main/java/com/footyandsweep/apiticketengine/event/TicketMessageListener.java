@@ -16,42 +16,56 @@
 
 package com.footyandsweep.apiticketengine.event;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.footyandsweep.apicommonlibrary.BaseEvent;
 import com.footyandsweep.apicommonlibrary.events.EventType;
+import com.footyandsweep.apicommonlibrary.events.SweepstakeEvent;
 import com.footyandsweep.apicommonlibrary.events.TicketEvent;
 import com.footyandsweep.apiticketengine.dao.TicketDao;
 import com.footyandsweep.apiticketengine.engine.TicketEngine;
 import com.footyandsweep.apiticketengine.model.Ticket;
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 @Component
 public class TicketMessageListener {
 
-  private final ObjectMapper objectMapper;
   private final TicketEngine ticketEngine;
   private final TicketDao ticketDao;
+  private final TicketMessageDispatcher ticketMessageDispatcher;
 
-  public TicketMessageListener(
-      ObjectMapper objectMapper, TicketEngine ticketEngine, TicketDao ticketDao) {
-    this.objectMapper = objectMapper;
+  public TicketMessageListener(TicketEngine ticketEngine, TicketDao ticketDao, TicketMessageDispatcher ticketMessageDispatcher) {
     this.ticketEngine = ticketEngine;
     this.ticketDao = ticketDao;
+    this.ticketMessageDispatcher = ticketMessageDispatcher;
   }
 
-  @KafkaListener(topics = "api-ticket-events-topic")
-  public void ticketEventListener(String serializedMessage) {
+  @KafkaListener(
+          id = "ticketTicketListener",
+          topics = "api-ticket-events-topic",
+          groupId = "ticketConsumerGroup",
+          containerFactory = "TicketEventKafkaListenerContainerFactory")
+  public void ticketEventListener(BaseEvent message) {
     try {
       /* Use JSON Object Mapper to read the message and reflect it into an object */
-      TicketEvent event = objectMapper.readValue(serializedMessage, TicketEvent.class);
+      TicketEvent event = (TicketEvent) message;
 
       /* Use relevant helper functions depending on the different event types */
-      if (event.getEvent().equals(EventType.ALLOCATED))
-        ticketDao.saveAndFlush((Ticket) event.getTicket());
-    } catch (JsonProcessingException e) {
+      if (event.getEvent().equals(EventType.ALLOCATED)) {
+        Ticket ticket = new Ticket();
+        BeanUtils.copyProperties(ticket, event.getTicket());
+
+        ticketDao.saveAndFlush(ticket);
+
+        /* Publish message to sweepstake to sweepstake */
+        if (event.isLastTicket()) {
+          SweepstakeEvent sweepstakeEvent = new SweepstakeEvent(event.getTicket().getSweepstake(), EventType.STATUS_UPDATED);
+
+          ticketMessageDispatcher.publishEvent(sweepstakeEvent, "api-sweepstake-events-topic");
+        }
+      }
+    } catch (Exception e) {
       /* TODO: Log or handle the exception here */
-      System.out.println("Error sending or receiving a valid message!");
     }
   }
 }

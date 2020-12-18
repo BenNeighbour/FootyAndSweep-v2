@@ -44,8 +44,8 @@ public class ResultSchedulerConfig {
     this.sweepstakeMessageDispatcher = sweepstakeMessageDispatcher;
   }
 
-  /* Scheduled for every 4 minutes (480000) */
-  @Scheduled(fixedRate = 120000)
+  /* Scheduled for every 4 minutes (240000) */
+  @Scheduled(fixedRate = 240000)
   public void fetchAndDecisionSweepstakes() {
     /* Logging the periodic check */
     log.info(

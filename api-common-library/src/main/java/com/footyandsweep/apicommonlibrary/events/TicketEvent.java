@@ -36,4 +36,6 @@ public class TicketEvent extends BaseEvent implements Serializable {
   private TicketCommon ticket;
 
   private EventType event;
+
+  private boolean isLastTicket;
 }

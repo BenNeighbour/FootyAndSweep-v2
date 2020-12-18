@@ -21,10 +21,10 @@ import com.footyandsweep.apiallocationengine.event.AllocationMessageDispatcher;
 import com.footyandsweep.apiallocationengine.model.Allocation;
 import com.footyandsweep.apicommonlibrary.events.EventType;
 import com.footyandsweep.apicommonlibrary.events.TicketEvent;
-import com.footyandsweep.apicommonlibrary.model.football.FootballMatchSweepstakeCommon;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeTypeCommon;
 import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
+import com.footyandsweep.apicommonlibrary.other.CustomMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -85,7 +85,9 @@ public class AllocationEngineImpl implements AllocationEngine {
   }
 
   private List<Integer> getSweepstakeResultIdList(Map<Integer, String> sweepstakeResultMap) {
-    List<Integer> sweepstakeResultIdList = new ArrayList<>(sweepstakeResultMap.keySet());
+    List<Integer> sweepstakeResultIdList = new ArrayList<>();
+    sweepstakeResultIdList.addAll(sweepstakeResultMap.keySet());
+
     Collections.shuffle(sweepstakeResultIdList);
 
     return sweepstakeResultIdList;
@@ -94,7 +96,7 @@ public class AllocationEngineImpl implements AllocationEngine {
   private List<UUID> sweepstakeParticipantsHelper(UUID sweepstakeId) {
     /* Get a list of participants that might have purchased tickets */
     List<UUID> participantIds =
-            Arrays.asList(Objects.requireNonNull(restTemplate.getForObject(
+            new LinkedList<>(Arrays.asList(restTemplate.getForObject(
                     "http://api-sweepstake-engine:8080/internal/sweepstake/by/"
                             + sweepstakeId
                             + "/participants",
@@ -108,16 +110,15 @@ public class AllocationEngineImpl implements AllocationEngine {
   private List<TicketCommon> getSweepstakeTicketsHelper(UUID sweepstakeId) {
     /* Get a list of tickets that belong to the sweepstake */
     Optional<List<TicketCommon>> ticketList =
-        Optional.of(
-            Arrays.asList(
-                Objects.requireNonNull(
-                    restTemplate.getForObject(
-                        "http://api-ticket-engine:8080/internal/ticket/by/sweepstake/"
-                            + sweepstakeId,
-                        TicketCommon[].class))));
+            Optional.of(
+                    new LinkedList<>(Arrays.asList(
+                                    restTemplate.getForObject(
+                                            "http://api-ticket-engine:8080/internal/ticket/by/sweepstake/"
+                                                    + sweepstakeId,
+                                            TicketCommon[].class))));
 
     /* Return those tickets if they are valid, otherwise an empty array */
-    return ticketList.orElseGet(ArrayList::new);
+    return ticketList.get();
   }
 
   private void processAllTickets(
@@ -168,7 +169,7 @@ public class AllocationEngineImpl implements AllocationEngine {
           TicketCommon ticket = userTickets.remove(0);
 
           /* Logs here */
-          this.allocateTicket(sweepstakeResultMap, sweepstakeResultIdList, ticket);
+          this.allocateTicket(sweepstakeResultMap, sweepstakeResultIdList, ticket, userIdAllocationList.isEmpty());
         }
       }
 
@@ -180,7 +181,8 @@ public class AllocationEngineImpl implements AllocationEngine {
   private void allocateTicket(
       Map<Integer, String> sweepstakeResultMap,
       List<Integer> sweepstakeResultIdList,
-      TicketCommon ticket) {
+      TicketCommon ticket,
+      boolean isLastTicket) {
     try {
       /* Creating a new instance of the allocation object that is about to be persisted */
       Allocation allocation = new Allocation();
@@ -192,16 +194,14 @@ public class AllocationEngineImpl implements AllocationEngine {
 
       /* Setting the ticket fields before broadcasting the event */
       ticket.setStatus(TicketCommon.TicketStatus.INPLAY);
-      ticket.setAllocationId(allocation.getId());
 
       /* Getting sweepstake by the id so that it can be modified here */
       Optional<SweepstakeCommon> sweepstake =
           Optional.ofNullable(
               restTemplate.getForObject(
-                  "http://api-sweepstake-engine:8080/internal/sweepstake/by/"
-                      + ticket.getSweepstakeId()
-                      + "/participants",
-                  SweepstakeCommon.class));
+                      "http://api-sweepstake-engine:8080/internal/sweepstake/by/id/"
+                              + ticket.getSweepstakeId(),
+                      SweepstakeCommon.class));
 
       /* If the sweepstake is not valid, then throw an error */
       if (!sweepstake.isPresent()) throw new Exception();
@@ -216,37 +216,46 @@ public class AllocationEngineImpl implements AllocationEngine {
       ticket.setAllocationCommon(allocation);
       ticket.setSweepstake(sweepstake.get());
 
+      /* Join the allocation id with the ticket */
+      ticket.setAllocationId(allocation.getId());
+
       /* Creating the ticket allocated event with the right metadata inside to be put into the message to the other services */
-      TicketEvent ticketAllocated = new TicketEvent(ticket, EventType.ALLOCATED);
+      TicketEvent ticketAllocated = new TicketEvent(ticket, EventType.ALLOCATED, isLastTicket);
 
       /* Publish ticket allocated event */
-      allocationMessageDispatcher.publishEvent(ticketAllocated, "api-ticket-event-topic");
+      allocationMessageDispatcher.publishEvent(ticketAllocated, "api-ticket-events-topic");
 
       /* Log the event */
       log.info("Sweepstake {} ticket {} has been allocated! {}", ticket.getSweepstakeId(), ticket.getId(), dateFormat.format(new Date()));
     } catch (Exception e) {
       /* Throw error to WebSocket client */
+
+      e.getCause();
     }
   }
 
   private Map<Integer, String> getSweepstakeResultMap(SweepstakeCommon sweepstake) {
-    /* Defining the result map so it can be modified in the iteration */
-    Optional<Map<Integer, String>> resultMap = Optional.empty();
+    List<CustomMap> resultMap = new ArrayList<>();
 
     /* Going over all of the sweepstake types in the enum in order to programmatically determine what method will be invoked on the result helper */
     for (SweepstakeTypeCommon i : SweepstakeTypeCommon.values()) {
       /* Call result helper to get the field and return a function that returns the right maps to back */
-      if (sweepstake.getSweepstakeType().equals(i))
+      if (sweepstake.getSweepstakeType().equals(i)) {
         resultMap =
-            Optional.ofNullable(
-                restTemplate
-                    .postForEntity(
-                        "http://api-sweepstake-engine:8080/internal/sweepstake/result",
-                        sweepstake,
-                        Map.class)
-                    .getBody());
+                new LinkedList<>(Arrays.asList(restTemplate
+                        .postForObject(
+                                "http://api-sweepstake-engine:8080/internal/sweepstake/result",
+                                sweepstake,
+                                CustomMap[].class)));
+      }
     }
 
-    return resultMap.orElse(new HashMap<>());
+    HashMap<Integer, String> deserializedMap = new HashMap<>();
+
+    resultMap.forEach(customMap -> {
+      deserializedMap.put(customMap.getIntegerKey(), customMap.getStringValue());
+    });
+
+    return deserializedMap;
   }
 }

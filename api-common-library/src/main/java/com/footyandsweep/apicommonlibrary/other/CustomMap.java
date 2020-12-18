@@ -14,19 +14,27 @@
  *   limitations under the License.
  */
 
-plugins {
-    id 'java-library'
-}
+package com.footyandsweep.apicommonlibrary.other;
 
-dependencies {
-    compileOnly 'org.projectlombok:lombok:1.18.14'
-    annotationProcessor 'org.projectlombok:lombok:1.18.14'
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-    testCompileOnly 'org.projectlombok:lombok:1.18.14'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.14'
+import javax.persistence.MappedSuperclass;
+import java.io.Serializable;
 
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.12.0'
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@MappedSuperclass
+public class CustomMap implements Serializable {
 
-    compile "commons-lang:commons-lang:2.6"
-    compileOnly "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
+    private static final long serialVersionUID = -818874942149783488L;
+
+    private Integer integerKey;
+
+    private String stringValue;
+
 }
