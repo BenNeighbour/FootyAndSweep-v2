@@ -96,11 +96,11 @@ public class AllocationEngineImpl implements AllocationEngine {
   private List<UUID> sweepstakeParticipantsHelper(UUID sweepstakeId) {
     /* Get a list of participants that might have purchased tickets */
     List<UUID> participantIds =
-            new LinkedList<>(Arrays.asList(Objects.requireNonNull(restTemplate.getForObject(
+            new LinkedList<>(Arrays.asList(restTemplate.getForObject(
                     "http://api-sweepstake-engine:8080/internal/sweepstake/by/"
                             + sweepstakeId
                             + "/participants",
-                    UUID[].class))));
+                    UUID[].class)));
 
     /* Shuffle the user list and return it back to caller */
     Collections.shuffle(participantIds);
@@ -112,11 +112,10 @@ public class AllocationEngineImpl implements AllocationEngine {
     Optional<List<TicketCommon>> ticketList =
             Optional.of(
                     new LinkedList<>(Arrays.asList(
-                            Objects.requireNonNull(
                                     restTemplate.getForObject(
                                             "http://api-ticket-engine:8080/internal/ticket/by/sweepstake/"
                                                     + sweepstakeId,
-                                            TicketCommon[].class)))));
+                                            TicketCommon[].class))));
 
     /* Return those tickets if they are valid, otherwise an empty array */
     return ticketList.get();
@@ -170,7 +169,7 @@ public class AllocationEngineImpl implements AllocationEngine {
           TicketCommon ticket = userTickets.remove(0);
 
           /* Logs here */
-          this.allocateTicket(sweepstakeResultMap, sweepstakeResultIdList, ticket);
+          this.allocateTicket(sweepstakeResultMap, sweepstakeResultIdList, ticket, userIdAllocationList.isEmpty());
         }
       }
 
@@ -182,7 +181,8 @@ public class AllocationEngineImpl implements AllocationEngine {
   private void allocateTicket(
       Map<Integer, String> sweepstakeResultMap,
       List<Integer> sweepstakeResultIdList,
-      TicketCommon ticket) {
+      TicketCommon ticket,
+      boolean isLastTicket) {
     try {
       /* Creating a new instance of the allocation object that is about to be persisted */
       Allocation allocation = new Allocation();
@@ -220,10 +220,10 @@ public class AllocationEngineImpl implements AllocationEngine {
       ticket.setAllocationId(allocation.getId());
 
       /* Creating the ticket allocated event with the right metadata inside to be put into the message to the other services */
-      TicketEvent ticketAllocated = new TicketEvent(ticket, EventType.ALLOCATED);
+      TicketEvent ticketAllocated = new TicketEvent(ticket, EventType.ALLOCATED, isLastTicket);
 
       /* Publish ticket allocated event */
-      allocationMessageDispatcher.publishEvent(ticketAllocated, "api-ticket-event-topic");
+      allocationMessageDispatcher.publishEvent(ticketAllocated, "api-ticket-events-topic");
 
       /* Log the event */
       log.info("Sweepstake {} ticket {} has been allocated! {}", ticket.getSweepstakeId(), ticket.getId(), dateFormat.format(new Date()));

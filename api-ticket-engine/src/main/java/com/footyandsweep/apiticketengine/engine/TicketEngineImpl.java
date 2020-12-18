@@ -156,7 +156,7 @@ public class TicketEngineImpl implements TicketEngine {
         ticket = ticketDao.save(ticket);
 
         /* Creating the sweepstake created object for the other services to react to */
-        TicketEvent ticketBought = new TicketEvent(ticket, EventType.PURCHASED);
+        TicketEvent ticketBought = new TicketEvent(ticket, EventType.PURCHASED, false);
 
         /* Dispatch tickets bought event */
         ticketMessageDispatcher.publishEvent(ticketBought, "api-ticket-events-topic");

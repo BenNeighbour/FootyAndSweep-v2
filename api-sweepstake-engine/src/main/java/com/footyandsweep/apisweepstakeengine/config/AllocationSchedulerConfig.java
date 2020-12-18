@@ -44,7 +44,7 @@ public class AllocationSchedulerConfig {
     this.sweepstakeMessageDispatcher = sweepstakeMessageDispatcher;
   }
 
-  /* Scheduled for every 4 minutes */
+  /* Scheduled for every 1 minute */
   @Scheduled(fixedRate = 60000)
   public void checkAndAllocateSweepstakes() {
     /* Logging the periodic check */
