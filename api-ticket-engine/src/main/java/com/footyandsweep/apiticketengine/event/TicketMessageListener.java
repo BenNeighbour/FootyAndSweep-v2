@@ -55,12 +55,13 @@ public class TicketMessageListener {
         Ticket ticket = new Ticket();
         BeanUtils.copyProperties(ticket, event.getTicket());
 
+        /* Update the ticket in the database */
         ticketDao.saveAndFlush(ticket);
 
-        /* Publish message to sweepstake to sweepstake */
         if (event.isLastTicket()) {
           SweepstakeEvent sweepstakeEvent = new SweepstakeEvent(event.getTicket().getSweepstake(), EventType.STATUS_UPDATED);
 
+          /* Publish message to sweepstake to sweepstake */
           ticketMessageDispatcher.publishEvent(sweepstakeEvent, "api-sweepstake-events-topic");
         }
       }
