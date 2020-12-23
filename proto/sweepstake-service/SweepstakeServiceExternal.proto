@@ -1,0 +1,49 @@
+syntax = "proto3";
+package sweepstake;
+
+enum SweepstakeStatus {
+  OPEN = 0;
+  ALLOCATED = 1;
+  CLOSED = 2;
+}
+
+enum SweepstakeTypeCommon {
+  Correct_Score_FT = 0;
+  Correct_Score_HT = 1;
+}
+
+enum ProcessStatus {
+  PENDING = 0;
+  INVALID = 1;
+  PERSISTED = 2;
+}
+
+message Sweepstake {
+  string id = 1;
+  string name = 2;
+  string joinCode = 3;
+  SweepstakeStatus status = 4;
+  bool isPrivate = 5;
+  string ownerId = 6;
+  string sweepstakeEventId = 7;
+  SweepstakeTypeCommon sweepstakeType = 8;
+  ProcessStatus processStatus = 9;
+  int32 sweepstakeListSize = 10;
+  int32 minimumPlayers = 11;
+  int32 maximumPlayerTickets = 12;
+  BigDecimal stake = 13;
+  int32 totalNumberOfTickets = 14;
+}
+
+message BigDecimal {
+  int32 scale = 1;
+  BigInteger int_val = 2;
+}
+
+message BigInteger {
+  bytes value = 1;
+}
+
+service SweepstakeServiceExternal {
+  rpc requestNewSweepstake(Sweepstake) returns (stream Sweepstake);
+}

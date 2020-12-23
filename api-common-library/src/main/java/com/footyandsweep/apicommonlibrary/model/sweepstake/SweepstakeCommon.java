@@ -16,6 +16,7 @@
 
 package com.footyandsweep.apicommonlibrary.model.sweepstake;
 
+import com.footyandsweep.apicommonlibrary.events.ProcessStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -42,7 +43,9 @@ public class SweepstakeCommon implements Serializable {
 
   @Version protected Integer version;
 
-  @Id @GeneratedValue private UUID id;
+  @Id
+  @GeneratedValue
+  private UUID id;
 
   private String name;
 
@@ -58,6 +61,10 @@ public class SweepstakeCommon implements Serializable {
 
   @Enumerated(EnumType.STRING)
   private SweepstakeTypeCommon sweepstakeType = this.getSweepstakeType();
+
+  @Transient
+  @Enumerated(EnumType.STRING)
+  private ProcessStatus processStatus = ProcessStatus.PENDING;
 
   @Transient private int sweepstakeListSize;
 

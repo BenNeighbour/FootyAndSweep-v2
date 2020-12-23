@@ -16,6 +16,7 @@
 
 package com.footyandsweep.apicommonlibrary.model.ticket;
 
+import com.footyandsweep.apicommonlibrary.events.ProcessStatus;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -37,8 +38,9 @@ import java.util.UUID;
 public class TicketCommon implements Serializable {
 
   private static final long serialVersionUID = -7269123358093904648L;
-  @Version protected Integer version;
+
   @Id @GeneratedValue private UUID id;
+
   private TicketStatus status = TicketStatus.PENDING;
 
   private UUID sweepstakeId;
@@ -56,6 +58,10 @@ public class TicketCommon implements Serializable {
   @Transient private SweepstakeCommon sweepstake;
 
   @Transient private AllocationCommon allocationCommon;
+
+  @Transient
+  @Enumerated(EnumType.STRING)
+  private ProcessStatus processStatus = ProcessStatus.PENDING;
 
   public enum TicketStatus {
     PENDING(0),
