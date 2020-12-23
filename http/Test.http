@@ -2,9 +2,9 @@ POST http://localhost:8082/internal/sweepstake/save
 Content-Type: application/json
 
 {
-  "name": "Ben's Sweepstake",
+  "name": "A Sweepstake",
   "isPrivate": true,
-  "ownerId": "123e4567-e89b-42d3-a456-556642440000",
+  "ownerId": "d913ed9d-ebfa-406d-bef1-8ee91a9ccda3",
   "numberOfRange": 5,
   "numberOfMax": 5,
   "maxNumberOfRanges": 5,
@@ -14,7 +14,7 @@ Content-Type: application/json
   "includeStartingGoalkeeper": false,
   "includeNoGoalScorer": false,
   "includeOwnGoals": true,
-  "stake": 100.00
+  "stake": 1.00
 }
 
 ###
@@ -23,9 +23,9 @@ POST http://localhost:8082/internal/ticket/buy
 Content-Type: application/json
 
 {
-  "ownerId": "123e4567-e89b-42d3-a456-556642440000",
-  "joinCode": "t2vF1JTX",
-  "numberOfTickets": 1
+  "ownerId": "d913ed9d-ebfa-406d-bef1-8ee91a9ccda3",
+  "joinCode": "SXpn34jE",
+  "numberOfTickets": 3
 }
 
 ###
