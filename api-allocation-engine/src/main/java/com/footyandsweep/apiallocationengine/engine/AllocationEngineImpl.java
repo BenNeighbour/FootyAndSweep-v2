@@ -64,10 +64,7 @@ public class AllocationEngineImpl implements AllocationEngine {
 
       /* Get the built possible result maps from the sweepstake/result methods */
       Optional<Map<Integer, String>> sweepstakeResultMap =
-          Optional.ofNullable(this.getSweepstakeResultMap(sweepstake));
-
-      /* If the result map is not valid, then throw an error */
-      if (!sweepstakeResultMap.isPresent()) throw new Exception();
+          Optional.of(this.getSweepstakeResultMap(sweepstake));
 
       /* Build a randomized list of possible results */
       List<Integer> sweepstakeResultIdList = getSweepstakeResultIdList(sweepstakeResultMap.get());
@@ -169,7 +166,7 @@ public class AllocationEngineImpl implements AllocationEngine {
           TicketCommon ticket = userTickets.remove(0);
 
           /* Logs here */
-          this.allocateTicket(sweepstakeResultMap, sweepstakeResultIdList, ticket, userIdAllocationList.isEmpty());
+          this.allocateTicket(sweepstakeResultMap, sweepstakeResultIdList, ticket, userTickets.isEmpty());
         }
       }
 
@@ -208,9 +205,6 @@ public class AllocationEngineImpl implements AllocationEngine {
 
       /* Persisting the allocation and setting to itself so the generated id is filled in */
       allocation = allocationDao.save(allocation);
-
-      /* Setting the sweepstake status to allocated */
-      sweepstake.get().setStatus(SweepstakeCommon.SweepstakeStatus.ALLOCATED);
 
       /* Setting the transient aggregate  */
       ticket.setAllocationCommon(allocation);

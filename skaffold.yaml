@@ -19,6 +19,9 @@ build:
     - image: api-allocation-engine
       context: api-allocation-engine
       docker: { }
+    - image: api-envoy-proxy
+      context: kubernetes/api-envoy-proxy
+      docker: { }
 deploy:
   kubectl:
     manifests:
@@ -27,6 +30,7 @@ deploy:
       - kubernetes/api-event-broker/api-kafka.yaml
       - kubernetes/api-event-broker/api-kafka-monitor.yaml
       - kubernetes/api-event-broker/zookeeper.yaml
+      - kubernetes/api-envoy-proxy/api-envoy-proxy.yaml
       - kubernetes/api-gateway-service/api-gateway-service-config.yaml
       - kubernetes/api-sweepstake-engine/api-sweepstake-engine-config.yaml
       - kubernetes/api-ticket-engine/api-ticket-engine-config.yaml

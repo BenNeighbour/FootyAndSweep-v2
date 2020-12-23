@@ -16,15 +16,14 @@
 
 package com.footyandsweep.apisweepstakeengine.event;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.footyandsweep.apicommonlibrary.BaseEvent;
 import com.footyandsweep.apicommonlibrary.events.EventType;
 import com.footyandsweep.apicommonlibrary.events.SweepstakeEvent;
-import com.footyandsweep.apicommonlibrary.events.TicketEvent;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
 import com.footyandsweep.apisweepstakeengine.engine.SweepstakeEngine;
 import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
@@ -42,25 +41,6 @@ public class SweepstakeMessageListener {
     this.sweepstakeDao = sweepstakeDao;
   }
 
-//  @KafkaListener(
-//          id = "sweepstakeTicketListener",
-//          topics = "api-ticket-events-topic",
-//          groupId = "sweepstakeConsumerGroup",
-//          containerFactory = "SweepstakeEventKafkaListenerContainerFactory")
-//  public void ticketEventListener(BaseEvent message) {
-//    try {
-//      /* Use JSON Object Mapper to read the message and reflect it into an object */
-//      TicketEvent event = (TicketEvent) message;
-//
-//      /* Use relevant helper functions depending on the different event types */
-//      if (event.getEvent().equals(EventType.ALLOCATED))
-//        sweepstakeDao.saveAndFlush((Sweepstake) event.getTicket().getSweepstake());
-//    } catch (Exception e) {
-//      /* TODO: Log or handle the exception here */
-//      System.out.println("Error sending or receiving a valid message!");
-//    }
-//  }
-
   @KafkaListener(
       id = "sweepstakeSweepstakeListener",
       topics = "api-sweepstake-events-topic",
@@ -76,9 +56,14 @@ public class SweepstakeMessageListener {
         sweepstakeEngine.deleteParticipantRelation(event.getSweepstake().getId());
         sweepstakeEngine.deleteSweepstake(event.getSweepstake().getId());
       }
+      if (event.getEvent().equals(EventType.STATUS_UPDATED)) {
+        Sweepstake sweepstake = new Sweepstake();
+        BeanUtils.copyProperties(sweepstake, event.getSweepstake());
+
+        sweepstakeDao.saveAndFlush(sweepstake);
+      }
     } catch (Exception e) {
       /* TODO: Log or handle the exception here */
-      System.out.println("Error sending or receiving a valid message!");
     }
   }
 }
