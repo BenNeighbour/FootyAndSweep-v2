@@ -20,6 +20,7 @@ import com.footyandsweep.apicommonlibrary.BaseEvent;
 import com.footyandsweep.apicommonlibrary.events.EventType;
 import com.footyandsweep.apicommonlibrary.events.SweepstakeEvent;
 import com.footyandsweep.apicommonlibrary.events.TicketEvent;
+import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apiticketengine.dao.TicketDao;
 import com.footyandsweep.apiticketengine.engine.TicketEngine;
 import com.footyandsweep.apiticketengine.model.Ticket;
@@ -51,7 +52,7 @@ public class TicketMessageListener {
       TicketEvent event = (TicketEvent) message;
 
       /* Use relevant helper functions depending on the different event types */
-      if (event.getEvent().equals(EventType.ALLOCATED)) {
+      if (event.getEvent().equals(EventType.ALLOCATED) && !event.getTicket().getSweepstake().getStatus().equals(SweepstakeCommon.SweepstakeStatus.ALLOCATED)) {
         Ticket ticket = new Ticket();
         BeanUtils.copyProperties(ticket, event.getTicket());
 
@@ -59,7 +60,10 @@ public class TicketMessageListener {
         ticketDao.saveAndFlush(ticket);
 
         if (event.isLastTicket()) {
-          SweepstakeEvent sweepstakeEvent = new SweepstakeEvent(event.getTicket().getSweepstake(), EventType.STATUS_UPDATED);
+          /* Setting the status */
+          ticket.getSweepstake().setStatus(SweepstakeCommon.SweepstakeStatus.ALLOCATED);
+
+          SweepstakeEvent sweepstakeEvent = new SweepstakeEvent(ticket.getSweepstake(), EventType.STATUS_UPDATED);
 
           /* Publish message to sweepstake to sweepstake */
           ticketMessageDispatcher.publishEvent(sweepstakeEvent, "api-sweepstake-events-topic");

@@ -2,7 +2,6 @@ const { GreetingServiceClient } = require('../proto/greeting_service_grpc_web_pb
 const { HelloRequest, HelloResponse } = require('../proto/greeting_service_pb');
 
 export const getTestThing = (action: any) => {
-    // Send a gRPC call here
     const client = new GreetingServiceClient('http://localhost:9090', null, null);
 
     const callService = () => {

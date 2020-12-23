@@ -206,9 +206,6 @@ public class AllocationEngineImpl implements AllocationEngine {
       /* Persisting the allocation and setting to itself so the generated id is filled in */
       allocation = allocationDao.save(allocation);
 
-      /* Setting the sweepstake status to allocated */
-      sweepstake.get().setStatus(SweepstakeCommon.SweepstakeStatus.ALLOCATED);
-
       /* Setting the transient aggregate  */
       ticket.setAllocationCommon(allocation);
       ticket.setSweepstake(sweepstake.get());
