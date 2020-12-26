@@ -1,8 +1,5 @@
 syntax = "proto3";
-package sweepstake;
-
-option java_package = "sweepstake";
-option java_outer_classname = "SweepstakeService";
+package com.footyandsweep;
 
 enum SweepstakeStatus {
   OPEN = 0;
@@ -59,14 +56,11 @@ message Map {
   map<int64, string> pairs = 1;
 }
 
-service SweepstakeServiceInternal {
+service SweepstakeService {
   rpc updateSweepstake(Sweepstake) returns (Sweepstake);
   rpc findSweepstakeByJoinCode(JoinCode) returns (Sweepstake);
   rpc findSweepstakeById(SweepstakeId) returns (Sweepstake);
   rpc getResultHelperMap(Sweepstake) returns (Map);
-}
-
-service SweepstakeServiceExternal {
   rpc requestNewSweepstake(Sweepstake) returns (stream Sweepstake);
   rpc createSweepstake(Sweepstake) returns (Sweepstake);
 }

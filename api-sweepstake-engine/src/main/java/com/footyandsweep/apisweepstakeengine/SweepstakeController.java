@@ -16,105 +16,41 @@
 
 package com.footyandsweep.apisweepstakeengine;
 
-import com.footyandsweep.apicommonlibrary.model.football.FootballMatchSweepstakeCommon;
-import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
-import com.footyandsweep.apicommonlibrary.other.CustomMap;
-import com.footyandsweep.apisweepstakeengine.dao.FootballMatchDao;
-import com.footyandsweep.apisweepstakeengine.dao.ParticipantIdDao;
-import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
-import com.footyandsweep.apisweepstakeengine.engine.SweepstakeEngineImpl;
-import com.footyandsweep.apisweepstakeengine.helper.ResultHelper;
-import com.footyandsweep.apisweepstakeengine.model.FootballMatchSweepstake;
-import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
-import com.footyandsweep.apisweepstakeengine.relation.ParticipantIds;
-import org.apache.commons.beanutils.BeanUtils;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import com.footyandsweep.SweepstakeServiceGrpc;
+import com.footyandsweep.SweepstakeServiceOuterClass;
+import com.footyandsweep.apicommonlibrary.gRPC.GrpcService;
+import io.grpc.stub.StreamObserver;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.*;
-import java.util.stream.Collectors;
+@GrpcService
+public class SweepstakeServiceImpl extends SweepstakeServiceGrpc.SweepstakeServiceImplBase {
 
-@RestController
-@RequestMapping("/internal/sweepstake")
-public class SweepstakeController {
+    @Override
+    public void updateSweepstake(SweepstakeServiceOuterClass.Sweepstake request, StreamObserver<SweepstakeServiceOuterClass.Sweepstake> responseObserver) {
+        /* TODO: Call service method here */
+    }
 
-  private final SweepstakeEngineImpl sweepstakeEngine;
-  private final SweepstakeDao sweepstakeDao;
-  private final ParticipantIdDao participantIdDao;
-  private final ResultHelper resultHelper;
-  private final FootballMatchDao footballMatchDao;
+    @Override
+    public void findSweepstakeByJoinCode(SweepstakeServiceOuterClass.JoinCode request, StreamObserver<SweepstakeServiceOuterClass.Sweepstake> responseObserver) {
+        super.findSweepstakeByJoinCode(request, responseObserver);
+    }
 
-  public SweepstakeController(
-      final SweepstakeEngineImpl sweepstakeEngine,
-      final SweepstakeDao sweepstakeDao,
-      final ParticipantIdDao participantIdDao,
-      final ResultHelper resultHelper,
-      final FootballMatchDao footballMatchDao) {
-    this.sweepstakeEngine = sweepstakeEngine;
-    this.sweepstakeDao = sweepstakeDao;
-    this.participantIdDao = participantIdDao;
-    this.resultHelper = resultHelper;
-    this.footballMatchDao = footballMatchDao;
-  }
+    @Override
+    public void findSweepstakeById(SweepstakeServiceOuterClass.SweepstakeId request, StreamObserver<SweepstakeServiceOuterClass.Sweepstake> responseObserver) {
+        super.findSweepstakeById(request, responseObserver);
+    }
 
-  @PostMapping("/save")
-  public ResponseEntity<Sweepstake> createSweepstake(
-      @RequestBody FootballMatchSweepstake sweepstake) {
-    return ResponseEntity.ok(sweepstakeEngine.saveSweepstake(sweepstake.getOwnerId(), sweepstake));
-  }
+    @Override
+    public void getResultHelperMap(SweepstakeServiceOuterClass.Sweepstake request, StreamObserver<SweepstakeServiceOuterClass.Map> responseObserver) {
+        super.getResultHelperMap(request, responseObserver);
+    }
 
-  @GetMapping("/by/joinCode/{joinCode}")
-  public Sweepstake findSweepstakeByJoinCode(@PathVariable("joinCode") String joinCode) {
-    return sweepstakeDao.findSweepstakeByJoinCode(joinCode);
-  }
+    @Override
+    public void requestNewSweepstake(SweepstakeServiceOuterClass.Sweepstake request, StreamObserver<SweepstakeServiceOuterClass.Sweepstake> responseObserver) {
+        super.requestNewSweepstake(request, responseObserver);
+    }
 
-  @GetMapping("/by/id/{id}")
-  public Sweepstake findSweepstakeById(@PathVariable("id") UUID id) {
-    return sweepstakeDao.findSweepstakeById(id);
-  }
-
-  @GetMapping("/by/footballMatch/{id}")
-  public List<Sweepstake> findSweepstakeByFootballMatchId(@PathVariable("id") UUID id) {
-    return sweepstakeDao.findAll().stream()
-        .filter(sweepstake -> sweepstake instanceof FootballMatchSweepstake)
-        .filter(
-            sweepstake -> ((FootballMatchSweepstake) sweepstake).getFootballMatchId().equals(id))
-        .filter(
-            sweepstake ->
-                footballMatchDao
-                    .findFootballMatchById(sweepstake.getSweepstakeEventId())
-                    .equals(footballMatchDao.findFootballMatchById(id)))
-        .collect(Collectors.toList());
-  }
-
-  @GetMapping("/by/{sweepstakeId}/participants")
-  public List<UUID> findAllSweepstakeParticipantRelations(
-      @PathVariable("sweepstakeId") UUID id) {
-
-    Optional<List<ParticipantIds>> participantsInSweepstake =
-        participantIdDao.findAllParticipantIdsBySweepstakeId(id);
-
-    List<UUID> returnList = new ArrayList<>();
-
-    assert participantsInSweepstake.isPresent();
-    participantsInSweepstake.get().forEach(participantIds -> {
-      returnList.add(participantIds.getParticipantId());
-    });
-
-    return returnList;
-  }
-
-  @PostMapping("/result")
-  public List<CustomMap> resultHelper(@RequestBody SweepstakeCommon sweepstake) {
-    List<CustomMap> customMap = new ArrayList<>();
-
-    FootballMatchSweepstake footballMatchSweepstake = sweepstakeDao.findFootballMatchSweepstakeById(sweepstake.getId());
-
-    resultHelper.buildResultsForSweepstakeType(footballMatchSweepstake.getSweepstakeType(), footballMatchSweepstake).forEach((integer, s) -> {
-      customMap.add(new CustomMap(integer, s));
-    });
-
-    return customMap;
-  }
+    @Override
+    public void createSweepstake(SweepstakeServiceOuterClass.Sweepstake request, StreamObserver<SweepstakeServiceOuterClass.Sweepstake> responseObserver) {
+        super.createSweepstake(request, responseObserver);
+    }
 }
