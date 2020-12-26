@@ -1,0 +1,1 @@
+protoc --java_out=./api-common-library/src/main/java/com/footyandsweep/apicommonlibrary/gRPC/generated ./proto/**/*.proto
