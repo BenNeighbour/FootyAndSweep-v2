@@ -20,6 +20,7 @@ import com.footyandsweep.apiallocationengine.dao.AllocationDao;
 import com.footyandsweep.apiallocationengine.event.AllocationMessageDispatcher;
 import com.footyandsweep.apiallocationengine.model.Allocation;
 import com.footyandsweep.apicommonlibrary.events.EventType;
+import com.footyandsweep.apicommonlibrary.events.ProcessStatus;
 import com.footyandsweep.apicommonlibrary.events.TicketEvent;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeTypeCommon;
@@ -205,6 +206,7 @@ public class AllocationEngineImpl implements AllocationEngine {
 
       /* Persisting the allocation and setting to itself so the generated id is filled in */
       allocation = allocationDao.save(allocation);
+      allocation.setProcessStatus(ProcessStatus.PERSISTED);
 
       /* Setting the transient aggregate  */
       ticket.setAllocationCommon(allocation);

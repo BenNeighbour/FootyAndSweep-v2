@@ -14,20 +14,19 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apicommonlibrary.events;
+package com.footyandsweep.apicommonlibrary.gRPC;
 
-public enum EventType {
-  SOLD_OUT,
-  PROCESS_ENDED,
-  ALLOCATED,
-  PURCHASED,
-  CREATED,
-  DELETED,
-  NEEDS_ALLOCATING,
-  NEEDS_DECISIONING,
-  UPDATED,
-  STATUS_UPDATED,
-  RELATION_DELETED,
-  RELATION_UPDATED,
-  RELATION_CREATED;
+import io.grpc.BindableService;
+import org.springframework.stereotype.Service;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Service
+public @interface GrpcService {
+    Class<? extends BindableService>[] value() default {};
 }

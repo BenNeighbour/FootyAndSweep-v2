@@ -19,6 +19,7 @@ package com.footyandsweep.apisweepstakeengine.event;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.footyandsweep.apicommonlibrary.BaseEvent;
 import com.footyandsweep.apicommonlibrary.events.EventType;
+import com.footyandsweep.apicommonlibrary.events.ProcessStatus;
 import com.footyandsweep.apicommonlibrary.events.SweepstakeEvent;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
 import com.footyandsweep.apisweepstakeengine.engine.SweepstakeEngine;
@@ -34,8 +35,7 @@ public class SweepstakeMessageListener {
   private final SweepstakeEngine sweepstakeEngine;
   private final SweepstakeDao sweepstakeDao;
 
-  public SweepstakeMessageListener(
-      ObjectMapper objectMapper, SweepstakeEngine sweepstakeEngine, SweepstakeDao sweepstakeDao) {
+  public SweepstakeMessageListener(ObjectMapper objectMapper, SweepstakeEngine sweepstakeEngine, SweepstakeDao sweepstakeDao) {
     this.objectMapper = objectMapper;
     this.sweepstakeEngine = sweepstakeEngine;
     this.sweepstakeDao = sweepstakeDao;
@@ -55,6 +55,13 @@ public class SweepstakeMessageListener {
       if (event.getEvent().equals(EventType.RELATION_DELETED)) {
         sweepstakeEngine.deleteParticipantRelation(event.getSweepstake().getId());
         sweepstakeEngine.deleteSweepstake(event.getSweepstake().getId());
+
+        /* Change the status to an error */
+        Sweepstake sweepstake = new Sweepstake();
+        BeanUtils.copyProperties(sweepstake, event.getSweepstake());
+        sweepstake.setProcessStatus(ProcessStatus.INVALID);
+
+        /* TODO: Somehow set the sweepstake for the sweepstake grpc */
       }
       if (event.getEvent().equals(EventType.STATUS_UPDATED)) {
         Sweepstake sweepstake = new Sweepstake();

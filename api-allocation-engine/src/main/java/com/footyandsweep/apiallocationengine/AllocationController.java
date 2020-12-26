@@ -19,6 +19,7 @@ package com.footyandsweep.apiallocationengine;
 import com.footyandsweep.apiallocationengine.dao.AllocationDao;
 import com.footyandsweep.apiallocationengine.engine.AllocationEngine;
 import com.footyandsweep.apiallocationengine.model.Allocation;
+import com.footyandsweep.apicommonlibrary.events.ProcessStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -42,6 +43,7 @@ public class AllocationController {
 
   @PostMapping("/save")
   public Allocation createAllocation(@RequestBody Allocation allocation) {
+    allocation.setProcessStatus(ProcessStatus.PERSISTED);
     return allocationDao.save(allocation);
   }
 }

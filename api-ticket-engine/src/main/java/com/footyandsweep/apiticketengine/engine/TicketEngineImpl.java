@@ -17,6 +17,7 @@
 package com.footyandsweep.apiticketengine.engine;
 
 import com.footyandsweep.apicommonlibrary.events.EventType;
+import com.footyandsweep.apicommonlibrary.events.ProcessStatus;
 import com.footyandsweep.apicommonlibrary.events.SweepstakeEvent;
 import com.footyandsweep.apicommonlibrary.events.TicketEvent;
 import com.footyandsweep.apicommonlibrary.helper.SweepstakeLock;
@@ -154,6 +155,7 @@ public class TicketEngineImpl implements TicketEngine {
 
         /* Persist that ticket while adding it onto the list of bought tickets for that user */
         ticket = ticketDao.save(ticket);
+        ticket.setProcessStatus(ProcessStatus.PERSISTED);
 
         /* Creating the sweepstake created object for the other services to react to */
         TicketEvent ticketBought = new TicketEvent(ticket, EventType.PURCHASED, false);

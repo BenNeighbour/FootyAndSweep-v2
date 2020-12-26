@@ -1,7 +1,8 @@
 syntax = "proto3";
-package allocation;
+package sweepstake;
 
-message void {}
+option java_package = "sweepstake";
+option java_outer_classname = "SweepstakeService";
 
 enum SweepstakeStatus {
   OPEN = 0;
@@ -46,6 +47,26 @@ message BigInteger {
   bytes value = 1;
 }
 
-service AllocationServiceInternal {
-  rpc allocateSweepstakeTickets(Sweepstake) returns (void);
+message JoinCode {
+  string joinCode = 1;
+}
+
+message SweepstakeId {
+  string sweepstakeId = 1;
+}
+
+message Map {
+  map<int64, string> pairs = 1;
+}
+
+service SweepstakeServiceInternal {
+  rpc updateSweepstake(Sweepstake) returns (Sweepstake);
+  rpc findSweepstakeByJoinCode(JoinCode) returns (Sweepstake);
+  rpc findSweepstakeById(SweepstakeId) returns (Sweepstake);
+  rpc getResultHelperMap(Sweepstake) returns (Map);
+}
+
+service SweepstakeServiceExternal {
+  rpc requestNewSweepstake(Sweepstake) returns (stream Sweepstake);
+  rpc createSweepstake(Sweepstake) returns (Sweepstake);
 }
