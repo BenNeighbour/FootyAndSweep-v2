@@ -1,1 +1,1 @@
-protoc --java_out=./api-common-library/src/main/java/com/footyandsweep/apicommonlibrary/gRPC/generated ./proto/**/*.proto
+protoc --js_out=import_style=commonjs:../../../../ui-service/src/client/ --grpc-web_out=import_style=commonjs,mode=grpcwebtext:../../../../ui-service/src/client/ *.proto
