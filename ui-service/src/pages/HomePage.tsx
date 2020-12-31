@@ -14,16 +14,50 @@
  *   limitations under the License.
  */
 
-import React, { FunctionComponent } from 'react';
+import React, {FunctionComponent} from 'react';
+import {saveSweepstake} from "../services/SweepstakeService";
+import NavBar from "../components/NavBar/NavBar";
+import "./HomePage.css";
+import SweepstakeCard from "../components/SweepstakeCard/SweepstakeCard";
+import Button from "../components/Button/Button";
+import {Col, Row} from "react-bootstrap";
 
-interface OwnProps {}
+interface OwnProps {
+}
 
 type Props = OwnProps;
 
 const HomePage: FunctionComponent<Props> = (props) => {
-  return (
-      <h1>Home page!</h1>
-  );
+    saveSweepstake(undefined);
+    return (
+        <>
+            <NavBar/>
+            {/*Tabs Here*/}
+            <div className={"container"}>
+                <Row className={"row"}>
+                    <Col sm>
+                        <div className="d-sm-flex justify-content-between align-items-center mb-4">
+                            <h1 className="text-dark mb-0">Home</h1>
+                        </div>
+                    </Col>
+                    <Col sm>
+                        <Button label={"Create Sweepstake"}/>
+                    </Col>
+                    <Col sm>
+                        <Button label={"Join Sweepstake"}/>
+                    </Col>
+                </Row>
+                <Row className={"row"}>
+                    <Col>
+                        <div className="row">
+                            <SweepstakeCard />
+                        </div>
+                    </Col>
+                </Row>
+            </div>
+        </>
+    );
 };
+
 
 export default HomePage;

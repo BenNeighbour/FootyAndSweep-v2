@@ -43,7 +43,6 @@ public class AllocationController {
 
   @PostMapping("/save")
   public Allocation createAllocation(@RequestBody Allocation allocation) {
-    allocation.setProcessStatus(ProcessStatus.PERSISTED);
     return allocationDao.save(allocation);
   }
 }

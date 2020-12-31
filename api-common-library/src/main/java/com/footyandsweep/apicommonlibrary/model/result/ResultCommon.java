@@ -39,7 +39,6 @@ public class ResultCommon implements Serializable {
 
   private boolean isProcessed = false;
 
-  @Transient
   @Enumerated(EnumType.STRING)
-  private ProcessStatus processStatus = ProcessStatus.PENDING;
+  private ProcessStatus processStatus = ProcessStatus.RELATIONS_PENDING;
 }

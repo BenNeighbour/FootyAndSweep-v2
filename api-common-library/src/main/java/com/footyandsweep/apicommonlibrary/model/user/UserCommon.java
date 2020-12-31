@@ -60,9 +60,8 @@ public class UserCommon implements Serializable {
 
   @UpdateTimestamp private Date updated;
 
-  @Transient
   @Enumerated(EnumType.STRING)
-  private ProcessStatus processStatus = ProcessStatus.PENDING;
+  private ProcessStatus processStatus = ProcessStatus.RELATIONS_PENDING;
 
   enum AuthProvider {
     local,

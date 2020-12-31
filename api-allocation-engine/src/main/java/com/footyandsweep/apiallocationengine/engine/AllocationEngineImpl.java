@@ -206,7 +206,6 @@ public class AllocationEngineImpl implements AllocationEngine {
 
       /* Persisting the allocation and setting to itself so the generated id is filled in */
       allocation = allocationDao.save(allocation);
-      allocation.setProcessStatus(ProcessStatus.PERSISTED);
 
       /* Setting the transient aggregate  */
       ticket.setAllocationCommon(allocation);

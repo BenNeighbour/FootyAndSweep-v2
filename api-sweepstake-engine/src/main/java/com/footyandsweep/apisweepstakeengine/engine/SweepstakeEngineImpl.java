@@ -62,7 +62,6 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
 
       /* Persist the sweepstake and it's participant junction table */
       sweepstake = sweepstakeDao.save(sweepstake);
-      sweepstake.setProcessStatus(ProcessStatus.PERSISTED);
 
       /* Save the relation */
       participantIdDao.save(new ParticipantIds(sweepstake.getId(), ownerId));

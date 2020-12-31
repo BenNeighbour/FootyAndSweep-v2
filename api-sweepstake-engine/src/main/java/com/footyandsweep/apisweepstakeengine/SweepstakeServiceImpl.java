@@ -18,23 +18,21 @@ package com.footyandsweep.apisweepstakeengine;
 
 import com.footyandsweep.SweepstakeServiceGrpc;
 import com.footyandsweep.SweepstakeServiceOuterClass;
-import com.footyandsweep.apicommonlibrary.gRPC.GrpcService;
 import com.footyandsweep.apisweepstakeengine.dao.FootballMatchDao;
 import com.footyandsweep.apisweepstakeengine.dao.ParticipantIdDao;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
 import com.footyandsweep.apisweepstakeengine.engine.SweepstakeEngineImpl;
+import com.footyandsweep.apisweepstakeengine.grpc.GrpcService;
 import com.footyandsweep.apisweepstakeengine.helper.ResultHelper;
 import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
 import io.grpc.stub.StreamObserver;
 import org.apache.commons.beanutils.BeanUtils;
-import org.springframework.stereotype.Service;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.UUID;
 
-@Service
 @GrpcService
-public class SweepstakeController extends SweepstakeServiceGrpc.SweepstakeServiceImplBase {
+public class SweepstakeServiceImpl extends SweepstakeServiceGrpc.SweepstakeServiceImplBase {
 
     private final SweepstakeEngineImpl sweepstakeEngine;
     private final SweepstakeDao sweepstakeDao;
@@ -42,7 +40,7 @@ public class SweepstakeController extends SweepstakeServiceGrpc.SweepstakeServic
     private final ResultHelper resultHelper;
     private final FootballMatchDao footballMatchDao;
 
-    public SweepstakeController(
+    public SweepstakeServiceImpl(
             final SweepstakeEngineImpl sweepstakeEngine,
             final SweepstakeDao sweepstakeDao,
             final ParticipantIdDao participantIdDao,
@@ -91,7 +89,24 @@ public class SweepstakeController extends SweepstakeServiceGrpc.SweepstakeServic
 
     @Override
     public void requestNewSweepstake(SweepstakeServiceOuterClass.Sweepstake request, StreamObserver<SweepstakeServiceOuterClass.Sweepstake> responseObserver) {
-        super.requestNewSweepstake(request, responseObserver);
+        try {
+            /* Copy the properties onto a standard sweepstake object */
+            Sweepstake sweepstake = new Sweepstake();
+
+            BeanUtils.copyProperties(sweepstake, request);
+            sweepstake.setOwnerId(UUID.fromString(request.getOwnerId()));
+
+            /* Fulfill the initial request here */
+            sweepstake = sweepstakeEngine.saveSweepstake(sweepstake.getOwnerId(), sweepstake);
+
+            /* Return the sweepstake here */
+            SweepstakeServiceOuterClass.Sweepstake returnSweepstake = this.castHelper(sweepstake);
+
+            responseObserver.onNext(returnSweepstake);
+            responseObserver.onCompleted();
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -100,11 +115,18 @@ public class SweepstakeController extends SweepstakeServiceGrpc.SweepstakeServic
     }
 
     private SweepstakeServiceOuterClass.Sweepstake castHelper(Sweepstake sweepstake) throws InvocationTargetException, IllegalAccessException {
-        /* Cast the sweepstake fields to the protobuf sweepstake */
-        SweepstakeServiceOuterClass.Sweepstake response = SweepstakeServiceOuterClass.Sweepstake.newBuilder().build();
-        BeanUtils.copyProperties(response, sweepstake);
+        if (sweepstake != null) {
+            /* Cast the sweepstake fields to the protobuf sweepstake */
+            SweepstakeServiceOuterClass.Sweepstake response =
+                    SweepstakeServiceOuterClass.Sweepstake.newBuilder()
+                            .setId(sweepstake.getId().toString())
+                            .build();
+            BeanUtils.copyProperties(response, sweepstake);
 
-        /* Return the casted version to be sent off to the client */
-        return response;
+            /* Return the casted version to be sent off to the client */
+            return response;
+        } else {
+            return null;
+        }
     }
 }

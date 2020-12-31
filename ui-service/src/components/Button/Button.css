@@ -1,0 +1,25 @@
+.btn {
+    font-size: .8rem;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    padding: .75rem 1rem;
+    margin-bottom: 2vh;
+    background: rgb(0,155,255);
+    background: linear-gradient(90deg, rgba(0,155,255,1) 0%, rgba(0,155,255,0.8211659663865546) 100%);
+}
+
+.text-white {
+    color: #fff!important;
+}
+
+.btn-primary:not(:disabled):not(.disabled).active:focus, .btn-primary:not(:disabled):not(.disabled):active:focus, .show > .btn-primary.dropdown-toggle:focus {
+    box-shadow: 0 0 0 .2rem rgba(105,136,228,.5);
+}
+
+.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show > .btn-primary.dropdown-toggle {
+    color: #fff;
+    background-color: #2653d4;
+    border-color: #244ec9;
+}
+

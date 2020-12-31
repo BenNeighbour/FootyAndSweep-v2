@@ -32,7 +32,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -155,7 +154,6 @@ public class TicketEngineImpl implements TicketEngine {
 
         /* Persist that ticket while adding it onto the list of bought tickets for that user */
         ticket = ticketDao.save(ticket);
-        ticket.setProcessStatus(ProcessStatus.PERSISTED);
 
         /* Creating the sweepstake created object for the other services to react to */
         TicketEvent ticketBought = new TicketEvent(ticket, EventType.PURCHASED, false);

@@ -51,23 +51,29 @@ public class SweepstakeMessageListener {
       /* Use JSON Object Mapper to read the message and reflect it into an object */
       SweepstakeEvent event = (SweepstakeEvent) message;
 
+      Sweepstake sweepstake = new Sweepstake();
+      BeanUtils.copyProperties(sweepstake, event.getSweepstake());
+
       /* Use relevant helper functions depending on the different event types */
       if (event.getEvent().equals(EventType.RELATION_DELETED)) {
         sweepstakeEngine.deleteParticipantRelation(event.getSweepstake().getId());
         sweepstakeEngine.deleteSweepstake(event.getSweepstake().getId());
-
-        /* Change the status to an error */
-        Sweepstake sweepstake = new Sweepstake();
-        BeanUtils.copyProperties(sweepstake, event.getSweepstake());
         sweepstake.setProcessStatus(ProcessStatus.INVALID);
 
-        /* TODO: Somehow set the sweepstake for the sweepstake grpc */
+        /* Invoke process ended event */
+        event.setSweepstake(sweepstake);
+        event.setEvent(EventType.PROCESS_ENDED);
+        this.sweepstakeEventListener(event);
       }
       if (event.getEvent().equals(EventType.STATUS_UPDATED)) {
-        Sweepstake sweepstake = new Sweepstake();
-        BeanUtils.copyProperties(sweepstake, event.getSweepstake());
-
         sweepstakeDao.saveAndFlush(sweepstake);
+      }
+      /* Set the root entities status to persisted */
+      if (event.getEvent().equals(EventType.PROCESS_ENDED)) {
+        if (sweepstake.getProcessStatus().equals(ProcessStatus.RELATIONS_PENDING)) {
+          sweepstake.setProcessStatus(ProcessStatus.FULLY_PERSISTED);
+          sweepstakeDao.saveAndFlush(sweepstake);
+        }
       }
     } catch (Exception e) {
       /* TODO: Log or handle the exception here */

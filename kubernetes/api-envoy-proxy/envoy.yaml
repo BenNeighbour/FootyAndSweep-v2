@@ -32,4 +32,4 @@ static_resources:
       type: LOGICAL_DNS
       lb_policy: ROUND_ROBIN
       http2_protocol_options: { }
-      hosts: [ { socket_address: { address: api-gateway-service, port_value: 8080 } } ]
+      hosts: [ { socket_address: { address: api-sweepstake-engine, port_value: 9090 } } ]

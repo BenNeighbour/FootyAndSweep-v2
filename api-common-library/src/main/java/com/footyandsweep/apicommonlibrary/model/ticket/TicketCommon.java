@@ -59,9 +59,8 @@ public class TicketCommon implements Serializable {
 
   @Transient private AllocationCommon allocationCommon;
 
-  @Transient
   @Enumerated(EnumType.STRING)
-  private ProcessStatus processStatus = ProcessStatus.PENDING;
+  private ProcessStatus processStatus = ProcessStatus.RELATIONS_PENDING;
 
   public enum TicketStatus {
     PENDING(0),

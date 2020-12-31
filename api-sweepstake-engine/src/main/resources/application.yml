@@ -28,3 +28,7 @@ spring:
 
   cache:
     type: redis
+
+grpc:
+  server:
+    port: 9090

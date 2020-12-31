@@ -19,7 +19,8 @@ import { createBrowserHistory } from 'history';
 import { routerMiddleware } from 'connected-react-router';
 import rootReducer from './RootReducer';
 import createSagaMiddleware from 'redux-saga';
-import testSaga from "./sagas/test/TestSaga";
+import saveSweepstakeSaga from "./sagas/test/SweepstakeSaga";
+
 
 export const history = createBrowserHistory();
 
@@ -30,7 +31,7 @@ export const initialize = () => {
     const initialState = {};
     const store = createStore(rootReducer(history), initialState, applyMiddleware(...middlewares));
 
-    sagaMiddleware.run(testSaga);
+    sagaMiddleware.run(saveSweepstakeSaga);
     return store;
 }
 

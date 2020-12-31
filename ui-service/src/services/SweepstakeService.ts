@@ -14,19 +14,21 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apicommonlibrary.gRPC;
+const { SweepstakeServiceClient } = require('../client/SweepstakeService_grpc_web_pb');
+const { JoinCode } = require('../client/SweepstakeService_pb');
 
-import io.grpc.BindableService;
-import org.springframework.stereotype.Service;
+export const saveSweepstake = (action: any) => {
+    const client = new SweepstakeServiceClient('http://localhost:9090', null, null);
+    const request = new JoinCode();
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+    request.setJoincode("sdfsdf");
 
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-@Service
-public @interface GrpcService {
-    Class<? extends BindableService>[] value() default {};
+    client.findSweepstakeByJoinCode(request, {}, (err: any, response: any) => {
+        if (response == null) {
+            console.log(err);
+        } else {
+            console.log(response);
+        }
+    });
+
 }

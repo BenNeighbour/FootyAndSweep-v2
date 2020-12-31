@@ -15,19 +15,19 @@
  */
 
 import {call, put, takeLatest} from 'redux-saga/effects';
-import * as testService from "../../../services/TestService";
+import * as testService from "../../../services/SweepstakeService";
 
 function* fetchTest(action: any) {
     try {
-        const user = yield call(testService.getTestThing, action.payload.test);
-        yield put({type: "TEST_FETCH_SUCCEEDED", user: user});
+        const user = yield call(testService.saveSweepstake, action.payload.sweepstake);
+        yield put({type: "SWEEPSTAKE_SUCCESS", user: user});
     } catch (e) {
-        yield put({type: "TEST_FETCH_FAILED", message: e.message});
+        yield put({type: "SWEEPSTAKE_INVALID", message: e.message});
     }
 }
 
-function* testSaga() {
-    yield takeLatest("TEST_FETCH_PENDING", fetchTest);
+function* saveSweepstakeSaga() {
+    yield takeLatest("SWEEPSTAKE_PENDING", fetchTest);
 }
 
-export default testSaga;
+export default saveSweepstakeSaga;

@@ -41,7 +41,7 @@ public class SweepstakeCommon implements Serializable {
 
   private static final long serialVersionUID = -771315870335755392L;
 
-  @Version protected Integer version;
+  protected Integer version;
 
   @Id
   @GeneratedValue
@@ -62,9 +62,8 @@ public class SweepstakeCommon implements Serializable {
   @Enumerated(EnumType.STRING)
   private SweepstakeTypeCommon sweepstakeType = this.getSweepstakeType();
 
-  @Transient
   @Enumerated(EnumType.STRING)
-  private ProcessStatus processStatus = ProcessStatus.PENDING;
+  private ProcessStatus processStatus = ProcessStatus.RELATIONS_PENDING;
 
   @Transient private int sweepstakeListSize;
 
