@@ -17,6 +17,7 @@
 package com.footyandsweep.apiticketengine.engine;
 
 import com.footyandsweep.apicommonlibrary.events.EventType;
+import com.footyandsweep.apicommonlibrary.events.ProcessStatus;
 import com.footyandsweep.apicommonlibrary.events.SweepstakeEvent;
 import com.footyandsweep.apicommonlibrary.events.TicketEvent;
 import com.footyandsweep.apicommonlibrary.helper.SweepstakeLock;
@@ -31,7 +32,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;

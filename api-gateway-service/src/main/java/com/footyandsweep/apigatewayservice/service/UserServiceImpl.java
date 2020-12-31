@@ -57,6 +57,10 @@ public class UserServiceImpl implements UserService {
 
       if (addingParticipant != null) {
         sweepstakeIdDao.save(new SweepstakeIds(sweepstake.getOwnerId(), sweepstake.getId()));
+
+        /* Inform the sweepstake engine that the process has completed */
+        SweepstakeEvent processCompletedEvent = new SweepstakeEvent(sweepstake, EventType.PROCESS_ENDED);
+        userMessageDispatcher.publishEvent(processCompletedEvent, "api-sweepstake-events-topic");
       } else {
         /* Dispatch a sweepstake relation deleted event */
         SweepstakeEvent relationDeleted =

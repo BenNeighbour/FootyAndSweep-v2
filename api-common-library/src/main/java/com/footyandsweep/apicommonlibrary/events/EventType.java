@@ -18,6 +18,7 @@ package com.footyandsweep.apicommonlibrary.events;
 
 public enum EventType {
   SOLD_OUT,
+  PROCESS_ENDED,
   ALLOCATED,
   PURCHASED,
   CREATED,

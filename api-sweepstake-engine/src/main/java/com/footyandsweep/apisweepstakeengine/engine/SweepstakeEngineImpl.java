@@ -17,6 +17,7 @@
 package com.footyandsweep.apisweepstakeengine.engine;
 
 import com.footyandsweep.apicommonlibrary.events.EventType;
+import com.footyandsweep.apicommonlibrary.events.ProcessStatus;
 import com.footyandsweep.apicommonlibrary.events.SweepstakeEvent;
 import com.footyandsweep.apisweepstakeengine.config.ResultSchedulerConfig;
 import com.footyandsweep.apisweepstakeengine.dao.ParticipantIdDao;
@@ -61,6 +62,8 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
 
       /* Persist the sweepstake and it's participant junction table */
       sweepstake = sweepstakeDao.save(sweepstake);
+
+      /* Save the relation */
       participantIdDao.save(new ParticipantIds(sweepstake.getId(), ownerId));
 
       /* Creating the sweepstake created object for other services to react to */

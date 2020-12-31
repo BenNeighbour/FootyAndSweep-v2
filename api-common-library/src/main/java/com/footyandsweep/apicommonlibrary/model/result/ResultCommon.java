@@ -16,14 +16,13 @@
 
 package com.footyandsweep.apicommonlibrary.model.result;
 
+import com.footyandsweep.apicommonlibrary.events.ProcessStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.UUID;
 
@@ -39,4 +38,7 @@ public class ResultCommon implements Serializable {
   @Id @GeneratedValue private UUID id;
 
   private boolean isProcessed = false;
+
+  @Enumerated(EnumType.STRING)
+  private ProcessStatus processStatus = ProcessStatus.RELATIONS_PENDING;
 }

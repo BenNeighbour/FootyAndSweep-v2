@@ -34,9 +34,9 @@ zuul:
     api-sweepstake-engine:
       path: '/internal/sweepstake/**'
       serviceId: 'api-sweepstake-engine'
-      url: 'http://api-sweepstake-engine:8080/'
+      url: 'http://api-sweepstake-engine:9090/'
       sensitiveHeaders:
-      stripPrefix: false
+      stripPrefix: true
 
     api-ticket-engine:
       path: '/internal/ticket/**'

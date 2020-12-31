@@ -1,0 +1,7 @@
+syntax = "proto3";
+package allocation;
+
+option java_package = "allocation";
+option java_outer_classname = "AllocationGrpcService";
+
+message Allocation {}

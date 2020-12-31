@@ -19,6 +19,7 @@ package com.footyandsweep.apisweepstakeengine.event;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.footyandsweep.apicommonlibrary.BaseEvent;
 import com.footyandsweep.apicommonlibrary.events.EventType;
+import com.footyandsweep.apicommonlibrary.events.ProcessStatus;
 import com.footyandsweep.apicommonlibrary.events.SweepstakeEvent;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
 import com.footyandsweep.apisweepstakeengine.engine.SweepstakeEngine;
@@ -34,8 +35,7 @@ public class SweepstakeMessageListener {
   private final SweepstakeEngine sweepstakeEngine;
   private final SweepstakeDao sweepstakeDao;
 
-  public SweepstakeMessageListener(
-      ObjectMapper objectMapper, SweepstakeEngine sweepstakeEngine, SweepstakeDao sweepstakeDao) {
+  public SweepstakeMessageListener(ObjectMapper objectMapper, SweepstakeEngine sweepstakeEngine, SweepstakeDao sweepstakeDao) {
     this.objectMapper = objectMapper;
     this.sweepstakeEngine = sweepstakeEngine;
     this.sweepstakeDao = sweepstakeDao;
@@ -51,16 +51,29 @@ public class SweepstakeMessageListener {
       /* Use JSON Object Mapper to read the message and reflect it into an object */
       SweepstakeEvent event = (SweepstakeEvent) message;
 
+      Sweepstake sweepstake = new Sweepstake();
+      BeanUtils.copyProperties(sweepstake, event.getSweepstake());
+
       /* Use relevant helper functions depending on the different event types */
       if (event.getEvent().equals(EventType.RELATION_DELETED)) {
         sweepstakeEngine.deleteParticipantRelation(event.getSweepstake().getId());
         sweepstakeEngine.deleteSweepstake(event.getSweepstake().getId());
+        sweepstake.setProcessStatus(ProcessStatus.INVALID);
+
+        /* Invoke process ended event */
+        event.setSweepstake(sweepstake);
+        event.setEvent(EventType.PROCESS_ENDED);
+        this.sweepstakeEventListener(event);
       }
       if (event.getEvent().equals(EventType.STATUS_UPDATED)) {
-        Sweepstake sweepstake = new Sweepstake();
-        BeanUtils.copyProperties(sweepstake, event.getSweepstake());
-
         sweepstakeDao.saveAndFlush(sweepstake);
+      }
+      /* Set the root entities status to persisted */
+      if (event.getEvent().equals(EventType.PROCESS_ENDED)) {
+        if (sweepstake.getProcessStatus().equals(ProcessStatus.RELATIONS_PENDING)) {
+          sweepstake.setProcessStatus(ProcessStatus.FULLY_PERSISTED);
+          sweepstakeDao.saveAndFlush(sweepstake);
+        }
       }
     } catch (Exception e) {
       /* TODO: Log or handle the exception here */
