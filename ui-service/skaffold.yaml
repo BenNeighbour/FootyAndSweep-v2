@@ -2,7 +2,7 @@ apiVersion: skaffold/v1
 kind: Config
 build:
   artifacts:
-    - image: api-envoy-proxy
+    - image: ui-service
       docker:
         dockerfile: Dockerfile
   local: { }
@@ -10,4 +10,4 @@ build:
 deploy:
   kubectl:
     manifests:
-      - './api-envoy-proxy.yaml'
+      - '../kubernetes/ui-service/ui-service.yaml'

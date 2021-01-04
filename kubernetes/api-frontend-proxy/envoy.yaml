@@ -16,7 +16,7 @@ static_resources:
                       domains: [ "*" ]
                       routes:
                         - match: { prefix: "/" }
-                          route: { cluster: api-gateway-service }
+                          route: { cluster: api-ingress-controller }
                       cors:
                         allow_origin_string_match:
                           - prefix: "*"
@@ -27,9 +27,11 @@ static_resources:
                   - name: envoy.cors
                   - name: envoy.router
   clusters:
-    - name: api-gateway-service
+    - name: api-ingress-controller
       connect_timeout: 25s
       type: LOGICAL_DNS
       lb_policy: ROUND_ROBIN
       http2_protocol_options: { }
-      hosts: [ { socket_address: { address: api-sweepstake-engine, port_value: 9090 } } ]
+      hosts: [
+        { socket_address: { address: "api-gateway-proxy", port_value: 1449 } }
+      ]

@@ -15,7 +15,7 @@
  */
 
 import React, {FunctionComponent} from 'react';
-import {saveSweepstake} from "../services/SweepstakeService";
+import {joinSweepstake} from "../services/SweepstakeService";
 import NavBar from "../components/NavBar/NavBar";
 import "./HomePage.css";
 import SweepstakeCard from "../components/SweepstakeCard/SweepstakeCard";
@@ -28,12 +28,12 @@ interface OwnProps {
 type Props = OwnProps;
 
 const HomePage: FunctionComponent<Props> = (props) => {
-    saveSweepstake(undefined);
+    joinSweepstake(undefined);
     return (
         <>
             <NavBar/>
             {/*Tabs Here*/}
-            <div className={"container"}>
+            <div className={"container" }>
                 <Row className={"row"}>
                     <Col sm>
                         <div className="d-sm-flex justify-content-between align-items-center mb-4">

@@ -46,7 +46,7 @@ public class UserCommon implements Serializable {
 
   private String password;
 
-  @Embedded private AuthProvider provider;
+  private AuthProvider provider;
 
   private String email;
 

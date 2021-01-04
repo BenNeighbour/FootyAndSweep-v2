@@ -28,12 +28,10 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 public class SweepstakeMessageDispatcher {
 
   private final KafkaTemplate<String, BaseEvent> kafkaTemplate;
-  private final ObjectMapper objectMapper;
 
   public SweepstakeMessageDispatcher(
-      final KafkaTemplate<String, BaseEvent> kafkaTemplate, final ObjectMapper objectMapper) {
+      final KafkaTemplate<String, BaseEvent> kafkaTemplate) {
     this.kafkaTemplate = kafkaTemplate;
-    this.objectMapper = objectMapper;
   }
 
   public void publishEvent(BaseEvent event, String topic) {

@@ -17,17 +17,17 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
 import * as testService from "../../../services/SweepstakeService";
 
-function* fetchTest(action: any) {
+function* joinSweepstake(action: any) {
     try {
-        const user = yield call(testService.saveSweepstake, action.payload.sweepstake);
-        yield put({type: "SWEEPSTAKE_SUCCESS", user: user});
+        const user = yield call(testService.joinSweepstake, action.payload.sweepstake);
+        yield put({type: "JOIN_SWEEPSTAKE_SUCCESS", user: user});
     } catch (e) {
-        yield put({type: "SWEEPSTAKE_INVALID", message: e.message});
+        yield put({type: "JOIN_SWEEPSTAKE_INVALID", message: e.message});
     }
 }
 
-function* saveSweepstakeSaga() {
-    yield takeLatest("SWEEPSTAKE_PENDING", fetchTest);
+function* joinSweepstakeSaga() {
+    yield takeLatest("JOIN_SWEEPSTAKE_PENDING", joinSweepstake);
 }
 
-export default saveSweepstakeSaga;
+export default joinSweepstakeSaga;

@@ -17,6 +17,9 @@
 package com.footyandsweep.apicommonlibrary.model.sweepstake;
 
 import com.footyandsweep.apicommonlibrary.events.ProcessStatus;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -41,12 +44,11 @@ public class SweepstakeCommon implements Serializable {
 
   private static final long serialVersionUID = -771315870335755392L;
 
-  protected Integer version;
-
   @Id
   @GeneratedValue
   private UUID id;
 
+  @NotNull(message = "There must be a Sweepstake name")
   private String name;
 
   private String joinCode = generateSweepstakeCode();
@@ -55,10 +57,13 @@ public class SweepstakeCommon implements Serializable {
 
   private Boolean isPrivate;
 
+  @NotNull(message = "There must be a an owner id!")
   private UUID ownerId;
 
+  @NotNull(message = "The Sweepstake must be a linked event!")
   private UUID sweepstakeEventId;
 
+  @NotNull(message = "You must select a sweepstake type!")
   @Enumerated(EnumType.STRING)
   private SweepstakeTypeCommon sweepstakeType = this.getSweepstakeType();
 
@@ -67,10 +72,15 @@ public class SweepstakeCommon implements Serializable {
 
   @Transient private int sweepstakeListSize;
 
+  @Min(2)
+  @NotNull(message = "The Sweepstake must have at least 2 players!")
   private int minimumPlayers;
 
+  @NotNull
   private int maximumPlayerTickets;
 
+  @DecimalMin(value = "1.0", inclusive = false, message = "The stake must be at least 1 FootyCoin")
+  @NotNull(message = "There must be a stake!")
   private BigDecimal stake;
 
   private int totalNumberOfTickets;

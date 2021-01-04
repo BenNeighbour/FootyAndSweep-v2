@@ -9,7 +9,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @Component
 public class GrpcServerRunner implements CommandLineRunner, DisposableBean {
@@ -23,15 +26,12 @@ public class GrpcServerRunner implements CommandLineRunner, DisposableBean {
 
     @Override
     public void run(String... args) throws Exception {
-        ServerBuilder serverBuilder = ServerBuilder.forPort(9090);
+        /* Creating certificate files */
+        File cert = new File("~/etc/ssl/server.crt");
+        File key = new File("~/etc/ssl/server.key");
 
-        String[] beanNames = applicationContext.getBeanNamesForAnnotation(GrpcService.class);
-        Arrays.stream(beanNames).forEach(beanName -> {
-            BindableService service = applicationContext.getBean(beanName, BindableService.class);
-            serverBuilder.addService(service);
-        });
-
-        server = serverBuilder.build().start();
+        BindableService service = applicationContext.getBean("sweepstakeController", BindableService.class);
+        server = ServerBuilder.forPort(9090).useTransportSecurity(cert, key).addService(service).build();
 
         runSever();
     }
