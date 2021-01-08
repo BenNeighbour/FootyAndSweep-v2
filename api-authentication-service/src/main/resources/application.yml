@@ -1,6 +1,6 @@
 spring:
   application:
-    name: 'api-sweepstake-engine'
+    name: 'api-authentication-service'
 
   kafka:
     bootstrap-servers: ${KAFKA_CONNECT}
