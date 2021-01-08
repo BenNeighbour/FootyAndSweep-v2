@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@chakra-ui/react": "^1.1.1",
+    "@emotion/react": "^11.1.4",
+    "@emotion/styled": "^11.0.0",
     "@grpc/grpc-js": "^1.2.2",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
@@ -19,6 +22,7 @@
     "bootstrap": "^4.5.3",
     "connected-react-router": "^6.8.0",
     "formik": "^2.2.6",
+    "framer-motion": "^3.1.4",
     "google-protobuf": "^3.14.0",
     "grpc": "^1.24.4",
     "grpc-web": "^1.2.1",

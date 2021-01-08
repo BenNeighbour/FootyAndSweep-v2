@@ -30,7 +30,7 @@ metadata:
 spec:
   ports:
     - port: 9090
-      protocol: TCP
+      name: https
   selector:
     app: api-frontend-proxy
   type: NodePort
