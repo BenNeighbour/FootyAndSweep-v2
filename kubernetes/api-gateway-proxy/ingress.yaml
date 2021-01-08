@@ -8,12 +8,12 @@ metadata:
   name: api-gateway-proxy
 spec:
   rules:
-  - http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: api-sweepstake-engine
-            port:
-              number: 9090
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: api-sweepstake-engine
+                port:
+                  number: 9090

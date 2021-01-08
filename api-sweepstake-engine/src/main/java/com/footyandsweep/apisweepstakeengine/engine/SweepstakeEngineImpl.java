@@ -74,7 +74,10 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
       sweepstakeMessageDispatcher.publishEvent(sweepstakeCreated, "api-sweepstake-events-topic");
 
       /* Log the event */
-      log.info("Sweepstake {} has been created! {}", sweepstakeCreated.getSweepstake().getId(), dateFormat.format(new Date()));
+      log.info(
+          "Sweepstake {} has been created! {}",
+          sweepstakeCreated.getSweepstake().getId(),
+          dateFormat.format(new Date()));
 
       return sweepstake;
     } catch (Exception e) {
@@ -103,7 +106,8 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
     sweepstakeDao.delete(sweepstake);
 
     /* Log the event */
-    log.info("Sweepstake {} has been purged! {}", sweepstake.getId(), dateFormat.format(new Date()));
+    log.info(
+        "Sweepstake {} has been purged! {}", sweepstake.getId(), dateFormat.format(new Date()));
 
     // TODO: Broadcast websockets error message with the reason in it
 

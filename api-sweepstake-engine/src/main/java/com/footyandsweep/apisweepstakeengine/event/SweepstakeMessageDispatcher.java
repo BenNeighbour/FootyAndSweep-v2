@@ -29,8 +29,7 @@ public class SweepstakeMessageDispatcher {
 
   private final KafkaTemplate<String, BaseEvent> kafkaTemplate;
 
-  public SweepstakeMessageDispatcher(
-      final KafkaTemplate<String, BaseEvent> kafkaTemplate) {
+  public SweepstakeMessageDispatcher(final KafkaTemplate<String, BaseEvent> kafkaTemplate) {
     this.kafkaTemplate = kafkaTemplate;
   }
 

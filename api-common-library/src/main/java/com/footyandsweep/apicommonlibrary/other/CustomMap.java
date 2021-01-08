@@ -31,10 +31,9 @@ import java.io.Serializable;
 @MappedSuperclass
 public class CustomMap implements Serializable {
 
-    private static final long serialVersionUID = -818874942149783488L;
+  private static final long serialVersionUID = -818874942149783488L;
 
-    private Integer integerKey;
+  private Integer integerKey;
 
-    private String stringValue;
-
+  private String stringValue;
 }

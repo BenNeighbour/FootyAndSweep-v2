@@ -59,7 +59,8 @@ public class UserServiceImpl implements UserService {
         sweepstakeIdDao.save(new SweepstakeIds(sweepstake.getOwnerId(), sweepstake.getId()));
 
         /* Inform the sweepstake engine that the process has completed */
-        SweepstakeEvent processCompletedEvent = new SweepstakeEvent(sweepstake, EventType.PROCESS_ENDED);
+        SweepstakeEvent processCompletedEvent =
+            new SweepstakeEvent(sweepstake, EventType.PROCESS_ENDED);
         userMessageDispatcher.publishEvent(processCompletedEvent, "api-sweepstake-events-topic");
       } else {
         /* Dispatch a sweepstake relation deleted event */
@@ -72,7 +73,10 @@ public class UserServiceImpl implements UserService {
         userMessageDispatcher.publishEvent(relationDeleted, "api-sweepstake-events-topic");
 
         /* Log the event */
-        log.info("Sweepstake relation {} has been purged! {}", relationDeleted.getSweepstake().getId(), dateFormat.format(new Date()));
+        log.info(
+            "Sweepstake relation {} has been purged! {}",
+            relationDeleted.getSweepstake().getId(),
+            dateFormat.format(new Date()));
       }
     } catch (Exception e) {
       /* Get the error message and ping it back to the client */

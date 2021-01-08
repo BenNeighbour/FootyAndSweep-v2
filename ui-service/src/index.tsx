@@ -21,7 +21,7 @@ import Routes from './Routes';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
-    <Routes />,
+    <Routes/>,
     document.getElementById('root')
 );
 

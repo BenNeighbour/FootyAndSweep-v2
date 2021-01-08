@@ -94,10 +94,12 @@ public class AllocationEngineImpl implements AllocationEngine {
   private List<UUID> sweepstakeParticipantsHelper(UUID sweepstakeId) {
     /* Get a list of participants that might have purchased tickets */
     List<UUID> participantIds =
-            new LinkedList<>(Arrays.asList(restTemplate.getForObject(
+        new LinkedList<>(
+            Arrays.asList(
+                restTemplate.getForObject(
                     "http://api-sweepstake-engine:8080/internal/sweepstake/by/"
-                            + sweepstakeId
-                            + "/participants",
+                        + sweepstakeId
+                        + "/participants",
                     UUID[].class)));
 
     /* Shuffle the user list and return it back to caller */
@@ -108,12 +110,13 @@ public class AllocationEngineImpl implements AllocationEngine {
   private List<TicketCommon> getSweepstakeTicketsHelper(UUID sweepstakeId) {
     /* Get a list of tickets that belong to the sweepstake */
     Optional<List<TicketCommon>> ticketList =
-            Optional.of(
-                    new LinkedList<>(Arrays.asList(
-                                    restTemplate.getForObject(
-                                            "http://api-ticket-engine:8080/internal/ticket/by/sweepstake/"
-                                                    + sweepstakeId,
-                                            TicketCommon[].class))));
+        Optional.of(
+            new LinkedList<>(
+                Arrays.asList(
+                    restTemplate.getForObject(
+                        "http://api-ticket-engine:8080/internal/ticket/by/sweepstake/"
+                            + sweepstakeId,
+                        TicketCommon[].class))));
 
     /* Return those tickets if they are valid, otherwise an empty array */
     return ticketList.get();
@@ -167,7 +170,8 @@ public class AllocationEngineImpl implements AllocationEngine {
           TicketCommon ticket = userTickets.remove(0);
 
           /* Logs here */
-          this.allocateTicket(sweepstakeResultMap, sweepstakeResultIdList, ticket, userTickets.isEmpty());
+          this.allocateTicket(
+              sweepstakeResultMap, sweepstakeResultIdList, ticket, userTickets.isEmpty());
         }
       }
 
@@ -197,9 +201,9 @@ public class AllocationEngineImpl implements AllocationEngine {
       Optional<SweepstakeCommon> sweepstake =
           Optional.ofNullable(
               restTemplate.getForObject(
-                      "http://api-sweepstake-engine:8080/internal/sweepstake/by/id/"
-                              + ticket.getSweepstakeId(),
-                      SweepstakeCommon.class));
+                  "http://api-sweepstake-engine:8080/internal/sweepstake/by/id/"
+                      + ticket.getSweepstakeId(),
+                  SweepstakeCommon.class));
 
       /* If the sweepstake is not valid, then throw an error */
       if (!sweepstake.isPresent()) throw new Exception();
@@ -221,7 +225,11 @@ public class AllocationEngineImpl implements AllocationEngine {
       allocationMessageDispatcher.publishEvent(ticketAllocated, "api-ticket-events-topic");
 
       /* Log the event */
-      log.info("Sweepstake {} ticket {} has been allocated! {}", ticket.getSweepstakeId(), ticket.getId(), dateFormat.format(new Date()));
+      log.info(
+          "Sweepstake {} ticket {} has been allocated! {}",
+          ticket.getSweepstakeId(),
+          ticket.getId(),
+          dateFormat.format(new Date()));
     } catch (Exception e) {
       /* Throw error to WebSocket client */
 
@@ -237,19 +245,21 @@ public class AllocationEngineImpl implements AllocationEngine {
       /* Call result helper to get the field and return a function that returns the right maps to back */
       if (sweepstake.getSweepstakeType().equals(i)) {
         resultMap =
-                new LinkedList<>(Arrays.asList(restTemplate
-                        .postForObject(
-                                "http://api-sweepstake-engine:8080/internal/sweepstake/result",
-                                sweepstake,
-                                CustomMap[].class)));
+            new LinkedList<>(
+                Arrays.asList(
+                    restTemplate.postForObject(
+                        "http://api-sweepstake-engine:8080/internal/sweepstake/result",
+                        sweepstake,
+                        CustomMap[].class)));
       }
     }
 
     HashMap<Integer, String> deserializedMap = new HashMap<>();
 
-    resultMap.forEach(customMap -> {
-      deserializedMap.put(customMap.getIntegerKey(), customMap.getStringValue());
-    });
+    resultMap.forEach(
+        customMap -> {
+          deserializedMap.put(customMap.getIntegerKey(), customMap.getStringValue());
+        });
 
     return deserializedMap;
   }

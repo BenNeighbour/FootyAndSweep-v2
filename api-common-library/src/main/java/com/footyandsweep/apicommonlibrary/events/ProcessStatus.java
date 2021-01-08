@@ -17,7 +17,7 @@
 package com.footyandsweep.apicommonlibrary.events;
 
 public enum ProcessStatus {
-    RELATIONS_PENDING,
-    INVALID,
-    FULLY_PERSISTED
+  RELATIONS_PENDING,
+  INVALID,
+  FULLY_PERSISTED
 }

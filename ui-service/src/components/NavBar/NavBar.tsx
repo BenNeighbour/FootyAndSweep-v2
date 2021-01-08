@@ -1,4 +1,20 @@
-import React, { FunctionComponent } from 'react';
+/*
+ *   Copyright 2020 FootyAndSweep
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
+import React, {FunctionComponent} from 'react';
 import {Navbar} from "react-bootstrap";
 import logo from "./../../common/logo.png";
 import styled from "styled-components";
@@ -15,20 +31,21 @@ const NavbarStyled = styled.div`
   justify-content: space-between;
 `;
 
-interface OwnProps {}
+interface OwnProps {
+}
 
 type Props = OwnProps;
 
 const NavBar: FunctionComponent<Props> = (props) => {
-  return (
-      <NavbarStyled>
-          <Navbar.Brand><img alt={""} style={{
+    return (
+        <NavbarStyled>
+            <Navbar.Brand><img alt={""} style={{
                 width: "15%",
-              marginLeft: "2vw",
-              objectFit: 'cover'
-          }} src={logo} /></Navbar.Brand>
-      </NavbarStyled>
-  );
+                marginLeft: "2vw",
+                objectFit: 'cover'
+            }} src={logo}/></Navbar.Brand>
+        </NavbarStyled>
+    );
 };
 
 export default NavBar;

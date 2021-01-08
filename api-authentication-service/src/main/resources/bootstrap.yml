@@ -6,10 +6,10 @@ spring:
         enabled: true
 
       secrets:
-        name: api-sweepstake-engine-credentials
+        name: api-gateway-service
 
       config:
         enabled: true
         sources:
           - namespace: default
-            name: api-sweepstake-engine-config
+            name: api-gateway-service-config

@@ -33,7 +33,7 @@ const HomePage: FunctionComponent<Props> = (props) => {
         <>
             <NavBar/>
             {/*Tabs Here*/}
-            <div className={"container" }>
+            <div className={"container"}>
                 <Row className={"row"}>
                     <Col sm>
                         <div className="d-sm-flex justify-content-between align-items-center mb-4">
@@ -50,7 +50,7 @@ const HomePage: FunctionComponent<Props> = (props) => {
                 <Row className={"row"}>
                     <Col>
                         <div className="row">
-                            <SweepstakeCard />
+                            <SweepstakeCard/>
                         </div>
                     </Col>
                 </Row>

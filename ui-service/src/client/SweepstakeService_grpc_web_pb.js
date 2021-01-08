@@ -1,3 +1,19 @@
+/*
+ *   Copyright 2020 FootyAndSweep
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 /**
  * @fileoverview gRPC-Web generated client stub for com.footyandsweep
  * @enhanceable
@@ -9,7 +25,6 @@
 
 /* eslint-disable */
 // @ts-nocheck
-
 
 
 const grpc = {};
@@ -28,21 +43,21 @@ proto.com.footyandsweep = require('./SweepstakeService_pb.js');
  * @final
  */
 proto.com.footyandsweep.SweepstakeServiceClient =
-    function(hostname, credentials, options) {
-  if (!options) options = {};
-  options['format'] = 'text';
+    function (hostname, credentials, options) {
+        if (!options) options = {};
+        options['format'] = 'text';
 
-  /**
-   * @private @const {!grpc.web.GrpcWebClientBase} The client
-   */
-  this.client_ = new grpc.web.GrpcWebClientBase(options);
+        /**
+         * @private @const {!grpc.web.GrpcWebClientBase} The client
+         */
+        this.client_ = new grpc.web.GrpcWebClientBase(options);
 
-  /**
-   * @private @const {string} The hostname
-   */
-  this.hostname_ = hostname;
+        /**
+         * @private @const {string} The hostname
+         */
+        this.hostname_ = hostname;
 
-};
+    };
 
 
 /**
@@ -54,21 +69,21 @@ proto.com.footyandsweep.SweepstakeServiceClient =
  * @final
  */
 proto.com.footyandsweep.SweepstakeServicePromiseClient =
-    function(hostname, credentials, options) {
-  if (!options) options = {};
-  options['format'] = 'text';
+    function (hostname, credentials, options) {
+        if (!options) options = {};
+        options['format'] = 'text';
 
-  /**
-   * @private @const {!grpc.web.GrpcWebClientBase} The client
-   */
-  this.client_ = new grpc.web.GrpcWebClientBase(options);
+        /**
+         * @private @const {!grpc.web.GrpcWebClientBase} The client
+         */
+        this.client_ = new grpc.web.GrpcWebClientBase(options);
 
-  /**
-   * @private @const {string} The hostname
-   */
-  this.hostname_ = hostname;
+        /**
+         * @private @const {string} The hostname
+         */
+        this.hostname_ = hostname;
 
-};
+    };
 
 
 /**
@@ -78,18 +93,18 @@ proto.com.footyandsweep.SweepstakeServicePromiseClient =
  *   !proto.com.footyandsweep.Sweepstake>}
  */
 const methodDescriptor_SweepstakeService_findSweepstakeByJoinCode = new grpc.web.MethodDescriptor(
-  '/com.footyandsweep.SweepstakeService/findSweepstakeByJoinCode',
-  grpc.web.MethodType.UNARY,
-  proto.com.footyandsweep.JoinCode,
-  proto.com.footyandsweep.Sweepstake,
-  /**
-   * @param {!proto.com.footyandsweep.JoinCode} request
-   * @return {!Uint8Array}
-   */
-  function(request) {
-    return request.serializeBinary();
-  },
-  proto.com.footyandsweep.Sweepstake.deserializeBinary
+    '/com.footyandsweep.SweepstakeService/findSweepstakeByJoinCode',
+    grpc.web.MethodType.UNARY,
+    proto.com.footyandsweep.JoinCode,
+    proto.com.footyandsweep.Sweepstake,
+    /**
+     * @param {!proto.com.footyandsweep.JoinCode} request
+     * @return {!Uint8Array}
+     */
+    function (request) {
+        return request.serializeBinary();
+    },
+    proto.com.footyandsweep.Sweepstake.deserializeBinary
 );
 
 
@@ -100,15 +115,15 @@ const methodDescriptor_SweepstakeService_findSweepstakeByJoinCode = new grpc.web
  *   !proto.com.footyandsweep.Sweepstake>}
  */
 const methodInfo_SweepstakeService_findSweepstakeByJoinCode = new grpc.web.AbstractClientBase.MethodInfo(
-  proto.com.footyandsweep.Sweepstake,
-  /**
-   * @param {!proto.com.footyandsweep.JoinCode} request
-   * @return {!Uint8Array}
-   */
-  function(request) {
-    return request.serializeBinary();
-  },
-  proto.com.footyandsweep.Sweepstake.deserializeBinary
+    proto.com.footyandsweep.Sweepstake,
+    /**
+     * @param {!proto.com.footyandsweep.JoinCode} request
+     * @return {!Uint8Array}
+     */
+    function (request) {
+        return request.serializeBinary();
+    },
+    proto.com.footyandsweep.Sweepstake.deserializeBinary
 );
 
 
@@ -123,14 +138,14 @@ const methodInfo_SweepstakeService_findSweepstakeByJoinCode = new grpc.web.Abstr
  *     The XHR Node Readable Stream
  */
 proto.com.footyandsweep.SweepstakeServiceClient.prototype.findSweepstakeByJoinCode =
-    function(request, metadata, callback) {
-  return this.client_.rpcCall(this.hostname_ +
-      '/com.footyandsweep.SweepstakeService/findSweepstakeByJoinCode',
-      request,
-      metadata || {},
-      methodDescriptor_SweepstakeService_findSweepstakeByJoinCode,
-      callback);
-};
+    function (request, metadata, callback) {
+        return this.client_.rpcCall(this.hostname_ +
+            '/com.footyandsweep.SweepstakeService/findSweepstakeByJoinCode',
+            request,
+            metadata || {},
+            methodDescriptor_SweepstakeService_findSweepstakeByJoinCode,
+            callback);
+    };
 
 
 /**
@@ -142,13 +157,13 @@ proto.com.footyandsweep.SweepstakeServiceClient.prototype.findSweepstakeByJoinCo
  *     Promise that resolves to the response
  */
 proto.com.footyandsweep.SweepstakeServicePromiseClient.prototype.findSweepstakeByJoinCode =
-    function(request, metadata) {
-  return this.client_.unaryCall(this.hostname_ +
-      '/com.footyandsweep.SweepstakeService/findSweepstakeByJoinCode',
-      request,
-      metadata || {},
-      methodDescriptor_SweepstakeService_findSweepstakeByJoinCode);
-};
+    function (request, metadata) {
+        return this.client_.unaryCall(this.hostname_ +
+            '/com.footyandsweep.SweepstakeService/findSweepstakeByJoinCode',
+            request,
+            metadata || {},
+            methodDescriptor_SweepstakeService_findSweepstakeByJoinCode);
+    };
 
 
 /**
@@ -158,18 +173,18 @@ proto.com.footyandsweep.SweepstakeServicePromiseClient.prototype.findSweepstakeB
  *   !proto.com.footyandsweep.Sweepstake>}
  */
 const methodDescriptor_SweepstakeService_findSweepstakeById = new grpc.web.MethodDescriptor(
-  '/com.footyandsweep.SweepstakeService/findSweepstakeById',
-  grpc.web.MethodType.UNARY,
-  proto.com.footyandsweep.SweepstakeId,
-  proto.com.footyandsweep.Sweepstake,
-  /**
-   * @param {!proto.com.footyandsweep.SweepstakeId} request
-   * @return {!Uint8Array}
-   */
-  function(request) {
-    return request.serializeBinary();
-  },
-  proto.com.footyandsweep.Sweepstake.deserializeBinary
+    '/com.footyandsweep.SweepstakeService/findSweepstakeById',
+    grpc.web.MethodType.UNARY,
+    proto.com.footyandsweep.SweepstakeId,
+    proto.com.footyandsweep.Sweepstake,
+    /**
+     * @param {!proto.com.footyandsweep.SweepstakeId} request
+     * @return {!Uint8Array}
+     */
+    function (request) {
+        return request.serializeBinary();
+    },
+    proto.com.footyandsweep.Sweepstake.deserializeBinary
 );
 
 
@@ -180,15 +195,15 @@ const methodDescriptor_SweepstakeService_findSweepstakeById = new grpc.web.Metho
  *   !proto.com.footyandsweep.Sweepstake>}
  */
 const methodInfo_SweepstakeService_findSweepstakeById = new grpc.web.AbstractClientBase.MethodInfo(
-  proto.com.footyandsweep.Sweepstake,
-  /**
-   * @param {!proto.com.footyandsweep.SweepstakeId} request
-   * @return {!Uint8Array}
-   */
-  function(request) {
-    return request.serializeBinary();
-  },
-  proto.com.footyandsweep.Sweepstake.deserializeBinary
+    proto.com.footyandsweep.Sweepstake,
+    /**
+     * @param {!proto.com.footyandsweep.SweepstakeId} request
+     * @return {!Uint8Array}
+     */
+    function (request) {
+        return request.serializeBinary();
+    },
+    proto.com.footyandsweep.Sweepstake.deserializeBinary
 );
 
 
@@ -203,14 +218,14 @@ const methodInfo_SweepstakeService_findSweepstakeById = new grpc.web.AbstractCli
  *     The XHR Node Readable Stream
  */
 proto.com.footyandsweep.SweepstakeServiceClient.prototype.findSweepstakeById =
-    function(request, metadata, callback) {
-  return this.client_.rpcCall(this.hostname_ +
-      '/com.footyandsweep.SweepstakeService/findSweepstakeById',
-      request,
-      metadata || {},
-      methodDescriptor_SweepstakeService_findSweepstakeById,
-      callback);
-};
+    function (request, metadata, callback) {
+        return this.client_.rpcCall(this.hostname_ +
+            '/com.footyandsweep.SweepstakeService/findSweepstakeById',
+            request,
+            metadata || {},
+            methodDescriptor_SweepstakeService_findSweepstakeById,
+            callback);
+    };
 
 
 /**
@@ -222,13 +237,13 @@ proto.com.footyandsweep.SweepstakeServiceClient.prototype.findSweepstakeById =
  *     Promise that resolves to the response
  */
 proto.com.footyandsweep.SweepstakeServicePromiseClient.prototype.findSweepstakeById =
-    function(request, metadata) {
-  return this.client_.unaryCall(this.hostname_ +
-      '/com.footyandsweep.SweepstakeService/findSweepstakeById',
-      request,
-      metadata || {},
-      methodDescriptor_SweepstakeService_findSweepstakeById);
-};
+    function (request, metadata) {
+        return this.client_.unaryCall(this.hostname_ +
+            '/com.footyandsweep.SweepstakeService/findSweepstakeById',
+            request,
+            metadata || {},
+            methodDescriptor_SweepstakeService_findSweepstakeById);
+    };
 
 
 /**
@@ -238,18 +253,18 @@ proto.com.footyandsweep.SweepstakeServicePromiseClient.prototype.findSweepstakeB
  *   !proto.com.footyandsweep.Map>}
  */
 const methodDescriptor_SweepstakeService_getResultHelperMap = new grpc.web.MethodDescriptor(
-  '/com.footyandsweep.SweepstakeService/getResultHelperMap',
-  grpc.web.MethodType.UNARY,
-  proto.com.footyandsweep.Sweepstake,
-  proto.com.footyandsweep.Map,
-  /**
-   * @param {!proto.com.footyandsweep.Sweepstake} request
-   * @return {!Uint8Array}
-   */
-  function(request) {
-    return request.serializeBinary();
-  },
-  proto.com.footyandsweep.Map.deserializeBinary
+    '/com.footyandsweep.SweepstakeService/getResultHelperMap',
+    grpc.web.MethodType.UNARY,
+    proto.com.footyandsweep.Sweepstake,
+    proto.com.footyandsweep.Map,
+    /**
+     * @param {!proto.com.footyandsweep.Sweepstake} request
+     * @return {!Uint8Array}
+     */
+    function (request) {
+        return request.serializeBinary();
+    },
+    proto.com.footyandsweep.Map.deserializeBinary
 );
 
 
@@ -260,15 +275,15 @@ const methodDescriptor_SweepstakeService_getResultHelperMap = new grpc.web.Metho
  *   !proto.com.footyandsweep.Map>}
  */
 const methodInfo_SweepstakeService_getResultHelperMap = new grpc.web.AbstractClientBase.MethodInfo(
-  proto.com.footyandsweep.Map,
-  /**
-   * @param {!proto.com.footyandsweep.Sweepstake} request
-   * @return {!Uint8Array}
-   */
-  function(request) {
-    return request.serializeBinary();
-  },
-  proto.com.footyandsweep.Map.deserializeBinary
+    proto.com.footyandsweep.Map,
+    /**
+     * @param {!proto.com.footyandsweep.Sweepstake} request
+     * @return {!Uint8Array}
+     */
+    function (request) {
+        return request.serializeBinary();
+    },
+    proto.com.footyandsweep.Map.deserializeBinary
 );
 
 
@@ -283,14 +298,14 @@ const methodInfo_SweepstakeService_getResultHelperMap = new grpc.web.AbstractCli
  *     The XHR Node Readable Stream
  */
 proto.com.footyandsweep.SweepstakeServiceClient.prototype.getResultHelperMap =
-    function(request, metadata, callback) {
-  return this.client_.rpcCall(this.hostname_ +
-      '/com.footyandsweep.SweepstakeService/getResultHelperMap',
-      request,
-      metadata || {},
-      methodDescriptor_SweepstakeService_getResultHelperMap,
-      callback);
-};
+    function (request, metadata, callback) {
+        return this.client_.rpcCall(this.hostname_ +
+            '/com.footyandsweep.SweepstakeService/getResultHelperMap',
+            request,
+            metadata || {},
+            methodDescriptor_SweepstakeService_getResultHelperMap,
+            callback);
+    };
 
 
 /**
@@ -302,13 +317,13 @@ proto.com.footyandsweep.SweepstakeServiceClient.prototype.getResultHelperMap =
  *     Promise that resolves to the response
  */
 proto.com.footyandsweep.SweepstakeServicePromiseClient.prototype.getResultHelperMap =
-    function(request, metadata) {
-  return this.client_.unaryCall(this.hostname_ +
-      '/com.footyandsweep.SweepstakeService/getResultHelperMap',
-      request,
-      metadata || {},
-      methodDescriptor_SweepstakeService_getResultHelperMap);
-};
+    function (request, metadata) {
+        return this.client_.unaryCall(this.hostname_ +
+            '/com.footyandsweep.SweepstakeService/getResultHelperMap',
+            request,
+            metadata || {},
+            methodDescriptor_SweepstakeService_getResultHelperMap);
+    };
 
 
 /**
@@ -318,18 +333,18 @@ proto.com.footyandsweep.SweepstakeServicePromiseClient.prototype.getResultHelper
  *   !proto.com.footyandsweep.Sweepstake>}
  */
 const methodDescriptor_SweepstakeService_requestNewSweepstake = new grpc.web.MethodDescriptor(
-  '/com.footyandsweep.SweepstakeService/requestNewSweepstake',
-  grpc.web.MethodType.SERVER_STREAMING,
-  proto.com.footyandsweep.Sweepstake,
-  proto.com.footyandsweep.Sweepstake,
-  /**
-   * @param {!proto.com.footyandsweep.Sweepstake} request
-   * @return {!Uint8Array}
-   */
-  function(request) {
-    return request.serializeBinary();
-  },
-  proto.com.footyandsweep.Sweepstake.deserializeBinary
+    '/com.footyandsweep.SweepstakeService/requestNewSweepstake',
+    grpc.web.MethodType.SERVER_STREAMING,
+    proto.com.footyandsweep.Sweepstake,
+    proto.com.footyandsweep.Sweepstake,
+    /**
+     * @param {!proto.com.footyandsweep.Sweepstake} request
+     * @return {!Uint8Array}
+     */
+    function (request) {
+        return request.serializeBinary();
+    },
+    proto.com.footyandsweep.Sweepstake.deserializeBinary
 );
 
 
@@ -340,15 +355,15 @@ const methodDescriptor_SweepstakeService_requestNewSweepstake = new grpc.web.Met
  *   !proto.com.footyandsweep.Sweepstake>}
  */
 const methodInfo_SweepstakeService_requestNewSweepstake = new grpc.web.AbstractClientBase.MethodInfo(
-  proto.com.footyandsweep.Sweepstake,
-  /**
-   * @param {!proto.com.footyandsweep.Sweepstake} request
-   * @return {!Uint8Array}
-   */
-  function(request) {
-    return request.serializeBinary();
-  },
-  proto.com.footyandsweep.Sweepstake.deserializeBinary
+    proto.com.footyandsweep.Sweepstake,
+    /**
+     * @param {!proto.com.footyandsweep.Sweepstake} request
+     * @return {!Uint8Array}
+     */
+    function (request) {
+        return request.serializeBinary();
+    },
+    proto.com.footyandsweep.Sweepstake.deserializeBinary
 );
 
 
@@ -360,13 +375,13 @@ const methodInfo_SweepstakeService_requestNewSweepstake = new grpc.web.AbstractC
  *     The XHR Node Readable Stream
  */
 proto.com.footyandsweep.SweepstakeServiceClient.prototype.requestNewSweepstake =
-    function(request, metadata) {
-  return this.client_.serverStreaming(this.hostname_ +
-      '/com.footyandsweep.SweepstakeService/requestNewSweepstake',
-      request,
-      metadata || {},
-      methodDescriptor_SweepstakeService_requestNewSweepstake);
-};
+    function (request, metadata) {
+        return this.client_.serverStreaming(this.hostname_ +
+            '/com.footyandsweep.SweepstakeService/requestNewSweepstake',
+            request,
+            metadata || {},
+            methodDescriptor_SweepstakeService_requestNewSweepstake);
+    };
 
 
 /**
@@ -377,13 +392,13 @@ proto.com.footyandsweep.SweepstakeServiceClient.prototype.requestNewSweepstake =
  *     The XHR Node Readable Stream
  */
 proto.com.footyandsweep.SweepstakeServicePromiseClient.prototype.requestNewSweepstake =
-    function(request, metadata) {
-  return this.client_.serverStreaming(this.hostname_ +
-      '/com.footyandsweep.SweepstakeService/requestNewSweepstake',
-      request,
-      metadata || {},
-      methodDescriptor_SweepstakeService_requestNewSweepstake);
-};
+    function (request, metadata) {
+        return this.client_.serverStreaming(this.hostname_ +
+            '/com.footyandsweep.SweepstakeService/requestNewSweepstake',
+            request,
+            metadata || {},
+            methodDescriptor_SweepstakeService_requestNewSweepstake);
+    };
 
 
 module.exports = proto.com.footyandsweep;

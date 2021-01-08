@@ -14,9 +14,9 @@
  *   limitations under the License.
  */
 
-import { createStore, applyMiddleware } from 'redux';
-import { createBrowserHistory } from 'history';
-import { routerMiddleware } from 'connected-react-router';
+import {createStore, applyMiddleware} from 'redux';
+import {createBrowserHistory} from 'history';
+import {routerMiddleware} from 'connected-react-router';
 import rootReducer from './RootReducer';
 import createSagaMiddleware from 'redux-saga';
 import joinSweepstakeSaga from "./sagas/sweepstake/SweepstakeSaga";

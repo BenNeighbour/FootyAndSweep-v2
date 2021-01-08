@@ -35,24 +35,32 @@ public class TicketMessageListener {
   private final TicketDao ticketDao;
   private final TicketMessageDispatcher ticketMessageDispatcher;
 
-  public TicketMessageListener(TicketEngine ticketEngine, TicketDao ticketDao, TicketMessageDispatcher ticketMessageDispatcher) {
+  public TicketMessageListener(
+      TicketEngine ticketEngine,
+      TicketDao ticketDao,
+      TicketMessageDispatcher ticketMessageDispatcher) {
     this.ticketEngine = ticketEngine;
     this.ticketDao = ticketDao;
     this.ticketMessageDispatcher = ticketMessageDispatcher;
   }
 
   @KafkaListener(
-          id = "ticketTicketListener",
-          topics = "api-ticket-events-topic",
-          groupId = "ticketConsumerGroup",
-          containerFactory = "TicketEventKafkaListenerContainerFactory")
+      id = "ticketTicketListener",
+      topics = "api-ticket-events-topic",
+      groupId = "ticketConsumerGroup",
+      containerFactory = "TicketEventKafkaListenerContainerFactory")
   public void ticketEventListener(BaseEvent message) {
     try {
       /* Use JSON Object Mapper to read the message and reflect it into an object */
       TicketEvent event = (TicketEvent) message;
 
       /* Use relevant helper functions depending on the different event types */
-      if (event.getEvent().equals(EventType.ALLOCATED) && !event.getTicket().getSweepstake().getStatus().equals(SweepstakeCommon.SweepstakeStatus.ALLOCATED)) {
+      if (event.getEvent().equals(EventType.ALLOCATED)
+          && !event
+              .getTicket()
+              .getSweepstake()
+              .getStatus()
+              .equals(SweepstakeCommon.SweepstakeStatus.ALLOCATED)) {
         Ticket ticket = new Ticket();
         BeanUtils.copyProperties(ticket, event.getTicket());
 
@@ -63,7 +71,8 @@ public class TicketMessageListener {
           /* Setting the status */
           ticket.getSweepstake().setStatus(SweepstakeCommon.SweepstakeStatus.ALLOCATED);
 
-          SweepstakeEvent sweepstakeEvent = new SweepstakeEvent(ticket.getSweepstake(), EventType.STATUS_UPDATED);
+          SweepstakeEvent sweepstakeEvent =
+              new SweepstakeEvent(ticket.getSweepstake(), EventType.STATUS_UPDATED);
 
           /* Publish message to sweepstake to sweepstake */
           ticketMessageDispatcher.publishEvent(sweepstakeEvent, "api-sweepstake-events-topic");

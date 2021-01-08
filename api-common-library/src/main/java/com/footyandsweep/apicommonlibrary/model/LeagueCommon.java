@@ -33,12 +33,11 @@ import java.util.UUID;
 @MappedSuperclass
 public class LeagueCommon implements Serializable {
 
-    private static final long serialVersionUID = 4620865235440152025L;
+  private static final long serialVersionUID = 4620865235440152025L;
 
-    @Id private UUID id;
+  @Id private UUID id;
 
-    private Integer code;
+  private Integer code;
 
-    private String name;
-
+  private String name;
 }

@@ -14,11 +14,11 @@
  *   limitations under the License.
  */
 
-const { SweepstakeServiceClient } = require('../client/SweepstakeService_grpc_web_pb');
-const { JoinCode } = require('../client/SweepstakeService_pb');
+const {SweepstakeServiceClient} = require('../client/SweepstakeService_grpc_web_pb');
+const {JoinCode} = require('../client/SweepstakeService_pb');
 
 export const joinSweepstake = (action: any) => {
-const client = new SweepstakeServiceClient('http://localhost:9091', null, null);
+    const client = new SweepstakeServiceClient('http://localhost:9091', null, null);
     const request = new JoinCode();
 
     request.setJoincode("sdfsdf");
