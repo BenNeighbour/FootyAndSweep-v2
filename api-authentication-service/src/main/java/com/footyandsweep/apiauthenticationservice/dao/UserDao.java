@@ -14,19 +14,20 @@
  *   limitations under the License.
  */
 
-pluginManagement {
-    plugins {
-        id 'org.springframework.boot' version "2.3.3.RELEASE"
-        id 'io.spring.dependency-management' version '1.0.10.RELEASE'
-    }
+package com.footyandsweep.apiauthenticationservice.dao;
+
+import com.footyandsweep.apiauthenticationservice.model.User;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import javax.transaction.Transactional;
+import java.util.UUID;
+
+@Repository
+public interface UserDao extends JpaRepository<User, UUID> {
+
+  @Transactional
+  @CacheEvict(value = "userCache", key = "#id")
+  User findUserById(UUID id);
 }
-
-rootProject.name = 'FootyAndSweep v2'
-
-include ':api-common-library'
-include ':api-gateway-service'
-include ':api-sweepstake-engine'
-include ':api-ticket-engine'
-include ':api-result-engine'
-include ':api-allocation-engine'
-include ':api-authentication-service'

@@ -1,0 +1,13 @@
+apiVersion: skaffold/v1
+kind: Config
+build:
+  artifacts:
+    - image: api-authentication-service
+      docker:
+        dockerfile: Dockerfile
+  local: { }
+
+deploy:
+  kubectl:
+    manifests:
+      - '../kubernetes/api-gateway-service/api-gateway-service.yaml'
