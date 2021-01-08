@@ -6,10 +6,10 @@ spring:
         enabled: true
 
       secrets:
-        name: api-gateway-service
+        name: api-authentication-service
 
       config:
         enabled: true
         sources:
           - namespace: default
-            name: api-gateway-service-config
+            name: api-authentication-service-config
