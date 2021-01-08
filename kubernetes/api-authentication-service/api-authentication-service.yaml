@@ -19,7 +19,7 @@ spec:
           image: api-authentication-service
           imagePullPolicy: Never
           ports:
-            - containerPort: 8080
+            - containerPort: 9090
           env:
             - name: SPRING_DATASOURCE_USERNAME
               valueFrom:
@@ -54,7 +54,7 @@ metadata:
     app: api-authentication-service
 spec:
   ports:
-    - port: 8080
+    - port: 9090
       protocol: TCP
   selector:
     app: api-authentication-service
