@@ -14,19 +14,19 @@
  *   limitations under the License.
  */
 
-pluginManagement {
-    plugins {
-        id 'org.springframework.boot' version "2.3.3.RELEASE"
-        id 'io.spring.dependency-management' version '1.0.10.RELEASE'
-    }
-}
+package com.footyandsweep.apiauthenticationservice.model;
 
-rootProject.name = 'FootyAndSweep v2'
+import com.footyandsweep.apicommonlibrary.model.user.UserCommon;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-include ':api-common-library'
-include ':api-gateway-service'
-include ':api-sweepstake-engine'
-include ':api-ticket-engine'
-include ':api-result-engine'
-include ':api-allocation-engine'
-include ':api-authentication-service'
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Setter
+@Getter
+@NoArgsConstructor
+@Entity
+@Table(name = "user_account")
+public class User extends UserCommon {}
