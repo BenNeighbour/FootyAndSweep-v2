@@ -16,7 +16,6 @@
 
 package com.footyandsweep.apisweepstakeengine.event;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.footyandsweep.apicommonlibrary.BaseEvent;
 import com.footyandsweep.apicommonlibrary.events.EventType;
 import com.footyandsweep.apicommonlibrary.events.ProcessStatus;
@@ -31,12 +30,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class SweepstakeMessageListener {
 
-  private final ObjectMapper objectMapper;
   private final SweepstakeEngine sweepstakeEngine;
   private final SweepstakeDao sweepstakeDao;
 
-  public SweepstakeMessageListener(ObjectMapper objectMapper, SweepstakeEngine sweepstakeEngine, SweepstakeDao sweepstakeDao) {
-    this.objectMapper = objectMapper;
+  public SweepstakeMessageListener(SweepstakeEngine sweepstakeEngine, SweepstakeDao sweepstakeDao) {
     this.sweepstakeEngine = sweepstakeEngine;
     this.sweepstakeDao = sweepstakeDao;
   }

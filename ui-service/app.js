@@ -14,21 +14,26 @@
  *   limitations under the License.
  */
 
-const { SweepstakeServiceClient } = require('../client/SweepstakeService_grpc_web_pb');
-const { JoinCode } = require('../client/SweepstakeService_pb');
+const express = require('express');
+const http = require('http');
+const path = require('path');
 
-export const joinSweepstake = (action: any) => {
-const client = new SweepstakeServiceClient('http://localhost:9091', null, null);
-    const request = new JoinCode();
+let app = express();
 
-    request.setJoincode("sdfsdf");
+app.use(express.static(path.join(__dirname, 'build')));
 
-    client.findSweepstakeByJoinCode(request, {}, (err: any, response: any) => {
-        if (response == null) {
-            console.log(err);
-        } else {
-            console.log(response);
+app.get('/*', function(req, res) {
+    res.sendFile(path.join(__dirname, 'build/index.html'), function(err) {
+        if (err) {
+            res.status(500).send(err)
         }
-    });
+    })
+})
 
-}
+const port = process.env.PORT || '3000';
+
+app.set('port', port);
+
+const server = http.createServer(app);
+
+server.listen(port, () => console.log(`Running on ${port}`));

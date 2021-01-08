@@ -27,38 +27,6 @@ public final class SweepstakeServiceGrpc {
   public static final String SERVICE_NAME = "com.footyandsweep.SweepstakeService";
 
   // Static method descriptors that strictly reflect the proto.
-  private static volatile io.grpc.MethodDescriptor<com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake,
-      com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake> getUpdateSweepstakeMethod;
-
-  @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "updateSweepstake",
-      requestType = com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake.class,
-      responseType = com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake,
-      com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake> getUpdateSweepstakeMethod() {
-    io.grpc.MethodDescriptor<com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake, com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake> getUpdateSweepstakeMethod;
-    if ((getUpdateSweepstakeMethod = SweepstakeServiceGrpc.getUpdateSweepstakeMethod) == null) {
-      synchronized (SweepstakeServiceGrpc.class) {
-        if ((getUpdateSweepstakeMethod = SweepstakeServiceGrpc.getUpdateSweepstakeMethod) == null) {
-          SweepstakeServiceGrpc.getUpdateSweepstakeMethod = getUpdateSweepstakeMethod = 
-              io.grpc.MethodDescriptor.<com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake, com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName(generateFullMethodName(
-                  "com.footyandsweep.SweepstakeService", "updateSweepstake"))
-              .setSampledToLocalTracing(true)
-              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake.getDefaultInstance()))
-              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake.getDefaultInstance()))
-                  .setSchemaDescriptor(new SweepstakeServiceMethodDescriptorSupplier("updateSweepstake"))
-                  .build();
-          }
-        }
-     }
-     return getUpdateSweepstakeMethod;
-  }
-
   private static volatile io.grpc.MethodDescriptor<com.footyandsweep.SweepstakeServiceOuterClass.JoinCode,
       com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake> getFindSweepstakeByJoinCodeMethod;
 
@@ -187,38 +155,6 @@ public final class SweepstakeServiceGrpc {
      return getRequestNewSweepstakeMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake,
-      com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake> getCreateSweepstakeMethod;
-
-  @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "createSweepstake",
-      requestType = com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake.class,
-      responseType = com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake,
-      com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake> getCreateSweepstakeMethod() {
-    io.grpc.MethodDescriptor<com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake, com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake> getCreateSweepstakeMethod;
-    if ((getCreateSweepstakeMethod = SweepstakeServiceGrpc.getCreateSweepstakeMethod) == null) {
-      synchronized (SweepstakeServiceGrpc.class) {
-        if ((getCreateSweepstakeMethod = SweepstakeServiceGrpc.getCreateSweepstakeMethod) == null) {
-          SweepstakeServiceGrpc.getCreateSweepstakeMethod = getCreateSweepstakeMethod = 
-              io.grpc.MethodDescriptor.<com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake, com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName(generateFullMethodName(
-                  "com.footyandsweep.SweepstakeService", "createSweepstake"))
-              .setSampledToLocalTracing(true)
-              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake.getDefaultInstance()))
-              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake.getDefaultInstance()))
-                  .setSchemaDescriptor(new SweepstakeServiceMethodDescriptorSupplier("createSweepstake"))
-                  .build();
-          }
-        }
-     }
-     return getCreateSweepstakeMethod;
-  }
-
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -248,13 +184,6 @@ public final class SweepstakeServiceGrpc {
 
     /**
      */
-    public void updateSweepstake(com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake request,
-        io.grpc.stub.StreamObserver<com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake> responseObserver) {
-      asyncUnimplementedUnaryCall(getUpdateSweepstakeMethod(), responseObserver);
-    }
-
-    /**
-     */
     public void findSweepstakeByJoinCode(com.footyandsweep.SweepstakeServiceOuterClass.JoinCode request,
         io.grpc.stub.StreamObserver<com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake> responseObserver) {
       asyncUnimplementedUnaryCall(getFindSweepstakeByJoinCodeMethod(), responseObserver);
@@ -281,22 +210,8 @@ public final class SweepstakeServiceGrpc {
       asyncUnimplementedUnaryCall(getRequestNewSweepstakeMethod(), responseObserver);
     }
 
-    /**
-     */
-    public void createSweepstake(com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake request,
-        io.grpc.stub.StreamObserver<com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake> responseObserver) {
-      asyncUnimplementedUnaryCall(getCreateSweepstakeMethod(), responseObserver);
-    }
-
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
-          .addMethod(
-            getUpdateSweepstakeMethod(),
-            asyncUnaryCall(
-              new MethodHandlers<
-                com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake,
-                com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake>(
-                  this, METHODID_UPDATE_SWEEPSTAKE)))
           .addMethod(
             getFindSweepstakeByJoinCodeMethod(),
             asyncUnaryCall(
@@ -325,13 +240,6 @@ public final class SweepstakeServiceGrpc {
                 com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake,
                 com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake>(
                   this, METHODID_REQUEST_NEW_SWEEPSTAKE)))
-          .addMethod(
-            getCreateSweepstakeMethod(),
-            asyncUnaryCall(
-              new MethodHandlers<
-                com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake,
-                com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake>(
-                  this, METHODID_CREATE_SWEEPSTAKE)))
           .build();
     }
   }
@@ -352,14 +260,6 @@ public final class SweepstakeServiceGrpc {
     protected SweepstakeServiceStub build(io.grpc.Channel channel,
         io.grpc.CallOptions callOptions) {
       return new SweepstakeServiceStub(channel, callOptions);
-    }
-
-    /**
-     */
-    public void updateSweepstake(com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake request,
-        io.grpc.stub.StreamObserver<com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake> responseObserver) {
-      asyncUnaryCall(
-          getChannel().newCall(getUpdateSweepstakeMethod(), getCallOptions()), request, responseObserver);
     }
 
     /**
@@ -393,14 +293,6 @@ public final class SweepstakeServiceGrpc {
       asyncServerStreamingCall(
           getChannel().newCall(getRequestNewSweepstakeMethod(), getCallOptions()), request, responseObserver);
     }
-
-    /**
-     */
-    public void createSweepstake(com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake request,
-        io.grpc.stub.StreamObserver<com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake> responseObserver) {
-      asyncUnaryCall(
-          getChannel().newCall(getCreateSweepstakeMethod(), getCallOptions()), request, responseObserver);
-    }
   }
 
   /**
@@ -419,13 +311,6 @@ public final class SweepstakeServiceGrpc {
     protected SweepstakeServiceBlockingStub build(io.grpc.Channel channel,
         io.grpc.CallOptions callOptions) {
       return new SweepstakeServiceBlockingStub(channel, callOptions);
-    }
-
-    /**
-     */
-    public com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake updateSweepstake(com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake request) {
-      return blockingUnaryCall(
-          getChannel(), getUpdateSweepstakeMethod(), getCallOptions(), request);
     }
 
     /**
@@ -456,13 +341,6 @@ public final class SweepstakeServiceGrpc {
       return blockingServerStreamingCall(
           getChannel(), getRequestNewSweepstakeMethod(), getCallOptions(), request);
     }
-
-    /**
-     */
-    public com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake createSweepstake(com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake request) {
-      return blockingUnaryCall(
-          getChannel(), getCreateSweepstakeMethod(), getCallOptions(), request);
-    }
   }
 
   /**
@@ -481,14 +359,6 @@ public final class SweepstakeServiceGrpc {
     protected SweepstakeServiceFutureStub build(io.grpc.Channel channel,
         io.grpc.CallOptions callOptions) {
       return new SweepstakeServiceFutureStub(channel, callOptions);
-    }
-
-    /**
-     */
-    public com.google.common.util.concurrent.ListenableFuture<com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake> updateSweepstake(
-        com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake request) {
-      return futureUnaryCall(
-          getChannel().newCall(getUpdateSweepstakeMethod(), getCallOptions()), request);
     }
 
     /**
@@ -514,22 +384,12 @@ public final class SweepstakeServiceGrpc {
       return futureUnaryCall(
           getChannel().newCall(getGetResultHelperMapMethod(), getCallOptions()), request);
     }
-
-    /**
-     */
-    public com.google.common.util.concurrent.ListenableFuture<com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake> createSweepstake(
-        com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake request) {
-      return futureUnaryCall(
-          getChannel().newCall(getCreateSweepstakeMethod(), getCallOptions()), request);
-    }
   }
 
-  private static final int METHODID_UPDATE_SWEEPSTAKE = 0;
-  private static final int METHODID_FIND_SWEEPSTAKE_BY_JOIN_CODE = 1;
-  private static final int METHODID_FIND_SWEEPSTAKE_BY_ID = 2;
-  private static final int METHODID_GET_RESULT_HELPER_MAP = 3;
-  private static final int METHODID_REQUEST_NEW_SWEEPSTAKE = 4;
-  private static final int METHODID_CREATE_SWEEPSTAKE = 5;
+  private static final int METHODID_FIND_SWEEPSTAKE_BY_JOIN_CODE = 0;
+  private static final int METHODID_FIND_SWEEPSTAKE_BY_ID = 1;
+  private static final int METHODID_GET_RESULT_HELPER_MAP = 2;
+  private static final int METHODID_REQUEST_NEW_SWEEPSTAKE = 3;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -548,10 +408,6 @@ public final class SweepstakeServiceGrpc {
     @java.lang.SuppressWarnings("unchecked")
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
-        case METHODID_UPDATE_SWEEPSTAKE:
-          serviceImpl.updateSweepstake((com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake) request,
-              (io.grpc.stub.StreamObserver<com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake>) responseObserver);
-          break;
         case METHODID_FIND_SWEEPSTAKE_BY_JOIN_CODE:
           serviceImpl.findSweepstakeByJoinCode((com.footyandsweep.SweepstakeServiceOuterClass.JoinCode) request,
               (io.grpc.stub.StreamObserver<com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake>) responseObserver);
@@ -566,10 +422,6 @@ public final class SweepstakeServiceGrpc {
           break;
         case METHODID_REQUEST_NEW_SWEEPSTAKE:
           serviceImpl.requestNewSweepstake((com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake) request,
-              (io.grpc.stub.StreamObserver<com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake>) responseObserver);
-          break;
-        case METHODID_CREATE_SWEEPSTAKE:
-          serviceImpl.createSweepstake((com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake) request,
               (io.grpc.stub.StreamObserver<com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake>) responseObserver);
           break;
         default:
@@ -633,12 +485,10 @@ public final class SweepstakeServiceGrpc {
         if (result == null) {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new SweepstakeServiceFileDescriptorSupplier())
-              .addMethod(getUpdateSweepstakeMethod())
               .addMethod(getFindSweepstakeByJoinCodeMethod())
               .addMethod(getFindSweepstakeByIdMethod())
               .addMethod(getGetResultHelperMapMethod())
               .addMethod(getRequestNewSweepstakeMethod())
-              .addMethod(getCreateSweepstakeMethod())
               .build();
         }
       }

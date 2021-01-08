@@ -1,3 +1,4 @@
+
 static_resources:
   listeners:
     - name: listener_0
@@ -32,4 +33,4 @@ static_resources:
       type: LOGICAL_DNS
       lb_policy: ROUND_ROBIN
       http2_protocol_options: { }
-      hosts: [ { socket_address: { address: api-sweepstake-engine, port_value: 9090 } } ]
+      hosts: [ { socket_address: { address: api-gateway-proxy, port_value: 1449 } } ]

@@ -25,14 +25,18 @@ import com.footyandsweep.apisweepstakeengine.engine.SweepstakeEngineImpl;
 import com.footyandsweep.apisweepstakeengine.grpc.GrpcService;
 import com.footyandsweep.apisweepstakeengine.helper.ResultHelper;
 import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
+import com.google.rpc.Code;
+import com.google.rpc.Status;
+import io.grpc.protobuf.StatusProto;
 import io.grpc.stub.StreamObserver;
 import org.apache.commons.beanutils.BeanUtils;
 
+import javax.validation.ValidationException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.UUID;
 
 @GrpcService
-public class SweepstakeServiceImpl extends SweepstakeServiceGrpc.SweepstakeServiceImplBase {
+public class SweepstakeController extends SweepstakeServiceGrpc.SweepstakeServiceImplBase {
 
     private final SweepstakeEngineImpl sweepstakeEngine;
     private final SweepstakeDao sweepstakeDao;
@@ -40,7 +44,7 @@ public class SweepstakeServiceImpl extends SweepstakeServiceGrpc.SweepstakeServi
     private final ResultHelper resultHelper;
     private final FootballMatchDao footballMatchDao;
 
-    public SweepstakeServiceImpl(
+    public SweepstakeController(
             final SweepstakeEngineImpl sweepstakeEngine,
             final SweepstakeDao sweepstakeDao,
             final ParticipantIdDao participantIdDao,
@@ -54,19 +58,19 @@ public class SweepstakeServiceImpl extends SweepstakeServiceGrpc.SweepstakeServi
     }
 
     @Override
-    public void updateSweepstake(SweepstakeServiceOuterClass.Sweepstake request, StreamObserver<SweepstakeServiceOuterClass.Sweepstake> responseObserver) {
-        /* TODO: Call service method here */
-    }
-
-    @Override
     public void findSweepstakeByJoinCode(SweepstakeServiceOuterClass.JoinCode request, StreamObserver<SweepstakeServiceOuterClass.Sweepstake> responseObserver) {
         try {
             SweepstakeServiceOuterClass.Sweepstake sweepstake = this.castHelper(sweepstakeDao.findSweepstakeByJoinCode(request.getJoinCode()));
 
             responseObserver.onNext(sweepstake);
             responseObserver.onCompleted();
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            Status errorStatus = Status.newBuilder()
+                    .setCode(Code.INVALID_ARGUMENT.getNumber())
+                    .setMessage("Invalid Sweepstake Join Code!")
+                    .build();
+
+            responseObserver.onError(StatusProto.toStatusRuntimeException(errorStatus));
         }
     }
 
@@ -106,12 +110,15 @@ public class SweepstakeServiceImpl extends SweepstakeServiceGrpc.SweepstakeServi
             responseObserver.onCompleted();
         } catch (IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
-        }
-    }
+        } catch (ValidationException e) {
+            /* If there are any validation errors (to do with the sweepstake fields), then tell the user */
+            Status errorStatus = Status.newBuilder()
+                    .setCode(Code.INVALID_ARGUMENT.getNumber())
+                    .setMessage(e.getMessage())
+                    .build();
 
-    @Override
-    public void createSweepstake(SweepstakeServiceOuterClass.Sweepstake request, StreamObserver<SweepstakeServiceOuterClass.Sweepstake> responseObserver) {
-        super.createSweepstake(request, responseObserver);
+            responseObserver.onError(StatusProto.toStatusRuntimeException(errorStatus));
+        }
     }
 
     private SweepstakeServiceOuterClass.Sweepstake castHelper(Sweepstake sweepstake) throws InvocationTargetException, IllegalAccessException {

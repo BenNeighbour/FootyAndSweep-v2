@@ -26,10 +26,12 @@ public class GrpcServerRunner implements CommandLineRunner, DisposableBean {
         ServerBuilder serverBuilder = ServerBuilder.forPort(9090);
 
         String[] beanNames = applicationContext.getBeanNamesForAnnotation(GrpcService.class);
-        Arrays.stream(beanNames).forEach(beanName -> {
-            BindableService service = applicationContext.getBean(beanName, BindableService.class);
-            serverBuilder.addService(service);
-        });
+        Arrays.stream(beanNames)
+                .forEach(
+                        beanName -> {
+                            BindableService service = applicationContext.getBean(beanName, BindableService.class);
+                            serverBuilder.addService(service);
+                        });
 
         server = serverBuilder.build().start();
 
@@ -37,13 +39,15 @@ public class GrpcServerRunner implements CommandLineRunner, DisposableBean {
     }
 
     private void runSever() {
-        Thread thread = new Thread(() -> {
-            try {
-                server.awaitTermination();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        });
+        Thread thread =
+                new Thread(
+                        () -> {
+                            try {
+                                server.awaitTermination();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        });
         thread.setDaemon(false);
         thread.start();
     }

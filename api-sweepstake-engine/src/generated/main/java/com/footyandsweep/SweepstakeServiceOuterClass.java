@@ -5255,20 +5255,16 @@ public final class SweepstakeServiceOuterClass {
       "epstakeTypeCommon\022\024\n\020Correct_Score_FT\020\000\022" +
       "\024\n\020Correct_Score_HT\020\001*8\n\rProcessStatus\022\013" +
       "\n\007PENDING\020\000\022\013\n\007INVALID\020\001\022\r\n\tPERSISTED\020\0022" +
-      "\212\004\n\021SweepstakeService\022P\n\020updateSweepstak" +
-      "e\022\035.com.footyandsweep.Sweepstake\032\035.com.f" +
-      "ootyandsweep.Sweepstake\022V\n\030findSweepstak" +
-      "eByJoinCode\022\033.com.footyandsweep.JoinCode" +
-      "\032\035.com.footyandsweep.Sweepstake\022T\n\022findS" +
-      "weepstakeById\022\037.com.footyandsweep.Sweeps" +
-      "takeId\032\035.com.footyandsweep.Sweepstake\022K\n" +
-      "\022getResultHelperMap\022\035.com.footyandsweep." +
-      "Sweepstake\032\026.com.footyandsweep.Map\022V\n\024re" +
-      "questNewSweepstake\022\035.com.footyandsweep.S" +
-      "weepstake\032\035.com.footyandsweep.Sweepstake" +
-      "0\001\022P\n\020createSweepstake\022\035.com.footyandswe" +
-      "ep.Sweepstake\032\035.com.footyandsweep.Sweeps" +
-      "takeb\006proto3"
+      "\346\002\n\021SweepstakeService\022V\n\030findSweepstakeB" +
+      "yJoinCode\022\033.com.footyandsweep.JoinCode\032\035" +
+      ".com.footyandsweep.Sweepstake\022T\n\022findSwe" +
+      "epstakeById\022\037.com.footyandsweep.Sweepsta" +
+      "keId\032\035.com.footyandsweep.Sweepstake\022K\n\022g" +
+      "etResultHelperMap\022\035.com.footyandsweep.Sw" +
+      "eepstake\032\026.com.footyandsweep.Map\022V\n\024requ" +
+      "estNewSweepstake\022\035.com.footyandsweep.Swe" +
+      "epstake\032\035.com.footyandsweep.Sweepstake0\001" +
+      "b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

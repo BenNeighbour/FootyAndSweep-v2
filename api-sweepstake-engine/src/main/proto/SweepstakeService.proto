@@ -57,10 +57,8 @@ message Map {
 }
 
 service SweepstakeService {
-  rpc updateSweepstake(Sweepstake) returns (Sweepstake);
   rpc findSweepstakeByJoinCode(JoinCode) returns (Sweepstake);
   rpc findSweepstakeById(SweepstakeId) returns (Sweepstake);
   rpc getResultHelperMap(Sweepstake) returns (Map);
   rpc requestNewSweepstake(Sweepstake) returns (stream Sweepstake);
-  rpc createSweepstake(Sweepstake) returns (Sweepstake);
 }

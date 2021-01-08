@@ -1,4 +1,4 @@
-// source: api-sweepstake-engine/src/main/proto/SweepstakeService.proto
+// source: SweepstakeService.proto
 /**
  * @fileoverview
  * @enhanceable
