@@ -19,6 +19,7 @@ spec:
           image: api-gateway-proxy
           ports:
             - containerPort: 1449
+            - containerPort: 80
 ---
 apiVersion: v1
 kind: Service
@@ -29,5 +30,8 @@ spec:
     - name: http2
       port: 1449
       targetPort: 1449
+    - name: http
+      port: 80
+      targetPort: 80
   selector:
     app: api-gateway-proxy

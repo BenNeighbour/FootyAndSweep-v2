@@ -24,7 +24,6 @@ pluginManagement {
 rootProject.name = 'FootyAndSweep v2'
 
 include ':api-common-library'
-include ':api-gateway-service'
 include ':api-sweepstake-engine'
 include ':api-ticket-engine'
 include ':api-result-engine'
