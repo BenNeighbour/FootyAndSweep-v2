@@ -46,8 +46,6 @@ public class UserCommon implements Serializable {
 
   private String password;
 
-  private AuthProvider provider;
-
   private String email;
 
   private BigDecimal balance;
@@ -63,9 +61,4 @@ public class UserCommon implements Serializable {
   @Enumerated(EnumType.STRING)
   private ProcessStatus processStatus = ProcessStatus.RELATIONS_PENDING;
 
-  enum AuthProvider {
-    local,
-    facebook,
-    google
-  }
 }

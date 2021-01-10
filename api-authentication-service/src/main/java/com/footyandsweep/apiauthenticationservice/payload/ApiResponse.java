@@ -14,34 +14,20 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apiauthenticationservice.model;
+package com.footyandsweep.apiauthenticationservice.payload;
 
-import com.footyandsweep.apicommonlibrary.model.user.UserCommon;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-
 @Setter
 @Getter
 @NoArgsConstructor
-@Entity
-@Table(name = "user_account")
-public class User extends UserCommon {
+@AllArgsConstructor
+public class ApiResponse {
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    private AuthProvider provider;
+  private boolean success;
 
-    @Column(name = "profilePicture")
-    private String profilePicture;
-
-    @Column(name = "providerId")
-    private String providerId;
-
-    @Column(name = "isEmailVerified", nullable = false)
-    private Boolean isEmailVerified = false;
-
+  private String message;
 }

@@ -29,6 +29,27 @@ spring:
   cache:
     type: redis
 
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: 718687795151-9ssqtao7g22pck10lbf5u213se1c60tc.apps.googleusercontent.com
+            clientSecret: JVpzRT3XaKwcP78j6v6gDZWd
+            redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
+            scope:
+              - email
+              - profile
+
+footyandsweep:
+  auth:
+    tokenSecret: 926D96C90030DD58429D2751AC1BDBBC
+    tokenExpirationMsec: 864000000
+
+  oauth2:
+    authorizedRedirectUris:
+      - http://localhost:3000/oauth2/redirect
+
 grpc:
   server:
     port: 9090

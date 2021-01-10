@@ -83,6 +83,11 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
     implementation "org.springframework.boot:spring-boot-starter-data-redis:$springBootVersion"
 
+    implementation "org.springframework.boot:spring-boot-starter-security"
+    implementation "org.springframework.security:spring-security-oauth2-client"
+    implementation "org.springframework.security:spring-security-oauth2-jose"
+    implementation "io.jsonwebtoken:jjwt:0.5.1"
+
     implementation("io.grpc:grpc-stub:${grpcVersion}")
     implementation("io.grpc:grpc-core:${grpcVersion}")
     implementation("io.grpc:grpc-protobuf:${grpcVersion}")
