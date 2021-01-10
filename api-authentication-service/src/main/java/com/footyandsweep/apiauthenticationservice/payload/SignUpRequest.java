@@ -30,14 +30,9 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 public class SignUpRequest {
 
-    @NotBlank
-    private String name;
+  @NotBlank private String name;
 
-    @NotBlank
-    @Email
-    private String email;
+  @NotBlank @Email private String email;
 
-    @NotBlank
-    private String password;
-
+  @NotBlank private String password;
 }

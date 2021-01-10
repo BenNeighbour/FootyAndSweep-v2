@@ -17,8 +17,8 @@
 package com.footyandsweep.apiauthenticationservice.model;
 
 public enum AuthProvider {
-    local,
-    facebook,
-    google,
-    microsoft
+  local,
+  facebook,
+  google,
+  microsoft
 }

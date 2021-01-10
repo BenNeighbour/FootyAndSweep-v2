@@ -32,13 +32,14 @@ const ButtonStyled = styled.button`
 
 interface OwnProps {
     label: string;
+    onClick?: () => void;
 }
 
 type Props = OwnProps;
 
 const Button: FunctionComponent<Props> = (props) => {
     return (
-        <ButtonStyled>{props.label}</ButtonStyled>
+        <ButtonStyled onClick={props.onClick}>{props.label}</ButtonStyled>
     );
 };
 

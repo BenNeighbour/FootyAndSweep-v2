@@ -31,17 +31,16 @@ import javax.validation.constraints.NotNull;
 @Table(name = "user_account")
 public class User extends UserCommon {
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    private AuthProvider provider;
+  @NotNull
+  @Enumerated(EnumType.STRING)
+  private AuthProvider provider;
 
-    @Column(name = "profilePicture")
-    private String profilePicture;
+  @Column(name = "profilePicture")
+  private String profilePicture;
 
-    @Column(name = "providerId")
-    private String providerId;
+  @Column(name = "providerId")
+  private String providerId;
 
-    @Column(name = "isEmailVerified", nullable = false)
-    private Boolean isEmailVerified = false;
-
+  @Column(name = "isEmailVerified", nullable = false)
+  private Boolean isEmailVerified = false;
 }

@@ -60,5 +60,4 @@ public class UserCommon implements Serializable {
 
   @Enumerated(EnumType.STRING)
   private ProcessStatus processStatus = ProcessStatus.RELATIONS_PENDING;
-
 }

@@ -16,7 +16,6 @@
 
 package com.footyandsweep.apiauthenticationservice.security;
 
-
 import com.footyandsweep.apiauthenticationservice.dao.UserDao;
 import com.footyandsweep.apiauthenticationservice.exception.ResourceNotFoundException;
 import com.footyandsweep.apiauthenticationservice.model.User;
@@ -31,30 +30,29 @@ import java.util.UUID;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final UserDao userDao;
+  private final UserDao userDao;
 
-    public CustomUserDetailsService(UserDao userDao) {
-        this.userDao = userDao;
-    }
+  public CustomUserDetailsService(UserDao userDao) {
+    this.userDao = userDao;
+  }
 
-    @Override
-    @Transactional
-    public UserDetails loadUserByUsername(String email)
-            throws UsernameNotFoundException {
-        User user = userDao.findUserByEmail(email)
-                .orElseThrow(() ->
-                        new UsernameNotFoundException("User not found with email : " + email)
-        );
+  @Override
+  @Transactional
+  public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    User user =
+        userDao
+            .findUserByEmail(email)
+            .orElseThrow(
+                () -> new UsernameNotFoundException("User not found with email : " + email));
 
-        return UserPrincipal.create(user);
-    }
+    return UserPrincipal.create(user);
+  }
 
-    @Transactional
-    public UserDetails loadUserById(UUID id) {
-        User user = userDao.findById(id).orElseThrow(
-            () -> new ResourceNotFoundException("User", "id", id)
-        );
+  @Transactional
+  public UserDetails loadUserById(UUID id) {
+    User user =
+        userDao.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
 
-        return UserPrincipal.create(user);
-    }
+    return UserPrincipal.create(user);
+  }
 }
