@@ -18,8 +18,6 @@ package com.footyandsweep.apiallocationengine.engine;
 
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 
-import javax.transaction.Transactional;
-
 public interface AllocationEngine {
 
   void allocateSweepstakeTickets(SweepstakeCommon sweepstake);

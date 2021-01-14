@@ -46,6 +46,7 @@ public class CookieUtils {
     cookie.setPath("/");
     cookie.setHttpOnly(true);
     cookie.setMaxAge(maxAge);
+    cookie.setDomain("footyandsweep-dev.com");
     response.addCookie(cookie);
   }
 

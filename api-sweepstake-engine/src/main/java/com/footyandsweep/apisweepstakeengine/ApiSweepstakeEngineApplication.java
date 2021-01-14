@@ -17,7 +17,6 @@
 package com.footyandsweep.apisweepstakeengine;
 
 import com.footyandsweep.apisweepstakeengine.config.WebConfiguration;
-import io.grpc.Server;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;

@@ -16,8 +16,6 @@
 
 package com.footyandsweep.apiresultengine.engine;
 
-import javax.transaction.Transactional;
-
 public interface ResultEngine {
   void processWinningTickets();
 }

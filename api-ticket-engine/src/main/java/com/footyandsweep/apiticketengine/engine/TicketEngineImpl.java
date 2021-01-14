@@ -17,7 +17,6 @@
 package com.footyandsweep.apiticketengine.engine;
 
 import com.footyandsweep.apicommonlibrary.events.EventType;
-import com.footyandsweep.apicommonlibrary.events.ProcessStatus;
 import com.footyandsweep.apicommonlibrary.events.SweepstakeEvent;
 import com.footyandsweep.apicommonlibrary.events.TicketEvent;
 import com.footyandsweep.apicommonlibrary.helper.SweepstakeLock;

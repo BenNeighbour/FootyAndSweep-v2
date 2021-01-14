@@ -18,7 +18,9 @@ const {SweepstakeServiceClient} = require('../client/SweepstakeService_grpc_web_
 const {JoinCode} = require('../client/SweepstakeService_pb');
 
 export const joinSweepstake = (action: any) => {
-    const client = new SweepstakeServiceClient('http://localhost:9091', null, null);
+    const client = new SweepstakeServiceClient('http://api.footyandsweep-dev.com:32601', null, {
+        withCredentials: true
+    });
     const request = new JoinCode();
 
     request.setJoincode("sdfsdf");

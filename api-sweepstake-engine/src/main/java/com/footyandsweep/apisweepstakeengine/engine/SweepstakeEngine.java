@@ -18,7 +18,6 @@ package com.footyandsweep.apisweepstakeengine.engine;
 
 import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
 
-import javax.transaction.Transactional;
 import java.util.UUID;
 
 public interface SweepstakeEngine {

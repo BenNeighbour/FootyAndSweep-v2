@@ -20,7 +20,6 @@ import com.footyandsweep.apiallocationengine.dao.AllocationDao;
 import com.footyandsweep.apiallocationengine.event.AllocationMessageDispatcher;
 import com.footyandsweep.apiallocationengine.model.Allocation;
 import com.footyandsweep.apicommonlibrary.events.EventType;
-import com.footyandsweep.apicommonlibrary.events.ProcessStatus;
 import com.footyandsweep.apicommonlibrary.events.TicketEvent;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeTypeCommon;

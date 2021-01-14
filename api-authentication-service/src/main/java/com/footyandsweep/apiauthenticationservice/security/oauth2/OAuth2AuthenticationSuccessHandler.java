@@ -74,7 +74,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         "X-AUTH-TOKEN="
             + tokenProvider.createToken(authentication)
             + ";"
-            + "Path=/; HttpOnly; Domain=localhost;");
+            + "Path=/; HttpOnly; Domain=footyandsweep-dev.com;");
     getRedirectStrategy().sendRedirect(request, response, targetUrl);
   }
 

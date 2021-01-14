@@ -17,9 +17,7 @@
 package com.footyandsweep.apisweepstakeengine.engine;
 
 import com.footyandsweep.apicommonlibrary.events.EventType;
-import com.footyandsweep.apicommonlibrary.events.ProcessStatus;
 import com.footyandsweep.apicommonlibrary.events.SweepstakeEvent;
-import com.footyandsweep.apisweepstakeengine.config.ResultSchedulerConfig;
 import com.footyandsweep.apisweepstakeengine.dao.ParticipantIdDao;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
 import com.footyandsweep.apisweepstakeengine.event.SweepstakeMessageDispatcher;
@@ -29,7 +27,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;

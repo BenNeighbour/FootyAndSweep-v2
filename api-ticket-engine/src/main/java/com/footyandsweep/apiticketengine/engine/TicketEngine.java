@@ -16,7 +16,6 @@
 
 package com.footyandsweep.apiticketengine.engine;
 
-import javax.transaction.Transactional;
 import java.util.UUID;
 
 public interface TicketEngine {
