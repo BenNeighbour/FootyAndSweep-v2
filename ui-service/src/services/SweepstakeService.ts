@@ -25,11 +25,11 @@ export const joinSweepstake = (action: any) => {
 
     request.setJoincode("sdfsdf");
 
-    client.findSweepstakeByJoinCode(request, {}, (err: any, response: any) => {
-        if (response == null) {
-            console.error(err);
-        } else {
-            console.log(response);
+    client.findSweepstakeByJoinCode(request, {}, (response: any, err: any) => {
+        /* TODO: Add this as an interceptor on ALL grpc requests rather than hardcoding it into each service method */
+        if (response.code === 16) {
+            console.log("Unauthorized");
+            window.location.replace("http://api.footyandsweep-dev.com:30876/oauth2/authorize/google?redirect_uri=http://www.footyandsweep-dev.com:3000/home")
         }
     });
 
