@@ -33,7 +33,7 @@ const Routes: FunctionComponent<Props> = (props) => {
                 <Switch>
                     <Route exact path={"/home"} render={HomePage}/>
                     <Route render={() => <div><Button label={"Login"} onClick={() => {
-                        window.location.replace("http://api.footyandsweep-dev.com:30203/oauth2/authorize/google?redirect_uri=http://www.footyandsweep-dev.com:3000/home")
+                        window.location.replace("http://api.footyandsweep-dev.com:30876/oauth2/authorize/google?redirect_uri=http://www.footyandsweep-dev.com:3000/home")
                     }}/></div>}/>
                 </Switch>
             </ConnectedRouter>

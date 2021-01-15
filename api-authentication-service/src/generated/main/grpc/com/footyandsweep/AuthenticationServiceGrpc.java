@@ -27,36 +27,36 @@ public final class AuthenticationServiceGrpc {
   public static final String SERVICE_NAME = "com.footyandsweep.AuthenticationService";
 
   // Static method descriptors that strictly reflect the proto.
-  private static volatile io.grpc.MethodDescriptor<com.footyandsweep.AuthenticationServiceOuterClass.AmIAuthenticatedRequest,
-      com.footyandsweep.AuthenticationServiceOuterClass.AmIAuthenticatedResponse> getAmIAuthenticatedMethod;
+  private static volatile io.grpc.MethodDescriptor<com.footyandsweep.AuthenticationServiceOuterClass.findUserByIdRequest,
+      com.footyandsweep.AuthenticationServiceOuterClass.User> getFindUserByUserIdMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "AmIAuthenticated",
-      requestType = com.footyandsweep.AuthenticationServiceOuterClass.AmIAuthenticatedRequest.class,
-      responseType = com.footyandsweep.AuthenticationServiceOuterClass.AmIAuthenticatedResponse.class,
+      fullMethodName = SERVICE_NAME + '/' + "findUserByUserId",
+      requestType = com.footyandsweep.AuthenticationServiceOuterClass.findUserByIdRequest.class,
+      responseType = com.footyandsweep.AuthenticationServiceOuterClass.User.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<com.footyandsweep.AuthenticationServiceOuterClass.AmIAuthenticatedRequest,
-      com.footyandsweep.AuthenticationServiceOuterClass.AmIAuthenticatedResponse> getAmIAuthenticatedMethod() {
-    io.grpc.MethodDescriptor<com.footyandsweep.AuthenticationServiceOuterClass.AmIAuthenticatedRequest, com.footyandsweep.AuthenticationServiceOuterClass.AmIAuthenticatedResponse> getAmIAuthenticatedMethod;
-    if ((getAmIAuthenticatedMethod = AuthenticationServiceGrpc.getAmIAuthenticatedMethod) == null) {
+  public static io.grpc.MethodDescriptor<com.footyandsweep.AuthenticationServiceOuterClass.findUserByIdRequest,
+      com.footyandsweep.AuthenticationServiceOuterClass.User> getFindUserByUserIdMethod() {
+    io.grpc.MethodDescriptor<com.footyandsweep.AuthenticationServiceOuterClass.findUserByIdRequest, com.footyandsweep.AuthenticationServiceOuterClass.User> getFindUserByUserIdMethod;
+    if ((getFindUserByUserIdMethod = AuthenticationServiceGrpc.getFindUserByUserIdMethod) == null) {
       synchronized (AuthenticationServiceGrpc.class) {
-        if ((getAmIAuthenticatedMethod = AuthenticationServiceGrpc.getAmIAuthenticatedMethod) == null) {
-          AuthenticationServiceGrpc.getAmIAuthenticatedMethod = getAmIAuthenticatedMethod = 
-              io.grpc.MethodDescriptor.<com.footyandsweep.AuthenticationServiceOuterClass.AmIAuthenticatedRequest, com.footyandsweep.AuthenticationServiceOuterClass.AmIAuthenticatedResponse>newBuilder()
+        if ((getFindUserByUserIdMethod = AuthenticationServiceGrpc.getFindUserByUserIdMethod) == null) {
+          AuthenticationServiceGrpc.getFindUserByUserIdMethod = getFindUserByUserIdMethod = 
+              io.grpc.MethodDescriptor.<com.footyandsweep.AuthenticationServiceOuterClass.findUserByIdRequest, com.footyandsweep.AuthenticationServiceOuterClass.User>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
-                  "com.footyandsweep.AuthenticationService", "AmIAuthenticated"))
+                  "com.footyandsweep.AuthenticationService", "findUserByUserId"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.footyandsweep.AuthenticationServiceOuterClass.AmIAuthenticatedRequest.getDefaultInstance()))
+                  com.footyandsweep.AuthenticationServiceOuterClass.findUserByIdRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.footyandsweep.AuthenticationServiceOuterClass.AmIAuthenticatedResponse.getDefaultInstance()))
-                  .setSchemaDescriptor(new AuthenticationServiceMethodDescriptorSupplier("AmIAuthenticated"))
+                  com.footyandsweep.AuthenticationServiceOuterClass.User.getDefaultInstance()))
+                  .setSchemaDescriptor(new AuthenticationServiceMethodDescriptorSupplier("findUserByUserId"))
                   .build();
           }
         }
      }
-     return getAmIAuthenticatedMethod;
+     return getFindUserByUserIdMethod;
   }
 
   /**
@@ -88,20 +88,20 @@ public final class AuthenticationServiceGrpc {
 
     /**
      */
-    public void amIAuthenticated(com.footyandsweep.AuthenticationServiceOuterClass.AmIAuthenticatedRequest request,
-        io.grpc.stub.StreamObserver<com.footyandsweep.AuthenticationServiceOuterClass.AmIAuthenticatedResponse> responseObserver) {
-      asyncUnimplementedUnaryCall(getAmIAuthenticatedMethod(), responseObserver);
+    public void findUserByUserId(com.footyandsweep.AuthenticationServiceOuterClass.findUserByIdRequest request,
+        io.grpc.stub.StreamObserver<com.footyandsweep.AuthenticationServiceOuterClass.User> responseObserver) {
+      asyncUnimplementedUnaryCall(getFindUserByUserIdMethod(), responseObserver);
     }
 
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
-            getAmIAuthenticatedMethod(),
+            getFindUserByUserIdMethod(),
             asyncUnaryCall(
               new MethodHandlers<
-                com.footyandsweep.AuthenticationServiceOuterClass.AmIAuthenticatedRequest,
-                com.footyandsweep.AuthenticationServiceOuterClass.AmIAuthenticatedResponse>(
-                  this, METHODID_AM_IAUTHENTICATED)))
+                com.footyandsweep.AuthenticationServiceOuterClass.findUserByIdRequest,
+                com.footyandsweep.AuthenticationServiceOuterClass.User>(
+                  this, METHODID_FIND_USER_BY_USER_ID)))
           .build();
     }
   }
@@ -126,10 +126,10 @@ public final class AuthenticationServiceGrpc {
 
     /**
      */
-    public void amIAuthenticated(com.footyandsweep.AuthenticationServiceOuterClass.AmIAuthenticatedRequest request,
-        io.grpc.stub.StreamObserver<com.footyandsweep.AuthenticationServiceOuterClass.AmIAuthenticatedResponse> responseObserver) {
+    public void findUserByUserId(com.footyandsweep.AuthenticationServiceOuterClass.findUserByIdRequest request,
+        io.grpc.stub.StreamObserver<com.footyandsweep.AuthenticationServiceOuterClass.User> responseObserver) {
       asyncUnaryCall(
-          getChannel().newCall(getAmIAuthenticatedMethod(), getCallOptions()), request, responseObserver);
+          getChannel().newCall(getFindUserByUserIdMethod(), getCallOptions()), request, responseObserver);
     }
   }
 
@@ -153,9 +153,9 @@ public final class AuthenticationServiceGrpc {
 
     /**
      */
-    public com.footyandsweep.AuthenticationServiceOuterClass.AmIAuthenticatedResponse amIAuthenticated(com.footyandsweep.AuthenticationServiceOuterClass.AmIAuthenticatedRequest request) {
+    public com.footyandsweep.AuthenticationServiceOuterClass.User findUserByUserId(com.footyandsweep.AuthenticationServiceOuterClass.findUserByIdRequest request) {
       return blockingUnaryCall(
-          getChannel(), getAmIAuthenticatedMethod(), getCallOptions(), request);
+          getChannel(), getFindUserByUserIdMethod(), getCallOptions(), request);
     }
   }
 
@@ -179,14 +179,14 @@ public final class AuthenticationServiceGrpc {
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<com.footyandsweep.AuthenticationServiceOuterClass.AmIAuthenticatedResponse> amIAuthenticated(
-        com.footyandsweep.AuthenticationServiceOuterClass.AmIAuthenticatedRequest request) {
+    public com.google.common.util.concurrent.ListenableFuture<com.footyandsweep.AuthenticationServiceOuterClass.User> findUserByUserId(
+        com.footyandsweep.AuthenticationServiceOuterClass.findUserByIdRequest request) {
       return futureUnaryCall(
-          getChannel().newCall(getAmIAuthenticatedMethod(), getCallOptions()), request);
+          getChannel().newCall(getFindUserByUserIdMethod(), getCallOptions()), request);
     }
   }
 
-  private static final int METHODID_AM_IAUTHENTICATED = 0;
+  private static final int METHODID_FIND_USER_BY_USER_ID = 0;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -205,9 +205,9 @@ public final class AuthenticationServiceGrpc {
     @java.lang.SuppressWarnings("unchecked")
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
-        case METHODID_AM_IAUTHENTICATED:
-          serviceImpl.amIAuthenticated((com.footyandsweep.AuthenticationServiceOuterClass.AmIAuthenticatedRequest) request,
-              (io.grpc.stub.StreamObserver<com.footyandsweep.AuthenticationServiceOuterClass.AmIAuthenticatedResponse>) responseObserver);
+        case METHODID_FIND_USER_BY_USER_ID:
+          serviceImpl.findUserByUserId((com.footyandsweep.AuthenticationServiceOuterClass.findUserByIdRequest) request,
+              (io.grpc.stub.StreamObserver<com.footyandsweep.AuthenticationServiceOuterClass.User>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -270,7 +270,7 @@ public final class AuthenticationServiceGrpc {
         if (result == null) {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new AuthenticationServiceFileDescriptorSupplier())
-              .addMethod(getAmIAuthenticatedMethod())
+              .addMethod(getFindUserByUserIdMethod())
               .build();
         }
       }

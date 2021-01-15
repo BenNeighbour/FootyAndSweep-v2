@@ -1,14 +1,12 @@
 syntax = "proto3";
 package com.footyandsweep;
 
-message AmIAuthenticatedRequest {
+message User {}
+
+message findUserByIdRequest {
   string userId = 1;
-}
-message AmIAuthenticatedResponse {
-  int32 code = 1;
-  string message = 2;
 }
 
 service AuthenticationService {
-  rpc AmIAuthenticated(AmIAuthenticatedRequest) returns (AmIAuthenticatedResponse);
+  rpc findUserByUserId(findUserByIdRequest) returns (User);
 }

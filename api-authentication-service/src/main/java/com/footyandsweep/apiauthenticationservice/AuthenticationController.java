@@ -16,55 +16,24 @@
 
 package com.footyandsweep.apiauthenticationservice;
 
-import com.footyandsweep.AuthenticationServiceGrpc;
-import com.footyandsweep.AuthenticationServiceOuterClass;
-import com.footyandsweep.apiauthenticationservice.dao.UserDao;
-import com.footyandsweep.apiauthenticationservice.exception.BadRequestException;
-import com.footyandsweep.apiauthenticationservice.exception.ResourceNotFoundException;
-import com.footyandsweep.apiauthenticationservice.grpc.GrpcService;
-import com.footyandsweep.apiauthenticationservice.model.AuthProvider;
-import com.footyandsweep.apiauthenticationservice.model.User;
-import com.footyandsweep.apiauthenticationservice.payload.ApiResponse;
-import com.footyandsweep.apiauthenticationservice.payload.AuthResponse;
-import com.footyandsweep.apiauthenticationservice.payload.LoginRequest;
-import com.footyandsweep.apiauthenticationservice.payload.SignUpRequest;
-import com.footyandsweep.apiauthenticationservice.security.CurrentUser;
-import com.footyandsweep.apiauthenticationservice.security.TokenProvider;
-import com.footyandsweep.apiauthenticationservice.security.UserPrincipal;
-import io.grpc.stub.StreamObserver;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-import java.net.URI;
+@RestController
+@RequestMapping("/com.footyandsweep.AuthenticationService")
+public class AuthenticationController {
 
-@GrpcService
-public class AuthenticationController extends AuthenticationServiceGrpc.AuthenticationServiceImplBase {
+    @GetMapping("/amIAuthenticated")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<Object> amIAuthenticated() {
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 
-  private final AuthenticationManager authenticationManager;
-  private final UserDao userDao;
-  private final PasswordEncoder passwordEncoder;
-  private final TokenProvider tokenProvider;
-
-  public AuthenticationController(
-      AuthenticationManager authenticationManager,
-      UserDao userDao,
-      PasswordEncoder passwordEncoder,
-      TokenProvider tokenProvider) {
-    this.authenticationManager = authenticationManager;
-    this.userDao = userDao;
-    this.passwordEncoder = passwordEncoder;
-    this.tokenProvider = tokenProvider;
-  }
-
-//  @PostMapping("/login")
+    //  @PostMapping("/login")
 //  public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 //
 //    Authentication authentication =
@@ -110,11 +79,5 @@ public class AuthenticationController extends AuthenticationServiceGrpc.Authenti
 //   return userDao.findById(userPrincipal.getId())
 //           .orElseThrow(() -> new ResourceNotFoundException("User", "id", userPrincipal.getId()));
 // }
-
-  @Override
-//  @PreAuthorize("hasRole('USER')")
-  public void amIAuthenticated(AuthenticationServiceOuterClass.AmIAuthenticatedRequest request, StreamObserver<AuthenticationServiceOuterClass.AmIAuthenticatedResponse> responseObserver) {
-    responseObserver.onNext(AuthenticationServiceOuterClass.AmIAuthenticatedResponse.newBuilder().build());
-  }
 
 }
