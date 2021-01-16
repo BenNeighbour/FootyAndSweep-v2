@@ -36,7 +36,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.UUID;
 
 @GrpcService
-public class SweepstakeController extends SweepstakeServiceGrpc.SweepstakeServiceImplBase {
+public class SweepstakeControllerGrpc extends SweepstakeServiceGrpc.SweepstakeServiceImplBase {
 
   private final SweepstakeEngineImpl sweepstakeEngine;
   private final SweepstakeDao sweepstakeDao;
@@ -44,7 +44,7 @@ public class SweepstakeController extends SweepstakeServiceGrpc.SweepstakeServic
   private final ResultHelper resultHelper;
   private final FootballMatchDao footballMatchDao;
 
-  public SweepstakeController(
+  public SweepstakeControllerGrpc(
       final SweepstakeEngineImpl sweepstakeEngine,
       final SweepstakeDao sweepstakeDao,
       final ParticipantIdDao participantIdDao,

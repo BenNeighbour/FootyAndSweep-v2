@@ -14,19 +14,15 @@
  *   limitations under the License.
  */
 
-import {interceptGrpcResponse} from "./CommonsService";
-import {SweepstakeServiceClient} from "../client/SweepstakeServiceServiceClientPb";
-import {JoinCode} from "../client/SweepstakeService_pb";
+package com.footyandsweep.apiauthenticationservice.exception;
 
-export const joinSweepstake = (action: any) => {
-    const client = new SweepstakeServiceClient('http://api.footyandsweep-dev.com:30043', null, {withCredentials: true});
-    const request = new JoinCode();
+public class SignUpException extends RuntimeException {
 
-    request.setJoincode("sdfsdf");
+    public SignUpException(String message) {
+        super(message);
+    }
 
-    client.findSweepstakeByJoinCode(request, {}, (response: any, err: any) => {
-        console.log(response);
-
-        interceptGrpcResponse(response);
-    });
+    public SignUpException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

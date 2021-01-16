@@ -976,6 +976,1225 @@ public final class AuthenticationServiceOuterClass {
 
   }
 
+  public interface SignUpRequestOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.footyandsweep.SignUpRequest)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>string name = 1;</code>
+     */
+    java.lang.String getName();
+    /**
+     * <code>string name = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getNameBytes();
+
+    /**
+     * <code>string password = 2;</code>
+     */
+    java.lang.String getPassword();
+    /**
+     * <code>string password = 2;</code>
+     */
+    com.google.protobuf.ByteString
+        getPasswordBytes();
+
+    /**
+     * <code>string confirmPassword = 3;</code>
+     */
+    java.lang.String getConfirmPassword();
+    /**
+     * <code>string confirmPassword = 3;</code>
+     */
+    com.google.protobuf.ByteString
+        getConfirmPasswordBytes();
+
+    /**
+     * <code>string email = 4;</code>
+     */
+    java.lang.String getEmail();
+    /**
+     * <code>string email = 4;</code>
+     */
+    com.google.protobuf.ByteString
+        getEmailBytes();
+
+    /**
+     * <code>bool isSubscribedToEmails = 5;</code>
+     */
+    boolean getIsSubscribedToEmails();
+
+    /**
+     * <code>.google.type.Date dateOfBirth = 6;</code>
+     */
+    boolean hasDateOfBirth();
+    /**
+     * <code>.google.type.Date dateOfBirth = 6;</code>
+     */
+    com.google.type.Date getDateOfBirth();
+    /**
+     * <code>.google.type.Date dateOfBirth = 6;</code>
+     */
+    com.google.type.DateOrBuilder getDateOfBirthOrBuilder();
+  }
+  /**
+   * Protobuf type {@code com.footyandsweep.SignUpRequest}
+   */
+  public  static final class SignUpRequest extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:com.footyandsweep.SignUpRequest)
+      SignUpRequestOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use SignUpRequest.newBuilder() to construct.
+    private SignUpRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private SignUpRequest() {
+      name_ = "";
+      password_ = "";
+      confirmPassword_ = "";
+      email_ = "";
+      isSubscribedToEmails_ = false;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private SignUpRequest(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              name_ = s;
+              break;
+            }
+            case 18: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              password_ = s;
+              break;
+            }
+            case 26: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              confirmPassword_ = s;
+              break;
+            }
+            case 34: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              email_ = s;
+              break;
+            }
+            case 40: {
+
+              isSubscribedToEmails_ = input.readBool();
+              break;
+            }
+            case 50: {
+              com.google.type.Date.Builder subBuilder = null;
+              if (dateOfBirth_ != null) {
+                subBuilder = dateOfBirth_.toBuilder();
+              }
+              dateOfBirth_ = input.readMessage(com.google.type.Date.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(dateOfBirth_);
+                dateOfBirth_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.footyandsweep.AuthenticationServiceOuterClass.internal_static_com_footyandsweep_SignUpRequest_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.footyandsweep.AuthenticationServiceOuterClass.internal_static_com_footyandsweep_SignUpRequest_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest.class, com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest.Builder.class);
+    }
+
+    public static final int NAME_FIELD_NUMBER = 1;
+    private volatile java.lang.Object name_;
+    /**
+     * <code>string name = 1;</code>
+     */
+    public java.lang.String getName() {
+      java.lang.Object ref = name_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        name_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string name = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getNameBytes() {
+      java.lang.Object ref = name_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        name_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int PASSWORD_FIELD_NUMBER = 2;
+    private volatile java.lang.Object password_;
+    /**
+     * <code>string password = 2;</code>
+     */
+    public java.lang.String getPassword() {
+      java.lang.Object ref = password_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        password_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string password = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getPasswordBytes() {
+      java.lang.Object ref = password_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        password_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int CONFIRMPASSWORD_FIELD_NUMBER = 3;
+    private volatile java.lang.Object confirmPassword_;
+    /**
+     * <code>string confirmPassword = 3;</code>
+     */
+    public java.lang.String getConfirmPassword() {
+      java.lang.Object ref = confirmPassword_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        confirmPassword_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string confirmPassword = 3;</code>
+     */
+    public com.google.protobuf.ByteString
+        getConfirmPasswordBytes() {
+      java.lang.Object ref = confirmPassword_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        confirmPassword_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int EMAIL_FIELD_NUMBER = 4;
+    private volatile java.lang.Object email_;
+    /**
+     * <code>string email = 4;</code>
+     */
+    public java.lang.String getEmail() {
+      java.lang.Object ref = email_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        email_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string email = 4;</code>
+     */
+    public com.google.protobuf.ByteString
+        getEmailBytes() {
+      java.lang.Object ref = email_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        email_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int ISSUBSCRIBEDTOEMAILS_FIELD_NUMBER = 5;
+    private boolean isSubscribedToEmails_;
+    /**
+     * <code>bool isSubscribedToEmails = 5;</code>
+     */
+    public boolean getIsSubscribedToEmails() {
+      return isSubscribedToEmails_;
+    }
+
+    public static final int DATEOFBIRTH_FIELD_NUMBER = 6;
+    private com.google.type.Date dateOfBirth_;
+    /**
+     * <code>.google.type.Date dateOfBirth = 6;</code>
+     */
+    public boolean hasDateOfBirth() {
+      return dateOfBirth_ != null;
+    }
+    /**
+     * <code>.google.type.Date dateOfBirth = 6;</code>
+     */
+    public com.google.type.Date getDateOfBirth() {
+      return dateOfBirth_ == null ? com.google.type.Date.getDefaultInstance() : dateOfBirth_;
+    }
+    /**
+     * <code>.google.type.Date dateOfBirth = 6;</code>
+     */
+    public com.google.type.DateOrBuilder getDateOfBirthOrBuilder() {
+      return getDateOfBirth();
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!getNameBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, name_);
+      }
+      if (!getPasswordBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, password_);
+      }
+      if (!getConfirmPasswordBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, confirmPassword_);
+      }
+      if (!getEmailBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, email_);
+      }
+      if (isSubscribedToEmails_ != false) {
+        output.writeBool(5, isSubscribedToEmails_);
+      }
+      if (dateOfBirth_ != null) {
+        output.writeMessage(6, getDateOfBirth());
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!getNameBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, name_);
+      }
+      if (!getPasswordBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, password_);
+      }
+      if (!getConfirmPasswordBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, confirmPassword_);
+      }
+      if (!getEmailBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, email_);
+      }
+      if (isSubscribedToEmails_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(5, isSubscribedToEmails_);
+      }
+      if (dateOfBirth_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(6, getDateOfBirth());
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest)) {
+        return super.equals(obj);
+      }
+      com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest other = (com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest) obj;
+
+      boolean result = true;
+      result = result && getName()
+          .equals(other.getName());
+      result = result && getPassword()
+          .equals(other.getPassword());
+      result = result && getConfirmPassword()
+          .equals(other.getConfirmPassword());
+      result = result && getEmail()
+          .equals(other.getEmail());
+      result = result && (getIsSubscribedToEmails()
+          == other.getIsSubscribedToEmails());
+      result = result && (hasDateOfBirth() == other.hasDateOfBirth());
+      if (hasDateOfBirth()) {
+        result = result && getDateOfBirth()
+            .equals(other.getDateOfBirth());
+      }
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + NAME_FIELD_NUMBER;
+      hash = (53 * hash) + getName().hashCode();
+      hash = (37 * hash) + PASSWORD_FIELD_NUMBER;
+      hash = (53 * hash) + getPassword().hashCode();
+      hash = (37 * hash) + CONFIRMPASSWORD_FIELD_NUMBER;
+      hash = (53 * hash) + getConfirmPassword().hashCode();
+      hash = (37 * hash) + EMAIL_FIELD_NUMBER;
+      hash = (53 * hash) + getEmail().hashCode();
+      hash = (37 * hash) + ISSUBSCRIBEDTOEMAILS_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getIsSubscribedToEmails());
+      if (hasDateOfBirth()) {
+        hash = (37 * hash) + DATEOFBIRTH_FIELD_NUMBER;
+        hash = (53 * hash) + getDateOfBirth().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code com.footyandsweep.SignUpRequest}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.footyandsweep.SignUpRequest)
+        com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequestOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.footyandsweep.AuthenticationServiceOuterClass.internal_static_com_footyandsweep_SignUpRequest_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.footyandsweep.AuthenticationServiceOuterClass.internal_static_com_footyandsweep_SignUpRequest_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest.class, com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest.Builder.class);
+      }
+
+      // Construct using com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        name_ = "";
+
+        password_ = "";
+
+        confirmPassword_ = "";
+
+        email_ = "";
+
+        isSubscribedToEmails_ = false;
+
+        if (dateOfBirthBuilder_ == null) {
+          dateOfBirth_ = null;
+        } else {
+          dateOfBirth_ = null;
+          dateOfBirthBuilder_ = null;
+        }
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.footyandsweep.AuthenticationServiceOuterClass.internal_static_com_footyandsweep_SignUpRequest_descriptor;
+      }
+
+      @java.lang.Override
+      public com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest getDefaultInstanceForType() {
+        return com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest build() {
+        com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest buildPartial() {
+        com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest result = new com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest(this);
+        result.name_ = name_;
+        result.password_ = password_;
+        result.confirmPassword_ = confirmPassword_;
+        result.email_ = email_;
+        result.isSubscribedToEmails_ = isSubscribedToEmails_;
+        if (dateOfBirthBuilder_ == null) {
+          result.dateOfBirth_ = dateOfBirth_;
+        } else {
+          result.dateOfBirth_ = dateOfBirthBuilder_.build();
+        }
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest) {
+          return mergeFrom((com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest other) {
+        if (other == com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest.getDefaultInstance()) return this;
+        if (!other.getName().isEmpty()) {
+          name_ = other.name_;
+          onChanged();
+        }
+        if (!other.getPassword().isEmpty()) {
+          password_ = other.password_;
+          onChanged();
+        }
+        if (!other.getConfirmPassword().isEmpty()) {
+          confirmPassword_ = other.confirmPassword_;
+          onChanged();
+        }
+        if (!other.getEmail().isEmpty()) {
+          email_ = other.email_;
+          onChanged();
+        }
+        if (other.getIsSubscribedToEmails() != false) {
+          setIsSubscribedToEmails(other.getIsSubscribedToEmails());
+        }
+        if (other.hasDateOfBirth()) {
+          mergeDateOfBirth(other.getDateOfBirth());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private java.lang.Object name_ = "";
+      /**
+       * <code>string name = 1;</code>
+       */
+      public java.lang.String getName() {
+        java.lang.Object ref = name_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          name_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string name = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getNameBytes() {
+        java.lang.Object ref = name_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          name_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string name = 1;</code>
+       */
+      public Builder setName(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        name_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string name = 1;</code>
+       */
+      public Builder clearName() {
+        
+        name_ = getDefaultInstance().getName();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string name = 1;</code>
+       */
+      public Builder setNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        name_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object password_ = "";
+      /**
+       * <code>string password = 2;</code>
+       */
+      public java.lang.String getPassword() {
+        java.lang.Object ref = password_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          password_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string password = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getPasswordBytes() {
+        java.lang.Object ref = password_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          password_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string password = 2;</code>
+       */
+      public Builder setPassword(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        password_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string password = 2;</code>
+       */
+      public Builder clearPassword() {
+        
+        password_ = getDefaultInstance().getPassword();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string password = 2;</code>
+       */
+      public Builder setPasswordBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        password_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object confirmPassword_ = "";
+      /**
+       * <code>string confirmPassword = 3;</code>
+       */
+      public java.lang.String getConfirmPassword() {
+        java.lang.Object ref = confirmPassword_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          confirmPassword_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string confirmPassword = 3;</code>
+       */
+      public com.google.protobuf.ByteString
+          getConfirmPasswordBytes() {
+        java.lang.Object ref = confirmPassword_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          confirmPassword_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string confirmPassword = 3;</code>
+       */
+      public Builder setConfirmPassword(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        confirmPassword_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string confirmPassword = 3;</code>
+       */
+      public Builder clearConfirmPassword() {
+        
+        confirmPassword_ = getDefaultInstance().getConfirmPassword();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string confirmPassword = 3;</code>
+       */
+      public Builder setConfirmPasswordBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        confirmPassword_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object email_ = "";
+      /**
+       * <code>string email = 4;</code>
+       */
+      public java.lang.String getEmail() {
+        java.lang.Object ref = email_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          email_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string email = 4;</code>
+       */
+      public com.google.protobuf.ByteString
+          getEmailBytes() {
+        java.lang.Object ref = email_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          email_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string email = 4;</code>
+       */
+      public Builder setEmail(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        email_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string email = 4;</code>
+       */
+      public Builder clearEmail() {
+        
+        email_ = getDefaultInstance().getEmail();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string email = 4;</code>
+       */
+      public Builder setEmailBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        email_ = value;
+        onChanged();
+        return this;
+      }
+
+      private boolean isSubscribedToEmails_ ;
+      /**
+       * <code>bool isSubscribedToEmails = 5;</code>
+       */
+      public boolean getIsSubscribedToEmails() {
+        return isSubscribedToEmails_;
+      }
+      /**
+       * <code>bool isSubscribedToEmails = 5;</code>
+       */
+      public Builder setIsSubscribedToEmails(boolean value) {
+        
+        isSubscribedToEmails_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool isSubscribedToEmails = 5;</code>
+       */
+      public Builder clearIsSubscribedToEmails() {
+        
+        isSubscribedToEmails_ = false;
+        onChanged();
+        return this;
+      }
+
+      private com.google.type.Date dateOfBirth_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.google.type.Date, com.google.type.Date.Builder, com.google.type.DateOrBuilder> dateOfBirthBuilder_;
+      /**
+       * <code>.google.type.Date dateOfBirth = 6;</code>
+       */
+      public boolean hasDateOfBirth() {
+        return dateOfBirthBuilder_ != null || dateOfBirth_ != null;
+      }
+      /**
+       * <code>.google.type.Date dateOfBirth = 6;</code>
+       */
+      public com.google.type.Date getDateOfBirth() {
+        if (dateOfBirthBuilder_ == null) {
+          return dateOfBirth_ == null ? com.google.type.Date.getDefaultInstance() : dateOfBirth_;
+        } else {
+          return dateOfBirthBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.google.type.Date dateOfBirth = 6;</code>
+       */
+      public Builder setDateOfBirth(com.google.type.Date value) {
+        if (dateOfBirthBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          dateOfBirth_ = value;
+          onChanged();
+        } else {
+          dateOfBirthBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.type.Date dateOfBirth = 6;</code>
+       */
+      public Builder setDateOfBirth(
+          com.google.type.Date.Builder builderForValue) {
+        if (dateOfBirthBuilder_ == null) {
+          dateOfBirth_ = builderForValue.build();
+          onChanged();
+        } else {
+          dateOfBirthBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.type.Date dateOfBirth = 6;</code>
+       */
+      public Builder mergeDateOfBirth(com.google.type.Date value) {
+        if (dateOfBirthBuilder_ == null) {
+          if (dateOfBirth_ != null) {
+            dateOfBirth_ =
+              com.google.type.Date.newBuilder(dateOfBirth_).mergeFrom(value).buildPartial();
+          } else {
+            dateOfBirth_ = value;
+          }
+          onChanged();
+        } else {
+          dateOfBirthBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.type.Date dateOfBirth = 6;</code>
+       */
+      public Builder clearDateOfBirth() {
+        if (dateOfBirthBuilder_ == null) {
+          dateOfBirth_ = null;
+          onChanged();
+        } else {
+          dateOfBirth_ = null;
+          dateOfBirthBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.type.Date dateOfBirth = 6;</code>
+       */
+      public com.google.type.Date.Builder getDateOfBirthBuilder() {
+        
+        onChanged();
+        return getDateOfBirthFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.google.type.Date dateOfBirth = 6;</code>
+       */
+      public com.google.type.DateOrBuilder getDateOfBirthOrBuilder() {
+        if (dateOfBirthBuilder_ != null) {
+          return dateOfBirthBuilder_.getMessageOrBuilder();
+        } else {
+          return dateOfBirth_ == null ?
+              com.google.type.Date.getDefaultInstance() : dateOfBirth_;
+        }
+      }
+      /**
+       * <code>.google.type.Date dateOfBirth = 6;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.google.type.Date, com.google.type.Date.Builder, com.google.type.DateOrBuilder> 
+          getDateOfBirthFieldBuilder() {
+        if (dateOfBirthBuilder_ == null) {
+          dateOfBirthBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.google.type.Date, com.google.type.Date.Builder, com.google.type.DateOrBuilder>(
+                  getDateOfBirth(),
+                  getParentForChildren(),
+                  isClean());
+          dateOfBirth_ = null;
+        }
+        return dateOfBirthBuilder_;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:com.footyandsweep.SignUpRequest)
+    }
+
+    // @@protoc_insertion_point(class_scope:com.footyandsweep.SignUpRequest)
+    private static final com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest();
+    }
+
+    public static com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<SignUpRequest>
+        PARSER = new com.google.protobuf.AbstractParser<SignUpRequest>() {
+      @java.lang.Override
+      public SignUpRequest parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new SignUpRequest(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<SignUpRequest> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<SignUpRequest> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_com_footyandsweep_User_descriptor;
   private static final 
@@ -986,6 +2205,11 @@ public final class AuthenticationServiceOuterClass {
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_com_footyandsweep_findUserByIdRequest_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_footyandsweep_SignUpRequest_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_com_footyandsweep_SignUpRequest_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -996,11 +2220,18 @@ public final class AuthenticationServiceOuterClass {
   static {
     java.lang.String[] descriptorData = {
       "\n\033AuthenticationService.proto\022\021com.footy" +
-      "andsweep\"\006\n\004User\"%\n\023findUserByIdRequest\022" +
-      "\016\n\006userId\030\001 \001(\t2l\n\025AuthenticationService" +
-      "\022S\n\020findUserByUserId\022&.com.footyandsweep" +
-      ".findUserByIdRequest\032\027.com.footyandsweep" +
-      ".Userb\006proto3"
+      "andsweep\032\026google/type/date.proto\032\027google" +
+      "/rpc/status.proto\"\006\n\004User\"%\n\023findUserByI" +
+      "dRequest\022\016\n\006userId\030\001 \001(\t\"\235\001\n\rSignUpReque" +
+      "st\022\014\n\004name\030\001 \001(\t\022\020\n\010password\030\002 \001(\t\022\027\n\017co" +
+      "nfirmPassword\030\003 \001(\t\022\r\n\005email\030\004 \001(\t\022\034\n\024is" +
+      "SubscribedToEmails\030\005 \001(\010\022&\n\013dateOfBirth\030" +
+      "\006 \001(\0132\021.google.type.Date2\254\001\n\025Authenticat" +
+      "ionService\022>\n\006signUp\022 .com.footyandsweep" +
+      ".SignUpRequest\032\022.google.rpc.Status\022S\n\020fi" +
+      "ndUserByUserId\022&.com.footyandsweep.findU" +
+      "serByIdRequest\032\027.com.footyandsweep.Userb" +
+      "\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -1013,6 +2244,8 @@ public final class AuthenticationServiceOuterClass {
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
+          com.google.type.DateProto.getDescriptor(),
+          com.google.rpc.StatusProto.getDescriptor(),
         }, assigner);
     internal_static_com_footyandsweep_User_descriptor =
       getDescriptor().getMessageTypes().get(0);
@@ -1026,6 +2259,14 @@ public final class AuthenticationServiceOuterClass {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_footyandsweep_findUserByIdRequest_descriptor,
         new java.lang.String[] { "UserId", });
+    internal_static_com_footyandsweep_SignUpRequest_descriptor =
+      getDescriptor().getMessageTypes().get(2);
+    internal_static_com_footyandsweep_SignUpRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_com_footyandsweep_SignUpRequest_descriptor,
+        new java.lang.String[] { "Name", "Password", "ConfirmPassword", "Email", "IsSubscribedToEmails", "DateOfBirth", });
+    com.google.type.DateProto.getDescriptor();
+    com.google.rpc.StatusProto.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

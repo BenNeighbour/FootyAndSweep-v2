@@ -22,7 +22,7 @@
   },
   "linterOptions": {
     "exclude": [
-      "src/proto/*"
+      "src/client/"
     ]
   },
   "include": [

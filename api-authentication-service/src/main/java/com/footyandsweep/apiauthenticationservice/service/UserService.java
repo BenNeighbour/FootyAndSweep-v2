@@ -16,9 +16,13 @@
 
 package com.footyandsweep.apiauthenticationservice.service;
 
+import com.footyandsweep.AuthenticationServiceOuterClass;
+import com.footyandsweep.apiauthenticationservice.exception.SignUpException;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 
 public interface UserService {
 
   void addOwnerToSweepstake(SweepstakeCommon sweepstake);
+
+  void checkSignUpRequestIsValid(AuthenticationServiceOuterClass.SignUpRequest request) throws SignUpException;
 }

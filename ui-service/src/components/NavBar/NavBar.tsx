@@ -15,7 +15,6 @@
  */
 
 import React, {FunctionComponent} from 'react';
-import {Navbar} from "react-bootstrap";
 import logo from "./../../common/logo.png";
 import styled from "styled-components";
 
@@ -39,11 +38,11 @@ type Props = OwnProps;
 const NavBar: FunctionComponent<Props> = (props) => {
     return (
         <NavbarStyled>
-            <Navbar.Brand><img alt={""} style={{
-                width: "15%",
+            <img alt={""} style={{
+                height: "55px",
                 marginLeft: "2vw",
                 objectFit: 'cover'
-            }} src={logo}/></Navbar.Brand>
+            }} src={logo}/>
         </NavbarStyled>
     );
 };

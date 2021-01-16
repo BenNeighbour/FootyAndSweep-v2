@@ -1,1 +1,0 @@
-protoc --js_out=import_style=commonjs:../../../../ui-service/src/client/ --grpc-web_out=import_style=commonjs,mode=grpcwebtext:../../../../ui-service/src/client/ *.proto
