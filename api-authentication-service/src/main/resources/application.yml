@@ -42,9 +42,9 @@ spring:
               - profile
 
           facebook:
-            clientId: 4921992127843148
-            clientSecret: 6c7e42eaea8bf297239d514cd87b052b
-            redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
+            clientId: 695015954517496
+            clientSecret: 8a20fbf69495879823be75828d0f2ab4
+            redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
             scope:
               - email
               - public_profile
@@ -58,12 +58,20 @@ spring:
 footyandsweep:
   auth:
     tokenSecret: 926D96C90030DD58429D2751AC1BDBBC
-    tokenExpirationMsec: 864000000
+    tokenExpirationMsec: 864000000000
 
   oauth2:
     authorizedRedirectUris:
-      - http://www.footyandsweep-dev.com:3000/oauth2/redirect
+      - https://www.footyandsweep-dev.com:3000/oauth2/redirect
 
 grpc:
   server:
     port: 9090
+
+server:
+  port: 8080
+  ssl:
+    enabled: true
+    key-store-type: PKCS12
+    key-store: classpath:ssl/api-authentication-service.p12
+    key-store-password:

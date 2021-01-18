@@ -14,19 +14,19 @@
  *   limitations under the License.
  */
 
-import {interceptGrpcResponse} from "./CommonsService";
+import {handleErrors} from "./CommonsService";
 import {SweepstakeServiceClient} from "../client/SweepstakeServiceServiceClientPb";
 import {JoinCode} from "../client/SweepstakeService_pb";
 
+const client = new SweepstakeServiceClient(`${process.env.REACT_APP_API_GATEWAY_SERVICE}`, null, {withCredentials: true});
+
 export const joinSweepstake = (action: any) => {
-    const client = new SweepstakeServiceClient('http://api.footyandsweep-dev.com:30043', null, {withCredentials: true});
     const request = new JoinCode();
 
     request.setJoincode("sdfsdf");
 
-    client.findSweepstakeByJoinCode(request, {}, (response: any, err: any) => {
-        console.log(response);
-
-        interceptGrpcResponse(response);
+    client.findSweepstakeByJoinCode(request, {}, (error, response) => {
+        handleErrors(error);
+        console.log(response, error);
     });
 }

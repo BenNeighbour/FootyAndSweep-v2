@@ -38,11 +38,11 @@ type Props = OwnProps;
 const NavBar: FunctionComponent<Props> = (props) => {
     return (
         <NavbarStyled>
-            <img alt={""} style={{
-                height: "55px",
-                marginLeft: "2vw",
-                objectFit: 'cover'
-            }} src={logo}/>
+            {/*<img alt={""} style={{*/}
+            {/*    height: "55px",*/}
+            {/*    marginLeft: "2vw",*/}
+            {/*    objectFit: 'cover'*/}
+            {/*}} src={logo}/>*/}
         </NavbarStyled>
     );
 };

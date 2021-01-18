@@ -35,7 +35,8 @@ public class User extends UserCommon {
   @Enumerated(EnumType.STRING)
   private AuthProvider provider;
 
-  @Column(name = "profilePicture")
+  @Lob
+  @Column(name = "profilePicture", length = 100000)
   private String profilePicture;
 
   @Column(name = "providerId")

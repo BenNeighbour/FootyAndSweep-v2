@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apiauthenticationservice;
+package com.footyandsweep.apiauthenticationservice.controller;
 
 import com.footyandsweep.apiauthenticationservice.payload.AuthResponse;
 import com.footyandsweep.apiauthenticationservice.payload.LoginRequest;

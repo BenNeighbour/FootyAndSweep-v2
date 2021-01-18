@@ -31,9 +31,9 @@ const Routes: FunctionComponent<Props> = (props) => {
         <Provider store={initialize()}>
             <ConnectedRouter history={history}>
                 <Switch>
-                    <Route exact path={"/home"} render={HomePage}/>
+                    <Route exact path={"/app/home"} render={HomePage}/>
                     <Route render={() => <div><Button label={"Login"} onClick={() => {
-                        window.location.replace("http://api.footyandsweep-dev.com:30077/oauth2/authorize/google?redirect_uri=http://www.footyandsweep-dev.com:3000/home")
+                        window.location.replace(process.env.REACT_APP_API_AUTHENTICATION_SERVICE + "/oauth2/authorize/google?redirect_uri=" + process.env.REACT_APP_OAUTH_REDIRECT_URI);
                     }}/></div>}/>
                 </Switch>
             </ConnectedRouter>

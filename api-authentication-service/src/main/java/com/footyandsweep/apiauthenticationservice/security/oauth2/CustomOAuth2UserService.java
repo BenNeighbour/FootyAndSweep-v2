@@ -63,7 +63,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             oAuth2UserRequest.getClientRegistration().getRegistrationId(),
             oAuth2User.getAttributes());
     if (StringUtils.isEmpty(oAuth2UserInfo.getEmail())) {
-      throw new OAuth2AuthenticationProcessingException("Email not found from OAuth2 provider");
+      throw new OAuth2AuthenticationProcessingException("Email not found from any providers");
     }
 
     Optional<User> userOptional = userDao.findUserByEmail(oAuth2UserInfo.getEmail());
@@ -100,12 +100,14 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     user.setName(oAuth2UserInfo.getName());
     user.setEmail(oAuth2UserInfo.getEmail());
     user.setProfilePicture(oAuth2UserInfo.getImageUrl());
+
     return userDao.save(user);
   }
 
   private User updateExistingUser(User existingUser, OAuth2UserInfo oAuth2UserInfo) {
     existingUser.setName(oAuth2UserInfo.getName());
     existingUser.setProfilePicture(oAuth2UserInfo.getImageUrl());
+
     return userDao.save(existingUser);
   }
 }
