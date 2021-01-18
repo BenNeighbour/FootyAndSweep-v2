@@ -75,17 +75,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   }
 
   @Override
-  public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+  public void configure(AuthenticationManagerBuilder authenticationManagerBuilder)
+      throws Exception {
     authenticationManagerBuilder
-            .userDetailsService(customUserDetailsService)
-            .passwordEncoder(passwordEncoder());
+        .userDetailsService(customUserDetailsService)
+        .passwordEncoder(passwordEncoder());
   }
 
   @Bean
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
   }
-
 
   @Bean(BeanIds.AUTHENTICATION_MANAGER)
   @Override
@@ -112,17 +112,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .authorizeRequests()
         .antMatchers(
             "/",
-                "/error",
-                "/favicon.ico",
-                "/**/*.png",
-                "/**/*.gif",
-                "/**/*.svg",
-                "/**/*.jpg",
-                "/**/*.html",
-                "/**/*.css",
-                "/**/*.js")
-            .permitAll()
-            .antMatchers("/com.footyandsweep.AuthenticationService/login", "/com.footyandsweep.AuthenticationService/signUp", "/login/**", "/auth/**", "/oauth2/**")
+            "/error",
+            "/favicon.ico",
+            "/**/*.png",
+            "/**/*.gif",
+            "/**/*.svg",
+            "/**/*.jpg",
+            "/**/*.html",
+            "/**/*.css",
+            "/**/*.js")
+        .permitAll()
+        .antMatchers(
+            "/com.footyandsweep.AuthenticationService/login",
+            "/com.footyandsweep.AuthenticationService/signUp",
+            "/login/**",
+            "/auth/**",
+            "/oauth2/**")
         .permitAll()
         .anyRequest()
         .authenticated()

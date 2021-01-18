@@ -53,12 +53,14 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public void checkSignUpRequestIsValid(AuthenticationServiceOuterClass.SignUpRequest request) throws SignUpException {
+  public void checkSignUpRequestIsValid(AuthenticationServiceOuterClass.SignUpRequest request)
+      throws SignUpException {
     /* Firstly, check if the confirmPassword string and password string are the same, or they are not already signed up */
     if (!request.getPassword().equals(request.getConfirmPassword())) {
       throw new SignUpException("Password and Confirm Password do not match up!");
     } else if (userDao.existsByEmail(request.getEmail())) {
-      throw new SignUpException("Another account is using this email address. Please log into your account.");
+      throw new SignUpException(
+          "Another account is using this email address. Please log into your account.");
     }
   }
 
@@ -93,7 +95,5 @@ public class UserServiceImpl implements UserService {
     } catch (Exception e) {
       /* Get the error message and ping it back to the client */
     }
-
-
   }
 }

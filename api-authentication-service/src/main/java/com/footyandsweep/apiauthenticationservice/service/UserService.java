@@ -24,5 +24,6 @@ public interface UserService {
 
   void addOwnerToSweepstake(SweepstakeCommon sweepstake);
 
-  void checkSignUpRequestIsValid(AuthenticationServiceOuterClass.SignUpRequest request) throws SignUpException;
+  void checkSignUpRequestIsValid(AuthenticationServiceOuterClass.SignUpRequest request)
+      throws SignUpException;
 }

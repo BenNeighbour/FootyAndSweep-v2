@@ -19,7 +19,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import Routes from './Routes';
 import reportWebVitals from './reportWebVitals';
-import { ChakraProvider } from "@chakra-ui/react";
+import {ChakraProvider} from "@chakra-ui/react";
 import theme from "./theme";
 
 ReactDOM.render(

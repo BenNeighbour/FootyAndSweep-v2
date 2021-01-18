@@ -15,7 +15,7 @@
  */
 
 import React, {FunctionComponent} from 'react';
-import {Button, Box, Flex} from "@chakra-ui/react";
+import {Box, Button, Flex} from "@chakra-ui/react";
 import {FcGoogle, SiFacebook, SiGoogle} from "react-icons/all";
 
 interface OwnProps {
@@ -46,11 +46,12 @@ const PortalPage: FunctionComponent<Props> = (props) => {
                     window.location.replace(process.env.REACT_APP_API_AUTHENTICATION_SERVICE + "/oauth2/authorize/google?redirect_uri=" + process.env.REACT_APP_OAUTH_REDIRECT_URI);
                 }} isLoading={false}
                         loadingText="Loading"
-                        leftIcon={window.localStorage.getItem("chakra-ui-color-mode") === "dark" ? <SiGoogle/> : <FcGoogle />}>
+                        leftIcon={window.localStorage.getItem("chakra-ui-color-mode") === "dark" ? <SiGoogle/> :
+                            <FcGoogle/>}>
                     Continue with Google
                 </Button>
 
-                <br />
+                <br/>
 
                 <Button textAlign='center'
                         borderRadius={3}

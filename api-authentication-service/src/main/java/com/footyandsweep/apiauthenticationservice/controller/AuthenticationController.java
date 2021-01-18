@@ -34,31 +34,31 @@ import javax.validation.Valid;
 @RequestMapping("/com.footyandsweep.AuthenticationService")
 public class AuthenticationController {
 
-    private final TokenProvider tokenProvider;
-    private final AuthenticationManager authenticationManager;
+  private final TokenProvider tokenProvider;
+  private final AuthenticationManager authenticationManager;
 
-    public AuthenticationController(TokenProvider tokenProvider, AuthenticationManager authenticationManager) {
-        this.tokenProvider = tokenProvider;
-        this.authenticationManager = authenticationManager;
-    }
+  public AuthenticationController(
+      TokenProvider tokenProvider, AuthenticationManager authenticationManager) {
+    this.tokenProvider = tokenProvider;
+    this.authenticationManager = authenticationManager;
+  }
 
-    @GetMapping("/amIAuthenticated")
-    @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<Object> amIAuthenticated() {
-        return ResponseEntity.status(HttpStatus.OK).build();
-    }
+  @GetMapping("/amIAuthenticated")
+  @PreAuthorize("hasRole('USER')")
+  public ResponseEntity<Object> amIAuthenticated() {
+    return ResponseEntity.status(HttpStatus.OK).build();
+  }
 
-    @PostMapping("/login")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-        Authentication authentication =
-                authenticationManager.authenticate(
-                        new UsernamePasswordAuthenticationToken(
-                                loginRequest.getEmail(), loginRequest.getPassword()));
+  @PostMapping("/login")
+  public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+    Authentication authentication =
+        authenticationManager.authenticate(
+            new UsernamePasswordAuthenticationToken(
+                loginRequest.getEmail(), loginRequest.getPassword()));
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+    SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        String token = tokenProvider.createToken(authentication);
-        return ResponseEntity.ok(new AuthResponse(token));
-    }
-
+    String token = tokenProvider.createToken(authentication);
+    return ResponseEntity.ok(new AuthResponse(token));
+  }
 }
