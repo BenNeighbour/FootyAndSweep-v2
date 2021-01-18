@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020 FootyAndSweep
+ *   Copyright 2021 FootyAndSweep
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -18,8 +18,8 @@ import {ConnectedRouter} from 'connected-react-router';
 import {Route, Switch} from 'react-router';
 import {history, initialize} from './store';
 import {Provider} from "react-redux";
-import HomePage from "./pages/HomePage";
-import Button from "./components/Button/Button";
+import HomePage from "./pages/Home/HomePage";
+import PortalPage from "./pages/Portal/PortalPage";
 
 interface OwnProps {
 }
@@ -32,9 +32,7 @@ const Routes: FunctionComponent<Props> = (props) => {
             <ConnectedRouter history={history}>
                 <Switch>
                     <Route exact path={"/app/home"} render={HomePage}/>
-                    <Route render={() => <div><Button label={"Login"} onClick={() => {
-                        window.location.replace(process.env.REACT_APP_API_AUTHENTICATION_SERVICE + "/oauth2/authorize/google?redirect_uri=" + process.env.REACT_APP_OAUTH_REDIRECT_URI);
-                    }}/></div>}/>
+                    <Route exact path={"/portal"} render={PortalPage}/>
                 </Switch>
             </ConnectedRouter>
         </Provider>

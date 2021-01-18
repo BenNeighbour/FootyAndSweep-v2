@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020 FootyAndSweep
+ *   Copyright 2021 FootyAndSweep
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -14,15 +14,13 @@
  *   limitations under the License.
  */
 
-.container {
-    /*margin-left: 0;*/
-    /*margin-right: 0;*/
-    margin: 0;
-    padding-top: 3vh;
+import { extendTheme } from "@chakra-ui/react";
+
+const config = {
+    initialColorMode: "light",
+    useSystemColorMode: false,
 }
 
-.row {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-}
+const theme = extendTheme({ config })
+
+export default theme;

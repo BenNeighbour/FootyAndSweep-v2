@@ -31,6 +31,7 @@ spec:
   ports:
     - port: 9090
       name: https
+      nodePort: 32427
   selector:
     app: api-frontend-proxy
   type: NodePort

@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020 FootyAndSweep
+ *   Copyright 2021 FootyAndSweep
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -15,13 +15,12 @@
  */
 
 import React, {FunctionComponent} from 'react';
-import logo from "./../../common/logo.png";
 import styled from "styled-components";
 
 const NavbarStyled = styled.div`
   height: 4.375rem;
-  background: linear-gradient(90deg, rgba(0, 155, 255, 1) 0%, rgba(0, 155, 255, 0.8211659663865546) 100%) left top #ffffff no-repeat;
-  background-size: 100% 5px;
+  //background: linear-gradient(90deg, rgba(0, 155, 255, 1) 0%, rgba(0, 155, 255, 0.8211659663865546) 100%) left top #ffffff no-repeat;
+  //background-size: 100% 5px;
   background-color: #fff !important;
   box-shadow: 0 .15rem 1.75rem 0 rgba(58, 59, 69, .15) !important;
   display: flex;
@@ -38,11 +37,6 @@ type Props = OwnProps;
 const NavBar: FunctionComponent<Props> = (props) => {
     return (
         <NavbarStyled>
-            {/*<img alt={""} style={{*/}
-            {/*    height: "55px",*/}
-            {/*    marginLeft: "2vw",*/}
-            {/*    objectFit: 'cover'*/}
-            {/*}} src={logo}/>*/}
         </NavbarStyled>
     );
 };

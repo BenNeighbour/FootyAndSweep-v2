@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020 FootyAndSweep
+ *   Copyright 2021 FootyAndSweep
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -15,32 +15,25 @@
  */
 
 import React, {FunctionComponent} from 'react';
-import styled from "styled-components";
-
-const ButtonStyled = styled.button`
-  font-size: .8rem;
-  border-radius: 10px;
-  outline: none;
-  border: none;
-  padding: .75rem 1rem;
-  margin-bottom: 2vh;
-  background: rgb(0,155,255);
-  background: linear-gradient(90deg, rgba(0,155,255,1) 0%, rgba(0,155,255,0.8211659663865546) 100%);
-  color: #fff!important;
-  box-shadow: 0 0 0 .2rem rgba(105,136,228,.5);
-`
+import {joinSweepstake} from "../../services/SweepstakeService";
+import NavBar from "../../components/NavBar/NavBar";
 
 interface OwnProps {
-    label: string;
-    onClick?: () => void;
 }
 
 type Props = OwnProps;
 
-const Button: FunctionComponent<Props> = (props) => {
+const HomePage: FunctionComponent<Props> = (props) => {
+    joinSweepstake(undefined);
     return (
-        <ButtonStyled onClick={props.onClick}>{props.label}</ButtonStyled>
+        <>
+            <NavBar/>
+            <div className={"container"}>
+
+            </div>
+        </>
     );
 };
 
-export default Button;
+
+export default HomePage;
