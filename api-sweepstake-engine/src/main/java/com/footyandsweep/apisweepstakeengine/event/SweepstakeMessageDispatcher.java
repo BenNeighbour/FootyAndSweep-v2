@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020 FootyAndSweep
+ *   Copyright 2021 FootyAndSweep
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 
 package com.footyandsweep.apisweepstakeengine.event;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.footyandsweep.apicommonlibrary.BaseEvent;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
@@ -29,8 +28,7 @@ public class SweepstakeMessageDispatcher {
 
   private final KafkaTemplate<String, BaseEvent> kafkaTemplate;
 
-  public SweepstakeMessageDispatcher(
-      final KafkaTemplate<String, BaseEvent> kafkaTemplate) {
+  public SweepstakeMessageDispatcher(final KafkaTemplate<String, BaseEvent> kafkaTemplate) {
     this.kafkaTemplate = kafkaTemplate;
   }
 

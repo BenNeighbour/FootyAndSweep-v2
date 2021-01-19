@@ -1,0 +1,77 @@
+spring:
+  application:
+    name: 'api-authentication-service'
+
+  kafka:
+    bootstrap-servers: ${KAFKA_CONNECT}
+    consumer:
+      auto-offset-reset: earliest
+      group-id: api-event
+      enable-auto-commit: true
+
+    acks: all
+    retries: 5
+    retry:
+      backoff:
+        ms: 5000
+
+  jpa:
+    datasource:
+      url: ${SPRING_DATASOURCE_URL}
+      username: ${SPRING_DATASOURCE_USERNAME}
+      password: ${SPRING_DATASOURCE_PASSWORD}
+      driver-class-name: org.postgresql.Driver
+
+  redis:
+    host: ${REDIS_CONNECT}
+    port: 6379
+
+  cache:
+    type: redis
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: 718687795151-9ssqtao7g22pck10lbf5u213se1c60tc.apps.googleusercontent.com
+            clientSecret: JVpzRT3XaKwcP78j6v6gDZWd
+            redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
+            scope:
+              - email
+              - profile
+
+          facebook:
+            clientId: 695015954517496
+            clientSecret: 8a20fbf69495879823be75828d0f2ab4
+            redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
+            scope:
+              - email
+              - public_profile
+
+        provider:
+          facebook:
+            authorizationUri: https://www.facebook.com/v3.0/dialog/oauth
+            tokenUri: https://graph.facebook.com/v3.0/oauth/access_token
+            userInfoUri: https://graph.facebook.com/v3.0/me?fields=id,first_name,middle_name,last_name,name,email,verified,is_verified,picture.width(250).height(250)
+
+footyandsweep:
+  auth:
+    tokenSecret: 926D96C90030DD58429D2751AC1BDBBC
+    tokenExpirationMsec: 864000000000
+
+  oauth2:
+    authorizedRedirectUris:
+      - https://www.footyandsweep-dev.com:3000/oauth2/redirect
+
+grpc:
+  server:
+    port: 9090
+
+server:
+  port: 8080
+  ssl:
+    enabled: true
+    key-store-type: PKCS12
+    key-store: classpath:ssl/api-authentication-service.p12
+    key-store-password:

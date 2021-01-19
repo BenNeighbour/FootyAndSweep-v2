@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020 FootyAndSweep
+ *   Copyright 2021 FootyAndSweep
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -19,9 +19,15 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import Routes from './Routes';
 import reportWebVitals from './reportWebVitals';
+import {ChakraProvider} from "@chakra-ui/react";
+import theme from "./theme";
 
 ReactDOM.render(
-    <Routes />,
+    <>
+        <ChakraProvider theme={theme}>
+            <Routes/>
+        </ChakraProvider>
+    </>,
     document.getElementById('root')
 );
 

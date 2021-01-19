@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020 FootyAndSweep
+ *   Copyright 2021 FootyAndSweep
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package com.footyandsweep.apiallocationengine;
 import com.footyandsweep.apiallocationengine.dao.AllocationDao;
 import com.footyandsweep.apiallocationengine.engine.AllocationEngine;
 import com.footyandsweep.apiallocationengine.model.Allocation;
-import com.footyandsweep.apicommonlibrary.events.ProcessStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;

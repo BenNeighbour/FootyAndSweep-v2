@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020 FootyAndSweep
+ *   Copyright 2021 FootyAndSweep
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -27,15 +27,14 @@ import javax.persistence.*;
 @Entity
 @Table(name = "football_team")
 @AttributeOverrides({
-        @AttributeOverride(
-                name = "id",
-                column = @Column(columnDefinition = "uuid", updatable = false, name = "id"))
+  @AttributeOverride(
+      name = "id",
+      column = @Column(columnDefinition = "uuid", updatable = false, name = "id"))
 })
 public class FootballTeam extends TeamCommon {
 
-    private static final long serialVersionUID = 6335441968233336765L;
+  private static final long serialVersionUID = 6335441968233336765L;
 
-    @Column(name = "football_league")
-    private FootballLeague footballLeague;
-
+  @Column(name = "football_league")
+  private FootballLeague footballLeague;
 }

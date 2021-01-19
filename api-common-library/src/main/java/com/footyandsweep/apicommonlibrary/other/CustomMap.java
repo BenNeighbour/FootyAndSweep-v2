@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020 FootyAndSweep
+ *   Copyright 2021 FootyAndSweep
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -31,10 +31,9 @@ import java.io.Serializable;
 @MappedSuperclass
 public class CustomMap implements Serializable {
 
-    private static final long serialVersionUID = -818874942149783488L;
+  private static final long serialVersionUID = -818874942149783488L;
 
-    private Integer integerKey;
+  private Integer integerKey;
 
-    private String stringValue;
-
+  private String stringValue;
 }

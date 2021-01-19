@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020 FootyAndSweep
+ *   Copyright 2021 FootyAndSweep
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -18,7 +18,8 @@ import {ConnectedRouter} from 'connected-react-router';
 import {Route, Switch} from 'react-router';
 import {history, initialize} from './store';
 import {Provider} from "react-redux";
-import HomePage from "./pages/HomePage";
+import HomePage from "./pages/Home/HomePage";
+import PortalPage from "./pages/Portal/PortalPage";
 
 interface OwnProps {
 }
@@ -30,8 +31,8 @@ const Routes: FunctionComponent<Props> = (props) => {
         <Provider store={initialize()}>
             <ConnectedRouter history={history}>
                 <Switch>
-                    <Route exact path={"/home"} render={HomePage}/>
-                    <Route render={() => <div>404. Page not found!</div>}/>
+                    <Route exact path={"/app/home"} render={HomePage}/>
+                    <Route exact path={"/portal"} render={PortalPage}/>
                 </Switch>
             </ConnectedRouter>
         </Provider>

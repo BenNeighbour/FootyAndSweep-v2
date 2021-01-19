@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020 FootyAndSweep
+ *   Copyright 2021 FootyAndSweep
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -14,21 +14,19 @@
  *   limitations under the License.
  */
 
-const { SweepstakeServiceClient } = require('../client/SweepstakeService_grpc_web_pb');
-const { JoinCode } = require('../client/SweepstakeService_pb');
+import {handleErrors} from "./CommonsService";
+import {SweepstakeServiceClient} from "../client/SweepstakeServiceServiceClientPb";
+import {JoinCode} from "../client/SweepstakeService_pb";
+
+const client = new SweepstakeServiceClient(`${process.env.REACT_APP_API_GATEWAY_SERVICE}`, null, {withCredentials: true});
 
 export const joinSweepstake = (action: any) => {
-const client = new SweepstakeServiceClient('http://localhost:9091', null, null);
     const request = new JoinCode();
 
     request.setJoincode("sdfsdf");
 
-    client.findSweepstakeByJoinCode(request, {}, (err: any, response: any) => {
-        if (response == null) {
-            console.log(err);
-        } else {
-            console.log(response);
-        }
+    client.findSweepstakeByJoinCode(request, {}, (error, response) => {
+        handleErrors(error);
+        console.log(response, error);
     });
-
 }

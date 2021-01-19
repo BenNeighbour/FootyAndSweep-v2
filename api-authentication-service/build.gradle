@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020 FootyAndSweep
+ *   Copyright 2021 FootyAndSweep
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -28,100 +28,106 @@ group = 'com.footyandsweep'
 version = '0.0.1-SNAPSHOT'
 
 buildscript {
-	repositories {
-		mavenCentral()
-		maven { url "https://repo.spring.io/milestone" }
-		maven {
-			url "https://plugins.gradle.org/m2/"
-		}
-	}
-	dependencies {
-		classpath "io.spring.gradle:dependency-management-plugin:1.0.10.RELEASE"
-		classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion"
-		classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.13'
-	}
+    repositories {
+        mavenCentral()
+        maven { url "https://repo.spring.io/milestone" }
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.10.RELEASE"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion"
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.13'
+    }
 }
 
 repositories {
-	mavenCentral()
-	jcenter()
+    mavenCentral()
+    jcenter()
 
-	maven {
-		url "${project.rootDir}/build/repo"
-	}
+    maven {
+        url "${project.rootDir}/build/repo"
+    }
 }
 
 dependencyManagement {
-	imports {
-		mavenBom "org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion"
-	}
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion"
+    }
 }
 
 def protobufVersion = '3.6.1'
 def grpcVersion = '1.16.1'
 
 dependencies {
-	implementation project(':api-common-library')
+    implementation project(':api-common-library')
 
-	compileOnly 'org.projectlombok:lombok:1.18.14'
-	annotationProcessor 'org.projectlombok:lombok:1.18.14'
+    compileOnly 'org.projectlombok:lombok:1.18.14'
+    annotationProcessor 'org.projectlombok:lombok:1.18.14'
 
-	testCompileOnly 'org.projectlombok:lombok:1.18.14'
-	testAnnotationProcessor 'org.projectlombok:lombok:1.18.14'
+    testCompileOnly 'org.projectlombok:lombok:1.18.14'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.14'
 
-	compileOnly "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
+    compileOnly "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
 
-	compile group: 'org.postgresql', name: 'postgresql', version: '42.1.1'
+    compile group: 'org.postgresql', name: 'postgresql', version: '42.1.1'
 
-	compile 'commons-beanutils:commons-beanutils:1.9.4'
-	compile group: 'org.hibernate.validator', name: 'hibernate-validator', version: '7.0.0.Final'
+    compile 'commons-beanutils:commons-beanutils:1.9.4'
+    compile group: 'org.hibernate.validator', name: 'hibernate-validator', version: '7.0.0.Final'
 
-	implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
-	implementation "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
+    implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
 
-	implementation "org.springframework.boot:spring-boot-starter-actuator:$springBootVersion"
-	implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
-	implementation "org.springframework.boot:spring-boot-starter-data-redis:$springBootVersion"
+    implementation "org.springframework.boot:spring-boot-starter-actuator:$springBootVersion"
+    implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
+    implementation "org.springframework.boot:spring-boot-starter-data-redis:$springBootVersion"
 
-	implementation("io.grpc:grpc-stub:${grpcVersion}")
-	implementation("io.grpc:grpc-core:${grpcVersion}")
-	implementation("io.grpc:grpc-protobuf:${grpcVersion}")
-	implementation("io.grpc:grpc-netty:${grpcVersion}")
+    implementation "org.springframework.boot:spring-boot-starter-security"
+    implementation "org.springframework.security:spring-security-oauth2-client"
+    implementation "org.springframework.security:spring-security-oauth2-jose"
+    implementation "io.jsonwebtoken:jjwt:0.5.1"
 
-	implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-config:1.1.0.RELEASE'
-	implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes:1.1.0.RELEASE'
+    implementation("io.grpc:grpc-stub:${grpcVersion}")
+    implementation("io.grpc:grpc-core:${grpcVersion}")
+    implementation("io.grpc:grpc-protobuf:${grpcVersion}")
+    implementation("io.grpc:grpc-netty:${grpcVersion}")
 
-	compile 'org.springframework.cloud:spring-cloud-starter-sleuth'
+    implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-config:1.1.0.RELEASE'
+    implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes:1.1.0.RELEASE'
 
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-	}
+    compile "org.springframework.kafka:spring-kafka"
+    compile 'org.springframework.cloud:spring-cloud-starter-sleuth'
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
 }
 
 test {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
 
 protobuf {
-	protoc {
-		artifact = "com.google.protobuf:protoc:${protobufVersion}"
-	}
-	plugins {
-		grpc {
-			artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}"
-		}
-	}
-	generateProtoTasks {
-		all()*.plugins {
-			grpc {}
-		}
-	}
-	generatedFilesBaseDir = "$projectDir/src/generated"
+    protoc {
+        artifact = "com.google.protobuf:protoc:${protobufVersion}"
+    }
+    plugins {
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}"
+        }
+    }
+    generateProtoTasks {
+        all()*.plugins {
+            grpc {}
+        }
+    }
+    generatedFilesBaseDir = "$projectDir/src/generated"
 }
 
 idea {
-	module {
-		sourceDirs += file("${projectDir}/src/generated/main/java");
-		sourceDirs += file("${projectDir}/src/generated/main/grpc");
-	}
+    module {
+        sourceDirs += file("${projectDir}/src/generated/main/java");
+        sourceDirs += file("${projectDir}/src/generated/main/grpc");
+    }
 }

@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020 FootyAndSweep
+ *   Copyright 2021 FootyAndSweep
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -21,12 +21,27 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @Entity
 @Table(name = "user_account")
-public class User extends UserCommon {}
+public class User extends UserCommon {
+
+  @NotNull
+  @Enumerated(EnumType.STRING)
+  private AuthProvider provider;
+
+  @Lob
+  @Column(name = "profilePicture", length = 100000)
+  private String profilePicture;
+
+  @Column(name = "providerId")
+  private String providerId;
+
+  @Column(name = "isEmailVerified", nullable = false)
+  private Boolean isEmailVerified = false;
+}

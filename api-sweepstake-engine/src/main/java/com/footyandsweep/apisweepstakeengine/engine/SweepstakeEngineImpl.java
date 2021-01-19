@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020 FootyAndSweep
+ *   Copyright 2021 FootyAndSweep
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -17,9 +17,7 @@
 package com.footyandsweep.apisweepstakeengine.engine;
 
 import com.footyandsweep.apicommonlibrary.events.EventType;
-import com.footyandsweep.apicommonlibrary.events.ProcessStatus;
 import com.footyandsweep.apicommonlibrary.events.SweepstakeEvent;
-import com.footyandsweep.apisweepstakeengine.config.ResultSchedulerConfig;
 import com.footyandsweep.apisweepstakeengine.dao.ParticipantIdDao;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
 import com.footyandsweep.apisweepstakeengine.event.SweepstakeMessageDispatcher;
@@ -29,7 +27,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -74,7 +71,10 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
       sweepstakeMessageDispatcher.publishEvent(sweepstakeCreated, "api-sweepstake-events-topic");
 
       /* Log the event */
-      log.info("Sweepstake {} has been created! {}", sweepstakeCreated.getSweepstake().getId(), dateFormat.format(new Date()));
+      log.info(
+          "Sweepstake {} has been created! {}",
+          sweepstakeCreated.getSweepstake().getId(),
+          dateFormat.format(new Date()));
 
       return sweepstake;
     } catch (Exception e) {
@@ -103,7 +103,8 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
     sweepstakeDao.delete(sweepstake);
 
     /* Log the event */
-    log.info("Sweepstake {} has been purged! {}", sweepstake.getId(), dateFormat.format(new Date()));
+    log.info(
+        "Sweepstake {} has been purged! {}", sweepstake.getId(), dateFormat.format(new Date()));
 
     // TODO: Broadcast websockets error message with the reason in it
 

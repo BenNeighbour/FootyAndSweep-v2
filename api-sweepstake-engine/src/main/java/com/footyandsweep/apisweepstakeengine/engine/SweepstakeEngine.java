@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020 FootyAndSweep
+ *   Copyright 2021 FootyAndSweep
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@ package com.footyandsweep.apisweepstakeengine.engine;
 
 import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
 
-import javax.transaction.Transactional;
 import java.util.UUID;
 
 public interface SweepstakeEngine {

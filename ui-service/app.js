@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020 FootyAndSweep
+ *   Copyright 2021 FootyAndSweep
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -22,8 +22,8 @@ let app = express();
 
 app.use(express.static(path.join(__dirname, 'build')));
 
-app.get('/*', function(req, res) {
-    res.sendFile(path.join(__dirname, 'build/index.html'), function(err) {
+app.get('/*', function (req, res) {
+    res.sendFile(path.join(__dirname, 'build/index.html'), function (err) {
         if (err) {
             res.status(500).send(err)
         }

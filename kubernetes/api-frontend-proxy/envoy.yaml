@@ -1,4 +1,3 @@
-
 static_resources:
   listeners:
     - name: listener_0
@@ -20,9 +19,13 @@ static_resources:
                           route: { cluster: api-gateway-service }
                       cors:
                         allow_origin_string_match:
-                          - prefix: "*"
-                        allow_headers: keep-alive,user-agent,cache-control,content-type,content-transfer-encoding,x-accept-content-transfer-encoding,x-accept-response-streaming,x-user-agent,x-grpc-web,grpc-timeout
-                        expose_headers: grpc-status,grpc-message
+                          - prefix: "footyandsweep-dev.com"
+                        allow_headers: keep-alive,user-agent,cache-control,content-type,content-transfer-encoding,x-accept-content-transfer-encoding,x-accept-response-streaming,x-user-agent,x-grpc-web,grpc-timeout,Access-Control-Allow-Credentials,Set-Cookie,Authorization,Access-Control-Allow-Origin
+                        expose_headers: grpc-status,grpc-message,set-cookie,authorization,access-control-allow-credentials,access-control-allow-origin
+                      response_headers_to_add:
+                        - header:
+                            key: "set-cookie"
+                            value: "%REQ(set-cookie)%"
                 http_filters:
                   - name: envoy.grpc_web
                   - name: envoy.cors

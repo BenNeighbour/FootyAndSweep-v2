@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020 FootyAndSweep
+ *   Copyright 2021 FootyAndSweep
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -14,9 +14,9 @@
  *   limitations under the License.
  */
 
-import { createStore, applyMiddleware } from 'redux';
-import { createBrowserHistory } from 'history';
-import { routerMiddleware } from 'connected-react-router';
+import {applyMiddleware, createStore} from 'redux';
+import {createBrowserHistory} from 'history';
+import {routerMiddleware} from 'connected-react-router';
 import rootReducer from './RootReducer';
 import createSagaMiddleware from 'redux-saga';
 import joinSweepstakeSaga from "./sagas/sweepstake/SweepstakeSaga";

@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020 FootyAndSweep
+ *   Copyright 2021 FootyAndSweep
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -44,9 +44,7 @@ public class SweepstakeCommon implements Serializable {
 
   private static final long serialVersionUID = -771315870335755392L;
 
-  @Id
-  @GeneratedValue
-  private UUID id;
+  @Id @GeneratedValue private UUID id;
 
   @NotNull(message = "There must be a Sweepstake name")
   private String name;
@@ -76,8 +74,7 @@ public class SweepstakeCommon implements Serializable {
   @NotNull(message = "The Sweepstake must have at least 2 players!")
   private int minimumPlayers;
 
-  @NotNull
-  private int maximumPlayerTickets;
+  @NotNull private int maximumPlayerTickets;
 
   @DecimalMin(value = "1.0", inclusive = false, message = "The stake must be at least 1 FootyCoin")
   @NotNull(message = "There must be a stake!")

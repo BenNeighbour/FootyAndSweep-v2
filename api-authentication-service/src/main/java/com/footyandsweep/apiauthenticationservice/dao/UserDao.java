@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020 FootyAndSweep
+ *   Copyright 2021 FootyAndSweep
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -30,4 +31,10 @@ public interface UserDao extends JpaRepository<User, UUID> {
   @Transactional
   @CacheEvict(value = "userCache", key = "#id")
   User findUserById(UUID id);
+
+  @Transactional
+  @CacheEvict(value = "userCache", key = "#email")
+  Optional<User> findUserByEmail(String email);
+
+  Boolean existsByEmail(String email);
 }

@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020 FootyAndSweep
+ *   Copyright 2021 FootyAndSweep
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -33,12 +33,11 @@ import java.util.UUID;
 @MappedSuperclass
 public class LeagueCommon implements Serializable {
 
-    private static final long serialVersionUID = 4620865235440152025L;
+  private static final long serialVersionUID = 4620865235440152025L;
 
-    @Id private UUID id;
+  @Id private UUID id;
 
-    private Integer code;
+  private Integer code;
 
-    private String name;
-
+  private String name;
 }

@@ -1,5 +1,5 @@
 /*
- *   Copyright 2020 FootyAndSweep
+ *   Copyright 2021 FootyAndSweep
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -74,23 +74,26 @@ public class ResultEngineImpl implements ResultEngine {
     /* Get a list of sweepstakes that are linked to the result event, and are of the right type */
     List<SweepstakeCommon> sweepstakesWithResult =
         Arrays.asList(
-
             Objects.requireNonNull(
                 restTemplate.getForObject(
-                        "http://api-sweepstake-engine:8080/internal/sweepstake/by/footballMatch/"
-                                + footballMatchResult.getFootballMatchId(),
-                        SweepstakeCommon[].class)));
+                    "http://api-sweepstake-engine:8080/internal/sweepstake/by/footballMatch/"
+                        + footballMatchResult.getFootballMatchId(),
+                    SweepstakeCommon[].class)));
 
     /* For each sweepstake, process the tickets for it */
     sweepstakesWithResult.forEach(
-            sweepstake -> this.processTickets(sweepstake.getStake(), sweepstake));
+        sweepstake -> this.processTickets(sweepstake.getStake(), sweepstake));
 
     /* Make this result processed so it doesn't get attempted again , and persist it */
     result.setProcessed(true);
     result = resultDao.saveAndFlush(result);
 
     /* Log the event */
-    log.info("Result {} for football match {} has been created! {}", result.getId(), footballMatchResult.getFootballMatchId(), dateFormat.format(new Date()));
+    log.info(
+        "Result {} for football match {} has been created! {}",
+        result.getId(),
+        footballMatchResult.getFootballMatchId(),
+        dateFormat.format(new Date()));
   }
 
   private void processTickets(BigDecimal stake, SweepstakeCommon sweepstake) {
@@ -195,7 +198,10 @@ public class ResultEngineImpl implements ResultEngine {
       resultMessageDispatcher.publishEvent(userEvent, "api-user-events-topic");
 
       /* Log the event */
-      log.info("Attempt to update user {} balance {}", user.getName(), dateFormat.format(new Date()));
+      log.info(
+          "Attempt to update user {} balance {}",
+          user.getUsername(),
+          dateFormat.format(new Date()));
     } catch (InterruptedException ie) {
       ie.getMessage();
     } finally {

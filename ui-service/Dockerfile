@@ -1,11 +1,9 @@
+ENV DEBUG=*
+
 FROM node:alpine
-
-WORKDIR /app
-
-COPY package.json /app
-
-RUN yarn install
-
+RUN mkdir /app
 COPY . /app
-
-CMD ["yarn", "run", "start"]
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+CMD ["npm", "start"]

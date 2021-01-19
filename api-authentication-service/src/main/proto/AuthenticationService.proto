@@ -1,0 +1,15 @@
+syntax = "proto3";
+package com.footyandsweep;
+
+import "google/type/date.proto";
+import "google/rpc/status.proto";
+
+message User {}
+
+message findUserByIdRequest {
+  string userId = 1;
+}
+
+service AuthenticationService {
+  rpc findUserByUserId(findUserByIdRequest) returns (User);
+}
