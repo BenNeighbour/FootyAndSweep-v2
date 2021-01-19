@@ -16,12 +16,12 @@
 
 package com.footyandsweep.apiauthenticationservice.service;
 
-import com.footyandsweep.AuthenticationServiceOuterClass;
 import com.footyandsweep.apiauthenticationservice.dao.SweepstakeIdDao;
 import com.footyandsweep.apiauthenticationservice.dao.UserDao;
 import com.footyandsweep.apiauthenticationservice.event.UserMessageDispatcher;
 import com.footyandsweep.apiauthenticationservice.exception.SignUpException;
 import com.footyandsweep.apiauthenticationservice.model.User;
+import com.footyandsweep.apiauthenticationservice.payload.SignUpRequest;
 import com.footyandsweep.apiauthenticationservice.relation.SweepstakeIds;
 import com.footyandsweep.apicommonlibrary.events.EventType;
 import com.footyandsweep.apicommonlibrary.events.SweepstakeEvent;
@@ -53,8 +53,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public void checkSignUpRequestIsValid(AuthenticationServiceOuterClass.SignUpRequest request)
-      throws SignUpException {
+  public void checkSignUpRequestIsValid(SignUpRequest request) throws SignUpException {
     /* Firstly, check if the confirmPassword string and password string are the same, or they are not already signed up */
     if (!request.getPassword().equals(request.getConfirmPassword())) {
       throw new SignUpException("Password and Confirm Password do not match up!");

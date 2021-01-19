@@ -199,7 +199,9 @@ public class ResultEngineImpl implements ResultEngine {
 
       /* Log the event */
       log.info(
-          "Attempt to update user {} balance {}", user.getName(), dateFormat.format(new Date()));
+          "Attempt to update user {} balance {}",
+          user.getUsername(),
+          dateFormat.format(new Date()));
     } catch (InterruptedException ie) {
       ie.getMessage();
     } finally {

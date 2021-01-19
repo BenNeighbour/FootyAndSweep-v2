@@ -19,29 +19,19 @@ package com.footyandsweep.apiauthenticationservice;
 import com.footyandsweep.AuthenticationServiceGrpc;
 import com.footyandsweep.AuthenticationServiceOuterClass;
 import com.footyandsweep.apiauthenticationservice.dao.UserDao;
-import com.footyandsweep.apiauthenticationservice.exception.SignUpException;
 import com.footyandsweep.apiauthenticationservice.grpc.GrpcService;
-import com.footyandsweep.apiauthenticationservice.model.AuthProvider;
-import com.footyandsweep.apiauthenticationservice.model.User;
 import com.footyandsweep.apiauthenticationservice.service.UserService;
-import com.google.rpc.Code;
-import com.google.rpc.Status;
-import io.grpc.protobuf.StatusProto;
 import io.grpc.stub.StreamObserver;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @GrpcService
 public class AuthenticationControllerGrpc
     extends AuthenticationServiceGrpc.AuthenticationServiceImplBase {
 
   private final UserDao userDao;
-  private final PasswordEncoder passwordEncoder;
   private final UserService userService;
 
-  public AuthenticationControllerGrpc(
-      UserDao userDao, PasswordEncoder passwordEncoder, UserService userService) {
+  public AuthenticationControllerGrpc(UserDao userDao, UserService userService) {
     this.userDao = userDao;
-    this.passwordEncoder = passwordEncoder;
     this.userService = userService;
   }
 
@@ -50,49 +40,5 @@ public class AuthenticationControllerGrpc
       AuthenticationServiceOuterClass.findUserByIdRequest request,
       StreamObserver<AuthenticationServiceOuterClass.User> responseObserver) {
     /* TODO: Call the dao method here! */
-  }
-
-  @Override
-  public void signUp(
-      AuthenticationServiceOuterClass.SignUpRequest request,
-      StreamObserver<Status> responseObserver) {
-    try {
-      userService.checkSignUpRequestIsValid(request);
-
-      /* Constructing the new user from the fields that have been requested */
-      User user = new User();
-
-      /* Reflecting the values and persisting the user */
-      user.setName(request.getName());
-      user.setEmail(request.getEmail());
-      user.setPassword(request.getPassword());
-      user.setProvider(AuthProvider.local);
-      user.setPassword(passwordEncoder.encode(user.getPassword()));
-      userDao.save(user);
-
-      Status status =
-          Status.newBuilder()
-              .setCode(Code.OK.getNumber())
-              .setMessage("User registered successfully!")
-              .build();
-
-      responseObserver.onNext(status);
-      responseObserver.onCompleted();
-    } catch (SignUpException e) {
-      /* If there are any exceptions then tell the user */
-      Status errorStatus =
-          Status.newBuilder()
-              .setCode(Code.ALREADY_EXISTS.getNumber())
-              .setMessage(e.getMessage())
-              .build();
-
-      responseObserver.onError(StatusProto.toStatusRuntimeException(errorStatus));
-    } catch (Exception e) {
-      /* If there are any exceptions then tell the user */
-      Status errorStatus =
-          Status.newBuilder().setCode(Code.INTERNAL.getNumber()).setMessage(e.getMessage()).build();
-
-      responseObserver.onError(StatusProto.toStatusRuntimeException(errorStatus));
-    }
   }
 }

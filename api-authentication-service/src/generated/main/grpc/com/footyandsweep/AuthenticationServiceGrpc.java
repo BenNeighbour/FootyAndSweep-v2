@@ -1,19 +1,3 @@
-/*
- *   Copyright 2021 FootyAndSweep
- *
- *   Licensed under the Apache License, Version 2.0 (the "License");
- *   you may not use this file except in compliance with the License.
- *   You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- *   Unless required by applicable law or agreed to in writing, software
- *   distributed under the License is distributed on an "AS IS" BASIS,
- *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *   See the License for the specific language governing permissions and
- *   limitations under the License.
- */
-
 package com.footyandsweep;
 
 import static io.grpc.MethodDescriptor.generateFullMethodName;
@@ -30,12 +14,8 @@ import static io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall;
 public final class AuthenticationServiceGrpc {
 
   public static final String SERVICE_NAME = "com.footyandsweep.AuthenticationService";
-  private static final int METHODID_SIGN_UP = 0;
-  private static final int METHODID_FIND_USER_BY_USER_ID = 1;
+  private static final int METHODID_FIND_USER_BY_USER_ID = 0;
   // Static method descriptors that strictly reflect the proto.
-  private static volatile io.grpc.MethodDescriptor<
-          com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest, com.google.rpc.Status>
-      getSignUpMethod;
   private static volatile io.grpc.MethodDescriptor<
           com.footyandsweep.AuthenticationServiceOuterClass.findUserByIdRequest,
           com.footyandsweep.AuthenticationServiceOuterClass.User>
@@ -43,47 +23,6 @@ public final class AuthenticationServiceGrpc {
   private static volatile io.grpc.ServiceDescriptor serviceDescriptor;
 
   private AuthenticationServiceGrpc() {}
-
-  @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "signUp",
-      requestType = com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest.class,
-      responseType = com.google.rpc.Status.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<
-          com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest, com.google.rpc.Status>
-      getSignUpMethod() {
-    io.grpc.MethodDescriptor<
-            com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest, com.google.rpc.Status>
-        getSignUpMethod;
-    if ((getSignUpMethod = AuthenticationServiceGrpc.getSignUpMethod) == null) {
-      synchronized (AuthenticationServiceGrpc.class) {
-        if ((getSignUpMethod = AuthenticationServiceGrpc.getSignUpMethod) == null) {
-          AuthenticationServiceGrpc.getSignUpMethod =
-              getSignUpMethod =
-                  io.grpc.MethodDescriptor
-                      .<com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest,
-                          com.google.rpc.Status>
-                          newBuilder()
-                      .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
-                      .setFullMethodName(
-                          generateFullMethodName(
-                              "com.footyandsweep.AuthenticationService", "signUp"))
-                      .setSampledToLocalTracing(true)
-                      .setRequestMarshaller(
-                          io.grpc.protobuf.ProtoUtils.marshaller(
-                              com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest
-                                  .getDefaultInstance()))
-                      .setResponseMarshaller(
-                          io.grpc.protobuf.ProtoUtils.marshaller(
-                              com.google.rpc.Status.getDefaultInstance()))
-                      .setSchemaDescriptor(
-                          new AuthenticationServiceMethodDescriptorSupplier("signUp"))
-                      .build();
-        }
-      }
-    }
-    return getSignUpMethod;
-  }
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "findUserByUserId",
@@ -157,7 +96,6 @@ public final class AuthenticationServiceGrpc {
               result =
                   io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
                       .setSchemaDescriptor(new AuthenticationServiceFileDescriptorSupplier())
-                      .addMethod(getSignUpMethod())
                       .addMethod(getFindUserByUserIdMethod())
                       .build();
         }
@@ -170,13 +108,6 @@ public final class AuthenticationServiceGrpc {
   public abstract static class AuthenticationServiceImplBase implements io.grpc.BindableService {
 
     /** */
-    public void signUp(
-        com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest request,
-        io.grpc.stub.StreamObserver<com.google.rpc.Status> responseObserver) {
-      asyncUnimplementedUnaryCall(getSignUpMethod(), responseObserver);
-    }
-
-    /** */
     public void findUserByUserId(
         com.footyandsweep.AuthenticationServiceOuterClass.findUserByIdRequest request,
         io.grpc.stub.StreamObserver<com.footyandsweep.AuthenticationServiceOuterClass.User>
@@ -187,12 +118,6 @@ public final class AuthenticationServiceGrpc {
     @java.lang.Override
     public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
-          .addMethod(
-              getSignUpMethod(),
-              asyncUnaryCall(
-                  new MethodHandlers<
-                      com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest,
-                      com.google.rpc.Status>(this, METHODID_SIGN_UP)))
           .addMethod(
               getFindUserByUserIdMethod(),
               asyncUnaryCall(
@@ -219,14 +144,6 @@ public final class AuthenticationServiceGrpc {
     protected AuthenticationServiceStub build(
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       return new AuthenticationServiceStub(channel, callOptions);
-    }
-
-    /** */
-    public void signUp(
-        com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest request,
-        io.grpc.stub.StreamObserver<com.google.rpc.Status> responseObserver) {
-      asyncUnaryCall(
-          getChannel().newCall(getSignUpMethod(), getCallOptions()), request, responseObserver);
     }
 
     /** */
@@ -260,12 +177,6 @@ public final class AuthenticationServiceGrpc {
     }
 
     /** */
-    public com.google.rpc.Status signUp(
-        com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest request) {
-      return blockingUnaryCall(getChannel(), getSignUpMethod(), getCallOptions(), request);
-    }
-
-    /** */
     public com.footyandsweep.AuthenticationServiceOuterClass.User findUserByUserId(
         com.footyandsweep.AuthenticationServiceOuterClass.findUserByIdRequest request) {
       return blockingUnaryCall(
@@ -289,12 +200,6 @@ public final class AuthenticationServiceGrpc {
     protected AuthenticationServiceFutureStub build(
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       return new AuthenticationServiceFutureStub(channel, callOptions);
-    }
-
-    /** */
-    public com.google.common.util.concurrent.ListenableFuture<com.google.rpc.Status> signUp(
-        com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest request) {
-      return futureUnaryCall(getChannel().newCall(getSignUpMethod(), getCallOptions()), request);
     }
 
     /** */
@@ -324,11 +229,6 @@ public final class AuthenticationServiceGrpc {
     @java.lang.SuppressWarnings("unchecked")
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
-        case METHODID_SIGN_UP:
-          serviceImpl.signUp(
-              (com.footyandsweep.AuthenticationServiceOuterClass.SignUpRequest) request,
-              (io.grpc.stub.StreamObserver<com.google.rpc.Status>) responseObserver);
-          break;
         case METHODID_FIND_USER_BY_USER_ID:
           serviceImpl.findUserByUserId(
               (com.footyandsweep.AuthenticationServiceOuterClass.findUserByIdRequest) request,

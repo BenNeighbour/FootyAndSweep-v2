@@ -15,8 +15,8 @@
  */
 
 import React, {FunctionComponent} from 'react';
-import {Box, Button, Flex} from "@chakra-ui/react";
-import {FcGoogle, SiFacebook, SiGoogle} from "react-icons/all";
+import {Box, Button, Flex, Input, Stack} from "@chakra-ui/react";
+import {SiFacebook, SiGoogle} from "react-icons/all";
 
 interface OwnProps {
 }
@@ -25,47 +25,96 @@ type Props = OwnProps;
 
 const PortalPage: FunctionComponent<Props> = (props) => {
     return (
-        <Flex minHeight='100vh' width='full' align='center' justifyContent='center'>
+        <Flex minHeight='100vh' width='full' align='center' justifyContent='center' style={{
+            textAlign: "center",
+            display: 'flex',
+            placeItems: 'center',
+        }}>
             <Box
                 px={4}
                 width='full'
-                maxWidth='600px'
+                maxWidth='500px'
                 textAlign='center'
                 borderRadius={3}
                 style={{
-                    boxShadow: "rgba(0, 0, 0, 0.3) 0px 0px 10px"
+                    boxShadow: "rgba(0, 0, 0, 0.3) 0px 0px 10px",
+                    minHeight: "55vh",
+                    margin: 'auto',
                 }}
                 w="100%" p={4}>
-                <Button textAlign='center'
-                        borderRadius={3}
-                        style={{
-                            boxShadow: "rgba(0, 0, 0, 0.3) 0px 0px 10px",
-                            width: "25vw",
-                            marginBottom: "2vh"
-                        }} onClick={() => {
-                    window.location.replace(process.env.REACT_APP_API_AUTHENTICATION_SERVICE + "/oauth2/authorize/google?redirect_uri=" + process.env.REACT_APP_OAUTH_REDIRECT_URI);
-                }} isLoading={false}
-                        loadingText="Loading"
-                        leftIcon={window.localStorage.getItem("chakra-ui-color-mode") === "dark" ? <SiGoogle/> :
-                            <FcGoogle/>}>
-                    Continue with Google
-                </Button>
 
-                <br/>
+                <Stack spacing={3}>
+                    <Input style={{
+                        width: "22vw",
+                        margin: 'auto',
+                        marginBottom: "1.5vh",
+                        marginTop: "2.5vh"
+                    }} placeholder={"Email or Username"} variant={"filled"} type={"text"} size="md"/>
 
-                <Button textAlign='center'
-                        borderRadius={3}
-                        style={{
-                            boxShadow: "rgba(0, 0, 0, 0.5) 0px 0px 10px",
-                            width: "25vw",
-                            marginBottom: "2vh"
-                        }} onClick={() => {
-                    window.location.replace(process.env.REACT_APP_API_AUTHENTICATION_SERVICE + "/oauth2/authorize/facebook?redirect_uri=" + process.env.REACT_APP_OAUTH_REDIRECT_URI);
-                }} isLoading={false}
-                        loadingText="Loading"
-                        leftIcon={<SiFacebook/>}>
-                    Continue with Facebook
-                </Button>
+                    <Input style={{
+                        width: "22vw",
+                        margin: 'auto',
+                        marginBottom: "2vh"
+                    }} placeholder={"Password"} variant={"filled"} type={"password"} size="md"/>
+
+                    <Button colorScheme="blue" textAlign='center'
+                            borderRadius={3}
+                            style={{
+                                width: "22vw",
+                                margin: 'auto',
+                                boxShadow: "rgba(0, 0, 0, 0.3) 0px 0px 10px"
+                            }} onClick={() => {
+                        /* Execute Redux event to log in */
+                    }} isLoading={false}
+                            loadingText="Logging in">
+                        Log into FootyAndSweep
+                    </Button>
+
+                    <div className={"or"} style={{
+                        color: "rgb(151, 160, 175)",
+                        content: "attr(data-i18n-or)",
+                        display: "block",
+                        fontSize: "11px",
+                        lineHeight: 2,
+                        marginBottom: "16px",
+                        textAlign: "center",
+                        textTransform: "uppercase"
+                    }}>OR
+                    </div>
+
+                    <Button textAlign='center'
+                            borderRadius={3}
+                            style={{
+                                boxShadow: "rgba(0, 0, 0, 0.3) 0px 0px 10px",
+                                width: "22vw",
+                                margin: 'auto',
+                                marginBottom: "2.5vh"
+                            }} onClick={() => {
+                        window.location.replace(process.env.REACT_APP_API_AUTHENTICATION_SERVICE + "/oauth2/authorize/google?redirect_uri=" + process.env.REACT_APP_OAUTH_REDIRECT_URI);
+                    }} isLoading={false}
+                            loadingText="Loading"
+                            leftIcon={<SiGoogle/>
+                                // :
+                                //     <FcGoogle/>
+                            }>
+                        Continue with Google
+                    </Button>
+
+                    <Button textAlign='center'
+                            borderRadius={3}
+                            style={{
+                                boxShadow: "rgba(0, 0, 0, 0.3) 0px 0px 10px",
+                                width: "22vw",
+                                margin: 'auto',
+                                marginBottom: "2.5vh"
+                            }} onClick={() => {
+                        window.location.replace(process.env.REACT_APP_API_AUTHENTICATION_SERVICE + "/oauth2/authorize/facebook?redirect_uri=" + process.env.REACT_APP_OAUTH_REDIRECT_URI);
+                    }} isLoading={false}
+                            loadingText="Loading"
+                            leftIcon={<SiFacebook/>}>
+                        Continue with Facebook
+                    </Button>
+                </Stack>
             </Box>
         </Flex>
     );

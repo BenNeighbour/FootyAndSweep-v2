@@ -42,7 +42,7 @@ public class UserCommon implements Serializable {
 
   @Id @GeneratedValue private UUID id;
 
-  private String name;
+  private String username;
 
   private String password;
 
