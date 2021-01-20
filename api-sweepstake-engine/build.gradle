@@ -71,8 +71,6 @@ dependencies {
 
     compileOnly "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
 
-    compile group: 'org.postgresql', name: 'postgresql', version: '42.1.1'
-
     compile 'commons-beanutils:commons-beanutils:1.9.4'
     compile group: 'org.hibernate.validator', name: 'hibernate-validator', version: '7.0.0.Final'
 
@@ -91,8 +89,15 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-config:1.1.0.RELEASE'
     implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes:1.1.0.RELEASE'
 
-    compile "org.springframework.kafka:spring-kafka"
-    compile 'org.springframework.cloud:spring-cloud-starter-sleuth'
+    compile "io.eventuate.tram.sagas:eventuate-tram-sagas-spring-orchestration-simple-dsl:$eventuateTramSagasVersion"
+    compile "io.eventuate.tram.core:eventuate-tram-spring-producer-jdbc:$eventuateTramVersion"
+    compile "io.eventuate.tram.core:eventuate-tram-spring-consumer-kafka:$eventuateTramVersion"
+    compile "io.eventuate.tram.core:eventuate-tram-spring-consumer-jdbc:$eventuateTramVersion"
+    compile "io.eventuate.tram.core:eventuate-tram-spring-optimistic-locking:$eventuateTramVersion"
+
+    compile('org.postgresql:postgresql:9.4-1200-jdbc41') {
+        exclude group: "org.slf4j", module: "slf4j-simple"
+    }
 
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'

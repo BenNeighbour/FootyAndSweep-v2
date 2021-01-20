@@ -45,3 +45,4 @@ deploy:
       - kubernetes/api-allocation-engine/api-allocation-engine.yaml
       - kubernetes/api-authentication-service/api-authentication-service.yaml
       - kubernetes/api-gateway-proxy/api-gateway-proxy.yaml
+      - kubernetes/api-event-broker/api-cdc-service.yaml

@@ -2,18 +2,14 @@ spring:
   application:
     name: 'api-sweepstake-engine'
 
-  kafka:
-    bootstrap-servers: ${KAFKA_CONNECT}
-    consumer:
-      auto-offset-reset: earliest
-      group-id: api-event
-      enable-auto-commit: true
+  sleuth:
+    enabled: true
+    sampler:
+      probability: 1
 
-    acks: all
-    retries: 5
-    retry:
-      backoff:
-        ms: 5000
+  zipkin:
+    base:
+      url: http://${ZIPKIN_CONNECT}
 
   jpa:
     datasource:
@@ -32,3 +28,12 @@ spring:
 grpc:
   server:
     port: 9090
+
+eventuatelocal:
+  kafka:
+    bootstrap:
+      servers: ${KAFKA_CONNECT}
+
+  zookeeper:
+    connection:
+      string: ${ZOOKEEPER_CONNECT}

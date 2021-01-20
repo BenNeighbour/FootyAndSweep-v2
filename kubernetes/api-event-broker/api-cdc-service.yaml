@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-cdc-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-cdc-service
+      id: "0"
+  template:
+    metadata:
+      labels:
+        app: api-cdc-service
+        id: "0"
+    spec:
+      containers:
+        - name: api-cdc-service
+          image: eventuateio/eventuate-cdc-service:0.6.1.RELEASE
+          ports:
+            - containerPort: 8099
+          env:
+            - name: JAVA_OPTS
+              value: "-Xmx64m"
+
+            - name: SPRING_PROFILES_ACTIVE
+              value: "EventuatePolling"
+
+            - name: EVENTUATELOCAL_CDC_READER_NAME
+              value: "PostgresPollingReader"
+
+            - name: EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING
+              value: "zookeeper:2181"
+
+            - name: EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS
+              value: "api-kafka.default.svc.cluster.local:9092"
+
+            - name: SPRING_DATASOURCE_DRIVER_CLASS_NAME
+              value: org.postgresql.Driver
+
+            - name: SPRING_DATASOURCE_VALIDATION_QUERY
+              value: "SELECT 1"
+
+            - name: SPRING_DATASOURCE_TEST_ON_BORROW
+              value: "true"
+
+            - name: SPRING_DATASOURCE_URL
+              value: 'jdbc:postgresql://api-database:5432/api-footyandsweep?stringtype=unspecified'
+
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: api-sweepstake-engine-credentials
+                  key: username
+
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: api-sweepstake-engine-credentials
+                  key: password
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-cdc-service
+  namespace: default
+  labels:
+    name: api-cdc-service
+spec:
+  ports:
+    - port: 8099
+      name: port
+      protocol: TCP
+  selector:
+    app: api-cdc-service
+    id: "0"
+
+  type: NodePort

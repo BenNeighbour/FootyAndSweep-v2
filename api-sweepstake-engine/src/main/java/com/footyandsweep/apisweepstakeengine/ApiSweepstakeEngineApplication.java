@@ -17,6 +17,8 @@
 package com.footyandsweep.apisweepstakeengine;
 
 import com.footyandsweep.apisweepstakeengine.config.WebConfiguration;
+import io.eventuate.tram.spring.consumer.kafka.EventuateTramKafkaMessageConsumerConfiguration;
+import io.eventuate.tram.spring.messaging.producer.jdbc.TramMessageProducerJdbcConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -27,18 +29,20 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.Ordered;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.ForwardedHeaderFilter;
 
+@EnableJpaRepositories("com.footyandsweep.apisweepstakeengine.dao")
 @EnableCaching
 @SpringBootApplication
-@EnableJpaRepositories
 @EnableDiscoveryClient
-@EnableKafka
 @EnableScheduling
-@Import({WebConfiguration.class})
+@Import({
+        WebConfiguration.class,
+        TramMessageProducerJdbcConfiguration.class,
+        EventuateTramKafkaMessageConsumerConfiguration.class
+})
 public class ApiSweepstakeEngineApplication {
 
   public static void main(String[] args) {

@@ -18,7 +18,7 @@ spec:
           emptyDir: { }
       containers:
         - name: postgres
-          image: postgres
+          image: eventuateio/eventuate-tram-sagas-postgres:0.13.0.RELEASE
           env:
             - name: POSTGRES_USER
               valueFrom:

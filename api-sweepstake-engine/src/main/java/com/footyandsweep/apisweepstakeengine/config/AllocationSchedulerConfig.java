@@ -16,18 +16,13 @@
 
 package com.footyandsweep.apisweepstakeengine.config;
 
-import com.footyandsweep.apicommonlibrary.events.EventType;
-import com.footyandsweep.apicommonlibrary.events.SweepstakeEvent;
-import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
-import com.footyandsweep.apisweepstakeengine.event.SweepstakeMessageDispatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 @Component
 public class AllocationSchedulerConfig {
@@ -36,32 +31,30 @@ public class AllocationSchedulerConfig {
   private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ");
 
   private final SweepstakeDao sweepstakeDao;
-  private final SweepstakeMessageDispatcher sweepstakeMessageDispatcher;
 
   public AllocationSchedulerConfig(
-      SweepstakeDao sweepstakeDao, SweepstakeMessageDispatcher sweepstakeMessageDispatcher) {
+      SweepstakeDao sweepstakeDao) {
     this.sweepstakeDao = sweepstakeDao;
-    this.sweepstakeMessageDispatcher = sweepstakeMessageDispatcher;
   }
 
   /* Scheduled for every 2 minutes */
   @Scheduled(fixedRate = 120000)
   public void checkAndAllocateSweepstakes() {
-    /* Logging the periodic check */
-    log.info("Periodic check for unallocated sweepstakes at {}", dateFormat.format(new Date()));
-
-    /* For each sweepstake that is open, get the event id */
-    sweepstakeDao
-        .findAllSweepstakesByStatus(SweepstakeCommon.SweepstakeStatus.OPEN)
-        .forEach(
-            sweepstake -> {
-              /* Create the event object to be sent over */
-              SweepstakeEvent sweepstakeEvent =
-                  new SweepstakeEvent(sweepstake, EventType.NEEDS_ALLOCATING);
-
-              /* Send a sweepstake needs allocating message */
-              sweepstakeMessageDispatcher.publishEvent(
-                  sweepstakeEvent, "api-sweepstake-events-topic");
-            });
+//    /* Logging the periodic check */
+//    log.info("Periodic check for unallocated sweepstakes at {}", dateFormat.format(new Date()));
+//
+//    /* For each sweepstake that is open, get the event id */
+//    sweepstakeDao
+//        .findAllSweepstakesByStatus(SweepstakeCommon.SweepstakeStatus.OPEN)
+//        .forEach(
+//            sweepstake -> {
+//              /* Create the event object to be sent over */
+//              SweepstakeEvent sweepstakeEvent =
+//                  new SweepstakeEvent(sweepstake, EventType.NEEDS_ALLOCATING);
+//
+//              /* Send a sweepstake needs allocating message */
+//              sweepstakeMessageDispatcher.publishEvent(
+//                  sweepstakeEvent, "api-sweepstake-events-topic");
+//            });
   }
 }

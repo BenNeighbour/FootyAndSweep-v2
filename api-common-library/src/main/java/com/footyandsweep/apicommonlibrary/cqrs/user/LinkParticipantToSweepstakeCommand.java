@@ -14,18 +14,24 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apiauthenticationservice.service;
+package com.footyandsweep.apicommonlibrary.cqrs.user;
 
-import com.footyandsweep.apiauthenticationservice.exception.SignUpException;
-import com.footyandsweep.apiauthenticationservice.payload.SignUpRequest;
-import com.footyandsweep.apicommonlibrary.exceptions.SomethingWentWrongException;
-import com.footyandsweep.apicommonlibrary.exceptions.UserDoesNotExistException;
+import io.eventuate.tram.commands.common.Command;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.UUID;
 
-public interface UserService {
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+public class LinkParticipantToSweepstakeCommand implements Command {
 
-  void addOwnerToSweepstake(UUID sweepstakeId, UUID ownerId) throws UserDoesNotExistException, SomethingWentWrongException;
+    private UUID ownerId;
 
-  void checkSignUpRequestIsValid(SignUpRequest request) throws SignUpException;
+    private UUID sweepstakeId;
+
 }

@@ -18,20 +18,19 @@ package com.footyandsweep.apiauthenticationservice.service;
 
 import com.footyandsweep.apiauthenticationservice.dao.SweepstakeIdDao;
 import com.footyandsweep.apiauthenticationservice.dao.UserDao;
-import com.footyandsweep.apiauthenticationservice.event.UserMessageDispatcher;
 import com.footyandsweep.apiauthenticationservice.exception.SignUpException;
 import com.footyandsweep.apiauthenticationservice.model.User;
 import com.footyandsweep.apiauthenticationservice.payload.SignUpRequest;
 import com.footyandsweep.apiauthenticationservice.relation.SweepstakeIds;
-import com.footyandsweep.apicommonlibrary.events.EventType;
-import com.footyandsweep.apicommonlibrary.events.SweepstakeEvent;
-import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
+import com.footyandsweep.apicommonlibrary.exceptions.SomethingWentWrongException;
+import com.footyandsweep.apicommonlibrary.exceptions.UserDoesNotExistException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -41,15 +40,12 @@ public class UserServiceImpl implements UserService {
 
   private final UserDao userDao;
   private final SweepstakeIdDao sweepstakeIdDao;
-  private final UserMessageDispatcher userMessageDispatcher;
 
   public UserServiceImpl(
       final UserDao userDao,
-      final SweepstakeIdDao sweepstakeIdDao,
-      UserMessageDispatcher userMessageDispatcher) {
+      final SweepstakeIdDao sweepstakeIdDao) {
     this.userDao = userDao;
     this.sweepstakeIdDao = sweepstakeIdDao;
-    this.userMessageDispatcher = userMessageDispatcher;
   }
 
   @Override
@@ -64,35 +60,20 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public void addOwnerToSweepstake(SweepstakeCommon sweepstake) {
+  @Transactional
+  public void addOwnerToSweepstake(UUID sweepstakeId, UUID ownerId) throws UserDoesNotExistException, SomethingWentWrongException {
     try {
-      User addingParticipant = userDao.findUserById(sweepstake.getOwnerId());
+      User addingParticipant = userDao.findUserById(ownerId);
 
       if (addingParticipant != null) {
-        sweepstakeIdDao.save(new SweepstakeIds(sweepstake.getOwnerId(), sweepstake.getId()));
-
-        /* Inform the sweepstake engine that the process has completed */
-        SweepstakeEvent processCompletedEvent =
-            new SweepstakeEvent(sweepstake, EventType.PROCESS_ENDED);
-        userMessageDispatcher.publishEvent(processCompletedEvent, "api-sweepstake-events-topic");
+        sweepstakeIdDao.save(new SweepstakeIds(ownerId, sweepstakeId));
       } else {
-        /* Dispatch a sweepstake relation deleted event */
-        SweepstakeEvent relationDeleted =
-            new SweepstakeEvent(sweepstake, EventType.RELATION_DELETED);
-
-        /* The sweepstake engine will consume this broadcast and delete it's relation with this
-        sweepstake, then it will remove the sweepstake with the message string given by the event
-        above */
-        userMessageDispatcher.publishEvent(relationDeleted, "api-sweepstake-events-topic");
-
-        /* Log the event */
-        log.info(
-            "Sweepstake relation {} has been purged! {}",
-            relationDeleted.getSweepstake().getId(),
-            dateFormat.format(new Date()));
+        /* Throw a user does not exist error */
+        throw new UserDoesNotExistException();
       }
     } catch (Exception e) {
-      /* Get the error message and ping it back to the client */
+      /* Throw a something went wrong exception */
+      throw new SomethingWentWrongException();
     }
   }
 }

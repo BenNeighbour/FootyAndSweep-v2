@@ -16,17 +16,18 @@
 
 package com.footyandsweep.apisweepstakeengine.engine;
 
-import com.footyandsweep.apicommonlibrary.events.EventType;
-import com.footyandsweep.apicommonlibrary.events.SweepstakeEvent;
 import com.footyandsweep.apisweepstakeengine.dao.ParticipantIdDao;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
-import com.footyandsweep.apisweepstakeengine.event.SweepstakeMessageDispatcher;
+import com.footyandsweep.apisweepstakeengine.engine.saga.CreateSweepstakeSaga;
+import com.footyandsweep.apisweepstakeengine.engine.saga.CreateSweepstakeSagaData;
 import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
 import com.footyandsweep.apisweepstakeengine.relation.ParticipantIds;
+import io.eventuate.tram.sagas.orchestration.SagaInstanceFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -41,40 +42,25 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
 
   private final SweepstakeDao sweepstakeDao;
   private final ParticipantIdDao participantIdDao;
-  private final SweepstakeMessageDispatcher sweepstakeMessageDispatcher;
+  private final SagaInstanceFactory sagaInstanceFactory;
+  private final CreateSweepstakeSaga createSweepstakeSaga;
 
-  public SweepstakeEngineImpl(
-      final SweepstakeDao sweepstakeDao,
-      final ParticipantIdDao participantIdDao,
-      final SweepstakeMessageDispatcher sweepstakeMessageDispatcher) {
+  public SweepstakeEngineImpl(SweepstakeDao sweepstakeDao, ParticipantIdDao participantIdDao, SagaInstanceFactory sagaInstanceFactory, CreateSweepstakeSaga createSweepstakeSaga) {
     this.sweepstakeDao = sweepstakeDao;
     this.participantIdDao = participantIdDao;
-    this.sweepstakeMessageDispatcher = sweepstakeMessageDispatcher;
+    this.sagaInstanceFactory = sagaInstanceFactory;
+    this.createSweepstakeSaga = createSweepstakeSaga;
   }
 
   @Override
+  @Transactional
   public Sweepstake saveSweepstake(UUID ownerId, Sweepstake sweepstake) {
     try {
       sweepstake.setOwnerId(ownerId);
 
-      /* Persist the sweepstake and it's participant junction table */
-      sweepstake = sweepstakeDao.save(sweepstake);
-
-      /* Save the relation */
-      participantIdDao.save(new ParticipantIds(sweepstake.getId(), ownerId));
-
-      /* Creating the sweepstake created object for other services to react to */
-      SweepstakeEvent sweepstakeCreated = new SweepstakeEvent(sweepstake, EventType.CREATED);
-
-      /* This gets received by the gateway service, then that service adds the sweepstake and
-      user id into it's SweepstakeIds Junction Table */
-      sweepstakeMessageDispatcher.publishEvent(sweepstakeCreated, "api-sweepstake-events-topic");
-
-      /* Log the event */
-      log.info(
-          "Sweepstake {} has been created! {}",
-          sweepstakeCreated.getSweepstake().getId(),
-          dateFormat.format(new Date()));
+      /* TODO: Invoke the Create Sweepstake Saga Here */
+      CreateSweepstakeSagaData data = new CreateSweepstakeSagaData(sweepstake);
+      sagaInstanceFactory.create(createSweepstakeSaga, data);
 
       return sweepstake;
     } catch (Exception e) {
@@ -82,6 +68,8 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
       return null;
     }
   }
+
+
 
   @Override
   public void deleteParticipantRelation(UUID sweepstakeId) {
