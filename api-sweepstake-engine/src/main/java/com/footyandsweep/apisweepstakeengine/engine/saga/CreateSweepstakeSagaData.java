@@ -17,6 +17,7 @@
 package com.footyandsweep.apisweepstakeengine.engine.saga;
 
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
+import com.footyandsweep.apisweepstakeengine.relation.ParticipantIds;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,4 +29,9 @@ import lombok.Setter;
 @AllArgsConstructor
 public class CreateSweepstakeSagaData {
   private SweepstakeCommon sweepstake;
+  private ParticipantIds ownerIdObject;
+
+  public CreateSweepstakeSagaData(SweepstakeCommon sweepstake) {
+    this.sweepstake = sweepstake;
+  }
 }

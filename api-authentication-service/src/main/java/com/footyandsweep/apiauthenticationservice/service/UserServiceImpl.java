@@ -60,9 +60,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  @Transactional
-  public void addOwnerToSweepstake(UUID sweepstakeId, UUID ownerId) throws UserDoesNotExistException, SomethingWentWrongException {
-    try {
+  public void addOwnerToSweepstake(UUID sweepstakeId, UUID ownerId) {
       User addingParticipant = userDao.findUserById(ownerId);
 
       if (addingParticipant != null) {
@@ -71,9 +69,5 @@ public class UserServiceImpl implements UserService {
         /* Throw a user does not exist error */
         throw new UserDoesNotExistException();
       }
-    } catch (Exception e) {
-      /* Throw a something went wrong exception */
-      throw new SomethingWentWrongException();
-    }
   }
 }

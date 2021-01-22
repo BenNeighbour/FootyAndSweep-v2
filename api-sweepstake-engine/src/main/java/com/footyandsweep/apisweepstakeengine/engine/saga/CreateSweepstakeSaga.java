@@ -19,34 +19,44 @@ package com.footyandsweep.apisweepstakeengine.engine.saga;
 import com.footyandsweep.apicommonlibrary.cqrs.user.LinkParticipantToSweepstakeCommand;
 import com.footyandsweep.apicommonlibrary.cqrs.user.LinkParticipantToSweepstakeFailure;
 import com.footyandsweep.apicommonlibrary.cqrs.user.ParticipantNotFound;
+import com.footyandsweep.apisweepstakeengine.dao.ParticipantIdDao;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
 import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
+import com.footyandsweep.apisweepstakeengine.relation.ParticipantIds;
 import io.eventuate.tram.commands.consumer.CommandWithDestination;
 import io.eventuate.tram.sagas.orchestration.SagaDefinition;
 import io.eventuate.tram.sagas.simpledsl.SimpleSaga;
-
-import static io.eventuate.tram.commands.consumer.CommandWithDestinationBuilder.send;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.UUID;
 
+import static io.eventuate.tram.commands.consumer.CommandWithDestinationBuilder.send;
+
 public class CreateSweepstakeSaga implements SimpleSaga<CreateSweepstakeSagaData> {
+
+  @Autowired
+  private ParticipantIdDao participantIdDao;
 
   private final SweepstakeDao sweepstakeDao;
   private SagaDefinition<CreateSweepstakeSagaData> sagaDefinition =
-      /* New step in the saga */
-      step()
-          /* Invoking a method with transactions LOCAL to this service */
-          .invokeLocal(this::createSweepstake)
-          /* Run this method to compensate if it gets rejected */
-          .withCompensation(this::handleSweepstakeRejected)
           /* New step in the saga */
-          .step()
-          /* Invoking a cross-service call */
-          .invokeParticipant(this::linkOwnerToSweepstake)
-          /* 'Catch' exceptions here and handle them with methods */
-          .onReply(ParticipantNotFound.class, this::handleParticipantNotFound)
-          .onReply(LinkParticipantToSweepstakeFailure.class, this::handleLinkOwnerToSweepstakeFailure)
-          .build();
+          step()
+                  /* Invoking a method with transactions LOCAL to this service */
+                  .invokeLocal(this::createSweepstake)
+                  /* Run this method to compensate if it gets rejected */
+                  .withCompensation(this::handleSweepstakeRejected)
+
+                  .step()
+                  .invokeLocal(this::createSweepstakeRelation)
+                  .withCompensation(this::handleOwnerRelationRejected)
+                  /* New step in the saga */
+                  .step()
+                  /* Invoking a cross-service call */
+                  .invokeParticipant(this::linkOwnerToSweepstake)
+                  /* 'Catch' exceptions here and handle them with methods */
+                  .onReply(ParticipantNotFound.class, this::handleParticipantNotFound)
+                  .onReply(LinkParticipantToSweepstakeFailure.class, this::handleLinkOwnerToSweepstakeFailure)
+                  .build();
 
   private void handleLinkOwnerToSweepstakeFailure(CreateSweepstakeSagaData data, LinkParticipantToSweepstakeFailure reply) {
 
@@ -61,7 +71,7 @@ public class CreateSweepstakeSaga implements SimpleSaga<CreateSweepstakeSagaData
   }
 
   private CommandWithDestination linkOwnerToSweepstake(
-      CreateSweepstakeSagaData createSweepstakeSagaData) {
+          CreateSweepstakeSagaData createSweepstakeSagaData) {
     UUID sweepstakeId = createSweepstakeSagaData.getSweepstake().getId();
     UUID ownerId = createSweepstakeSagaData.getSweepstake().getOwnerId();
 
@@ -74,6 +84,11 @@ public class CreateSweepstakeSaga implements SimpleSaga<CreateSweepstakeSagaData
     sweepstakeDao.deleteById(createSweepstakeSagaData.getSweepstake().getId());
   }
 
+  private void handleOwnerRelationRejected(CreateSweepstakeSagaData createSweepstakeSagaData) {
+    /* Rollback here */
+    participantIdDao.deleteById(createSweepstakeSagaData.getOwnerIdObject().getId());
+  }
+
   private void createSweepstake(CreateSweepstakeSagaData createSweepstakeSagaData) {
     Sweepstake sweepstake = (Sweepstake) createSweepstakeSagaData.getSweepstake();
 
@@ -81,6 +96,13 @@ public class CreateSweepstakeSaga implements SimpleSaga<CreateSweepstakeSagaData
     sweepstake = sweepstakeDao.save(sweepstake);
 
     createSweepstakeSagaData.getSweepstake().setId(sweepstake.getId());
+  }
+
+  private void createSweepstakeRelation(CreateSweepstakeSagaData createSweepstakeSagaData) {
+    ParticipantIds participantId = new ParticipantIds(createSweepstakeSagaData.getSweepstake().getId(), createSweepstakeSagaData.getSweepstake().getOwnerId());
+    participantIdDao.save(participantId);
+
+    createSweepstakeSagaData.setOwnerIdObject(participantId);
   }
 
   @Override

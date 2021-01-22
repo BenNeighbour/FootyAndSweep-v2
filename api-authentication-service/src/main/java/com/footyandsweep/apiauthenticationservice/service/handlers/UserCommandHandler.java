@@ -42,11 +42,11 @@ public class UserCommandHandler {
     public CommandHandlers commandHandlerDefinitions() {
         return SagaCommandHandlersBuilder
                 .fromChannel("user-service-events")
-                .onMessage(LinkParticipantToSweepstakeCommand.class, this::linkOwnerToSweepstake)
+                .onMessage(LinkParticipantToSweepstakeCommand.class, this::linkParticipantToSweepstake)
                 .build();
     }
 
-    private Message linkOwnerToSweepstake(CommandMessage<LinkParticipantToSweepstakeCommand> linkOwnerToSweepstakeCommand) {
+    private Message linkParticipantToSweepstake(CommandMessage<LinkParticipantToSweepstakeCommand> linkOwnerToSweepstakeCommand) {
         try {
             LinkParticipantToSweepstakeCommand command = linkOwnerToSweepstakeCommand.getCommand();
             userService.addOwnerToSweepstake(command.getSweepstakeId(), command.getOwnerId());

@@ -18,14 +18,12 @@ package com.footyandsweep.apiauthenticationservice.service;
 
 import com.footyandsweep.apiauthenticationservice.exception.SignUpException;
 import com.footyandsweep.apiauthenticationservice.payload.SignUpRequest;
-import com.footyandsweep.apicommonlibrary.exceptions.SomethingWentWrongException;
-import com.footyandsweep.apicommonlibrary.exceptions.UserDoesNotExistException;
 
 import java.util.UUID;
 
 public interface UserService {
 
-  void addOwnerToSweepstake(UUID sweepstakeId, UUID ownerId) throws UserDoesNotExistException, SomethingWentWrongException;
+  void addOwnerToSweepstake(UUID sweepstakeId, UUID ownerId);
 
   void checkSignUpRequestIsValid(SignUpRequest request) throws SignUpException;
 }

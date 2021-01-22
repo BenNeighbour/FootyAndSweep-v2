@@ -15,7 +15,7 @@
  */
 
 import React, {FunctionComponent} from 'react';
-import {Box, Button, Flex, Input, Stack} from "@chakra-ui/react";
+import {Box, Button, Flex, Input, Stack, useColorMode} from "@chakra-ui/react";
 import {SiFacebook, SiGoogle} from "react-icons/all";
 
 interface OwnProps {

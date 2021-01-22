@@ -45,4 +45,8 @@ public interface ParticipantIdDao extends JpaRepository<ParticipantIds, UUID> {
   @Transactional
   @CacheEvict(value = "sweepstakeParticipantCache", key = "#participantIds.getSweepstakeId()")
   void delete(ParticipantIds participantIds);
+
+  @Transactional
+  @CacheEvict(value = "sweepstakeParticipantCache", key = "#participantIds.getSweepstakeId()")
+  void deleteBySweepstakeId(UUID sweepstakeId);
 }
