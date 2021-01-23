@@ -17,6 +17,5 @@
 package com.footyandsweep.apicommonlibrary.exceptions;
 
 public class SomethingWentWrongException extends RuntimeException {
-    public SomethingWentWrongException() {
-    }
+  public SomethingWentWrongException() {}
 }

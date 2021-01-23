@@ -41,9 +41,9 @@ import org.springframework.web.filter.ForwardedHeaderFilter;
 @EnableScheduling
 @EnableJpaRepositories("com.footyandsweep.apiauthenticationservice.dao")
 @Import({
-        WebConfiguration.class,
-        TramMessageProducerJdbcConfiguration.class,
-        EventuateTramKafkaMessageConsumerConfiguration.class
+  WebConfiguration.class,
+  TramMessageProducerJdbcConfiguration.class,
+  EventuateTramKafkaMessageConsumerConfiguration.class
 })
 @EnableConfigurationProperties(AppProperties.class)
 public class ApiAuthenticationServiceApplication {

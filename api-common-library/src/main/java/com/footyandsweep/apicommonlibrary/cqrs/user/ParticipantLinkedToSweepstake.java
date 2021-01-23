@@ -16,5 +16,4 @@
 
 package com.footyandsweep.apicommonlibrary.cqrs.user;
 
-public class ParticipantLinkedToSweepstake implements LinkParticipantToSweepstakeResult {
-}
+public class ParticipantLinkedToSweepstake implements LinkParticipantToSweepstakeResult {}

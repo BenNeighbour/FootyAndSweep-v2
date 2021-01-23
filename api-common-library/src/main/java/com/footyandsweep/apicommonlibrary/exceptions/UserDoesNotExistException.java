@@ -17,6 +17,5 @@
 package com.footyandsweep.apicommonlibrary.exceptions;
 
 public class UserDoesNotExistException extends RuntimeException {
-    public UserDoesNotExistException() {
-    }
+  public UserDoesNotExistException() {}
 }

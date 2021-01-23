@@ -34,16 +34,15 @@ public class SweepstakeEngineConfiguration {
 
   @Bean
   public SweepstakeEngine sweepstakeEngine(
-      SweepstakeDao sweepstakeDao,
-      ParticipantIdDao participantIdDao) {
-//      SagaInstanceFactory sagaInstanceFactory,
-//      CreateSweepstakeSaga createSweepstakeSaga) {
+      SweepstakeDao sweepstakeDao, ParticipantIdDao participantIdDao) {
+    //      SagaInstanceFactory sagaInstanceFactory,
+    //      CreateSweepstakeSaga createSweepstakeSaga) {
     return new SweepstakeEngineImpl(sweepstakeDao, participantIdDao);
   }
 
-//  @Bean
-//  public CreateSweepstakeSaga createSweepstakeSaga() {
-//    return new CreateSweepstakeSaga();
-//  }
+  //  @Bean
+  //  public CreateSweepstakeSaga createSweepstakeSaga() {
+  //    return new CreateSweepstakeSaga();
+  //  }
 
 }

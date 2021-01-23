@@ -2,11 +2,11 @@ apiVersion: skaffold/v2beta10
 kind: Config
 build:
   artifacts:
-  - image: api-ticket-engine
-    docker:
-      dockerfile: Dockerfile
-  local: {}
+    - image: api-ticket-engine
+      docker:
+        dockerfile: Dockerfile
+  local: { }
 deploy:
   kubectl:
     manifests:
-    - ../kubernetes/api-ticket-engine/api-ticket-engine.yaml
+      - ../kubernetes/api-ticket-engine/api-ticket-engine.yaml

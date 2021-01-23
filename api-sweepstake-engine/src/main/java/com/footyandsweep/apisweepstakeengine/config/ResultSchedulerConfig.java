@@ -32,38 +32,38 @@ public class ResultSchedulerConfig {
 
   private final SweepstakeDao sweepstakeDao;
 
-  public ResultSchedulerConfig(
-      SweepstakeDao sweepstakeDao) {
+  public ResultSchedulerConfig(SweepstakeDao sweepstakeDao) {
     this.sweepstakeDao = sweepstakeDao;
   }
 
   /* Scheduled for every 4 minutes (240000) */
   @Scheduled(fixedRate = 240000)
   public void fetchAndDecisionSweepstakes() {
-//    /* Logging the periodic check */
-//    log.info(
-//        "Periodic scrape for results and decisioning sweepstakes at {}",
-//        dateFormat.format(new Date()));
-//
-//    /* TODO: Check and scrape new results */
-//
-//    /* TODO: Get all of the football match ids of the results brought back */
-//
-//    /* TODO: Iterate over the football match ids */
-//
-//    /* For each sweepstake that is open, get the event id, and decision the sweepstake and it's tickets */
-//    sweepstakeDao
-//        .findAllSweepstakesByStatus(SweepstakeCommon.SweepstakeStatus.ALLOCATED)
-//        /* TODO: Filter by the current football match id */
-//        .forEach(
-//            sweepstake -> {
-//              /* Create the event object to be sent over */
-//              SweepstakeEvent sweepstakeEvent =
-//                  new SweepstakeEvent(sweepstake, EventType.NEEDS_DECISIONING);
-//
-//              /* Send a sweepstake needs allocating message */
-//              sweepstakeMessageDispatcher.publishEvent(
-//                  sweepstakeEvent, "api-sweepstake-events-topic");
-//            });
+    //    /* Logging the periodic check */
+    //    log.info(
+    //        "Periodic scrape for results and decisioning sweepstakes at {}",
+    //        dateFormat.format(new Date()));
+    //
+    //    /* TODO: Check and scrape new results */
+    //
+    //    /* TODO: Get all of the football match ids of the results brought back */
+    //
+    //    /* TODO: Iterate over the football match ids */
+    //
+    //    /* For each sweepstake that is open, get the event id, and decision the sweepstake and
+    // it's tickets */
+    //    sweepstakeDao
+    //        .findAllSweepstakesByStatus(SweepstakeCommon.SweepstakeStatus.ALLOCATED)
+    //        /* TODO: Filter by the current football match id */
+    //        .forEach(
+    //            sweepstake -> {
+    //              /* Create the event object to be sent over */
+    //              SweepstakeEvent sweepstakeEvent =
+    //                  new SweepstakeEvent(sweepstake, EventType.NEEDS_DECISIONING);
+    //
+    //              /* Send a sweepstake needs allocating message */
+    //              sweepstakeMessageDispatcher.publishEvent(
+    //                  sweepstakeEvent, "api-sweepstake-events-topic");
+    //            });
   }
 }

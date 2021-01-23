@@ -57,21 +57,27 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
   }
 
   @Override
-  public void createSweepstakeParticipantRelation(CreateSweepstakeSagaData createSweepstakeSagaData) {
-    ParticipantIds participantId = new ParticipantIds(createSweepstakeSagaData.getSweepstake().getId(), createSweepstakeSagaData.getSweepstake().getOwnerId());
-    participantIdDao.save(participantId);
+  public void createSweepstakeParticipantRelation(
+      CreateSweepstakeSagaData createSweepstakeSagaData) {
+    ParticipantIds participantId =
+        new ParticipantIds(
+            createSweepstakeSagaData.getSweepstake().getId(),
+            createSweepstakeSagaData.getSweepstake().getOwnerId());
+    participantId = participantIdDao.save(participantId);
 
     createSweepstakeSagaData.setOwnerIdObject(participantId);
   }
 
   @Override
   public CommandWithDestination linkOwnerToSweepstake(
-          CreateSweepstakeSagaData createSweepstakeSagaData) {
+      CreateSweepstakeSagaData createSweepstakeSagaData) {
     UUID sweepstakeId = createSweepstakeSagaData.getSweepstake().getId();
     UUID ownerId = createSweepstakeSagaData.getSweepstake().getOwnerId();
 
     /* Do the remote service invocation here */
-    return send(new LinkParticipantToSweepstakeCommand(ownerId, sweepstakeId)).to("user-service-events").build();
+    return send(new LinkParticipantToSweepstakeCommand(ownerId, sweepstakeId))
+        .to("user-service-events")
+        .build();
   }
 
   @Override
@@ -82,5 +88,10 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
   @Override
   public void deleteSweepstake(Sweepstake sweepstake) {
     sweepstakeDao.delete(sweepstake);
+  }
+
+  @Override
+  public void deleteSweepstakeRelationById(UUID relationId) {
+    participantIdDao.deleteById(relationId);
   }
 }

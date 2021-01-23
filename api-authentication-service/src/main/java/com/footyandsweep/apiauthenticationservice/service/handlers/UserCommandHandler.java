@@ -33,30 +33,29 @@ import static io.eventuate.tram.commands.consumer.CommandHandlerReplyBuilder.wit
 
 public class UserCommandHandler {
 
-    private final UserService userService;
+  private final UserService userService;
 
-    public UserCommandHandler(UserService userService) {
-        this.userService = userService;
+  public UserCommandHandler(UserService userService) {
+    this.userService = userService;
+  }
+
+  public CommandHandlers commandHandlerDefinitions() {
+    return SagaCommandHandlersBuilder.fromChannel("user-service-events")
+        .onMessage(LinkParticipantToSweepstakeCommand.class, this::linkParticipantToSweepstake)
+        .build();
+  }
+
+  private Message linkParticipantToSweepstake(
+      CommandMessage<LinkParticipantToSweepstakeCommand> linkOwnerToSweepstakeCommand) {
+    try {
+      LinkParticipantToSweepstakeCommand command = linkOwnerToSweepstakeCommand.getCommand();
+      userService.addOwnerToSweepstake(command.getSweepstakeId(), command.getOwnerId());
+
+      return withSuccess(new ParticipantLinkedToSweepstake());
+    } catch (UserDoesNotExistException e) {
+      return withFailure(new ParticipantNotFound());
+    } catch (SomethingWentWrongException e) {
+      return withFailure(new LinkParticipantToSweepstakeFailure());
     }
-
-    public CommandHandlers commandHandlerDefinitions() {
-        return SagaCommandHandlersBuilder
-                .fromChannel("user-service-events")
-                .onMessage(LinkParticipantToSweepstakeCommand.class, this::linkParticipantToSweepstake)
-                .build();
-    }
-
-    private Message linkParticipantToSweepstake(CommandMessage<LinkParticipantToSweepstakeCommand> linkOwnerToSweepstakeCommand) {
-        try {
-            LinkParticipantToSweepstakeCommand command = linkOwnerToSweepstakeCommand.getCommand();
-            userService.addOwnerToSweepstake(command.getSweepstakeId(), command.getOwnerId());
-
-            return withSuccess(new ParticipantLinkedToSweepstake());
-        } catch (UserDoesNotExistException e) {
-            return withFailure(new ParticipantNotFound());
-        } catch (SomethingWentWrongException e) {
-            return withFailure(new LinkParticipantToSweepstakeFailure());
-        }
-    }
-
+  }
 }

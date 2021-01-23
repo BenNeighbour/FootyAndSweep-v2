@@ -31,21 +31,21 @@ import javax.transaction.Transactional;
 @RequestMapping("/sweepstake/test")
 public class SweepstakeControllerTest {
 
-    private final CreateSweepstakeSaga createSweepstakeSaga;
-    private final SagaInstanceFactory sagaInstanceFactory;
+  private final CreateSweepstakeSaga createSweepstakeSaga;
+  private final SagaInstanceFactory sagaInstanceFactory;
 
-    public SweepstakeControllerTest(CreateSweepstakeSaga createSweepstakeSaga, SagaInstanceFactory sagaInstanceFactory) {
-        this.createSweepstakeSaga = createSweepstakeSaga;
-        this.sagaInstanceFactory = sagaInstanceFactory;
-    }
+  public SweepstakeControllerTest(
+      CreateSweepstakeSaga createSweepstakeSaga, SagaInstanceFactory sagaInstanceFactory) {
+    this.createSweepstakeSaga = createSweepstakeSaga;
+    this.sagaInstanceFactory = sagaInstanceFactory;
+  }
 
-    @PostMapping("/save")
-    @Transactional
-    public Sweepstake save(@RequestBody Sweepstake sweepstake) {
-        CreateSweepstakeSagaData data = new CreateSweepstakeSagaData(sweepstake);
-        sagaInstanceFactory.create(createSweepstakeSaga, data);
+  @PostMapping("/save")
+  @Transactional
+  public Sweepstake save(@RequestBody Sweepstake sweepstake) {
+    CreateSweepstakeSagaData data = new CreateSweepstakeSagaData(sweepstake);
+    sagaInstanceFactory.create(createSweepstakeSaga, data);
 
-        return sweepstake;
-    }
-
+    return sweepstake;
+  }
 }

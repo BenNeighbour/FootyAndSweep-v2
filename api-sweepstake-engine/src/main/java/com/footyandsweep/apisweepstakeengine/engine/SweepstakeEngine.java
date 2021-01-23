@@ -20,7 +20,6 @@ import com.footyandsweep.apisweepstakeengine.engine.saga.CreateSweepstakeSagaDat
 import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
 import io.eventuate.tram.commands.consumer.CommandWithDestination;
 
-import javax.transaction.Transactional;
 import java.util.UUID;
 
 public interface SweepstakeEngine {
@@ -32,6 +31,8 @@ public interface SweepstakeEngine {
   void deleteSweepstakeById(UUID sweepstakeId);
 
   void deleteSweepstake(Sweepstake sweepstake);
+
+  void deleteSweepstakeRelationById(UUID sweepstakeId);
 
   CommandWithDestination linkOwnerToSweepstake(CreateSweepstakeSagaData sagaData);
 }

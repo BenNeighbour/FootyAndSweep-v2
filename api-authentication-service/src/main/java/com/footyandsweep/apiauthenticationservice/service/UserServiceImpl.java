@@ -22,13 +22,11 @@ import com.footyandsweep.apiauthenticationservice.exception.SignUpException;
 import com.footyandsweep.apiauthenticationservice.model.User;
 import com.footyandsweep.apiauthenticationservice.payload.SignUpRequest;
 import com.footyandsweep.apiauthenticationservice.relation.SweepstakeIds;
-import com.footyandsweep.apicommonlibrary.exceptions.SomethingWentWrongException;
 import com.footyandsweep.apicommonlibrary.exceptions.UserDoesNotExistException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.text.SimpleDateFormat;
 import java.util.UUID;
 
@@ -41,9 +39,7 @@ public class UserServiceImpl implements UserService {
   private final UserDao userDao;
   private final SweepstakeIdDao sweepstakeIdDao;
 
-  public UserServiceImpl(
-      final UserDao userDao,
-      final SweepstakeIdDao sweepstakeIdDao) {
+  public UserServiceImpl(final UserDao userDao, final SweepstakeIdDao sweepstakeIdDao) {
     this.userDao = userDao;
     this.sweepstakeIdDao = sweepstakeIdDao;
   }
@@ -61,13 +57,13 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public void addOwnerToSweepstake(UUID sweepstakeId, UUID ownerId) {
-      User addingParticipant = userDao.findUserById(ownerId);
+    User addingParticipant = userDao.findUserById(ownerId);
 
-      if (addingParticipant != null) {
-        sweepstakeIdDao.save(new SweepstakeIds(ownerId, sweepstakeId));
-      } else {
-        /* Throw a user does not exist error */
-        throw new UserDoesNotExistException();
-      }
+    if (addingParticipant != null) {
+      sweepstakeIdDao.save(new SweepstakeIds(ownerId, sweepstakeId));
+    } else {
+      /* Throw a user does not exist error */
+      throw new UserDoesNotExistException();
+    }
   }
 }

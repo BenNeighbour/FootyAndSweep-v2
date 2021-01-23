@@ -16,6 +16,4 @@
 
 package com.footyandsweep.apicommonlibrary.cqrs.user;
 
-public interface LinkParticipantToSweepstakeResult {
-
-}
+public interface LinkParticipantToSweepstakeResult {}

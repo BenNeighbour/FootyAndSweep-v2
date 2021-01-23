@@ -20,7 +20,6 @@ import com.footyandsweep.apicommonlibrary.cqrs.user.LinkParticipantToSweepstakeF
 import com.footyandsweep.apicommonlibrary.cqrs.user.ParticipantNotFound;
 import com.footyandsweep.apisweepstakeengine.dao.ParticipantIdDao;
 import com.footyandsweep.apisweepstakeengine.engine.SweepstakeEngine;
-import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
 import io.eventuate.tram.sagas.orchestration.SagaDefinition;
 import io.eventuate.tram.sagas.simpledsl.SimpleSaga;
 import org.springframework.stereotype.Component;
@@ -31,7 +30,8 @@ public class CreateSweepstakeSaga implements SimpleSaga<CreateSweepstakeSagaData
   private final SweepstakeEngine sweepstakeEngine;
   private final ParticipantIdDao participantIdDao;
 
-  public CreateSweepstakeSaga(SweepstakeEngine sweepstakeEngine, ParticipantIdDao participantIdDao) {
+  public CreateSweepstakeSaga(
+      SweepstakeEngine sweepstakeEngine, ParticipantIdDao participantIdDao) {
     this.sweepstakeEngine = sweepstakeEngine;
     this.participantIdDao = participantIdDao;
   }
@@ -40,20 +40,21 @@ public class CreateSweepstakeSaga implements SimpleSaga<CreateSweepstakeSagaData
   public SagaDefinition<CreateSweepstakeSagaData> getSagaDefinition() {
 
     return step()
-            .invokeLocal(sweepstakeEngine::saveSweepstake)
-            .withCompensation(sagaData -> sweepstakeEngine.deleteSweepstake((Sweepstake) sagaData.getSweepstake()))
-            .step()
-            .invokeLocal(sweepstakeEngine::createSweepstakeParticipantRelation)
-            .withCompensation(sagaData -> participantIdDao.delete(sagaData.getOwnerIdObject()))
-            .step()
-            .invokeParticipant(sweepstakeEngine::linkOwnerToSweepstake)
-                    .onReply(
-                            ParticipantNotFound.class,
-                            (sagaData, participantNotFound) -> sagaData.getSweepstake())
-                    .onReply(
-                            LinkParticipantToSweepstakeFailure.class,
-                                    (sagaData, linkFailure) -> sagaData.getSweepstake())
-          .build();
+        .invokeLocal(sweepstakeEngine::saveSweepstake)
+        .withCompensation(
+            sagaData -> sweepstakeEngine.deleteSweepstakeById(sagaData.getSweepstake().getId()))
+        .step()
+        .invokeLocal(sweepstakeEngine::createSweepstakeParticipantRelation)
+        .withCompensation(
+            sagaData ->
+                sweepstakeEngine.deleteSweepstakeRelationById(sagaData.getOwnerIdObject().getId()))
+        .step()
+        .invokeParticipant(sweepstakeEngine::linkOwnerToSweepstake)
+        .onReply(
+            ParticipantNotFound.class, (sagaData, participantNotFound) -> sagaData.getSweepstake())
+        .onReply(
+            LinkParticipantToSweepstakeFailure.class,
+            (sagaData, linkFailure) -> sagaData.getSweepstake())
+        .build();
   }
-
 }

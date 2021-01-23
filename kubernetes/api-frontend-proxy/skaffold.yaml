@@ -2,11 +2,11 @@ apiVersion: skaffold/v2beta10
 kind: Config
 build:
   artifacts:
-  - image: api-frontend-proxy
-    docker:
-      dockerfile: Dockerfile
-  local: {}
+    - image: api-frontend-proxy
+      docker:
+        dockerfile: Dockerfile
+  local: { }
 deploy:
   kubectl:
     manifests:
-    - ./api-frontend-proxy.yaml
+      - ./api-frontend-proxy.yaml

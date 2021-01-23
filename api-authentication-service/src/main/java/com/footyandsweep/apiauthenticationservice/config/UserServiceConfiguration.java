@@ -16,12 +16,12 @@
 
 package com.footyandsweep.apiauthenticationservice.config;
 
-import io.eventuate.tram.commands.consumer.CommandDispatcher;
 import com.footyandsweep.apiauthenticationservice.dao.SweepstakeIdDao;
 import com.footyandsweep.apiauthenticationservice.dao.UserDao;
 import com.footyandsweep.apiauthenticationservice.service.UserService;
 import com.footyandsweep.apiauthenticationservice.service.UserServiceImpl;
 import com.footyandsweep.apiauthenticationservice.service.handlers.UserCommandHandler;
+import io.eventuate.tram.commands.consumer.CommandDispatcher;
 import io.eventuate.tram.sagas.participant.SagaCommandDispatcherFactory;
 import io.eventuate.tram.sagas.spring.participant.SagaParticipantConfiguration;
 import io.eventuate.tram.spring.optimisticlocking.OptimisticLockingDecoratorConfiguration;
@@ -35,20 +35,20 @@ import org.springframework.context.annotation.Import;
 @EnableAutoConfiguration
 public class UserServiceConfiguration {
 
-    @Bean
-    public UserService userService(UserDao userDao, SweepstakeIdDao sweepstakeIdDao) {
-        return new UserServiceImpl(userDao, sweepstakeIdDao);
-    }
+  @Bean
+  public UserService userService(UserDao userDao, SweepstakeIdDao sweepstakeIdDao) {
+    return new UserServiceImpl(userDao, sweepstakeIdDao);
+  }
 
-    @Bean
-    public UserCommandHandler userCommandHandler(UserService userService) {
-        return new UserCommandHandler(userService);
-    }
+  @Bean
+  public UserCommandHandler userCommandHandler(UserService userService) {
+    return new UserCommandHandler(userService);
+  }
 
-    @Bean
-    public CommandDispatcher consumerCommandDispatcher(UserCommandHandler target,
-                                                       SagaCommandDispatcherFactory sagaCommandDispatcherFactory) {
-        return sagaCommandDispatcherFactory.make("user-service-events-dispatcher", target.commandHandlerDefinitions());
-    }
-
+  @Bean
+  public CommandDispatcher consumerCommandDispatcher(
+      UserCommandHandler target, SagaCommandDispatcherFactory sagaCommandDispatcherFactory) {
+    return sagaCommandDispatcherFactory.make(
+        "user-service-events-dispatcher", target.commandHandlerDefinitions());
+  }
 }

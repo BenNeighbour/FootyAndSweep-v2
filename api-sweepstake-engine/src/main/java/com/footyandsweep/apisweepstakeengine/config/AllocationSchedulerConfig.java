@@ -32,29 +32,29 @@ public class AllocationSchedulerConfig {
 
   private final SweepstakeDao sweepstakeDao;
 
-  public AllocationSchedulerConfig(
-      SweepstakeDao sweepstakeDao) {
+  public AllocationSchedulerConfig(SweepstakeDao sweepstakeDao) {
     this.sweepstakeDao = sweepstakeDao;
   }
 
   /* Scheduled for every 2 minutes */
   @Scheduled(fixedRate = 120000)
   public void checkAndAllocateSweepstakes() {
-//    /* Logging the periodic check */
-//    log.info("Periodic check for unallocated sweepstakes at {}", dateFormat.format(new Date()));
-//
-//    /* For each sweepstake that is open, get the event id */
-//    sweepstakeDao
-//        .findAllSweepstakesByStatus(SweepstakeCommon.SweepstakeStatus.OPEN)
-//        .forEach(
-//            sweepstake -> {
-//              /* Create the event object to be sent over */
-//              SweepstakeEvent sweepstakeEvent =
-//                  new SweepstakeEvent(sweepstake, EventType.NEEDS_ALLOCATING);
-//
-//              /* Send a sweepstake needs allocating message */
-//              sweepstakeMessageDispatcher.publishEvent(
-//                  sweepstakeEvent, "api-sweepstake-events-topic");
-//            });
+    //    /* Logging the periodic check */
+    //    log.info("Periodic check for unallocated sweepstakes at {}", dateFormat.format(new
+    // Date()));
+    //
+    //    /* For each sweepstake that is open, get the event id */
+    //    sweepstakeDao
+    //        .findAllSweepstakesByStatus(SweepstakeCommon.SweepstakeStatus.OPEN)
+    //        .forEach(
+    //            sweepstake -> {
+    //              /* Create the event object to be sent over */
+    //              SweepstakeEvent sweepstakeEvent =
+    //                  new SweepstakeEvent(sweepstake, EventType.NEEDS_ALLOCATING);
+    //
+    //              /* Send a sweepstake needs allocating message */
+    //              sweepstakeMessageDispatcher.publishEvent(
+    //                  sweepstakeEvent, "api-sweepstake-events-topic");
+    //            });
   }
 }
