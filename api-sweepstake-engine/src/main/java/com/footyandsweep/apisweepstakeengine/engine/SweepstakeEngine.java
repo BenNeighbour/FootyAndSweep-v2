@@ -16,15 +16,22 @@
 
 package com.footyandsweep.apisweepstakeengine.engine;
 
+import com.footyandsweep.apisweepstakeengine.engine.saga.CreateSweepstakeSagaData;
 import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
+import io.eventuate.tram.commands.consumer.CommandWithDestination;
 
+import javax.transaction.Transactional;
 import java.util.UUID;
 
 public interface SweepstakeEngine {
 
-  Sweepstake saveSweepstake(UUID ownerId, Sweepstake sweepstake);
+  void saveSweepstake(CreateSweepstakeSagaData sagaData);
 
-  void deleteParticipantRelation(UUID sweepstakeId);
+  void createSweepstakeParticipantRelation(CreateSweepstakeSagaData sagaData);
 
-  Sweepstake deleteSweepstake(UUID sweepstakeId);
+  void deleteSweepstakeById(UUID sweepstakeId);
+
+  void deleteSweepstake(Sweepstake sweepstake);
+
+  CommandWithDestination linkOwnerToSweepstake(CreateSweepstakeSagaData sagaData);
 }

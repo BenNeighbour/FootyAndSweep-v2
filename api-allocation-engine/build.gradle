@@ -65,11 +65,7 @@ dependencies {
 
     compileOnly "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
 
-//    compile group: 'org.postgresql', name: 'postgresql', version: '42.1.1'
-
-    compile ('org.postgresql:postgresql:9.4-1200-jdbc41') {
-        exclude group: "org.slf4j", module: "slf4j-simple"
-    }
+    compile group: 'org.postgresql', name: 'postgresql', version: '42.1.1'
 
     implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
     implementation "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"

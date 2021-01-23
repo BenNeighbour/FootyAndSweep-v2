@@ -20,8 +20,6 @@ import com.footyandsweep.apisweepstakeengine.dao.ParticipantIdDao;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
 import com.footyandsweep.apisweepstakeengine.engine.SweepstakeEngine;
 import com.footyandsweep.apisweepstakeengine.engine.SweepstakeEngineImpl;
-import com.footyandsweep.apisweepstakeengine.engine.saga.CreateSweepstakeSaga;
-import io.eventuate.tram.sagas.orchestration.SagaInstanceFactory;
 import io.eventuate.tram.sagas.spring.orchestration.SagaOrchestratorConfiguration;
 import io.eventuate.tram.spring.optimisticlocking.OptimisticLockingDecoratorConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -37,14 +35,15 @@ public class SweepstakeEngineConfiguration {
   @Bean
   public SweepstakeEngine sweepstakeEngine(
       SweepstakeDao sweepstakeDao,
-      ParticipantIdDao participantIdDao,
-      SagaInstanceFactory sagaInstanceFactory,
-      CreateSweepstakeSaga createSweepstakeSaga) {
-    return new SweepstakeEngineImpl(sweepstakeDao, participantIdDao, sagaInstanceFactory, createSweepstakeSaga);
+      ParticipantIdDao participantIdDao) {
+//      SagaInstanceFactory sagaInstanceFactory,
+//      CreateSweepstakeSaga createSweepstakeSaga) {
+    return new SweepstakeEngineImpl(sweepstakeDao, participantIdDao);
   }
 
-  @Bean
-  public CreateSweepstakeSaga createSweepstakeSaga(SweepstakeDao sweepstakeDao) {
-    return new CreateSweepstakeSaga(sweepstakeDao);
-  }
+//  @Bean
+//  public CreateSweepstakeSaga createSweepstakeSaga() {
+//    return new CreateSweepstakeSaga();
+//  }
+
 }

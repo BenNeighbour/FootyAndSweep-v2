@@ -16,26 +16,36 @@
 
 package com.footyandsweep.apisweepstakeengine;
 
-import com.footyandsweep.apisweepstakeengine.engine.SweepstakeEngine;
+import com.footyandsweep.apisweepstakeengine.engine.saga.CreateSweepstakeSaga;
+import com.footyandsweep.apisweepstakeengine.engine.saga.CreateSweepstakeSagaData;
 import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
+import io.eventuate.tram.sagas.orchestration.SagaInstanceFactory;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.transaction.Transactional;
+
 @RestController
 @RequestMapping("/sweepstake/test")
 public class SweepstakeControllerTest {
 
-    private final SweepstakeEngine sweepstakeEngine;
+    private final CreateSweepstakeSaga createSweepstakeSaga;
+    private final SagaInstanceFactory sagaInstanceFactory;
 
-    public SweepstakeControllerTest(SweepstakeEngine sweepstakeEngine) {
-        this.sweepstakeEngine = sweepstakeEngine;
+    public SweepstakeControllerTest(CreateSweepstakeSaga createSweepstakeSaga, SagaInstanceFactory sagaInstanceFactory) {
+        this.createSweepstakeSaga = createSweepstakeSaga;
+        this.sagaInstanceFactory = sagaInstanceFactory;
     }
 
     @PostMapping("/save")
+    @Transactional
     public Sweepstake save(@RequestBody Sweepstake sweepstake) {
-        return sweepstakeEngine.saveSweepstake(sweepstake.getOwnerId(), sweepstake);
+        CreateSweepstakeSagaData data = new CreateSweepstakeSagaData(sweepstake);
+        sagaInstanceFactory.create(createSweepstakeSaga, data);
+
+        return sweepstake;
     }
 
 }
