@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apisweepstakeengine.engine.saga;
+package com.footyandsweep.apisweepstakeengine.engine.saga.createSweepstake;
 
 import com.footyandsweep.apicommonlibrary.cqrs.user.LinkParticipantToSweepstakeFailure;
 import com.footyandsweep.apicommonlibrary.cqrs.user.ParticipantNotFound;

@@ -14,18 +14,7 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apiauthenticationservice.service;
+package com.footyandsweep.apicommonlibrary.cqrs.sweepstake;
 
-import com.footyandsweep.apiauthenticationservice.exception.SignUpException;
-import com.footyandsweep.apiauthenticationservice.payload.SignUpRequest;
-
-import java.util.UUID;
-
-public interface UserService {
-
-  void addOwnerToSweepstake(UUID sweepstakeId, UUID ownerId);
-
-  void checkSignUpRequestIsValid(SignUpRequest request) throws SignUpException;
-
-  void deleteAllSweepstakeRelations(UUID sweepstakeId);
+public class AllSweepstakeRelationsDeleted extends DeleteAllSweepstakeRelationsCommand {
 }

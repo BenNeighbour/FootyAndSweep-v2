@@ -14,18 +14,20 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apiauthenticationservice.service;
+package com.footyandsweep.apisweepstakeengine.engine.saga.deleteSweepstake;
 
-import com.footyandsweep.apiauthenticationservice.exception.SignUpException;
-import com.footyandsweep.apiauthenticationservice.payload.SignUpRequest;
+import com.footyandsweep.apicommonlibrary.cqrs.BaseSagaData;
+import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
+import com.footyandsweep.apisweepstakeengine.relation.ParticipantIds;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.util.UUID;
-
-public interface UserService {
-
-  void addOwnerToSweepstake(UUID sweepstakeId, UUID ownerId);
-
-  void checkSignUpRequestIsValid(SignUpRequest request) throws SignUpException;
-
-  void deleteAllSweepstakeRelations(UUID sweepstakeId);
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+public class DeleteSweepstakeSagaData {
+  private SweepstakeCommon sweepstake;
 }

@@ -14,24 +14,20 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apisweepstakeengine.engine.saga;
+package com.footyandsweep.apicommonlibrary.cqrs.sweepstake;
 
-import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
-import com.footyandsweep.apisweepstakeengine.relation.ParticipantIds;
+import io.eventuate.tram.commands.common.Command;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Setter
 @Getter
-@NoArgsConstructor
 @AllArgsConstructor
-public class CreateSweepstakeSagaData {
-  private SweepstakeCommon sweepstake;
-  private ParticipantIds ownerIdObject;
-
-  public CreateSweepstakeSagaData(SweepstakeCommon sweepstake) {
-    this.sweepstake = sweepstake;
-  }
+@NoArgsConstructor
+public class DeleteAllSweepstakeRelationsCommand implements Command {
+    private UUID sweepstakeId;
 }

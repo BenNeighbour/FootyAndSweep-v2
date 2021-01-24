@@ -17,6 +17,8 @@
 package com.footyandsweep.apiauthenticationservice.service.handlers;
 
 import com.footyandsweep.apiauthenticationservice.service.UserService;
+import com.footyandsweep.apicommonlibrary.cqrs.sweepstake.AllSweepstakeRelationsDeleted;
+import com.footyandsweep.apicommonlibrary.cqrs.sweepstake.DeleteAllSweepstakeRelationsCommand;
 import com.footyandsweep.apicommonlibrary.cqrs.user.LinkParticipantToSweepstakeCommand;
 import com.footyandsweep.apicommonlibrary.cqrs.user.LinkParticipantToSweepstakeFailure;
 import com.footyandsweep.apicommonlibrary.cqrs.user.ParticipantLinkedToSweepstake;
@@ -41,12 +43,20 @@ public class UserCommandHandler {
 
   public CommandHandlers commandHandlerDefinitions() {
     return SagaCommandHandlersBuilder.fromChannel("user-service-events")
-        .onMessage(LinkParticipantToSweepstakeCommand.class, this::linkParticipantToSweepstake)
-        .build();
+            .onMessage(LinkParticipantToSweepstakeCommand.class, this::linkParticipantToSweepstake)
+            .onMessage(DeleteAllSweepstakeRelationsCommand.class, this::deleteAllSweepstakeRelations)
+            .build();
+  }
+
+  private Message deleteAllSweepstakeRelations(CommandMessage<DeleteAllSweepstakeRelationsCommand> deleteAllSweepstakeRelationsCommand) {
+    DeleteAllSweepstakeRelationsCommand command = deleteAllSweepstakeRelationsCommand.getCommand();
+    userService.deleteAllSweepstakeRelations(command.getSweepstakeId());
+
+    return withSuccess(new AllSweepstakeRelationsDeleted());
   }
 
   private Message linkParticipantToSweepstake(
-      CommandMessage<LinkParticipantToSweepstakeCommand> linkOwnerToSweepstakeCommand) {
+          CommandMessage<LinkParticipantToSweepstakeCommand> linkOwnerToSweepstakeCommand) {
     try {
       LinkParticipantToSweepstakeCommand command = linkOwnerToSweepstakeCommand.getCommand();
       userService.addOwnerToSweepstake(command.getSweepstakeId(), command.getOwnerId());

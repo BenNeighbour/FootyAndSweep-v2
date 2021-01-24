@@ -16,10 +16,12 @@
 
 package com.footyandsweep.apisweepstakeengine.engine;
 
+import com.footyandsweep.apicommonlibrary.cqrs.sweepstake.DeleteAllSweepstakeRelationsCommand;
 import com.footyandsweep.apicommonlibrary.cqrs.user.LinkParticipantToSweepstakeCommand;
 import com.footyandsweep.apisweepstakeengine.dao.ParticipantIdDao;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
-import com.footyandsweep.apisweepstakeengine.engine.saga.CreateSweepstakeSagaData;
+import com.footyandsweep.apisweepstakeengine.engine.saga.createSweepstake.CreateSweepstakeSagaData;
+import com.footyandsweep.apisweepstakeengine.engine.saga.deleteSweepstake.DeleteSweepstakeSagaData;
 import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
 import com.footyandsweep.apisweepstakeengine.relation.ParticipantIds;
 import io.eventuate.tram.commands.consumer.CommandWithDestination;
@@ -28,6 +30,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static io.eventuate.tram.commands.consumer.CommandWithDestinationBuilder.send;
@@ -81,6 +85,13 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
   }
 
   @Override
+  public CommandWithDestination deleteRemoteSweepstakeRelation(DeleteSweepstakeSagaData sagaData) {
+    return send(new DeleteAllSweepstakeRelationsCommand(sagaData.getSweepstake().getId()))
+            .to("user-service-events")
+            .build();
+  }
+
+  @Override
   public void deleteSweepstakeById(UUID sweepstakeId) {
     sweepstakeDao.deleteById(sweepstakeId);
   }
@@ -93,5 +104,13 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
   @Override
   public void deleteSweepstakeRelationById(UUID relationId) {
     participantIdDao.deleteById(relationId);
+  }
+
+  @Override
+  public void deleteAllSweepstakeRelationsBySweepstakeId(UUID sweepstakeId) {
+    Optional<List<ParticipantIds>> participantIds = participantIdDao.findAllParticipantIdsBySweepstakeId(sweepstakeId);
+
+    assert participantIds.isPresent();
+    participantIds.get().forEach(participantIdDao::delete);
   }
 }

@@ -16,8 +16,10 @@
 
 package com.footyandsweep.apisweepstakeengine;
 
-import com.footyandsweep.apisweepstakeengine.engine.saga.CreateSweepstakeSaga;
-import com.footyandsweep.apisweepstakeengine.engine.saga.CreateSweepstakeSagaData;
+import com.footyandsweep.apisweepstakeengine.engine.saga.createSweepstake.CreateSweepstakeSaga;
+import com.footyandsweep.apisweepstakeengine.engine.saga.createSweepstake.CreateSweepstakeSagaData;
+import com.footyandsweep.apisweepstakeengine.engine.saga.deleteSweepstake.DeleteSweepstakeSaga;
+import com.footyandsweep.apisweepstakeengine.engine.saga.deleteSweepstake.DeleteSweepstakeSagaData;
 import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
 import io.eventuate.tram.sagas.orchestration.SagaInstanceFactory;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,11 +34,12 @@ import javax.transaction.Transactional;
 public class SweepstakeControllerTest {
 
   private final CreateSweepstakeSaga createSweepstakeSaga;
+  private final DeleteSweepstakeSaga deleteSweepstakeSaga;
   private final SagaInstanceFactory sagaInstanceFactory;
 
-  public SweepstakeControllerTest(
-      CreateSweepstakeSaga createSweepstakeSaga, SagaInstanceFactory sagaInstanceFactory) {
+  public SweepstakeControllerTest(CreateSweepstakeSaga createSweepstakeSaga, DeleteSweepstakeSaga deleteSweepstakeSaga, SagaInstanceFactory sagaInstanceFactory) {
     this.createSweepstakeSaga = createSweepstakeSaga;
+    this.deleteSweepstakeSaga = deleteSweepstakeSaga;
     this.sagaInstanceFactory = sagaInstanceFactory;
   }
 
@@ -45,6 +48,15 @@ public class SweepstakeControllerTest {
   public Sweepstake save(@RequestBody Sweepstake sweepstake) {
     CreateSweepstakeSagaData data = new CreateSweepstakeSagaData(sweepstake);
     sagaInstanceFactory.create(createSweepstakeSaga, data);
+
+    return sweepstake;
+  }
+
+  @PostMapping("/delete")
+  @Transactional
+  public Sweepstake delete(@RequestBody Sweepstake sweepstake) {
+    DeleteSweepstakeSagaData data = new DeleteSweepstakeSagaData(sweepstake);
+    sagaInstanceFactory.create(deleteSweepstakeSaga, data);
 
     return sweepstake;
   }

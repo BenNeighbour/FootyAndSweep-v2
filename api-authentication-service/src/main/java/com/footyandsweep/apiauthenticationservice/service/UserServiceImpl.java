@@ -28,6 +28,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -65,5 +67,13 @@ public class UserServiceImpl implements UserService {
       /* Throw a user does not exist error */
       throw new UserDoesNotExistException();
     }
+  }
+
+  @Override
+  public void deleteAllSweepstakeRelations(UUID sweepstakeId) {
+    Optional<List<SweepstakeIds>> sweepstakeIdsList = sweepstakeIdDao.findAllSweepstakeIdsBySweepstakeId(sweepstakeId);
+
+    assert sweepstakeIdsList.isPresent();
+    sweepstakeIdsList.get().forEach(sweepstakeIdDao::delete);
   }
 }
