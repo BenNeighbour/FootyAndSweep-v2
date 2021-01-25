@@ -28,4 +28,6 @@ public interface UserService {
   void checkSignUpRequestIsValid(SignUpRequest request) throws SignUpException;
 
   void deleteAllSweepstakeRelations(UUID sweepstakeId);
+
+  void saveSweepstakeId(UUID sweepstakeId, UUID participantId);
 }

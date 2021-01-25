@@ -16,5 +16,4 @@
 
 package com.footyandsweep.apicommonlibrary.cqrs;
 
-public interface BaseSagaData {
-}
+public interface BaseSagaData {}

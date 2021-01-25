@@ -30,7 +30,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class LinkParticipantToSweepstakeCommand implements Command {
 
-  private UUID ownerId;
+  private UUID participantId;
 
   private UUID sweepstakeId;
 }

@@ -14,7 +14,20 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apicommonlibrary.cqrs.sweepstake;
+package com.footyandsweep.apicommonlibrary.cqrs.sweepstake.delete;
 
-public class AllSweepstakeRelationsDeleted extends DeleteAllSweepstakeRelationsCommand {
+import io.eventuate.tram.commands.common.Command;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.UUID;
+
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+public class DeleteAllSweepstakeRelationsCommand implements Command {
+  private UUID sweepstakeId;
 }

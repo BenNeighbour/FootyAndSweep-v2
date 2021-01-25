@@ -16,9 +16,7 @@
 
 package com.footyandsweep.apisweepstakeengine.engine.saga.deleteSweepstake;
 
-import com.footyandsweep.apicommonlibrary.cqrs.BaseSagaData;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
-import com.footyandsweep.apisweepstakeengine.relation.ParticipantIds;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

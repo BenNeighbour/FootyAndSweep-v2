@@ -14,9 +14,8 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apicommonlibrary.cqrs.sweepstake;
+package com.footyandsweep.apisweepstakeengine.engine.saga.joinSweepstake;
 
-import io.eventuate.tram.commands.common.Command;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,8 +25,11 @@ import java.util.UUID;
 
 @Setter
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
-public class DeleteAllSweepstakeRelationsCommand implements Command {
-    private UUID sweepstakeId;
+@AllArgsConstructor
+public class JoinSweepstakeSagaData {
+  private String sweepstakeJoinCode;
+  private UUID sweepstakeId;
+  private UUID participantId;
+  private UUID sweepstakeParticipantId;
 }

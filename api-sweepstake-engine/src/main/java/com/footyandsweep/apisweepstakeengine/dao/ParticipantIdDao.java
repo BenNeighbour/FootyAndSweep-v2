@@ -32,7 +32,7 @@ public interface ParticipantIdDao extends JpaRepository<ParticipantIds, UUID> {
 
   @Transactional
   @Cacheable(value = "sweepstakeParticipantCache", key = "#sweepstakeId")
-  Optional<List<ParticipantIds>> findAllParticipantIdsBySweepstakeId(UUID sweepstakeId);
+  List<ParticipantIds> findAllParticipantIdsBySweepstakeId(UUID sweepstakeId);
 
   @Transactional
   @Cacheable(value = "sweepstakeParticipantCache", key = "#result.get().getSweepstakeId()")

@@ -14,11 +14,10 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apisweepstakeengine.engine.saga.createSweepstake;
+package com.footyandsweep.apisweepstakeengine.engine.saga.joinSweepstake;
 
 import com.footyandsweep.apicommonlibrary.cqrs.user.LinkParticipantToSweepstakeFailure;
 import com.footyandsweep.apicommonlibrary.cqrs.user.ParticipantNotFound;
-import com.footyandsweep.apisweepstakeengine.dao.ParticipantIdDao;
 import com.footyandsweep.apisweepstakeengine.engine.SweepstakeEngine;
 import com.footyandsweep.apisweepstakeengine.relation.ParticipantIds;
 import io.eventuate.tram.sagas.orchestration.SagaDefinition;
@@ -26,47 +25,40 @@ import io.eventuate.tram.sagas.simpledsl.SimpleSaga;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CreateSweepstakeSaga implements SimpleSaga<CreateSweepstakeSagaData> {
+public class JoinSweepstakeSaga implements SimpleSaga<JoinSweepstakeSagaData> {
 
   private final SweepstakeEngine sweepstakeEngine;
-  private final ParticipantIdDao participantIdDao;
 
-  public CreateSweepstakeSaga(
-      SweepstakeEngine sweepstakeEngine, ParticipantIdDao participantIdDao) {
+  public JoinSweepstakeSaga(SweepstakeEngine sweepstakeEngine) {
     this.sweepstakeEngine = sweepstakeEngine;
-    this.participantIdDao = participantIdDao;
   }
 
   @Override
-  public SagaDefinition<CreateSweepstakeSagaData> getSagaDefinition() {
-
+  public SagaDefinition<JoinSweepstakeSagaData> getSagaDefinition() {
     return step()
-        .invokeLocal(sweepstakeEngine::saveSweepstake)
-        .withCompensation(
-            sagaData -> sweepstakeEngine.deleteSweepstakeById(sagaData.getSweepstake().getId()))
-        .step()
         .invokeLocal(
             sagaData -> {
-              ParticipantIds participantIds =
+              ParticipantIds participantId =
                   sweepstakeEngine.createSweepstakeParticipantRelation(
-                      sagaData.getSweepstake().getJoinCode(),
-                      sagaData.getSweepstake().getOwnerId());
-              sagaData.setOwnerIdObject(participantIds);
+                      sagaData.getSweepstakeJoinCode(), sagaData.getParticipantId());
+
+              sagaData.setSweepstakeParticipantId(participantId.getId());
+              sagaData.setSweepstakeId(participantId.getSweepstakeId());
             })
         .withCompensation(
-            sagaData ->
-                sweepstakeEngine.deleteSweepstakeRelationById(sagaData.getOwnerIdObject().getId()))
+            sagaData -> {
+              /* Delete the sweepstake and the relation */
+              sweepstakeEngine.deleteSweepstakeById(sagaData.getSweepstakeId());
+              sweepstakeEngine.deleteSweepstakeRelationById(sagaData.getSweepstakeParticipantId());
+            })
         .step()
         .invokeParticipant(
             sagaData ->
                 sweepstakeEngine.linkParticipantToSweepstake(
-                    sagaData.getSweepstake().getId(),
-                    sagaData.getOwnerIdObject().getParticipantId()))
+                    sagaData.getSweepstakeId(), sagaData.getParticipantId()))
+        .onReply(ParticipantNotFound.class, (sagaData, e) -> sagaData.getSweepstakeId())
         .onReply(
-            ParticipantNotFound.class, (sagaData, participantNotFound) -> sagaData.getSweepstake())
-        .onReply(
-            LinkParticipantToSweepstakeFailure.class,
-            (sagaData, linkFailure) -> sagaData.getSweepstake())
+            LinkParticipantToSweepstakeFailure.class, (sagaData, e) -> sagaData.getSweepstakeId())
         .build();
   }
 }

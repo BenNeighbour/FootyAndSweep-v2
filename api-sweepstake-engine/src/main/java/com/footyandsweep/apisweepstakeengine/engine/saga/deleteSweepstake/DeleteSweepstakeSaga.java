@@ -35,13 +35,15 @@ public class DeleteSweepstakeSaga implements SimpleSaga<DeleteSweepstakeSagaData
     return step()
         .invokeLocal(
             sagaData -> sweepstakeEngine.deleteSweepstakeById(sagaData.getSweepstake().getId()))
-            .withCompensation(sagaData -> {})
+        .withCompensation(sagaData -> {})
         .step()
         .invokeParticipant(sweepstakeEngine::deleteRemoteSweepstakeRelation)
         .step()
         .invokeLocal(
-            sagaData -> sweepstakeEngine.deleteAllSweepstakeRelationsBySweepstakeId(sagaData.getSweepstake().getId()))
-            .withCompensation(sagaData -> {})
+            sagaData ->
+                sweepstakeEngine.deleteAllSweepstakeRelationsBySweepstakeId(
+                    sagaData.getSweepstake().getId()))
+        .withCompensation(sagaData -> {})
         .build();
   }
 }

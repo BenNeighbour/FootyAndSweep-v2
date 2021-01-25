@@ -20,14 +20,15 @@ import com.footyandsweep.apisweepstakeengine.engine.saga.createSweepstake.Create
 import com.footyandsweep.apisweepstakeengine.engine.saga.createSweepstake.CreateSweepstakeSagaData;
 import com.footyandsweep.apisweepstakeengine.engine.saga.deleteSweepstake.DeleteSweepstakeSaga;
 import com.footyandsweep.apisweepstakeengine.engine.saga.deleteSweepstake.DeleteSweepstakeSagaData;
+import com.footyandsweep.apisweepstakeengine.engine.saga.joinSweepstake.JoinSweepstakeSaga;
+import com.footyandsweep.apisweepstakeengine.engine.saga.joinSweepstake.JoinSweepstakeSagaData;
 import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
 import io.eventuate.tram.sagas.orchestration.SagaInstanceFactory;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/sweepstake/test")
@@ -35,11 +36,14 @@ public class SweepstakeControllerTest {
 
   private final CreateSweepstakeSaga createSweepstakeSaga;
   private final DeleteSweepstakeSaga deleteSweepstakeSaga;
+  private final JoinSweepstakeSaga joinSweepstakeSaga;
+
   private final SagaInstanceFactory sagaInstanceFactory;
 
-  public SweepstakeControllerTest(CreateSweepstakeSaga createSweepstakeSaga, DeleteSweepstakeSaga deleteSweepstakeSaga, SagaInstanceFactory sagaInstanceFactory) {
+  public SweepstakeControllerTest(CreateSweepstakeSaga createSweepstakeSaga, DeleteSweepstakeSaga deleteSweepstakeSaga, JoinSweepstakeSaga joinSweepstakeSaga, SagaInstanceFactory sagaInstanceFactory) {
     this.createSweepstakeSaga = createSweepstakeSaga;
     this.deleteSweepstakeSaga = deleteSweepstakeSaga;
+    this.joinSweepstakeSaga = joinSweepstakeSaga;
     this.sagaInstanceFactory = sagaInstanceFactory;
   }
 
@@ -59,5 +63,17 @@ public class SweepstakeControllerTest {
     sagaInstanceFactory.create(deleteSweepstakeSaga, data);
 
     return sweepstake;
+  }
+
+  @PostMapping("/join")
+  @Transactional
+  public ResponseEntity<String> join(@RequestParam("participantId") UUID participantId, @RequestParam("joinCode") String joinCode) {
+    JoinSweepstakeSagaData data = new JoinSweepstakeSagaData();
+    data.setSweepstakeJoinCode(joinCode);
+    data.setParticipantId(participantId);
+
+    sagaInstanceFactory.create(joinSweepstakeSaga, data);
+
+    return ResponseEntity.ok("Joined Successfully");
   }
 }

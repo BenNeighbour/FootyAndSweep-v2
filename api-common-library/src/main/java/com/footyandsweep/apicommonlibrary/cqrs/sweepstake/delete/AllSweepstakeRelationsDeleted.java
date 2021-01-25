@@ -14,24 +14,6 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apisweepstakeengine.engine.saga.createSweepstake;
+package com.footyandsweep.apicommonlibrary.cqrs.sweepstake.delete;
 
-import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
-import com.footyandsweep.apisweepstakeengine.relation.ParticipantIds;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-@Setter
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
-public class CreateSweepstakeSagaData {
-  private SweepstakeCommon sweepstake;
-  private ParticipantIds ownerIdObject;
-
-  public CreateSweepstakeSagaData(SweepstakeCommon sweepstake) {
-    this.sweepstake = sweepstake;
-  }
-}
+public class AllSweepstakeRelationsDeleted extends DeleteAllSweepstakeRelationsCommand {}

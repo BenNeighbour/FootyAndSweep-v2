@@ -53,7 +53,21 @@ public class UserServiceImpl implements UserService {
       throw new SignUpException("Password and Confirm Password do not match up!");
     } else if (userDao.existsByEmail(request.getEmail())) {
       throw new SignUpException(
-          "Another account is using this email address. Please log into your account.");
+              "Another account is using this email address. Please log into your account.");
+    }
+  }
+
+  @Override
+  public void saveSweepstakeId(UUID sweepstakeId, UUID participantId) {
+    /* Check if the user actually exists */
+    User joiningUser = userDao.findUserById(participantId);
+
+    if (joiningUser != null) {
+      /* If the user exists, save the new relation */
+      SweepstakeIds sweepstakeIds = new SweepstakeIds(participantId, sweepstakeId);
+      sweepstakeIdDao.save(sweepstakeIds);
+    } else {
+      throw new UserDoesNotExistException();
     }
   }
 
@@ -71,7 +85,8 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public void deleteAllSweepstakeRelations(UUID sweepstakeId) {
-    Optional<List<SweepstakeIds>> sweepstakeIdsList = sweepstakeIdDao.findAllSweepstakeIdsBySweepstakeId(sweepstakeId);
+    Optional<List<SweepstakeIds>> sweepstakeIdsList =
+            sweepstakeIdDao.findAllSweepstakeIdsBySweepstakeId(sweepstakeId);
 
     assert sweepstakeIdsList.isPresent();
     sweepstakeIdsList.get().forEach(sweepstakeIdDao::delete);
