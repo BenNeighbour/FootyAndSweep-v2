@@ -16,6 +16,7 @@
 
 package com.footyandsweep.apisweepstakeengine;
 
+import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
 import com.footyandsweep.apisweepstakeengine.engine.saga.createSweepstake.CreateSweepstakeSaga;
 import com.footyandsweep.apisweepstakeengine.engine.saga.createSweepstake.CreateSweepstakeSagaData;
 import com.footyandsweep.apisweepstakeengine.engine.saga.deleteSweepstake.DeleteSweepstakeSaga;
@@ -34,13 +35,16 @@ import java.util.UUID;
 @RequestMapping("/sweepstake/test")
 public class SweepstakeControllerTest {
 
+  private final SweepstakeDao sweepstakeDao;
+
   private final CreateSweepstakeSaga createSweepstakeSaga;
   private final DeleteSweepstakeSaga deleteSweepstakeSaga;
   private final JoinSweepstakeSaga joinSweepstakeSaga;
 
   private final SagaInstanceFactory sagaInstanceFactory;
 
-  public SweepstakeControllerTest(CreateSweepstakeSaga createSweepstakeSaga, DeleteSweepstakeSaga deleteSweepstakeSaga, JoinSweepstakeSaga joinSweepstakeSaga, SagaInstanceFactory sagaInstanceFactory) {
+  public SweepstakeControllerTest(SweepstakeDao sweepstakeDao, CreateSweepstakeSaga createSweepstakeSaga, DeleteSweepstakeSaga deleteSweepstakeSaga, JoinSweepstakeSaga joinSweepstakeSaga, SagaInstanceFactory sagaInstanceFactory) {
+    this.sweepstakeDao = sweepstakeDao;
     this.createSweepstakeSaga = createSweepstakeSaga;
     this.deleteSweepstakeSaga = deleteSweepstakeSaga;
     this.joinSweepstakeSaga = joinSweepstakeSaga;
@@ -63,6 +67,11 @@ public class SweepstakeControllerTest {
     sagaInstanceFactory.create(deleteSweepstakeSaga, data);
 
     return sweepstake;
+  }
+
+  @GetMapping("/by/joinCode/{joinCode}")
+  public Sweepstake findSweepstakeByJoinCode(@PathVariable("joinCode") String joinCode) {
+    return sweepstakeDao.findSweepstakeByJoinCode(joinCode);
   }
 
   @PostMapping("/join")

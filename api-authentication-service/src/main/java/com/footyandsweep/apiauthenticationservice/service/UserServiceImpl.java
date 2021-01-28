@@ -22,11 +22,13 @@ import com.footyandsweep.apiauthenticationservice.exception.SignUpException;
 import com.footyandsweep.apiauthenticationservice.model.User;
 import com.footyandsweep.apiauthenticationservice.payload.SignUpRequest;
 import com.footyandsweep.apiauthenticationservice.relation.SweepstakeIds;
+import com.footyandsweep.apicommonlibrary.exceptions.InsufficientCreditsException;
 import com.footyandsweep.apicommonlibrary.exceptions.UserDoesNotExistException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
@@ -90,5 +92,25 @@ public class UserServiceImpl implements UserService {
 
     assert sweepstakeIdsList.isPresent();
     sweepstakeIdsList.get().forEach(sweepstakeIdDao::delete);
+  }
+
+  @Override
+  public void updateUserBalance(UUID userId, BigDecimal amountDeducted) {
+    try {
+      User user = userDao.findUserById(userId);
+
+      if (user == null) throw new UserDoesNotExistException();
+
+      /* Check if the user can afford the amount deducted */
+      if (!(user.getBalance().subtract(amountDeducted).compareTo(new BigDecimal("0")) >= 0))
+        throw new InsufficientCreditsException();
+
+      user.setBalance(user.getBalance().subtract(amountDeducted));
+      userDao.saveAndFlush(user);
+    } catch (UserDoesNotExistException | NullPointerException e) {
+      throw new UserDoesNotExistException();
+    } catch (InsufficientCreditsException e) {
+      throw new InsufficientCreditsException();
+    }
   }
 }

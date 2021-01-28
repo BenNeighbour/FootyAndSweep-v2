@@ -17,6 +17,8 @@
 package com.footyandsweep.apiticketengine;
 
 import com.footyandsweep.apiticketengine.config.WebConfiguration;
+import io.eventuate.tram.spring.consumer.kafka.EventuateTramKafkaMessageConsumerConfiguration;
+import io.eventuate.tram.spring.messaging.producer.jdbc.TramMessageProducerJdbcConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -27,16 +29,20 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.Ordered;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.kafka.annotation.EnableKafka;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.ForwardedHeaderFilter;
 
+@EnableJpaRepositories("com.footyandsweep.apiticketengine.dao")
 @EnableCaching
 @SpringBootApplication
-@EnableJpaRepositories
 @EnableDiscoveryClient
-@EnableKafka
-@Import({WebConfiguration.class})
+@EnableScheduling
+@Import({
+        WebConfiguration.class,
+        TramMessageProducerJdbcConfiguration.class,
+        EventuateTramKafkaMessageConsumerConfiguration.class
+})
 public class ApiTicketEngineApplication {
 
   public static void main(String[] args) {

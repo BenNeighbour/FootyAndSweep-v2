@@ -14,16 +14,21 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apiticketengine.engine;
+package com.footyandsweep.apiticketengine.engine.saga;
 
-import com.footyandsweep.apiticketengine.engine.saga.BuyTicketSagaData;
-import io.eventuate.tram.commands.consumer.CommandWithDestination;
+import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
+import com.footyandsweep.apicommonlibrary.model.user.UserCommon;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-public interface TicketEngine {
-
-  void buyTickets(BuyTicketSagaData sagaData);
-
-  void getParentSweepstakeAndParticipant(BuyTicketSagaData sagaData);
-
-  CommandWithDestination updateUserBalance(BuyTicketSagaData buyTicketSagaData);
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+public class BuyTicketSagaData {
+    private UserCommon participant;
+    private SweepstakeCommon parentSweepstake;
+    private int numberOfTickets;
 }

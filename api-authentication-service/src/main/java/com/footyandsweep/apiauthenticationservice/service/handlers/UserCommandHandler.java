@@ -19,10 +19,8 @@ package com.footyandsweep.apiauthenticationservice.service.handlers;
 import com.footyandsweep.apiauthenticationservice.service.UserService;
 import com.footyandsweep.apicommonlibrary.cqrs.sweepstake.delete.AllSweepstakeRelationsDeleted;
 import com.footyandsweep.apicommonlibrary.cqrs.sweepstake.delete.DeleteAllSweepstakeRelationsCommand;
-import com.footyandsweep.apicommonlibrary.cqrs.user.LinkParticipantToSweepstakeCommand;
-import com.footyandsweep.apicommonlibrary.cqrs.user.LinkParticipantToSweepstakeFailure;
-import com.footyandsweep.apicommonlibrary.cqrs.user.ParticipantLinkedToSweepstake;
-import com.footyandsweep.apicommonlibrary.cqrs.user.ParticipantNotFound;
+import com.footyandsweep.apicommonlibrary.cqrs.user.*;
+import com.footyandsweep.apicommonlibrary.exceptions.InsufficientCreditsException;
 import com.footyandsweep.apicommonlibrary.exceptions.SomethingWentWrongException;
 import com.footyandsweep.apicommonlibrary.exceptions.UserDoesNotExistException;
 import io.eventuate.tram.commands.consumer.CommandHandlers;
@@ -46,7 +44,19 @@ public class UserCommandHandler {
         .onMessage(LinkParticipantToSweepstakeCommand.class, this::linkParticipantToSweepstake)
         .onMessage(DeleteAllSweepstakeRelationsCommand.class, this::deleteAllSweepstakeRelations)
         .onMessage(LinkParticipantToSweepstakeCommand.class, this::linkParticipantToSweepstake)
+        .onMessage(UpdateUserBalanceCommand.class, this::updateUserBalance)
         .build();
+  }
+
+  private Message updateUserBalance(CommandMessage<UpdateUserBalanceCommand> updateUserBalanceCommandCommand) {
+    try {
+      UpdateUserBalanceCommand command = updateUserBalanceCommandCommand.getCommand();
+      userService.updateUserBalance(command.getUserId(), command.getAmountDeducted());
+
+      return withSuccess(new UserBalanceUpdated());
+    } catch (UserDoesNotExistException | InsufficientCreditsException e) {
+      return withFailure(new UpdateUserBalanceFailure());
+    }
   }
 
   private Message deleteAllSweepstakeRelations(

@@ -14,23 +14,24 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apiauthenticationservice.service;
+package com.footyandsweep.apicommonlibrary.cqrs.user;
 
-import com.footyandsweep.apiauthenticationservice.exception.SignUpException;
-import com.footyandsweep.apiauthenticationservice.payload.SignUpRequest;
+import io.eventuate.tram.commands.common.Command;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
-public interface UserService {
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+public class UpdateUserBalanceCommand implements Command {
 
-  void addOwnerToSweepstake(UUID sweepstakeId, UUID ownerId);
+  private UUID userId;
 
-  void checkSignUpRequestIsValid(SignUpRequest request) throws SignUpException;
-
-  void deleteAllSweepstakeRelations(UUID sweepstakeId);
-
-  void saveSweepstakeId(UUID sweepstakeId, UUID participantId);
-
-  void updateUserBalance(UUID userId, BigDecimal amountDeducted);
+  private BigDecimal amountDeducted;
 }

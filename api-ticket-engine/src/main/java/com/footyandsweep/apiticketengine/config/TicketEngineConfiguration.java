@@ -14,28 +14,26 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apisweepstakeengine.config;
+package com.footyandsweep.apiticketengine.config;
 
-import com.footyandsweep.apisweepstakeengine.dao.ParticipantIdDao;
-import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
-import com.footyandsweep.apisweepstakeengine.engine.SweepstakeEngine;
-import com.footyandsweep.apisweepstakeengine.engine.SweepstakeEngineImpl;
+import com.footyandsweep.apiticketengine.dao.TicketDao;
+import com.footyandsweep.apiticketengine.engine.TicketEngine;
+import com.footyandsweep.apiticketengine.engine.TicketEngineImpl;
 import io.eventuate.tram.sagas.spring.orchestration.SagaOrchestratorConfiguration;
 import io.eventuate.tram.spring.optimisticlocking.OptimisticLockingDecoratorConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.web.client.RestTemplate;
 
 @Configuration
 @EnableAutoConfiguration
 @Import({SagaOrchestratorConfiguration.class, OptimisticLockingDecoratorConfiguration.class})
-public class SweepstakeEngineConfiguration {
+public class TicketEngineConfiguration {
 
   @Bean
-  public SweepstakeEngine sweepstakeEngine(
-      SweepstakeDao sweepstakeDao, ParticipantIdDao participantIdDao) {
-    return new SweepstakeEngineImpl(sweepstakeDao, participantIdDao);
+  public TicketEngine ticketEngine(TicketDao ticketDao, RestTemplate restTemplate) {
+    return new TicketEngineImpl(ticketDao, restTemplate);
   }
-
 }

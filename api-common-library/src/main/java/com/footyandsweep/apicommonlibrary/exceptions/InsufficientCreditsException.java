@@ -14,16 +14,10 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apiticketengine.engine;
+package com.footyandsweep.apicommonlibrary.exceptions;
 
-import com.footyandsweep.apiticketengine.engine.saga.BuyTicketSagaData;
-import io.eventuate.tram.commands.consumer.CommandWithDestination;
+public class InsufficientCreditsException extends RuntimeException {
+    public InsufficientCreditsException() {
 
-public interface TicketEngine {
-
-  void buyTickets(BuyTicketSagaData sagaData);
-
-  void getParentSweepstakeAndParticipant(BuyTicketSagaData sagaData);
-
-  CommandWithDestination updateUserBalance(BuyTicketSagaData buyTicketSagaData);
+    }
 }
