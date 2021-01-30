@@ -14,12 +14,19 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apiresultengine.engine;
+package com.footyandsweep.apiresultengine.grpc;
 
-import com.footyandsweep.apiresultengine.engine.saga.ProcessSweepstakeResultSagaData;
-import io.eventuate.tram.commands.consumer.CommandWithDestination;
+import io.grpc.BindableService;
+import org.springframework.stereotype.Service;
 
-public interface ResultEngine {
-  void processSweepstakeResult(ProcessSweepstakeResultSagaData sagaData);
-  CommandWithDestination updateUserBalance(ProcessSweepstakeResultSagaData sagaData);
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Service
+public @interface GrpcService {
+  Class<? extends BindableService>[] value() default {};
 }

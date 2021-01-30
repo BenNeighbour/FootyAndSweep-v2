@@ -33,5 +33,5 @@ public class UpdateUserBalanceCommand implements Command {
 
   private UUID userId;
 
-  private BigDecimal amountDeducted;
+  private BigDecimal amountAdded;
 }

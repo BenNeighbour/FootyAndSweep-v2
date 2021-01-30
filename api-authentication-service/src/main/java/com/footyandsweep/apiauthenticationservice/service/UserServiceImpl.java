@@ -102,10 +102,10 @@ public class UserServiceImpl implements UserService {
       if (user == null) throw new UserDoesNotExistException();
 
       /* Check if the user can afford the amount deducted */
-      if (!(user.getBalance().subtract(amountDeducted).compareTo(new BigDecimal("0")) >= 0))
+      if (!(user.getBalance().add(amountDeducted).compareTo(new BigDecimal("0")) >= 0))
         throw new InsufficientCreditsException();
 
-      user.setBalance(user.getBalance().subtract(amountDeducted));
+      user.setBalance(user.getBalance().add(amountDeducted));
       userDao.saveAndFlush(user);
     } catch (UserDoesNotExistException | NullPointerException e) {
       throw new UserDoesNotExistException();

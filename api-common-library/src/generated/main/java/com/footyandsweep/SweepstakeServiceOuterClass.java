@@ -219,113 +219,6 @@ public final class SweepstakeServiceOuterClass {
     // @@protoc_insertion_point(enum_scope:com.footyandsweep.SweepstakeTypeCommon)
   }
 
-  /**
-   * Protobuf enum {@code com.footyandsweep.ProcessStatus}
-   */
-  public enum ProcessStatus
-      implements com.google.protobuf.ProtocolMessageEnum {
-    /**
-     * <code>PENDING = 0;</code>
-     */
-    PENDING(0),
-    /**
-     * <code>INVALID = 1;</code>
-     */
-    INVALID(1),
-    /**
-     * <code>PERSISTED = 2;</code>
-     */
-    PERSISTED(2),
-    UNRECOGNIZED(-1),
-    ;
-
-    /**
-     * <code>PENDING = 0;</code>
-     */
-    public static final int PENDING_VALUE = 0;
-    /**
-     * <code>INVALID = 1;</code>
-     */
-    public static final int INVALID_VALUE = 1;
-    /**
-     * <code>PERSISTED = 2;</code>
-     */
-    public static final int PERSISTED_VALUE = 2;
-
-
-    public final int getNumber() {
-      if (this == UNRECOGNIZED) {
-        throw new java.lang.IllegalArgumentException(
-            "Can't get the number of an unknown enum value.");
-      }
-      return value;
-    }
-
-    /**
-     * @deprecated Use {@link #forNumber(int)} instead.
-     */
-    @java.lang.Deprecated
-    public static ProcessStatus valueOf(int value) {
-      return forNumber(value);
-    }
-
-    public static ProcessStatus forNumber(int value) {
-      switch (value) {
-        case 0: return PENDING;
-        case 1: return INVALID;
-        case 2: return PERSISTED;
-        default: return null;
-      }
-    }
-
-    public static com.google.protobuf.Internal.EnumLiteMap<ProcessStatus>
-        internalGetValueMap() {
-      return internalValueMap;
-    }
-    private static final com.google.protobuf.Internal.EnumLiteMap<
-        ProcessStatus> internalValueMap =
-          new com.google.protobuf.Internal.EnumLiteMap<ProcessStatus>() {
-            public ProcessStatus findValueByNumber(int number) {
-              return ProcessStatus.forNumber(number);
-            }
-          };
-
-    public final com.google.protobuf.Descriptors.EnumValueDescriptor
-        getValueDescriptor() {
-      return getDescriptor().getValues().get(ordinal());
-    }
-    public final com.google.protobuf.Descriptors.EnumDescriptor
-        getDescriptorForType() {
-      return getDescriptor();
-    }
-    public static final com.google.protobuf.Descriptors.EnumDescriptor
-        getDescriptor() {
-      return com.footyandsweep.SweepstakeServiceOuterClass.getDescriptor().getEnumTypes().get(2);
-    }
-
-    private static final ProcessStatus[] VALUES = values();
-
-    public static ProcessStatus valueOf(
-        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-      if (desc.getType() != getDescriptor()) {
-        throw new java.lang.IllegalArgumentException(
-          "EnumValueDescriptor is not for this type.");
-      }
-      if (desc.getIndex() == -1) {
-        return UNRECOGNIZED;
-      }
-      return VALUES[desc.getIndex()];
-    }
-
-    private final int value;
-
-    private ProcessStatus(int value) {
-      this.value = value;
-    }
-
-    // @@protoc_insertion_point(enum_scope:com.footyandsweep.ProcessStatus)
-  }
-
   public interface SweepstakeOrBuilder extends
       // @@protoc_insertion_point(interface_extends:com.footyandsweep.Sweepstake)
       com.google.protobuf.MessageOrBuilder {
@@ -404,15 +297,6 @@ public final class SweepstakeServiceOuterClass {
     com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeTypeCommon getSweepstakeType();
 
     /**
-     * <code>.com.footyandsweep.ProcessStatus processStatus = 9;</code>
-     */
-    int getProcessStatusValue();
-    /**
-     * <code>.com.footyandsweep.ProcessStatus processStatus = 9;</code>
-     */
-    com.footyandsweep.SweepstakeServiceOuterClass.ProcessStatus getProcessStatus();
-
-    /**
      * <code>int32 sweepstakeListSize = 10;</code>
      */
     int getSweepstakeListSize();
@@ -466,7 +350,6 @@ public final class SweepstakeServiceOuterClass {
       ownerId_ = "";
       sweepstakeEventId_ = "";
       sweepstakeType_ = 0;
-      processStatus_ = 0;
       sweepstakeListSize_ = 0;
       minimumPlayers_ = 0;
       maximumPlayerTickets_ = 0;
@@ -542,12 +425,6 @@ public final class SweepstakeServiceOuterClass {
               int rawValue = input.readEnum();
 
               sweepstakeType_ = rawValue;
-              break;
-            }
-            case 72: {
-              int rawValue = input.readEnum();
-
-              processStatus_ = rawValue;
               break;
             }
             case 80: {
@@ -828,23 +705,6 @@ public final class SweepstakeServiceOuterClass {
       return result == null ? com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeTypeCommon.UNRECOGNIZED : result;
     }
 
-    public static final int PROCESSSTATUS_FIELD_NUMBER = 9;
-    private int processStatus_;
-    /**
-     * <code>.com.footyandsweep.ProcessStatus processStatus = 9;</code>
-     */
-    public int getProcessStatusValue() {
-      return processStatus_;
-    }
-    /**
-     * <code>.com.footyandsweep.ProcessStatus processStatus = 9;</code>
-     */
-    public com.footyandsweep.SweepstakeServiceOuterClass.ProcessStatus getProcessStatus() {
-      @SuppressWarnings("deprecation")
-      com.footyandsweep.SweepstakeServiceOuterClass.ProcessStatus result = com.footyandsweep.SweepstakeServiceOuterClass.ProcessStatus.valueOf(processStatus_);
-      return result == null ? com.footyandsweep.SweepstakeServiceOuterClass.ProcessStatus.UNRECOGNIZED : result;
-    }
-
     public static final int SWEEPSTAKELISTSIZE_FIELD_NUMBER = 10;
     private int sweepstakeListSize_;
     /**
@@ -940,9 +800,6 @@ public final class SweepstakeServiceOuterClass {
       if (sweepstakeType_ != com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeTypeCommon.Correct_Score_FT.getNumber()) {
         output.writeEnum(8, sweepstakeType_);
       }
-      if (processStatus_ != com.footyandsweep.SweepstakeServiceOuterClass.ProcessStatus.PENDING.getNumber()) {
-        output.writeEnum(9, processStatus_);
-      }
       if (sweepstakeListSize_ != 0) {
         output.writeInt32(10, sweepstakeListSize_);
       }
@@ -994,10 +851,6 @@ public final class SweepstakeServiceOuterClass {
         size += com.google.protobuf.CodedOutputStream
           .computeEnumSize(8, sweepstakeType_);
       }
-      if (processStatus_ != com.footyandsweep.SweepstakeServiceOuterClass.ProcessStatus.PENDING.getNumber()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(9, processStatus_);
-      }
       if (sweepstakeListSize_ != 0) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(10, sweepstakeListSize_);
@@ -1048,7 +901,6 @@ public final class SweepstakeServiceOuterClass {
       result = result && getSweepstakeEventId()
           .equals(other.getSweepstakeEventId());
       result = result && sweepstakeType_ == other.sweepstakeType_;
-      result = result && processStatus_ == other.processStatus_;
       result = result && (getSweepstakeListSize()
           == other.getSweepstakeListSize());
       result = result && (getMinimumPlayers()
@@ -1090,8 +942,6 @@ public final class SweepstakeServiceOuterClass {
       hash = (53 * hash) + getSweepstakeEventId().hashCode();
       hash = (37 * hash) + SWEEPSTAKETYPE_FIELD_NUMBER;
       hash = (53 * hash) + sweepstakeType_;
-      hash = (37 * hash) + PROCESSSTATUS_FIELD_NUMBER;
-      hash = (53 * hash) + processStatus_;
       hash = (37 * hash) + SWEEPSTAKELISTSIZE_FIELD_NUMBER;
       hash = (53 * hash) + getSweepstakeListSize();
       hash = (37 * hash) + MINIMUMPLAYERS_FIELD_NUMBER;
@@ -1253,8 +1103,6 @@ public final class SweepstakeServiceOuterClass {
 
         sweepstakeType_ = 0;
 
-        processStatus_ = 0;
-
         sweepstakeListSize_ = 0;
 
         minimumPlayers_ = 0;
@@ -1303,7 +1151,6 @@ public final class SweepstakeServiceOuterClass {
         result.ownerId_ = ownerId_;
         result.sweepstakeEventId_ = sweepstakeEventId_;
         result.sweepstakeType_ = sweepstakeType_;
-        result.processStatus_ = processStatus_;
         result.sweepstakeListSize_ = sweepstakeListSize_;
         result.minimumPlayers_ = minimumPlayers_;
         result.maximumPlayerTickets_ = maximumPlayerTickets_;
@@ -1389,9 +1236,6 @@ public final class SweepstakeServiceOuterClass {
         }
         if (other.sweepstakeType_ != 0) {
           setSweepstakeTypeValue(other.getSweepstakeTypeValue());
-        }
-        if (other.processStatus_ != 0) {
-          setProcessStatusValue(other.getProcessStatusValue());
         }
         if (other.getSweepstakeListSize() != 0) {
           setSweepstakeListSize(other.getSweepstakeListSize());
@@ -1894,51 +1738,6 @@ public final class SweepstakeServiceOuterClass {
       public Builder clearSweepstakeType() {
         
         sweepstakeType_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private int processStatus_ = 0;
-      /**
-       * <code>.com.footyandsweep.ProcessStatus processStatus = 9;</code>
-       */
-      public int getProcessStatusValue() {
-        return processStatus_;
-      }
-      /**
-       * <code>.com.footyandsweep.ProcessStatus processStatus = 9;</code>
-       */
-      public Builder setProcessStatusValue(int value) {
-        processStatus_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>.com.footyandsweep.ProcessStatus processStatus = 9;</code>
-       */
-      public com.footyandsweep.SweepstakeServiceOuterClass.ProcessStatus getProcessStatus() {
-        @SuppressWarnings("deprecation")
-        com.footyandsweep.SweepstakeServiceOuterClass.ProcessStatus result = com.footyandsweep.SweepstakeServiceOuterClass.ProcessStatus.valueOf(processStatus_);
-        return result == null ? com.footyandsweep.SweepstakeServiceOuterClass.ProcessStatus.UNRECOGNIZED : result;
-      }
-      /**
-       * <code>.com.footyandsweep.ProcessStatus processStatus = 9;</code>
-       */
-      public Builder setProcessStatus(com.footyandsweep.SweepstakeServiceOuterClass.ProcessStatus value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        
-        processStatus_ = value.getNumber();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>.com.footyandsweep.ProcessStatus processStatus = 9;</code>
-       */
-      public Builder clearProcessStatus() {
-        
-        processStatus_ = 0;
         onChanged();
         return this;
       }
@@ -3915,34 +3714,34 @@ public final class SweepstakeServiceOuterClass {
 
   }
 
-  public interface SweepstakeIdOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.footyandsweep.SweepstakeId)
+  public interface IdOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.footyandsweep.Id)
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>string sweepstakeId = 1;</code>
+     * <code>string id = 1;</code>
      */
-    java.lang.String getSweepstakeId();
+    java.lang.String getId();
     /**
-     * <code>string sweepstakeId = 1;</code>
+     * <code>string id = 1;</code>
      */
     com.google.protobuf.ByteString
-        getSweepstakeIdBytes();
+        getIdBytes();
   }
   /**
-   * Protobuf type {@code com.footyandsweep.SweepstakeId}
+   * Protobuf type {@code com.footyandsweep.Id}
    */
-  public  static final class SweepstakeId extends
+  public  static final class Id extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:com.footyandsweep.SweepstakeId)
-      SweepstakeIdOrBuilder {
+      // @@protoc_insertion_point(message_implements:com.footyandsweep.Id)
+      IdOrBuilder {
   private static final long serialVersionUID = 0L;
-    // Use SweepstakeId.newBuilder() to construct.
-    private SweepstakeId(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    // Use Id.newBuilder() to construct.
+    private Id(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-    private SweepstakeId() {
-      sweepstakeId_ = "";
+    private Id() {
+      id_ = "";
     }
 
     @java.lang.Override
@@ -3950,7 +3749,7 @@ public final class SweepstakeServiceOuterClass {
     getUnknownFields() {
       return this.unknownFields;
     }
-    private SweepstakeId(
+    private Id(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -3972,7 +3771,7 @@ public final class SweepstakeServiceOuterClass {
             case 10: {
               java.lang.String s = input.readStringRequireUtf8();
 
-              sweepstakeId_ = s;
+              id_ = s;
               break;
             }
             default: {
@@ -3996,45 +3795,45 @@ public final class SweepstakeServiceOuterClass {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.footyandsweep.SweepstakeServiceOuterClass.internal_static_com_footyandsweep_SweepstakeId_descriptor;
+      return com.footyandsweep.SweepstakeServiceOuterClass.internal_static_com_footyandsweep_Id_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.footyandsweep.SweepstakeServiceOuterClass.internal_static_com_footyandsweep_SweepstakeId_fieldAccessorTable
+      return com.footyandsweep.SweepstakeServiceOuterClass.internal_static_com_footyandsweep_Id_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeId.class, com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeId.Builder.class);
+              com.footyandsweep.SweepstakeServiceOuterClass.Id.class, com.footyandsweep.SweepstakeServiceOuterClass.Id.Builder.class);
     }
 
-    public static final int SWEEPSTAKEID_FIELD_NUMBER = 1;
-    private volatile java.lang.Object sweepstakeId_;
+    public static final int ID_FIELD_NUMBER = 1;
+    private volatile java.lang.Object id_;
     /**
-     * <code>string sweepstakeId = 1;</code>
+     * <code>string id = 1;</code>
      */
-    public java.lang.String getSweepstakeId() {
-      java.lang.Object ref = sweepstakeId_;
+    public java.lang.String getId() {
+      java.lang.Object ref = id_;
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        sweepstakeId_ = s;
+        id_ = s;
         return s;
       }
     }
     /**
-     * <code>string sweepstakeId = 1;</code>
+     * <code>string id = 1;</code>
      */
     public com.google.protobuf.ByteString
-        getSweepstakeIdBytes() {
-      java.lang.Object ref = sweepstakeId_;
+        getIdBytes() {
+      java.lang.Object ref = id_;
       if (ref instanceof java.lang.String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        sweepstakeId_ = b;
+        id_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
@@ -4055,8 +3854,8 @@ public final class SweepstakeServiceOuterClass {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (!getSweepstakeIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, sweepstakeId_);
+      if (!getIdBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, id_);
       }
       unknownFields.writeTo(output);
     }
@@ -4067,8 +3866,8 @@ public final class SweepstakeServiceOuterClass {
       if (size != -1) return size;
 
       size = 0;
-      if (!getSweepstakeIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, sweepstakeId_);
+      if (!getIdBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, id_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -4080,14 +3879,14 @@ public final class SweepstakeServiceOuterClass {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeId)) {
+      if (!(obj instanceof com.footyandsweep.SweepstakeServiceOuterClass.Id)) {
         return super.equals(obj);
       }
-      com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeId other = (com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeId) obj;
+      com.footyandsweep.SweepstakeServiceOuterClass.Id other = (com.footyandsweep.SweepstakeServiceOuterClass.Id) obj;
 
       boolean result = true;
-      result = result && getSweepstakeId()
-          .equals(other.getSweepstakeId());
+      result = result && getId()
+          .equals(other.getId());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -4099,76 +3898,76 @@ public final class SweepstakeServiceOuterClass {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + SWEEPSTAKEID_FIELD_NUMBER;
-      hash = (53 * hash) + getSweepstakeId().hashCode();
+      hash = (37 * hash) + ID_FIELD_NUMBER;
+      hash = (53 * hash) + getId().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeId parseFrom(
+    public static com.footyandsweep.SweepstakeServiceOuterClass.Id parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeId parseFrom(
+    public static com.footyandsweep.SweepstakeServiceOuterClass.Id parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeId parseFrom(
+    public static com.footyandsweep.SweepstakeServiceOuterClass.Id parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeId parseFrom(
+    public static com.footyandsweep.SweepstakeServiceOuterClass.Id parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeId parseFrom(byte[] data)
+    public static com.footyandsweep.SweepstakeServiceOuterClass.Id parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeId parseFrom(
+    public static com.footyandsweep.SweepstakeServiceOuterClass.Id parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeId parseFrom(java.io.InputStream input)
+    public static com.footyandsweep.SweepstakeServiceOuterClass.Id parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeId parseFrom(
+    public static com.footyandsweep.SweepstakeServiceOuterClass.Id parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeId parseDelimitedFrom(java.io.InputStream input)
+    public static com.footyandsweep.SweepstakeServiceOuterClass.Id parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeId parseDelimitedFrom(
+    public static com.footyandsweep.SweepstakeServiceOuterClass.Id parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeId parseFrom(
+    public static com.footyandsweep.SweepstakeServiceOuterClass.Id parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeId parseFrom(
+    public static com.footyandsweep.SweepstakeServiceOuterClass.Id parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -4181,7 +3980,7 @@ public final class SweepstakeServiceOuterClass {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeId prototype) {
+    public static Builder newBuilder(com.footyandsweep.SweepstakeServiceOuterClass.Id prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     @java.lang.Override
@@ -4197,26 +3996,26 @@ public final class SweepstakeServiceOuterClass {
       return builder;
     }
     /**
-     * Protobuf type {@code com.footyandsweep.SweepstakeId}
+     * Protobuf type {@code com.footyandsweep.Id}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.footyandsweep.SweepstakeId)
-        com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeIdOrBuilder {
+        // @@protoc_insertion_point(builder_implements:com.footyandsweep.Id)
+        com.footyandsweep.SweepstakeServiceOuterClass.IdOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.footyandsweep.SweepstakeServiceOuterClass.internal_static_com_footyandsweep_SweepstakeId_descriptor;
+        return com.footyandsweep.SweepstakeServiceOuterClass.internal_static_com_footyandsweep_Id_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.footyandsweep.SweepstakeServiceOuterClass.internal_static_com_footyandsweep_SweepstakeId_fieldAccessorTable
+        return com.footyandsweep.SweepstakeServiceOuterClass.internal_static_com_footyandsweep_Id_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeId.class, com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeId.Builder.class);
+                com.footyandsweep.SweepstakeServiceOuterClass.Id.class, com.footyandsweep.SweepstakeServiceOuterClass.Id.Builder.class);
       }
 
-      // Construct using com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeId.newBuilder()
+      // Construct using com.footyandsweep.SweepstakeServiceOuterClass.Id.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -4234,7 +4033,7 @@ public final class SweepstakeServiceOuterClass {
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        sweepstakeId_ = "";
+        id_ = "";
 
         return this;
       }
@@ -4242,17 +4041,17 @@ public final class SweepstakeServiceOuterClass {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.footyandsweep.SweepstakeServiceOuterClass.internal_static_com_footyandsweep_SweepstakeId_descriptor;
+        return com.footyandsweep.SweepstakeServiceOuterClass.internal_static_com_footyandsweep_Id_descriptor;
       }
 
       @java.lang.Override
-      public com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeId getDefaultInstanceForType() {
-        return com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeId.getDefaultInstance();
+      public com.footyandsweep.SweepstakeServiceOuterClass.Id getDefaultInstanceForType() {
+        return com.footyandsweep.SweepstakeServiceOuterClass.Id.getDefaultInstance();
       }
 
       @java.lang.Override
-      public com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeId build() {
-        com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeId result = buildPartial();
+      public com.footyandsweep.SweepstakeServiceOuterClass.Id build() {
+        com.footyandsweep.SweepstakeServiceOuterClass.Id result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
@@ -4260,9 +4059,9 @@ public final class SweepstakeServiceOuterClass {
       }
 
       @java.lang.Override
-      public com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeId buildPartial() {
-        com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeId result = new com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeId(this);
-        result.sweepstakeId_ = sweepstakeId_;
+      public com.footyandsweep.SweepstakeServiceOuterClass.Id buildPartial() {
+        com.footyandsweep.SweepstakeServiceOuterClass.Id result = new com.footyandsweep.SweepstakeServiceOuterClass.Id(this);
+        result.id_ = id_;
         onBuilt();
         return result;
       }
@@ -4301,18 +4100,18 @@ public final class SweepstakeServiceOuterClass {
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeId) {
-          return mergeFrom((com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeId)other);
+        if (other instanceof com.footyandsweep.SweepstakeServiceOuterClass.Id) {
+          return mergeFrom((com.footyandsweep.SweepstakeServiceOuterClass.Id)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeId other) {
-        if (other == com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeId.getDefaultInstance()) return this;
-        if (!other.getSweepstakeId().isEmpty()) {
-          sweepstakeId_ = other.sweepstakeId_;
+      public Builder mergeFrom(com.footyandsweep.SweepstakeServiceOuterClass.Id other) {
+        if (other == com.footyandsweep.SweepstakeServiceOuterClass.Id.getDefaultInstance()) return this;
+        if (!other.getId().isEmpty()) {
+          id_ = other.id_;
           onChanged();
         }
         this.mergeUnknownFields(other.unknownFields);
@@ -4330,11 +4129,11 @@ public final class SweepstakeServiceOuterClass {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeId parsedMessage = null;
+        com.footyandsweep.SweepstakeServiceOuterClass.Id parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeId) e.getUnfinishedMessage();
+          parsedMessage = (com.footyandsweep.SweepstakeServiceOuterClass.Id) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -4344,71 +4143,71 @@ public final class SweepstakeServiceOuterClass {
         return this;
       }
 
-      private java.lang.Object sweepstakeId_ = "";
+      private java.lang.Object id_ = "";
       /**
-       * <code>string sweepstakeId = 1;</code>
+       * <code>string id = 1;</code>
        */
-      public java.lang.String getSweepstakeId() {
-        java.lang.Object ref = sweepstakeId_;
+      public java.lang.String getId() {
+        java.lang.Object ref = id_;
         if (!(ref instanceof java.lang.String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
           java.lang.String s = bs.toStringUtf8();
-          sweepstakeId_ = s;
+          id_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
         }
       }
       /**
-       * <code>string sweepstakeId = 1;</code>
+       * <code>string id = 1;</code>
        */
       public com.google.protobuf.ByteString
-          getSweepstakeIdBytes() {
-        java.lang.Object ref = sweepstakeId_;
+          getIdBytes() {
+        java.lang.Object ref = id_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
-          sweepstakeId_ = b;
+          id_ = b;
           return b;
         } else {
           return (com.google.protobuf.ByteString) ref;
         }
       }
       /**
-       * <code>string sweepstakeId = 1;</code>
+       * <code>string id = 1;</code>
        */
-      public Builder setSweepstakeId(
+      public Builder setId(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
   
-        sweepstakeId_ = value;
+        id_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>string sweepstakeId = 1;</code>
+       * <code>string id = 1;</code>
        */
-      public Builder clearSweepstakeId() {
+      public Builder clearId() {
         
-        sweepstakeId_ = getDefaultInstance().getSweepstakeId();
+        id_ = getDefaultInstance().getId();
         onChanged();
         return this;
       }
       /**
-       * <code>string sweepstakeId = 1;</code>
+       * <code>string id = 1;</code>
        */
-      public Builder setSweepstakeIdBytes(
+      public Builder setIdBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
         
-        sweepstakeId_ = value;
+        id_ = value;
         onChanged();
         return this;
       }
@@ -4425,41 +4224,41 @@ public final class SweepstakeServiceOuterClass {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:com.footyandsweep.SweepstakeId)
+      // @@protoc_insertion_point(builder_scope:com.footyandsweep.Id)
     }
 
-    // @@protoc_insertion_point(class_scope:com.footyandsweep.SweepstakeId)
-    private static final com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeId DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:com.footyandsweep.Id)
+    private static final com.footyandsweep.SweepstakeServiceOuterClass.Id DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeId();
+      DEFAULT_INSTANCE = new com.footyandsweep.SweepstakeServiceOuterClass.Id();
     }
 
-    public static com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeId getDefaultInstance() {
+    public static com.footyandsweep.SweepstakeServiceOuterClass.Id getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<SweepstakeId>
-        PARSER = new com.google.protobuf.AbstractParser<SweepstakeId>() {
+    private static final com.google.protobuf.Parser<Id>
+        PARSER = new com.google.protobuf.AbstractParser<Id>() {
       @java.lang.Override
-      public SweepstakeId parsePartialFrom(
+      public Id parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new SweepstakeId(input, extensionRegistry);
+        return new Id(input, extensionRegistry);
       }
     };
 
-    public static com.google.protobuf.Parser<SweepstakeId> parser() {
+    public static com.google.protobuf.Parser<Id> parser() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.google.protobuf.Parser<SweepstakeId> getParserForType() {
+    public com.google.protobuf.Parser<Id> getParserForType() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeId getDefaultInstanceForType() {
+    public com.footyandsweep.SweepstakeServiceOuterClass.Id getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -5187,6 +4986,788 @@ public final class SweepstakeServiceOuterClass {
 
   }
 
+  public interface SweepstakeListOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.footyandsweep.SweepstakeList)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>repeated .com.footyandsweep.Sweepstake sweepstakes = 1;</code>
+     */
+    java.util.List<com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake> 
+        getSweepstakesList();
+    /**
+     * <code>repeated .com.footyandsweep.Sweepstake sweepstakes = 1;</code>
+     */
+    com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake getSweepstakes(int index);
+    /**
+     * <code>repeated .com.footyandsweep.Sweepstake sweepstakes = 1;</code>
+     */
+    int getSweepstakesCount();
+    /**
+     * <code>repeated .com.footyandsweep.Sweepstake sweepstakes = 1;</code>
+     */
+    java.util.List<? extends com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeOrBuilder> 
+        getSweepstakesOrBuilderList();
+    /**
+     * <code>repeated .com.footyandsweep.Sweepstake sweepstakes = 1;</code>
+     */
+    com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeOrBuilder getSweepstakesOrBuilder(
+        int index);
+  }
+  /**
+   * Protobuf type {@code com.footyandsweep.SweepstakeList}
+   */
+  public  static final class SweepstakeList extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:com.footyandsweep.SweepstakeList)
+      SweepstakeListOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use SweepstakeList.newBuilder() to construct.
+    private SweepstakeList(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private SweepstakeList() {
+      sweepstakes_ = java.util.Collections.emptyList();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private SweepstakeList(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+                sweepstakes_ = new java.util.ArrayList<com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake>();
+                mutable_bitField0_ |= 0x00000001;
+              }
+              sweepstakes_.add(
+                  input.readMessage(com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake.parser(), extensionRegistry));
+              break;
+            }
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+          sweepstakes_ = java.util.Collections.unmodifiableList(sweepstakes_);
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.footyandsweep.SweepstakeServiceOuterClass.internal_static_com_footyandsweep_SweepstakeList_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.footyandsweep.SweepstakeServiceOuterClass.internal_static_com_footyandsweep_SweepstakeList_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeList.class, com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeList.Builder.class);
+    }
+
+    public static final int SWEEPSTAKES_FIELD_NUMBER = 1;
+    private java.util.List<com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake> sweepstakes_;
+    /**
+     * <code>repeated .com.footyandsweep.Sweepstake sweepstakes = 1;</code>
+     */
+    public java.util.List<com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake> getSweepstakesList() {
+      return sweepstakes_;
+    }
+    /**
+     * <code>repeated .com.footyandsweep.Sweepstake sweepstakes = 1;</code>
+     */
+    public java.util.List<? extends com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeOrBuilder> 
+        getSweepstakesOrBuilderList() {
+      return sweepstakes_;
+    }
+    /**
+     * <code>repeated .com.footyandsweep.Sweepstake sweepstakes = 1;</code>
+     */
+    public int getSweepstakesCount() {
+      return sweepstakes_.size();
+    }
+    /**
+     * <code>repeated .com.footyandsweep.Sweepstake sweepstakes = 1;</code>
+     */
+    public com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake getSweepstakes(int index) {
+      return sweepstakes_.get(index);
+    }
+    /**
+     * <code>repeated .com.footyandsweep.Sweepstake sweepstakes = 1;</code>
+     */
+    public com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeOrBuilder getSweepstakesOrBuilder(
+        int index) {
+      return sweepstakes_.get(index);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      for (int i = 0; i < sweepstakes_.size(); i++) {
+        output.writeMessage(1, sweepstakes_.get(i));
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      for (int i = 0; i < sweepstakes_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, sweepstakes_.get(i));
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeList)) {
+        return super.equals(obj);
+      }
+      com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeList other = (com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeList) obj;
+
+      boolean result = true;
+      result = result && getSweepstakesList()
+          .equals(other.getSweepstakesList());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (getSweepstakesCount() > 0) {
+        hash = (37 * hash) + SWEEPSTAKES_FIELD_NUMBER;
+        hash = (53 * hash) + getSweepstakesList().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeList parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeList parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeList parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeList parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeList parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeList parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeList parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeList parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeList parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeList parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeList parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeList parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeList prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code com.footyandsweep.SweepstakeList}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.footyandsweep.SweepstakeList)
+        com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeListOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.footyandsweep.SweepstakeServiceOuterClass.internal_static_com_footyandsweep_SweepstakeList_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.footyandsweep.SweepstakeServiceOuterClass.internal_static_com_footyandsweep_SweepstakeList_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeList.class, com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeList.Builder.class);
+      }
+
+      // Construct using com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeList.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+          getSweepstakesFieldBuilder();
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        if (sweepstakesBuilder_ == null) {
+          sweepstakes_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+        } else {
+          sweepstakesBuilder_.clear();
+        }
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.footyandsweep.SweepstakeServiceOuterClass.internal_static_com_footyandsweep_SweepstakeList_descriptor;
+      }
+
+      @java.lang.Override
+      public com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeList getDefaultInstanceForType() {
+        return com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeList.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeList build() {
+        com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeList result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeList buildPartial() {
+        com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeList result = new com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeList(this);
+        int from_bitField0_ = bitField0_;
+        if (sweepstakesBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) == 0x00000001)) {
+            sweepstakes_ = java.util.Collections.unmodifiableList(sweepstakes_);
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
+          result.sweepstakes_ = sweepstakes_;
+        } else {
+          result.sweepstakes_ = sweepstakesBuilder_.build();
+        }
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeList) {
+          return mergeFrom((com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeList)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeList other) {
+        if (other == com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeList.getDefaultInstance()) return this;
+        if (sweepstakesBuilder_ == null) {
+          if (!other.sweepstakes_.isEmpty()) {
+            if (sweepstakes_.isEmpty()) {
+              sweepstakes_ = other.sweepstakes_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensureSweepstakesIsMutable();
+              sweepstakes_.addAll(other.sweepstakes_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.sweepstakes_.isEmpty()) {
+            if (sweepstakesBuilder_.isEmpty()) {
+              sweepstakesBuilder_.dispose();
+              sweepstakesBuilder_ = null;
+              sweepstakes_ = other.sweepstakes_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              sweepstakesBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getSweepstakesFieldBuilder() : null;
+            } else {
+              sweepstakesBuilder_.addAllMessages(other.sweepstakes_);
+            }
+          }
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeList parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeList) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private java.util.List<com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake> sweepstakes_ =
+        java.util.Collections.emptyList();
+      private void ensureSweepstakesIsMutable() {
+        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
+          sweepstakes_ = new java.util.ArrayList<com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake>(sweepstakes_);
+          bitField0_ |= 0x00000001;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake, com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake.Builder, com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeOrBuilder> sweepstakesBuilder_;
+
+      /**
+       * <code>repeated .com.footyandsweep.Sweepstake sweepstakes = 1;</code>
+       */
+      public java.util.List<com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake> getSweepstakesList() {
+        if (sweepstakesBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(sweepstakes_);
+        } else {
+          return sweepstakesBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .com.footyandsweep.Sweepstake sweepstakes = 1;</code>
+       */
+      public int getSweepstakesCount() {
+        if (sweepstakesBuilder_ == null) {
+          return sweepstakes_.size();
+        } else {
+          return sweepstakesBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .com.footyandsweep.Sweepstake sweepstakes = 1;</code>
+       */
+      public com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake getSweepstakes(int index) {
+        if (sweepstakesBuilder_ == null) {
+          return sweepstakes_.get(index);
+        } else {
+          return sweepstakesBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .com.footyandsweep.Sweepstake sweepstakes = 1;</code>
+       */
+      public Builder setSweepstakes(
+          int index, com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake value) {
+        if (sweepstakesBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureSweepstakesIsMutable();
+          sweepstakes_.set(index, value);
+          onChanged();
+        } else {
+          sweepstakesBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.footyandsweep.Sweepstake sweepstakes = 1;</code>
+       */
+      public Builder setSweepstakes(
+          int index, com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake.Builder builderForValue) {
+        if (sweepstakesBuilder_ == null) {
+          ensureSweepstakesIsMutable();
+          sweepstakes_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          sweepstakesBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.footyandsweep.Sweepstake sweepstakes = 1;</code>
+       */
+      public Builder addSweepstakes(com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake value) {
+        if (sweepstakesBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureSweepstakesIsMutable();
+          sweepstakes_.add(value);
+          onChanged();
+        } else {
+          sweepstakesBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.footyandsweep.Sweepstake sweepstakes = 1;</code>
+       */
+      public Builder addSweepstakes(
+          int index, com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake value) {
+        if (sweepstakesBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureSweepstakesIsMutable();
+          sweepstakes_.add(index, value);
+          onChanged();
+        } else {
+          sweepstakesBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.footyandsweep.Sweepstake sweepstakes = 1;</code>
+       */
+      public Builder addSweepstakes(
+          com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake.Builder builderForValue) {
+        if (sweepstakesBuilder_ == null) {
+          ensureSweepstakesIsMutable();
+          sweepstakes_.add(builderForValue.build());
+          onChanged();
+        } else {
+          sweepstakesBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.footyandsweep.Sweepstake sweepstakes = 1;</code>
+       */
+      public Builder addSweepstakes(
+          int index, com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake.Builder builderForValue) {
+        if (sweepstakesBuilder_ == null) {
+          ensureSweepstakesIsMutable();
+          sweepstakes_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          sweepstakesBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.footyandsweep.Sweepstake sweepstakes = 1;</code>
+       */
+      public Builder addAllSweepstakes(
+          java.lang.Iterable<? extends com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake> values) {
+        if (sweepstakesBuilder_ == null) {
+          ensureSweepstakesIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, sweepstakes_);
+          onChanged();
+        } else {
+          sweepstakesBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.footyandsweep.Sweepstake sweepstakes = 1;</code>
+       */
+      public Builder clearSweepstakes() {
+        if (sweepstakesBuilder_ == null) {
+          sweepstakes_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+          onChanged();
+        } else {
+          sweepstakesBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.footyandsweep.Sweepstake sweepstakes = 1;</code>
+       */
+      public Builder removeSweepstakes(int index) {
+        if (sweepstakesBuilder_ == null) {
+          ensureSweepstakesIsMutable();
+          sweepstakes_.remove(index);
+          onChanged();
+        } else {
+          sweepstakesBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .com.footyandsweep.Sweepstake sweepstakes = 1;</code>
+       */
+      public com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake.Builder getSweepstakesBuilder(
+          int index) {
+        return getSweepstakesFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .com.footyandsweep.Sweepstake sweepstakes = 1;</code>
+       */
+      public com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeOrBuilder getSweepstakesOrBuilder(
+          int index) {
+        if (sweepstakesBuilder_ == null) {
+          return sweepstakes_.get(index);  } else {
+          return sweepstakesBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .com.footyandsweep.Sweepstake sweepstakes = 1;</code>
+       */
+      public java.util.List<? extends com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeOrBuilder> 
+           getSweepstakesOrBuilderList() {
+        if (sweepstakesBuilder_ != null) {
+          return sweepstakesBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(sweepstakes_);
+        }
+      }
+      /**
+       * <code>repeated .com.footyandsweep.Sweepstake sweepstakes = 1;</code>
+       */
+      public com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake.Builder addSweepstakesBuilder() {
+        return getSweepstakesFieldBuilder().addBuilder(
+            com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .com.footyandsweep.Sweepstake sweepstakes = 1;</code>
+       */
+      public com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake.Builder addSweepstakesBuilder(
+          int index) {
+        return getSweepstakesFieldBuilder().addBuilder(
+            index, com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .com.footyandsweep.Sweepstake sweepstakes = 1;</code>
+       */
+      public java.util.List<com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake.Builder> 
+           getSweepstakesBuilderList() {
+        return getSweepstakesFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake, com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake.Builder, com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeOrBuilder> 
+          getSweepstakesFieldBuilder() {
+        if (sweepstakesBuilder_ == null) {
+          sweepstakesBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake, com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake.Builder, com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeOrBuilder>(
+                  sweepstakes_,
+                  ((bitField0_ & 0x00000001) == 0x00000001),
+                  getParentForChildren(),
+                  isClean());
+          sweepstakes_ = null;
+        }
+        return sweepstakesBuilder_;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:com.footyandsweep.SweepstakeList)
+    }
+
+    // @@protoc_insertion_point(class_scope:com.footyandsweep.SweepstakeList)
+    private static final com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeList DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeList();
+    }
+
+    public static com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeList getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<SweepstakeList>
+        PARSER = new com.google.protobuf.AbstractParser<SweepstakeList>() {
+      @java.lang.Override
+      public SweepstakeList parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new SweepstakeList(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<SweepstakeList> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<SweepstakeList> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeList getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_com_footyandsweep_Sweepstake_descriptor;
   private static final 
@@ -5208,10 +5789,10 @@ public final class SweepstakeServiceOuterClass {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_com_footyandsweep_JoinCode_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_footyandsweep_SweepstakeId_descriptor;
+    internal_static_com_footyandsweep_Id_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_com_footyandsweep_SweepstakeId_fieldAccessorTable;
+      internal_static_com_footyandsweep_Id_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_com_footyandsweep_Map_descriptor;
   private static final 
@@ -5222,6 +5803,11 @@ public final class SweepstakeServiceOuterClass {
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_com_footyandsweep_Map_PairsEntry_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_footyandsweep_SweepstakeList_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_com_footyandsweep_SweepstakeList_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -5232,39 +5818,39 @@ public final class SweepstakeServiceOuterClass {
   static {
     java.lang.String[] descriptorData = {
       "\n\027SweepstakeService.proto\022\021com.footyands" +
-      "weep\"\304\003\n\nSweepstake\022\n\n\002id\030\001 \001(\t\022\014\n\004name\030" +
+      "weep\"\213\003\n\nSweepstake\022\n\n\002id\030\001 \001(\t\022\014\n\004name\030" +
       "\002 \001(\t\022\020\n\010joinCode\030\003 \001(\t\0223\n\006status\030\004 \001(\0162" +
       "#.com.footyandsweep.SweepstakeStatus\022\021\n\t" +
       "isPrivate\030\005 \001(\010\022\017\n\007ownerId\030\006 \001(\t\022\031\n\021swee" +
       "pstakeEventId\030\007 \001(\t\022?\n\016sweepstakeType\030\010 " +
       "\001(\0162\'.com.footyandsweep.SweepstakeTypeCo" +
-      "mmon\0227\n\rprocessStatus\030\t \001(\0162 .com.footya" +
-      "ndsweep.ProcessStatus\022\032\n\022sweepstakeListS" +
-      "ize\030\n \001(\005\022\026\n\016minimumPlayers\030\013 \001(\005\022\034\n\024max" +
-      "imumPlayerTickets\030\014 \001(\005\022,\n\005stake\030\r \001(\0132\035" +
-      ".com.footyandsweep.BigDecimal\022\034\n\024totalNu" +
-      "mberOfTickets\030\016 \001(\005\"K\n\nBigDecimal\022\r\n\005sca" +
-      "le\030\001 \001(\005\022.\n\007int_val\030\002 \001(\0132\035.com.footyand" +
-      "sweep.BigInteger\"\033\n\nBigInteger\022\r\n\005value\030" +
-      "\001 \001(\014\"\034\n\010JoinCode\022\020\n\010joinCode\030\001 \001(\t\"$\n\014S" +
-      "weepstakeId\022\024\n\014sweepstakeId\030\001 \001(\t\"e\n\003Map" +
-      "\0220\n\005pairs\030\001 \003(\0132!.com.footyandsweep.Map." +
-      "PairsEntry\032,\n\nPairsEntry\022\013\n\003key\030\001 \001(\003\022\r\n" +
-      "\005value\030\002 \001(\t:\0028\001*7\n\020SweepstakeStatus\022\010\n\004" +
-      "OPEN\020\000\022\r\n\tALLOCATED\020\001\022\n\n\006CLOSED\020\002*B\n\024Swe" +
-      "epstakeTypeCommon\022\024\n\020Correct_Score_FT\020\000\022" +
-      "\024\n\020Correct_Score_HT\020\001*8\n\rProcessStatus\022\013" +
-      "\n\007PENDING\020\000\022\013\n\007INVALID\020\001\022\r\n\tPERSISTED\020\0022" +
-      "\346\002\n\021SweepstakeService\022V\n\030findSweepstakeB" +
-      "yJoinCode\022\033.com.footyandsweep.JoinCode\032\035" +
-      ".com.footyandsweep.Sweepstake\022T\n\022findSwe" +
-      "epstakeById\022\037.com.footyandsweep.Sweepsta" +
-      "keId\032\035.com.footyandsweep.Sweepstake\022K\n\022g" +
-      "etResultHelperMap\022\035.com.footyandsweep.Sw" +
-      "eepstake\032\026.com.footyandsweep.Map\022V\n\024requ" +
-      "estNewSweepstake\022\035.com.footyandsweep.Swe" +
-      "epstake\032\035.com.footyandsweep.Sweepstake0\001" +
-      "b\006proto3"
+      "mmon\022\032\n\022sweepstakeListSize\030\n \001(\005\022\026\n\016mini" +
+      "mumPlayers\030\013 \001(\005\022\034\n\024maximumPlayerTickets" +
+      "\030\014 \001(\005\022,\n\005stake\030\r \001(\0132\035.com.footyandswee" +
+      "p.BigDecimal\022\034\n\024totalNumberOfTickets\030\016 \001" +
+      "(\005\"K\n\nBigDecimal\022\r\n\005scale\030\001 \001(\005\022.\n\007int_v" +
+      "al\030\002 \001(\0132\035.com.footyandsweep.BigInteger\"" +
+      "\033\n\nBigInteger\022\r\n\005value\030\001 \001(\014\"\034\n\010JoinCode" +
+      "\022\020\n\010joinCode\030\001 \001(\t\"\020\n\002Id\022\n\n\002id\030\001 \001(\t\"e\n\003" +
+      "Map\0220\n\005pairs\030\001 \003(\0132!.com.footyandsweep.M" +
+      "ap.PairsEntry\032,\n\nPairsEntry\022\013\n\003key\030\001 \001(\003" +
+      "\022\r\n\005value\030\002 \001(\t:\0028\001\"D\n\016SweepstakeList\0222\n" +
+      "\013sweepstakes\030\001 \003(\0132\035.com.footyandsweep.S" +
+      "weepstake*7\n\020SweepstakeStatus\022\010\n\004OPEN\020\000\022" +
+      "\r\n\tALLOCATED\020\001\022\n\n\006CLOSED\020\002*B\n\024Sweepstake" +
+      "TypeCommon\022\024\n\020Correct_Score_FT\020\000\022\024\n\020Corr" +
+      "ect_Score_HT\020\0012\271\003\n\021SweepstakeService\022V\n\030" +
+      "findSweepstakeByJoinCode\022\033.com.footyands" +
+      "weep.JoinCode\032\035.com.footyandsweep.Sweeps" +
+      "take\022[\n\037findSweepstakeByFootballMatchId\022" +
+      "\025.com.footyandsweep.Id\032!.com.footyandswe" +
+      "ep.SweepstakeList\022J\n\022findSweepstakeById\022" +
+      "\025.com.footyandsweep.Id\032\035.com.footyandswe" +
+      "ep.Sweepstake\022K\n\022getResultHelperMap\022\035.co" +
+      "m.footyandsweep.Sweepstake\032\026.com.footyan" +
+      "dsweep.Map\022V\n\024requestNewSweepstake\022\035.com" +
+      ".footyandsweep.Sweepstake\032\035.com.footyand" +
+      "sweep.Sweepstake0\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -5283,7 +5869,7 @@ public final class SweepstakeServiceOuterClass {
     internal_static_com_footyandsweep_Sweepstake_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_footyandsweep_Sweepstake_descriptor,
-        new java.lang.String[] { "Id", "Name", "JoinCode", "Status", "IsPrivate", "OwnerId", "SweepstakeEventId", "SweepstakeType", "ProcessStatus", "SweepstakeListSize", "MinimumPlayers", "MaximumPlayerTickets", "Stake", "TotalNumberOfTickets", });
+        new java.lang.String[] { "Id", "Name", "JoinCode", "Status", "IsPrivate", "OwnerId", "SweepstakeEventId", "SweepstakeType", "SweepstakeListSize", "MinimumPlayers", "MaximumPlayerTickets", "Stake", "TotalNumberOfTickets", });
     internal_static_com_footyandsweep_BigDecimal_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_com_footyandsweep_BigDecimal_fieldAccessorTable = new
@@ -5302,12 +5888,12 @@ public final class SweepstakeServiceOuterClass {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_footyandsweep_JoinCode_descriptor,
         new java.lang.String[] { "JoinCode", });
-    internal_static_com_footyandsweep_SweepstakeId_descriptor =
+    internal_static_com_footyandsweep_Id_descriptor =
       getDescriptor().getMessageTypes().get(4);
-    internal_static_com_footyandsweep_SweepstakeId_fieldAccessorTable = new
+    internal_static_com_footyandsweep_Id_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_com_footyandsweep_SweepstakeId_descriptor,
-        new java.lang.String[] { "SweepstakeId", });
+        internal_static_com_footyandsweep_Id_descriptor,
+        new java.lang.String[] { "Id", });
     internal_static_com_footyandsweep_Map_descriptor =
       getDescriptor().getMessageTypes().get(5);
     internal_static_com_footyandsweep_Map_fieldAccessorTable = new
@@ -5320,6 +5906,12 @@ public final class SweepstakeServiceOuterClass {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_footyandsweep_Map_PairsEntry_descriptor,
         new java.lang.String[] { "Key", "Value", });
+    internal_static_com_footyandsweep_SweepstakeList_descriptor =
+      getDescriptor().getMessageTypes().get(6);
+    internal_static_com_footyandsweep_SweepstakeList_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_com_footyandsweep_SweepstakeList_descriptor,
+        new java.lang.String[] { "Sweepstakes", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

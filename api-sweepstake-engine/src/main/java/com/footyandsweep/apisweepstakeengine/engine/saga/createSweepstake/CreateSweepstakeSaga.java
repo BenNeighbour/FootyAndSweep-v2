@@ -40,10 +40,14 @@ public class CreateSweepstakeSaga implements SimpleSaga<CreateSweepstakeSagaData
   @Override
   public SagaDefinition<CreateSweepstakeSagaData> getSagaDefinition() {
 
-    return step()
+    return
+
+            step()
         .invokeLocal(sweepstakeEngine::saveSweepstake)
         .withCompensation(
             sagaData -> sweepstakeEngine.deleteSweepstakeById(sagaData.getSweepstake().getId()))
+
+
         .step()
         .invokeLocal(
             sagaData -> {
@@ -56,6 +60,8 @@ public class CreateSweepstakeSaga implements SimpleSaga<CreateSweepstakeSagaData
         .withCompensation(
             sagaData ->
                 sweepstakeEngine.deleteSweepstakeRelationById(sagaData.getOwnerIdObject().getId()))
+
+
         .step()
         .invokeParticipant(
             sagaData ->
@@ -67,6 +73,8 @@ public class CreateSweepstakeSaga implements SimpleSaga<CreateSweepstakeSagaData
         .onReply(
             LinkParticipantToSweepstakeFailure.class,
             (sagaData, linkFailure) -> sagaData.getSweepstake())
+
+
         .build();
   }
 }

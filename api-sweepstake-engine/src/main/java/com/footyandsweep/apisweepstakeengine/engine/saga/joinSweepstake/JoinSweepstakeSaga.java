@@ -48,7 +48,6 @@ public class JoinSweepstakeSaga implements SimpleSaga<JoinSweepstakeSagaData> {
         .withCompensation(
             sagaData -> {
               /* Delete the sweepstake and the relation */
-              sweepstakeEngine.deleteSweepstakeById(sagaData.getSweepstakeId());
               sweepstakeEngine.deleteSweepstakeRelationById(sagaData.getSweepstakeParticipantId());
             })
         .step()

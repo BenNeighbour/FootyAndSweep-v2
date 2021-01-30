@@ -12,12 +12,6 @@ enum SweepstakeTypeCommon {
   Correct_Score_HT = 1;
 }
 
-enum ProcessStatus {
-  PENDING = 0;
-  INVALID = 1;
-  PERSISTED = 2;
-}
-
 message Sweepstake {
   string id = 1;
   string name = 2;
@@ -27,7 +21,6 @@ message Sweepstake {
   string ownerId = 6;
   string sweepstakeEventId = 7;
   SweepstakeTypeCommon sweepstakeType = 8;
-  ProcessStatus processStatus = 9;
   int32 sweepstakeListSize = 10;
   int32 minimumPlayers = 11;
   int32 maximumPlayerTickets = 12;
@@ -48,17 +41,22 @@ message JoinCode {
   string joinCode = 1;
 }
 
-message SweepstakeId {
-  string sweepstakeId = 1;
+message Id {
+  string id = 1;
 }
 
 message Map {
   map<int64, string> pairs = 1;
 }
 
+message SweepstakeList {
+  repeated Sweepstake sweepstakes = 1;
+}
+
 service SweepstakeService {
   rpc findSweepstakeByJoinCode(JoinCode) returns (Sweepstake);
-  rpc findSweepstakeById(SweepstakeId) returns (Sweepstake);
+  rpc findSweepstakeByFootballMatchId(Id) returns (SweepstakeList);
+  rpc findSweepstakeById(Id) returns (Sweepstake);
   rpc getResultHelperMap(Sweepstake) returns (Map);
   rpc requestNewSweepstake(Sweepstake) returns (stream Sweepstake);
 }

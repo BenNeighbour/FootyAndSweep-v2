@@ -16,7 +16,6 @@
 
 package com.footyandsweep.apicommonlibrary.model.sweepstake;
 
-import com.footyandsweep.apicommonlibrary.events.ProcessStatus;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -64,9 +63,6 @@ public class SweepstakeCommon implements Serializable {
   @NotNull(message = "You must select a sweepstake type!")
   @Enumerated(EnumType.STRING)
   private SweepstakeTypeCommon sweepstakeType = this.getSweepstakeType();
-
-  @Enumerated(EnumType.STRING)
-  private ProcessStatus processStatus = ProcessStatus.RELATIONS_PENDING;
 
   @Transient private int sweepstakeListSize;
 

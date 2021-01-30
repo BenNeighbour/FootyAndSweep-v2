@@ -16,7 +16,6 @@
 
 package com.footyandsweep.apicommonlibrary.model.user;
 
-import com.footyandsweep.apicommonlibrary.events.ProcessStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -57,7 +56,4 @@ public class UserCommon implements Serializable {
   @CreationTimestamp private Date created;
 
   @UpdateTimestamp private Date updated;
-
-  @Enumerated(EnumType.STRING)
-  private ProcessStatus processStatus = ProcessStatus.RELATIONS_PENDING;
 }

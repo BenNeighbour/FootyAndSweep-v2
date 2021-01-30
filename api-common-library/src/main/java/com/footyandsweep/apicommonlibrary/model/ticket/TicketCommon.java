@@ -16,7 +16,6 @@
 
 package com.footyandsweep.apicommonlibrary.model.ticket;
 
-import com.footyandsweep.apicommonlibrary.events.ProcessStatus;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -58,9 +57,6 @@ public class TicketCommon implements Serializable {
   @Transient private SweepstakeCommon sweepstake;
 
   @Transient private AllocationCommon allocationCommon;
-
-  @Enumerated(EnumType.STRING)
-  private ProcessStatus processStatus = ProcessStatus.RELATIONS_PENDING;
 
   public enum TicketStatus {
     PENDING(0),

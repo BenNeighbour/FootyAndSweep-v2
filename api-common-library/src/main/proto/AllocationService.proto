@@ -1,7 +1,4 @@
 syntax = "proto3";
-package allocation;
-
-option java_package = "allocation";
-option java_outer_classname = "AllocationGrpcService";
+package com.footyandsweep;
 
 message Allocation {}

@@ -14,10 +14,26 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apicommonlibrary.events;
+package com.footyandsweep.apiresultengine.engine.saga;
 
-public enum ProcessStatus {
-  RELATIONS_PENDING,
-  INVALID,
-  FULLY_PERSISTED
+import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
+import com.footyandsweep.apiresultengine.model.Result;
+import javafx.util.Pair;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.math.BigDecimal;
+import java.util.UUID;
+
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+public class ProcessSweepstakeResultSagaData {
+  private SweepstakeCommon sweepstake;
+  private Result result;
+  private Pair<UUID, BigDecimal> userBalanceMap;
+
 }

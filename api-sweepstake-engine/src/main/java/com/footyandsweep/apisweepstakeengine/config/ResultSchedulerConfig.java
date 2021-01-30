@@ -16,7 +16,12 @@
 
 package com.footyandsweep.apisweepstakeengine.config;
 
+import com.footyandsweep.ResultServiceGrpc;
+import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
+import com.google.protobuf.Empty;
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -39,31 +44,18 @@ public class ResultSchedulerConfig {
   /* Scheduled for every 4 minutes (240000) */
   @Scheduled(fixedRate = 240000)
   public void fetchAndDecisionSweepstakes() {
-    //    /* Logging the periodic check */
-    //    log.info(
-    //        "Periodic scrape for results and decisioning sweepstakes at {}",
-    //        dateFormat.format(new Date()));
-    //
-    //    /* TODO: Check and scrape new results */
-    //
-    //    /* TODO: Get all of the football match ids of the results brought back */
-    //
-    //    /* TODO: Iterate over the football match ids */
-    //
-    //    /* For each sweepstake that is open, get the event id, and decision the sweepstake and
-    // it's tickets */
-    //    sweepstakeDao
-    //        .findAllSweepstakesByStatus(SweepstakeCommon.SweepstakeStatus.ALLOCATED)
-    //        /* TODO: Filter by the current football match id */
-    //        .forEach(
-    //            sweepstake -> {
-    //              /* Create the event object to be sent over */
-    //              SweepstakeEvent sweepstakeEvent =
-    //                  new SweepstakeEvent(sweepstake, EventType.NEEDS_DECISIONING);
-    //
-    //              /* Send a sweepstake needs allocating message */
-    //              sweepstakeMessageDispatcher.publishEvent(
-    //                  sweepstakeEvent, "api-sweepstake-events-topic");
-    //            });
+      sweepstakeDao
+              .findAllSweepstakesByStatus(SweepstakeCommon.SweepstakeStatus.ALLOCATED)
+              /* TODO: Filter by the current football match id */
+              .forEach(
+                      sweepstake -> {
+                          /* Call the RPC, which in turn, calls the saga for each sweepstake */
+                          ManagedChannel channel = ManagedChannelBuilder.forAddress("api-result-engine", 9090)
+                                  .usePlaintext()
+                                  .build();
+
+                          ResultServiceGrpc.ResultServiceBlockingStub clientStub = ResultServiceGrpc.newBlockingStub(channel);
+                          clientStub.checkForSweepstakeResults(Empty.newBuilder().build());
+                      });
   }
 }

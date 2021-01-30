@@ -18,10 +18,13 @@ package com.footyandsweep.apiticketengine.engine.saga;
 
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apicommonlibrary.model.user.UserCommon;
+import com.footyandsweep.apiticketengine.model.Ticket;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Setter
 @Getter
@@ -30,5 +33,6 @@ import lombok.Setter;
 public class BuyTicketSagaData {
     private UserCommon participant;
     private SweepstakeCommon parentSweepstake;
+    private List<Ticket> savedTickets;
     private int numberOfTickets;
 }

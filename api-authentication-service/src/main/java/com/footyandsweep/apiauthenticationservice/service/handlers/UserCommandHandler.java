@@ -51,7 +51,7 @@ public class UserCommandHandler {
   private Message updateUserBalance(CommandMessage<UpdateUserBalanceCommand> updateUserBalanceCommandCommand) {
     try {
       UpdateUserBalanceCommand command = updateUserBalanceCommandCommand.getCommand();
-      userService.updateUserBalance(command.getUserId(), command.getAmountDeducted());
+      userService.updateUserBalance(command.getUserId(), command.getAmountAdded());
 
       return withSuccess(new UserBalanceUpdated());
     } catch (UserDoesNotExistException | InsufficientCreditsException e) {

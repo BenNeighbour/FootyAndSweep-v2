@@ -14,36 +14,31 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apiticketengine.engine.saga;
+package com.footyandsweep.apiresultengine.engine.saga;
 
-import com.footyandsweep.apiticketengine.engine.TicketEngine;
+import com.footyandsweep.apiresultengine.engine.ResultEngine;
 import io.eventuate.tram.sagas.orchestration.SagaDefinition;
 import io.eventuate.tram.sagas.simpledsl.SimpleSaga;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BuyTicketSaga implements SimpleSaga<BuyTicketSagaData> {
+public class ProcessSweepstakeResultSaga implements SimpleSaga<ProcessSweepstakeResultSagaData> {
 
-    private final TicketEngine ticketEngine;
+    private final ResultEngine resultEngine;
 
-    public BuyTicketSaga(TicketEngine ticketEngine) {
-        this.ticketEngine = ticketEngine;
+    public ProcessSweepstakeResultSaga(ResultEngine resultEngine) {
+        this.resultEngine = resultEngine;
     }
 
     @Override
-    public SagaDefinition<BuyTicketSagaData> getSagaDefinition() {
+    public SagaDefinition<ProcessSweepstakeResultSagaData> getSagaDefinition() {
         return step()
-                .invokeLocal(ticketEngine::getParentSweepstakeAndParticipant)
+            .invokeLocal(resultEngine::processSweepstakeResult)
                 .withCompensation(sagaData -> {})
                 .step()
-                .invokeLocal(ticketEngine::buyTickets)
-                .withCompensation(sagaData -> {
-                    sagaData.getSavedTickets().forEach(currentTicket -> {
-                        ticketEngine.deleteTicket(currentTicket.getId());
-                    });
-                })
-                .step()
-                .invokeParticipant(ticketEngine::updateUserBalance)
+                .invokeParticipant(resultEngine::updateUserBalance)
                 .build();
+
     }
+
 }

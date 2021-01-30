@@ -80,12 +80,12 @@ public class SweepstakeControllerGrpc extends SweepstakeServiceGrpc.SweepstakeSe
 
   @Override
   public void findSweepstakeById(
-      SweepstakeServiceOuterClass.SweepstakeId request,
+      SweepstakeServiceOuterClass.Id request,
       StreamObserver<SweepstakeServiceOuterClass.Sweepstake> responseObserver) {
     try {
       SweepstakeServiceOuterClass.Sweepstake sweepstake =
           this.castHelper(
-              sweepstakeDao.findSweepstakeById(UUID.fromString(request.getSweepstakeId())));
+              sweepstakeDao.findSweepstakeById(UUID.fromString(request.getId())));
 
       responseObserver.onNext(sweepstake);
       responseObserver.onCompleted();

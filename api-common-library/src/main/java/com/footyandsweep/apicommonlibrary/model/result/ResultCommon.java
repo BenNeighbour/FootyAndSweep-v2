@@ -16,7 +16,6 @@
 
 package com.footyandsweep.apicommonlibrary.model.result;
 
-import com.footyandsweep.apicommonlibrary.events.ProcessStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,6 +38,4 @@ public class ResultCommon implements Serializable {
 
   private boolean isProcessed = false;
 
-  @Enumerated(EnumType.STRING)
-  private ProcessStatus processStatus = ProcessStatus.RELATIONS_PENDING;
 }
