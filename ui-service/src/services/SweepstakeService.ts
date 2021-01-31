@@ -14,19 +14,23 @@
  *   limitations under the License.
  */
 
-import {handleErrors} from "./CommonsService";
-import {SweepstakeServiceClient} from "../client/SweepstakeServiceServiceClientPb";
+import {grpc} from "@improbable-eng/grpc-web";
 import {JoinCode} from "../client/SweepstakeService_pb";
+import {SweepstakeService} from "../client/SweepstakeService_pb_service";
 
-const client = new SweepstakeServiceClient(`${process.env.REACT_APP_API_GATEWAY_SERVICE}`, null, {withCredentials: true});
+const transportConfig = grpc.CrossBrowserHttpTransport({ withCredentials: true });
+grpc.setDefaultTransport(transportConfig);
 
 export const joinSweepstake = (action: any) => {
-    const request = new JoinCode();
+    /* TODO: Fill this in with the action payload data */
+    const joinCode = new JoinCode();
+    joinCode.setJoincode("sdfsdf");
 
-    request.setJoincode("sdfsdf");
-
-    client.findSweepstakeByJoinCode(request, {}, (error, response) => {
-        handleErrors(error);
-        console.log(response, error);
-    });
+    grpc.invoke(SweepstakeService.findSweepstakeByJoinCode, {
+        request: joinCode,
+        host: `http://api.footyandsweep-dev.com:32427`,
+        onEnd: (code: grpc.Code, msg: string | undefined, trailers: grpc.Metadata) => {
+            console.log(msg)
+        }
+    })
 }

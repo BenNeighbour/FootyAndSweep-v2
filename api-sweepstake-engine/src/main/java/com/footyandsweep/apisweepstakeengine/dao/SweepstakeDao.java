@@ -53,4 +53,6 @@ public interface SweepstakeDao extends JpaRepository<Sweepstake, UUID> {
   @Transactional
   @CacheEvict(value = "sweepstakeCache", key = "#sweepstake.getId()")
   void delete(Sweepstake sweepstake);
+
+  List<Sweepstake> findAllSweepstakeBySweepstakeEventId(UUID sweepstakeEventId);
 }

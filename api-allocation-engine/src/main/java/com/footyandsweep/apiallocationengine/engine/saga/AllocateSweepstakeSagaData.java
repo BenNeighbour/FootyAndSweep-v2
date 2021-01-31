@@ -14,8 +14,22 @@
  *   limitations under the License.
  */
 
-export const handleErrors = (error: any) => {
-    if (error.code === 16) {
-        /* Log the user out, then redirect to portal page */
-    }
+package com.footyandsweep.apiallocationengine.engine.saga;
+
+import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
+import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.List;
+
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+public class AllocateSweepstakeSagaData {
+  private SweepstakeCommon sweepstake;
+  private List<TicketCommon> tickets;
 }

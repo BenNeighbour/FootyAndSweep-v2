@@ -145,6 +145,11 @@ public class TicketEngineImpl implements TicketEngine {
   }
 
   @Override
+  public void modifyTickets(Ticket ticket) {
+    ticketDao.saveAndFlush(ticket);
+  }
+
+  @Override
   public void deleteTicket(UUID ticketId) {
     ticketDao.deleteById(ticketId);
   }

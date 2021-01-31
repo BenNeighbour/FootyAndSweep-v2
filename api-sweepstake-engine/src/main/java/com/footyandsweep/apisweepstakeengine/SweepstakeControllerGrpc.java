@@ -33,6 +33,7 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import javax.validation.ValidationException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 import java.util.UUID;
 
 @GrpcService
@@ -112,9 +113,6 @@ public class SweepstakeControllerGrpc extends SweepstakeServiceGrpc.SweepstakeSe
       BeanUtils.copyProperties(sweepstake, request);
       sweepstake.setOwnerId(UUID.fromString(request.getOwnerId()));
 
-      /* Fulfill the initial request here */
-      //      sweepstake = sweepstakeEngine.saveSweepstake(sweepstake.getOwnerId(), sweepstake);
-
       /* Return the sweepstake here */
       SweepstakeServiceOuterClass.Sweepstake returnSweepstake = this.castHelper(sweepstake);
 
@@ -125,23 +123,50 @@ public class SweepstakeControllerGrpc extends SweepstakeServiceGrpc.SweepstakeSe
     } catch (ValidationException e) {
       /* If there are any validation errors (to do with the sweepstake fields), then tell the user */
       Status errorStatus =
-          Status.newBuilder()
-              .setCode(Code.INVALID_ARGUMENT.getNumber())
-              .setMessage(e.getMessage())
-              .build();
+              Status.newBuilder()
+                      .setCode(Code.INVALID_ARGUMENT.getNumber())
+                      .setMessage(e.getMessage())
+                      .build();
+
+      responseObserver.onError(StatusProto.toStatusRuntimeException(errorStatus));
+    }
+  }
+
+  @Override
+  public void findSweepstakeByFootballMatchId(SweepstakeServiceOuterClass.Id request, StreamObserver<SweepstakeServiceOuterClass.SweepstakeList> responseObserver) {
+    try {
+      List<Sweepstake> sweepstakes = sweepstakeDao.findAllSweepstakeBySweepstakeEventId(UUID.fromString(request.getId()));
+      SweepstakeServiceOuterClass.SweepstakeList sweepstakeList = SweepstakeServiceOuterClass.SweepstakeList.newBuilder().build();
+
+      sweepstakes.forEach(sweepstake -> {
+        try {
+          sweepstakeList.getSweepstakesList().add(this.castHelper(sweepstake));
+        } catch (InvocationTargetException | IllegalAccessException e) {
+        }
+      });
+
+      responseObserver.onNext(sweepstakeList);
+      responseObserver.onCompleted();
+    }  catch (Exception e) {
+      /* If there are any validation errors (to do with the sweepstake fields), then tell the user */
+      Status errorStatus =
+              Status.newBuilder()
+                      .setCode(Code.INTERNAL.getNumber())
+                      .setMessage(e.getMessage())
+                      .build();
 
       responseObserver.onError(StatusProto.toStatusRuntimeException(errorStatus));
     }
   }
 
   private SweepstakeServiceOuterClass.Sweepstake castHelper(Sweepstake sweepstake)
-      throws InvocationTargetException, IllegalAccessException {
+          throws InvocationTargetException, IllegalAccessException {
     if (sweepstake != null) {
       /* Cast the sweepstake fields to the protobuf sweepstake */
       SweepstakeServiceOuterClass.Sweepstake response =
-          SweepstakeServiceOuterClass.Sweepstake.newBuilder()
-              .setId(sweepstake.getId().toString())
-              .build();
+              SweepstakeServiceOuterClass.Sweepstake.newBuilder()
+                      .setId(sweepstake.getId().toString())
+                      .build();
       BeanUtils.copyProperties(response, sweepstake);
 
       /* Return the casted version to be sent off to the client */

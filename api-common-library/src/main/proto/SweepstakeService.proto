@@ -58,5 +58,5 @@ service SweepstakeService {
   rpc findSweepstakeByFootballMatchId(Id) returns (SweepstakeList);
   rpc findSweepstakeById(Id) returns (Sweepstake);
   rpc getResultHelperMap(Sweepstake) returns (Map);
-  rpc requestNewSweepstake(Sweepstake) returns (stream Sweepstake);
+  rpc requestNewSweepstake(Sweepstake) returns (Sweepstake);
 }

@@ -25,6 +25,9 @@ build:
     - image: api-frontend-proxy
       context: kubernetes/api-frontend-proxy
       docker: { }
+#    - image: ui-service
+#      context: ui-service
+#      docker: {}
 deploy:
   kubectl:
     manifests:
@@ -46,3 +49,4 @@ deploy:
       - kubernetes/api-authentication-service/api-authentication-service.yaml
       - kubernetes/api-gateway-proxy/api-gateway-proxy.yaml
       - kubernetes/api-event-broker/api-cdc-service.yaml
+#      - kubernetes/ui-service/ui-service.yaml

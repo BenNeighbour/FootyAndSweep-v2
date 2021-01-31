@@ -14,8 +14,7 @@
  *   limitations under the License.
  */
 
-export const handleErrors = (error: any) => {
-    if (error.code === 16) {
-        /* Log the user out, then redirect to portal page */
-    }
+package com.footyandsweep.apicommonlibrary.cqrs.ticket;
+
+public class AllocateTicketsFailure extends AllocateTicketsCommand {
 }

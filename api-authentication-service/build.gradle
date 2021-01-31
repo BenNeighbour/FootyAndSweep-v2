@@ -100,10 +100,6 @@ dependencies {
 
     compile group: 'org.postgresql', name: 'postgresql', version: '42.1.1'
 
-//    compile ('org.postgresql:postgresql:9.4-1200-jdbc41') {
-//        exclude group: "org.slf4j", module: "slf4j-simple"
-//    }
-
     implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-config:1.1.0.RELEASE'
     implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes:1.1.0.RELEASE'
 

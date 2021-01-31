@@ -5839,7 +5839,7 @@ public final class SweepstakeServiceOuterClass {
       "weepstake*7\n\020SweepstakeStatus\022\010\n\004OPEN\020\000\022" +
       "\r\n\tALLOCATED\020\001\022\n\n\006CLOSED\020\002*B\n\024Sweepstake" +
       "TypeCommon\022\024\n\020Correct_Score_FT\020\000\022\024\n\020Corr" +
-      "ect_Score_HT\020\0012\271\003\n\021SweepstakeService\022V\n\030" +
+      "ect_Score_HT\020\0012\267\003\n\021SweepstakeService\022V\n\030" +
       "findSweepstakeByJoinCode\022\033.com.footyands" +
       "weep.JoinCode\032\035.com.footyandsweep.Sweeps" +
       "take\022[\n\037findSweepstakeByFootballMatchId\022" +
@@ -5848,9 +5848,9 @@ public final class SweepstakeServiceOuterClass {
       "\025.com.footyandsweep.Id\032\035.com.footyandswe" +
       "ep.Sweepstake\022K\n\022getResultHelperMap\022\035.co" +
       "m.footyandsweep.Sweepstake\032\026.com.footyan" +
-      "dsweep.Map\022V\n\024requestNewSweepstake\022\035.com" +
+      "dsweep.Map\022T\n\024requestNewSweepstake\022\035.com" +
       ".footyandsweep.Sweepstake\032\035.com.footyand" +
-      "sweep.Sweepstake0\001b\006proto3"
+      "sweep.Sweepstakeb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

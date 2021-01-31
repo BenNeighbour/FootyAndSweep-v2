@@ -14,14 +14,11 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apiticketengine.config;
+package com.footyandsweep.apiallocationengine.config;
 
-import com.footyandsweep.apiticketengine.dao.TicketDao;
-import com.footyandsweep.apiticketengine.engine.TicketEngine;
-import com.footyandsweep.apiticketengine.engine.TicketEngineImpl;
-import com.footyandsweep.apiticketengine.engine.handlers.TicketCommandHandler;
-import io.eventuate.tram.commands.consumer.CommandDispatcher;
-import io.eventuate.tram.sagas.participant.SagaCommandDispatcherFactory;
+import com.footyandsweep.apiallocationengine.dao.AllocationDao;
+import com.footyandsweep.apiallocationengine.engine.AllocationEngine;
+import com.footyandsweep.apiallocationengine.engine.AllocationEngineImpl;
 import io.eventuate.tram.sagas.spring.orchestration.SagaOrchestratorConfiguration;
 import io.eventuate.tram.spring.optimisticlocking.OptimisticLockingDecoratorConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -33,22 +30,10 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 @EnableAutoConfiguration
 @Import({SagaOrchestratorConfiguration.class, OptimisticLockingDecoratorConfiguration.class})
-public class TicketEngineConfiguration {
+public class AllocationEngineConfiguration {
 
   @Bean
-  public TicketEngine ticketEngine(TicketDao ticketDao, RestTemplate restTemplate) {
-    return new TicketEngineImpl(ticketDao, restTemplate);
-  }
-
-  @Bean
-  public TicketCommandHandler ticketCommandHandler(TicketEngine ticketEngine) {
-    return new TicketCommandHandler(ticketEngine);
-  }
-
-  @Bean
-  public CommandDispatcher consumerCommandDispatcher(
-          TicketCommandHandler target, SagaCommandDispatcherFactory sagaCommandDispatcherFactory) {
-    return sagaCommandDispatcherFactory.make(
-            "ticket-engine-events-dispatcher", target.commandHandlerDefinitions());
+  public AllocationEngine allocationEngine(AllocationDao allocationDao, RestTemplate restTemplate) {
+    return new AllocationEngineImpl(allocationDao, restTemplate);
   }
 }

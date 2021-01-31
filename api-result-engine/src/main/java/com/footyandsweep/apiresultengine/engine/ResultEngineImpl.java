@@ -31,6 +31,7 @@ import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import javafx.util.Pair;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -138,7 +139,7 @@ public class ResultEngineImpl implements ResultEngine {
                   }
 
                   /* Update user balance */
-                  sagaData.setUserBalanceMap(new Pair<>(ticket.getUserId(), totalPot));
+                  sagaData.setUserBalanceMap(new ImmutablePair<>(ticket.getUserId(), totalPot));
 
                 } else {
                   ticket.setStatus(TicketCommon.TicketStatus.LOST);
@@ -147,7 +148,7 @@ public class ResultEngineImpl implements ResultEngine {
                 ticket.setStatus(TicketCommon.TicketStatus.REFUNDED);
                 /* Update the user balance */
 //                sagaData.setUserBalanceMap(ticket.getUserId(), sagaData.getSweepstake().getStake());
-                sagaData.setUserBalanceMap(new Pair<>(ticket.getUserId(), sagaData.getSweepstake().getStake()));
+                sagaData.setUserBalanceMap(new ImmutablePair<>(ticket.getUserId(), sagaData.getSweepstake().getStake()));
               }
             });
   }

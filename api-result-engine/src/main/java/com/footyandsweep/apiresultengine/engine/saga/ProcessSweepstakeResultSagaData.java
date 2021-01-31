@@ -18,11 +18,11 @@ package com.footyandsweep.apiresultengine.engine.saga;
 
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apiresultengine.model.Result;
-import javafx.util.Pair;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -34,6 +34,5 @@ import java.util.UUID;
 public class ProcessSweepstakeResultSagaData {
   private SweepstakeCommon sweepstake;
   private Result result;
-  private Pair<UUID, BigDecimal> userBalanceMap;
-
+  private ImmutablePair<UUID, BigDecimal> userBalanceMap;
 }

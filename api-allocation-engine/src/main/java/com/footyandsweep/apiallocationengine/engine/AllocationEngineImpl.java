@@ -17,14 +17,15 @@
 package com.footyandsweep.apiallocationengine.engine;
 
 import com.footyandsweep.apiallocationengine.dao.AllocationDao;
-import com.footyandsweep.apiallocationengine.event.AllocationMessageDispatcher;
+import com.footyandsweep.apiallocationengine.engine.saga.AllocateSweepstakeSagaData;
 import com.footyandsweep.apiallocationengine.model.Allocation;
-import com.footyandsweep.apicommonlibrary.events.EventType;
-import com.footyandsweep.apicommonlibrary.events.TicketEvent;
+import com.footyandsweep.apicommonlibrary.cqrs.ticket.AllocateTicketsCommand;
+import com.footyandsweep.apicommonlibrary.cqrs.user.UpdateUserBalanceCommand;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeTypeCommon;
 import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
 import com.footyandsweep.apicommonlibrary.other.CustomMap;
+import io.eventuate.tram.commands.consumer.CommandWithDestination;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,8 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static io.eventuate.tram.commands.consumer.CommandWithDestinationBuilder.send;
+
 @Service
 public class AllocationEngineImpl implements AllocationEngine {
 
@@ -42,39 +45,37 @@ public class AllocationEngineImpl implements AllocationEngine {
 
   private final AllocationDao allocationDao;
   private final RestTemplate restTemplate;
-  private final AllocationMessageDispatcher allocationMessageDispatcher;
 
   public AllocationEngineImpl(
       final AllocationDao allocationDao,
-      final RestTemplate restTemplate,
-      final AllocationMessageDispatcher allocationMessageDispatcher) {
+      final RestTemplate restTemplate) {
     this.allocationDao = allocationDao;
     this.restTemplate = restTemplate;
-    this.allocationMessageDispatcher = allocationMessageDispatcher;
   }
 
   /*
     This method is called by either the sweepstake sold out event listener or by the cron job batch-processor
   */
   @Override
-  public void allocateSweepstakeTickets(SweepstakeCommon sweepstake) {
+  public void allocateSweepstakeTickets(AllocateSweepstakeSagaData sagaData) {
     try {
       /* Get a unique shuffled list of unique user ids */
-      List<UUID> uniqueUserList = this.sweepstakeParticipantsHelper(sweepstake.getId());
+      List<UUID> uniqueUserList = this.sweepstakeParticipantsHelper(sagaData.getSweepstake().getId());
 
       /* Get the built possible result maps from the sweepstake/result methods */
       Optional<Map<Integer, String>> sweepstakeResultMap =
-          Optional.of(this.getSweepstakeResultMap(sweepstake));
+          Optional.of(this.getSweepstakeResultMap(sagaData.getSweepstake()));
 
       /* Build a randomized list of possible results */
       List<Integer> sweepstakeResultIdList = getSweepstakeResultIdList(sweepstakeResultMap.get());
 
       /* Get a list of tickets that belong to this sweepstake */
-      List<TicketCommon> allPurchasedTickets = this.getSweepstakeTicketsHelper(sweepstake.getId());
+      List<TicketCommon> allPurchasedTickets = this.getSweepstakeTicketsHelper(sagaData.getSweepstake().getId());
+      sagaData.setTickets(allPurchasedTickets);
 
       /* Process each of the user bought tickets */
       this.processAllTickets(
-          allPurchasedTickets, uniqueUserList, sweepstakeResultMap.get(), sweepstakeResultIdList);
+          sagaData, uniqueUserList, sweepstakeResultMap.get(), sweepstakeResultIdList);
     } catch (Exception e) {
       /* Throw error to WebSocket client */
       e.getCause();
@@ -82,8 +83,7 @@ public class AllocationEngineImpl implements AllocationEngine {
   }
 
   private List<Integer> getSweepstakeResultIdList(Map<Integer, String> sweepstakeResultMap) {
-    List<Integer> sweepstakeResultIdList = new ArrayList<>();
-    sweepstakeResultIdList.addAll(sweepstakeResultMap.keySet());
+    List<Integer> sweepstakeResultIdList = new ArrayList<>(sweepstakeResultMap.keySet());
 
     Collections.shuffle(sweepstakeResultIdList);
 
@@ -122,7 +122,7 @@ public class AllocationEngineImpl implements AllocationEngine {
   }
 
   private void processAllTickets(
-      List<TicketCommon> tickets,
+          AllocateSweepstakeSagaData sagaData,
       List<UUID> participantIds,
       Map<Integer, String> sweepstakeResultMap,
       List<Integer> sweepstakeResultIdList) {
@@ -133,7 +133,7 @@ public class AllocationEngineImpl implements AllocationEngine {
     for (int i = 0; i < participantIds.size(); i++) {
       final int finalI = i;
       List<TicketCommon> userTickets =
-          tickets.stream()
+          sagaData.getTickets().stream()
               .filter(ticketCommon -> ticketCommon.getUserId().equals(participantIds.get(finalI)))
               .collect(Collectors.toList());
 
@@ -169,8 +169,8 @@ public class AllocationEngineImpl implements AllocationEngine {
           TicketCommon ticket = userTickets.remove(0);
 
           /* Logs here */
-          this.allocateTicket(
-              sweepstakeResultMap, sweepstakeResultIdList, ticket, userTickets.isEmpty());
+          sagaData.getTickets().add(this.allocateTicket(
+              sweepstakeResultMap, sweepstakeResultIdList, ticket, userTickets.isEmpty()));
         }
       }
 
@@ -179,7 +179,7 @@ public class AllocationEngineImpl implements AllocationEngine {
     }
   }
 
-  private void allocateTicket(
+  private TicketCommon allocateTicket(
       Map<Integer, String> sweepstakeResultMap,
       List<Integer> sweepstakeResultIdList,
       TicketCommon ticket,
@@ -217,23 +217,13 @@ public class AllocationEngineImpl implements AllocationEngine {
       /* Join the allocation id with the ticket */
       ticket.setAllocationId(allocation.getId());
 
-      /* Creating the ticket allocated event with the right metadata inside to be put into the message to the other services */
-      TicketEvent ticketAllocated = new TicketEvent(ticket, EventType.ALLOCATED, isLastTicket);
-
-      /* Publish ticket allocated event */
-      allocationMessageDispatcher.publishEvent(ticketAllocated, "api-ticket-events-topic");
-
-      /* Log the event */
-      log.info(
-          "Sweepstake {} ticket {} has been allocated! {}",
-          ticket.getSweepstakeId(),
-          ticket.getId(),
-          dateFormat.format(new Date()));
+      return ticket;
     } catch (Exception e) {
       /* Throw error to WebSocket client */
-
       e.getCause();
     }
+
+    return null;
   }
 
   private Map<Integer, String> getSweepstakeResultMap(SweepstakeCommon sweepstake) {
@@ -261,5 +251,12 @@ public class AllocationEngineImpl implements AllocationEngine {
         });
 
     return deserializedMap;
+  }
+
+  @Override
+  public CommandWithDestination allocateTickets(List<TicketCommon> tickets) {
+    return send(new AllocateTicketsCommand(tickets))
+            .to("ticket-engine-events")
+            .build();
   }
 }

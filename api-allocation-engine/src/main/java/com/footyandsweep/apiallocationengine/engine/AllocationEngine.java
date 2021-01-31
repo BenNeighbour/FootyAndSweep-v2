@@ -16,9 +16,15 @@
 
 package com.footyandsweep.apiallocationengine.engine;
 
-import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
+import com.footyandsweep.apiallocationengine.engine.saga.AllocateSweepstakeSagaData;
+import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
+import io.eventuate.tram.commands.consumer.CommandWithDestination;
+
+import java.util.List;
 
 public interface AllocationEngine {
 
-  void allocateSweepstakeTickets(SweepstakeCommon sweepstake);
+  void allocateSweepstakeTickets(AllocateSweepstakeSagaData sagaData);
+
+  CommandWithDestination allocateTickets(List<TicketCommon> tickets);
 }

@@ -17,8 +17,10 @@
 package com.footyandsweep.apiticketengine.engine;
 
 import com.footyandsweep.apiticketengine.engine.saga.BuyTicketSagaData;
+import com.footyandsweep.apiticketengine.model.Ticket;
 import io.eventuate.tram.commands.consumer.CommandWithDestination;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface TicketEngine {
@@ -28,6 +30,8 @@ public interface TicketEngine {
   void getParentSweepstakeAndParticipant(BuyTicketSagaData sagaData);
 
   void deleteTicket(UUID ticketId);
+
+  void modifyTickets(Ticket ticket);
 
   CommandWithDestination updateUserBalance(BuyTicketSagaData buyTicketSagaData);
 }
