@@ -23,6 +23,7 @@ import com.footyandsweep.apiticketengine.engine.handlers.TicketCommandHandler;
 import io.eventuate.tram.commands.consumer.CommandDispatcher;
 import io.eventuate.tram.sagas.participant.SagaCommandDispatcherFactory;
 import io.eventuate.tram.sagas.spring.orchestration.SagaOrchestratorConfiguration;
+import io.eventuate.tram.sagas.spring.participant.SagaParticipantConfiguration;
 import io.eventuate.tram.spring.optimisticlocking.OptimisticLockingDecoratorConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -32,7 +33,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Configuration
 @EnableAutoConfiguration
-@Import({SagaOrchestratorConfiguration.class, OptimisticLockingDecoratorConfiguration.class})
+@Import({SagaOrchestratorConfiguration.class, OptimisticLockingDecoratorConfiguration.class, SagaParticipantConfiguration.class})
 public class TicketEngineConfiguration {
 
   @Bean

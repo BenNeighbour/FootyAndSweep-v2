@@ -20,7 +20,6 @@ import com.footyandsweep.apiallocationengine.dao.AllocationDao;
 import com.footyandsweep.apiallocationengine.engine.saga.AllocateSweepstakeSagaData;
 import com.footyandsweep.apiallocationengine.model.Allocation;
 import com.footyandsweep.apicommonlibrary.cqrs.ticket.AllocateTicketsCommand;
-import com.footyandsweep.apicommonlibrary.cqrs.user.UpdateUserBalanceCommand;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeTypeCommon;
 import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;

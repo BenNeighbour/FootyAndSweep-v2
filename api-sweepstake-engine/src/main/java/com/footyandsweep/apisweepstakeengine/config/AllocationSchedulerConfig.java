@@ -16,13 +16,21 @@
 
 package com.footyandsweep.apisweepstakeengine.config;
 
+import com.footyandsweep.AllocationServiceGrpc;
+import com.footyandsweep.SweepstakeServiceOuterClass;
+import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
+import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.InvocationTargetException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Component
 public class AllocationSchedulerConfig {
@@ -37,24 +45,32 @@ public class AllocationSchedulerConfig {
   }
 
   /* Scheduled for every 2 minutes */
-  @Scheduled(fixedRate = 120000)
+  @Scheduled(fixedRate = 60000)
   public void checkAndAllocateSweepstakes() {
-    //    /* Logging the periodic check */
-    //    log.info("Periodic check for unallocated sweepstakes at {}", dateFormat.format(new
-    // Date()));
-    //
-    //    /* For each sweepstake that is open, get the event id */
-    //    sweepstakeDao
-    //        .findAllSweepstakesByStatus(SweepstakeCommon.SweepstakeStatus.OPEN)
-    //        .forEach(
-    //            sweepstake -> {
-    //              /* Create the event object to be sent over */
-    //              SweepstakeEvent sweepstakeEvent =
-    //                  new SweepstakeEvent(sweepstake, EventType.NEEDS_ALLOCATING);
-    //
-    //              /* Send a sweepstake needs allocating message */
-    //              sweepstakeMessageDispatcher.publishEvent(
-    //                  sweepstakeEvent, "api-sweepstake-events-topic");
-    //            });
+      /* Logging the periodic check */
+      log.info("Periodic check for unallocated sweepstakes at {}", dateFormat.format(new
+              Date()));
+
+      /* For each sweepstake that is open, get the event id */
+      sweepstakeDao
+              .findAllSweepstakesByStatus(SweepstakeCommon.SweepstakeStatus.OPEN)
+              .forEach(
+                      sweepstake -> {
+                          /* Call the RPC, which in turn, calls the saga for each sweepstake */
+                          ManagedChannel channel = ManagedChannelBuilder.forAddress("api-allocation-engine", 9090)
+                                  .usePlaintext()
+                                  .build();
+
+                          AllocationServiceGrpc.AllocationServiceBlockingStub clientStub = AllocationServiceGrpc.newBlockingStub(channel);
+                          SweepstakeServiceOuterClass.Sweepstake grpcSweepstake = SweepstakeServiceOuterClass.Sweepstake.newBuilder().setId(sweepstake.getId().toString()).build();
+
+                          try {
+                              BeanUtils.copyProperties(grpcSweepstake, sweepstake);
+                          } catch (IllegalAccessException | InvocationTargetException e) {
+                              e.printStackTrace();
+                          }
+
+                          clientStub.allocateSweepstake(grpcSweepstake);
+                      });
   }
 }

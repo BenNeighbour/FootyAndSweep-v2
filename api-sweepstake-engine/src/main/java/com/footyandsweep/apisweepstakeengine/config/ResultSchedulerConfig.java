@@ -42,7 +42,7 @@ public class ResultSchedulerConfig {
   }
 
   /* Scheduled for every 4 minutes (240000) */
-  @Scheduled(fixedRate = 240000)
+  @Scheduled(fixedRate = 120000)
   public void fetchAndDecisionSweepstakes() {
       sweepstakeDao
               .findAllSweepstakesByStatus(SweepstakeCommon.SweepstakeStatus.ALLOCATED)

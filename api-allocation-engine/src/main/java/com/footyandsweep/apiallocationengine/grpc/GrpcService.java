@@ -14,26 +14,19 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apicommonlibrary.events;
+package com.footyandsweep.apiallocationengine.grpc;
 
-import com.footyandsweep.apicommonlibrary.BaseEvent;
-import com.footyandsweep.apicommonlibrary.model.user.UserCommon;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import io.grpc.BindableService;
+import org.springframework.stereotype.Service;
 
-import java.io.Serializable;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-@Setter
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
-public class UserEvent extends BaseEvent implements Serializable {
-
-  private static final long serialVersionUID = 2032351067327457721L;
-
-  private UserCommon user;
-
-  private EventType event;
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Service
+public @interface GrpcService {
+  Class<? extends BindableService>[] value() default {};
 }
