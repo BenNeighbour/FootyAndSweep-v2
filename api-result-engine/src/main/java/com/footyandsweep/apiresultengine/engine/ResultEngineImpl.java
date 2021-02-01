@@ -29,7 +29,6 @@ import com.footyandsweep.apiresultengine.model.FootballMatchResult;
 import io.eventuate.tram.commands.consumer.CommandWithDestination;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-import javafx.util.Pair;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.slf4j.Logger;
@@ -174,7 +173,7 @@ public class ResultEngineImpl implements ResultEngine {
     return resultMap.orElse(new HashMap<>());
   }
 
-  private AllocationCommon getTicketAllocation(UUID ticketId) {
+  private AllocationCommon getTicketAllocation(String ticketId) {
     return restTemplate
             .getForEntity(
                     "http://api-allocation-engine:8080/internal/allocation/by/ticket/" + ticketId,

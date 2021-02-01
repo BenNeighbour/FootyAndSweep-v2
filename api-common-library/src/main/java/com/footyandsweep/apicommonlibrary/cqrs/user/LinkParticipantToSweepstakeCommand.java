@@ -22,7 +22,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.UUID;
 
 @Setter
 @Getter
@@ -30,7 +29,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class LinkParticipantToSweepstakeCommand implements Command {
 
-  private UUID participantId;
+  private String participantId;
 
-  private UUID sweepstakeId;
+  private String sweepstakeId;
 }

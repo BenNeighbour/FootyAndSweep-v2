@@ -21,7 +21,6 @@ import com.footyandsweep.apiallocationengine.engine.AllocationEngine;
 import com.footyandsweep.apiallocationengine.model.Allocation;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/internal/allocation")
@@ -36,7 +35,7 @@ public class AllocationController {
   }
 
   @GetMapping("/by/ticket/{id}")
-  public Allocation findAllocationByTicketId(@PathVariable("id") UUID id) {
+  public Allocation findAllocationByTicketId(@PathVariable("id") String id) {
     return allocationDao.findAllocationByTicketId(id);
   }
 

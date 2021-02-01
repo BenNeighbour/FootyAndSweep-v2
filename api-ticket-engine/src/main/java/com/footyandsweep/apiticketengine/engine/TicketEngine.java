@@ -20,16 +20,13 @@ import com.footyandsweep.apiticketengine.engine.saga.BuyTicketSagaData;
 import com.footyandsweep.apiticketengine.model.Ticket;
 import io.eventuate.tram.commands.consumer.CommandWithDestination;
 
-import java.util.List;
-import java.util.UUID;
-
 public interface TicketEngine {
 
   void buyTickets(BuyTicketSagaData sagaData);
 
   void getParentSweepstakeAndParticipant(BuyTicketSagaData sagaData);
 
-  void deleteTicket(UUID ticketId);
+  void deleteTicket(String ticketId);
 
   void modifyTickets(Ticket ticket);
 

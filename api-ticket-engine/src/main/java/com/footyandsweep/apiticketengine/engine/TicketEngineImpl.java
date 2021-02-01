@@ -34,7 +34,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import static io.eventuate.tram.commands.consumer.CommandWithDestinationBuilder.send;
 
@@ -150,7 +149,7 @@ public class TicketEngineImpl implements TicketEngine {
   }
 
   @Override
-  public void deleteTicket(UUID ticketId) {
+  public void deleteTicket(String ticketId) {
     ticketDao.deleteById(ticketId);
   }
 }

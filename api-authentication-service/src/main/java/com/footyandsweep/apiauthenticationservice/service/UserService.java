@@ -20,17 +20,16 @@ import com.footyandsweep.apiauthenticationservice.exception.SignUpException;
 import com.footyandsweep.apiauthenticationservice.payload.SignUpRequest;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 
 public interface UserService {
 
-  void addOwnerToSweepstake(UUID sweepstakeId, UUID ownerId);
+  void addOwnerToSweepstake(String sweepstakeId, String ownerId);
 
   void checkSignUpRequestIsValid(SignUpRequest request) throws SignUpException;
 
-  void deleteAllSweepstakeRelations(UUID sweepstakeId);
+  void deleteAllSweepstakeRelations(String sweepstakeId);
 
-  void saveSweepstakeId(UUID sweepstakeId, UUID participantId);
+  void saveSweepstakeId(String sweepstakeId, String participantId);
 
-  void updateUserBalance(UUID userId, BigDecimal amountDeducted);
+  void updateUserBalance(String userId, BigDecimal amountDeducted);
 }

@@ -32,7 +32,6 @@ import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static io.eventuate.tram.commands.consumer.CommandWithDestinationBuilder.send;
@@ -62,7 +61,7 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
   }
 
   @Override
-  public ParticipantIds createSweepstakeParticipantRelation(String joinCode, UUID participantId) {
+  public ParticipantIds createSweepstakeParticipantRelation(String joinCode, String participantId) {
       /* Find the sweepstake */
       Sweepstake sweepstake = sweepstakeDao.findSweepstakeByJoinCode(joinCode);
 
@@ -85,7 +84,7 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
 
   @Override
   public CommandWithDestination linkParticipantToSweepstake(
-          UUID sweepstakeId, UUID participantId) {
+          String sweepstakeId, String participantId) {
     /* Do the remote service invocation here */
     return send(new LinkParticipantToSweepstakeCommand(participantId, sweepstakeId))
             .to("user-service-events")
@@ -100,7 +99,7 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
   }
 
   @Override
-  public void deleteSweepstakeById(UUID sweepstakeId) {
+  public void deleteSweepstakeById(String sweepstakeId) {
     sweepstakeDao.deleteById(sweepstakeId);
   }
 
@@ -110,12 +109,12 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
   }
 
   @Override
-  public void deleteSweepstakeRelationById(UUID relationId) {
+  public void deleteSweepstakeRelationById(String relationId) {
     participantIdDao.deleteById(relationId);
   }
 
   @Override
-  public void deleteAllSweepstakeRelationsBySweepstakeId(UUID sweepstakeId) {
+  public void deleteAllSweepstakeRelationsBySweepstakeId(String sweepstakeId) {
     List<ParticipantIds> participantIds =
             participantIdDao.findAllParticipantIdsBySweepstakeId(sweepstakeId);
 

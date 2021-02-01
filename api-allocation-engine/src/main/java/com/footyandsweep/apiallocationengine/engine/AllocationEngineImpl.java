@@ -59,7 +59,7 @@ public class AllocationEngineImpl implements AllocationEngine {
   public void allocateSweepstakeTickets(AllocateSweepstakeSagaData sagaData) {
     try {
       /* Get a unique shuffled list of unique user ids */
-      List<UUID> uniqueUserList = this.sweepstakeParticipantsHelper(sagaData.getSweepstake().getId());
+      List<String> uniqueUserList = this.sweepstakeParticipantsHelper(sagaData.getSweepstake().getId());
 
       /* Get the built possible result maps from the sweepstake/result methods */
       Optional<Map<Integer, String>> sweepstakeResultMap =
@@ -89,23 +89,23 @@ public class AllocationEngineImpl implements AllocationEngine {
     return sweepstakeResultIdList;
   }
 
-  private List<UUID> sweepstakeParticipantsHelper(UUID sweepstakeId) {
+  private List<String> sweepstakeParticipantsHelper(String sweepstakeId) {
     /* Get a list of participants that might have purchased tickets */
-    List<UUID> participantIds =
+    List<String> participantIds =
         new LinkedList<>(
             Arrays.asList(
                 restTemplate.getForObject(
                     "http://api-sweepstake-engine:8080/internal/sweepstake/by/"
                         + sweepstakeId
                         + "/participants",
-                    UUID[].class)));
+                    String[].class)));
 
     /* Shuffle the user list and return it back to caller */
     Collections.shuffle(participantIds);
     return participantIds;
   }
 
-  private List<TicketCommon> getSweepstakeTicketsHelper(UUID sweepstakeId) {
+  private List<TicketCommon> getSweepstakeTicketsHelper(String sweepstakeId) {
     /* Get a list of tickets that belong to the sweepstake */
     Optional<List<TicketCommon>> ticketList =
         Optional.of(
@@ -122,11 +122,11 @@ public class AllocationEngineImpl implements AllocationEngine {
 
   private void processAllTickets(
           AllocateSweepstakeSagaData sagaData,
-      List<UUID> participantIds,
+      List<String> participantIds,
       Map<Integer, String> sweepstakeResultMap,
       List<Integer> sweepstakeResultIdList) {
     /* Creating a ticket map that will be iterated over to allocate each ticket */
-    Map<UUID, List<TicketCommon>> userTicketsMap = new HashMap<>();
+    Map<String, List<TicketCommon>> userTicketsMap = new HashMap<>();
 
     /* Adding the list of tickets that are linked to the user id and putting them into the user tickets map */
     for (int i = 0; i < participantIds.size(); i++) {
@@ -140,7 +140,7 @@ public class AllocationEngineImpl implements AllocationEngine {
     }
 
     /* List that stores user ids to keep track of what user we are on - it's ordered and gets refilled */
-    List<UUID> userIdAllocationList = new ArrayList<>();
+    List<String> userIdAllocationList = new ArrayList<>();
 
     /* Iterating over the user tickets map */
     while (!userTicketsMap.isEmpty()) {
@@ -150,7 +150,7 @@ public class AllocationEngineImpl implements AllocationEngine {
       /* Meanwhile there are still users left to allocate */
       while (!userIdAllocationList.isEmpty()) {
         /* Get the first user id of the list, then remove so it does not get allocated again during this round */
-        UUID userId = userIdAllocationList.get(0);
+        String userId = userIdAllocationList.get(0);
 
         /* Obtain the tickets for that user in the user tickets map */
         List<TicketCommon> userTickets = userTicketsMap.get(userId);

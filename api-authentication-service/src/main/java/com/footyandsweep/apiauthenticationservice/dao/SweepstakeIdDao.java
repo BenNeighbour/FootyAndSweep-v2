@@ -25,18 +25,17 @@ import org.springframework.stereotype.Repository;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Repository
-public interface SweepstakeIdDao extends JpaRepository<SweepstakeIds, UUID> {
+public interface SweepstakeIdDao extends JpaRepository<SweepstakeIds, String> {
 
   @Transactional
   @Cacheable(value = "sweepstakeParticipantCache", key = "#sweepstakeId")
-  Optional<List<SweepstakeIds>> findAllSweepstakeIdsBySweepstakeId(UUID sweepstakeId);
+  Optional<List<SweepstakeIds>> findAllSweepstakeIdsBySweepstakeId(String sweepstakeId);
 
   @Transactional
   @Cacheable(value = "sweepstakeParticipantCache", key = "#result.get().getSweepstakeId()")
-  Optional<SweepstakeIds> findSweepstakeIdsByParticipantId(UUID participantId);
+  Optional<SweepstakeIds> findSweepstakeIdsByParticipantId(String participantId);
 
   @Transactional
   @CacheEvict(value = "sweepstakeParticipantCache", key = "#sweepstakeIds.getSweepstakeId()")

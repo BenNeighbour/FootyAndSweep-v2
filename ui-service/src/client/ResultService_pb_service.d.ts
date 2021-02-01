@@ -1,7 +1,6 @@
 // package: com.footyandsweep
 // file: ResultService.proto
 
-import * as ResultService_pb from "./ResultService_pb";
 import * as google_protobuf_empty_pb from "google-protobuf/google/protobuf/empty_pb";
 import {grpc} from "@improbable-eng/grpc-web";
 

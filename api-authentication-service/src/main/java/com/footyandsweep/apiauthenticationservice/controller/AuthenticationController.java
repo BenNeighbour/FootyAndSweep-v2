@@ -41,7 +41,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/com.footyandsweep.AuthenticationService")
@@ -118,7 +117,7 @@ public class AuthenticationController {
   }
 
   @GetMapping("/by/id/{userId}")
-  public User findUserById(@PathVariable("userId") UUID userId) {
+  public User findUserById(@PathVariable("userId") String userId) {
     return userDao.findUserById(userId);
   }
 }

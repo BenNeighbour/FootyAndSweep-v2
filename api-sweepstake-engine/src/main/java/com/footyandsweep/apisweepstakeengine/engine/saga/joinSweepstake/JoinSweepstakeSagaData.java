@@ -21,15 +21,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.UUID;
-
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class JoinSweepstakeSagaData {
   private String sweepstakeJoinCode;
-  private UUID sweepstakeId;
-  private UUID participantId;
-  private UUID sweepstakeParticipantId;
+  private String sweepstakeId;
+  private String participantId;
+  private String sweepstakeParticipantId;
 }

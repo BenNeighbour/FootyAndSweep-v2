@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/internal/ticket")
@@ -47,7 +46,7 @@ public class TicketController {
 
   @GetMapping("/by/sweepstake/{sweepstakeId}")
   public Optional<List<Ticket>> findTicketBySweepstakeId(
-          @PathVariable("sweepstakeId") UUID sweepstakeId) {
+          @PathVariable("sweepstakeId") String sweepstakeId) {
     return ticketDao.findAllTicketsBySweepstakeId(sweepstakeId);
   }
 

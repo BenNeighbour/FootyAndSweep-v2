@@ -25,8 +25,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.UUID;
-
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
@@ -49,7 +47,7 @@ public class CustomUserDetailsService implements UserDetailsService {
   }
 
   @Transactional
-  public UserDetails loadUserById(UUID id) {
+  public UserDetails loadUserById(String id) {
     User user =
         userDao.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
 

@@ -23,7 +23,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 
 @Setter
 @Getter
@@ -31,7 +30,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class UpdateUserBalanceCommand implements Command {
 
-  private UUID userId;
+  private String userId;
 
   private BigDecimal amountAdded;
 }

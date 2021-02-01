@@ -85,6 +85,7 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-config:1.1.0.RELEASE'
     implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes:1.1.0.RELEASE'
 
+    compile 'commons-beanutils:commons-beanutils:1.9.4'
     compile group: 'org.hibernate.validator', name: 'hibernate-validator', version: '7.0.0.Final'
 
     compile "io.eventuate.tram.sagas:eventuate-tram-sagas-spring-orchestration-simple-dsl:$eventuateTramSagasVersion"

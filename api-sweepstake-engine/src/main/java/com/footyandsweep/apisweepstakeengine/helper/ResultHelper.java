@@ -185,7 +185,7 @@ public class ResultHelper {
     return 0;
   }
 
-  public int getWinningResultCode(List<TeamCommon> footballTeamList, UUID winningTeamId) {
+  public int getWinningResultCode(List<TeamCommon> footballTeamList, String winningTeamId) {
     for (int i = 0; i < footballTeamList.size(); i++) {
       TeamCommon footballTeam = footballTeamList.get(i);
 

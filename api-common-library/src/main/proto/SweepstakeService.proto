@@ -1,6 +1,8 @@
 syntax = "proto3";
 package com.footyandsweep;
 
+import 'Common.proto';
+
 enum SweepstakeStatus {
   OPEN = 0;
   ALLOCATED = 1;

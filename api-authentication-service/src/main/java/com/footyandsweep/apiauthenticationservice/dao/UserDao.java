@@ -23,14 +23,13 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.Optional;
-import java.util.UUID;
 
 @Repository
-public interface UserDao extends JpaRepository<User, UUID> {
+public interface UserDao extends JpaRepository<User, String> {
 
   @Transactional
   @CacheEvict(value = "userCache", key = "#id")
-  User findUserById(UUID id);
+  User findUserById(String id);
 
   @Transactional
   @CacheEvict(value = "userCache", key = "#email")

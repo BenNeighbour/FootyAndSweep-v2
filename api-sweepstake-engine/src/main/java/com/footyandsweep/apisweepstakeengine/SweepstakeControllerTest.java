@@ -29,7 +29,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/sweepstake/test")
@@ -76,7 +75,7 @@ public class SweepstakeControllerTest {
 
   @PostMapping("/join")
   @Transactional
-  public ResponseEntity<String> join(@RequestParam("participantId") UUID participantId, @RequestParam("joinCode") String joinCode) {
+  public ResponseEntity<String> join(@RequestParam("participantId") String participantId, @RequestParam("joinCode") String joinCode) {
     JoinSweepstakeSagaData data = new JoinSweepstakeSagaData();
     data.setSweepstakeJoinCode(joinCode);
     data.setParticipantId(participantId);

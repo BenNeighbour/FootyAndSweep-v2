@@ -18,12 +18,9 @@ package com.footyandsweep.apisweepstakeengine.engine;
 
 import com.footyandsweep.apisweepstakeengine.engine.saga.createSweepstake.CreateSweepstakeSagaData;
 import com.footyandsweep.apisweepstakeengine.engine.saga.deleteSweepstake.DeleteSweepstakeSagaData;
-import com.footyandsweep.apisweepstakeengine.engine.saga.joinSweepstake.JoinSweepstakeSagaData;
 import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
 import com.footyandsweep.apisweepstakeengine.relation.ParticipantIds;
 import io.eventuate.tram.commands.consumer.CommandWithDestination;
-
-import java.util.UUID;
 
 public interface SweepstakeEngine {
 
@@ -31,16 +28,16 @@ public interface SweepstakeEngine {
 
   CommandWithDestination deleteRemoteSweepstakeRelation(DeleteSweepstakeSagaData sagaData);
 
-  ParticipantIds createSweepstakeParticipantRelation(String joinCode, UUID participantId);
+  ParticipantIds createSweepstakeParticipantRelation(String joinCode, String participantId);
 
-  void deleteSweepstakeById(UUID sweepstakeId);
+  void deleteSweepstakeById(String sweepstakeId);
 
   void deleteSweepstake(Sweepstake sweepstake);
 
-  void deleteSweepstakeRelationById(UUID relationId);
+  void deleteSweepstakeRelationById(String relationId);
 
-  void deleteAllSweepstakeRelationsBySweepstakeId(UUID sweepstakeId);
+  void deleteAllSweepstakeRelationsBySweepstakeId(String sweepstakeId);
 
-  CommandWithDestination linkParticipantToSweepstake(UUID sweepstakeId, UUID participantId);
+  CommandWithDestination linkParticipantToSweepstake(String sweepstakeId, String participantId);
 
 }

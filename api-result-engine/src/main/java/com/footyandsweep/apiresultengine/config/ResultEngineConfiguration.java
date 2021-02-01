@@ -19,8 +19,6 @@ package com.footyandsweep.apiresultengine.config;
 import com.footyandsweep.apiresultengine.dao.ResultDao;
 import com.footyandsweep.apiresultengine.engine.ResultEngine;
 import com.footyandsweep.apiresultengine.engine.ResultEngineImpl;
-import com.footyandsweep.apiresultengine.engine.saga.ProcessSweepstakeResultSaga;
-import io.eventuate.tram.sagas.orchestration.SagaInstanceFactory;
 import io.eventuate.tram.sagas.spring.orchestration.SagaOrchestratorConfiguration;
 import io.eventuate.tram.spring.optimisticlocking.OptimisticLockingDecoratorConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;

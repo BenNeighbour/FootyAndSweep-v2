@@ -24,16 +24,15 @@ import org.springframework.stereotype.Repository;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Repository
-public interface TicketDao extends JpaRepository<Ticket, UUID> {
+public interface TicketDao extends JpaRepository<Ticket, String> {
 
   @Transactional
   @Cacheable(value = "ticketCache", key = "#id")
-  Ticket findTicketById(UUID id);
+  Ticket findTicketById(String id);
 
   @Transactional
   @Cacheable(value = "ticketCache", key = "#sweepstakeId")
-  Optional<List<Ticket>> findAllTicketsBySweepstakeId(UUID sweepstakeId);
+  Optional<List<Ticket>> findAllTicketsBySweepstakeId(String sweepstakeId);
 }

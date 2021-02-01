@@ -86,7 +86,7 @@ public class SweepstakeControllerGrpc extends SweepstakeServiceGrpc.SweepstakeSe
     try {
       SweepstakeServiceOuterClass.Sweepstake sweepstake =
           this.castHelper(
-              sweepstakeDao.findSweepstakeById(UUID.fromString(request.getId())));
+              sweepstakeDao.findSweepstakeById(request.getId()));
 
       responseObserver.onNext(sweepstake);
       responseObserver.onCompleted();
@@ -111,7 +111,6 @@ public class SweepstakeControllerGrpc extends SweepstakeServiceGrpc.SweepstakeSe
       Sweepstake sweepstake = new Sweepstake();
 
       BeanUtils.copyProperties(sweepstake, request);
-      sweepstake.setOwnerId(UUID.fromString(request.getOwnerId()));
 
       /* Return the sweepstake here */
       SweepstakeServiceOuterClass.Sweepstake returnSweepstake = this.castHelper(sweepstake);
@@ -135,7 +134,7 @@ public class SweepstakeControllerGrpc extends SweepstakeServiceGrpc.SweepstakeSe
   @Override
   public void findSweepstakeByFootballMatchId(SweepstakeServiceOuterClass.Id request, StreamObserver<SweepstakeServiceOuterClass.SweepstakeList> responseObserver) {
     try {
-      List<Sweepstake> sweepstakes = sweepstakeDao.findAllSweepstakeBySweepstakeEventId(UUID.fromString(request.getId()));
+      List<Sweepstake> sweepstakes = sweepstakeDao.findAllSweepstakeBySweepstakeEventId(request.getId());
       SweepstakeServiceOuterClass.SweepstakeList sweepstakeList = SweepstakeServiceOuterClass.SweepstakeList.newBuilder().build();
 
       sweepstakes.forEach(sweepstake -> {

@@ -25,7 +25,6 @@ import lombok.Setter;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 
 @Setter
 @Getter
@@ -34,5 +33,5 @@ import java.util.UUID;
 public class ProcessSweepstakeResultSagaData {
   private SweepstakeCommon sweepstake;
   private Result result;
-  private ImmutablePair<UUID, BigDecimal> userBalanceMap;
+  private ImmutablePair<String, BigDecimal> userBalanceMap;
 }

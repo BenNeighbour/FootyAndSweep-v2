@@ -22,12 +22,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.UUID;
 
 @Setter
 @Getter
@@ -38,17 +41,21 @@ public class TicketCommon implements Serializable {
 
   private static final long serialVersionUID = -7269123358093904648L;
 
-  @Id @GeneratedValue private UUID id;
+  @Id
+  @GeneratedValue(generator="system-uuid")
+  @GenericGenerator(name="system-uuid",
+          strategy = "uuid")
+  private String id;
 
   private TicketStatus status = TicketStatus.PENDING;
 
-  private UUID sweepstakeId;
+  private String sweepstakeId;
 
-  private UUID allocationId;
+  private String allocationId;
 
   private Boolean isWinner = false;
 
-  private UUID userId;
+  private String userId;
 
   @CreationTimestamp private Date created;
 

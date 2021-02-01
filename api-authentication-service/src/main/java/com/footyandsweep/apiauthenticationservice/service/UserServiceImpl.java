@@ -32,7 +32,6 @@ import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -60,7 +59,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public void saveSweepstakeId(UUID sweepstakeId, UUID participantId) {
+  public void saveSweepstakeId(String sweepstakeId, String participantId) {
     /* Check if the user actually exists */
     User joiningUser = userDao.findUserById(participantId);
 
@@ -74,7 +73,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public void addOwnerToSweepstake(UUID sweepstakeId, UUID ownerId) {
+  public void addOwnerToSweepstake(String sweepstakeId, String ownerId) {
     User addingParticipant = userDao.findUserById(ownerId);
 
     if (addingParticipant != null) {
@@ -86,7 +85,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public void deleteAllSweepstakeRelations(UUID sweepstakeId) {
+  public void deleteAllSweepstakeRelations(String sweepstakeId) {
     Optional<List<SweepstakeIds>> sweepstakeIdsList =
             sweepstakeIdDao.findAllSweepstakeIdsBySweepstakeId(sweepstakeId);
 
@@ -95,7 +94,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public void updateUserBalance(UUID userId, BigDecimal amountDeducted) {
+  public void updateUserBalance(String userId, BigDecimal amountDeducted) {
     try {
       User user = userDao.findUserById(userId);
 

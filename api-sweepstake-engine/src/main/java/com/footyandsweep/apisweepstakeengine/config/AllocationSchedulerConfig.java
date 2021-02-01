@@ -62,7 +62,7 @@ public class AllocationSchedulerConfig {
                                   .build();
 
                           AllocationServiceGrpc.AllocationServiceBlockingStub clientStub = AllocationServiceGrpc.newBlockingStub(channel);
-                          SweepstakeServiceOuterClass.Sweepstake grpcSweepstake = SweepstakeServiceOuterClass.Sweepstake.newBuilder().setId(sweepstake.getId().toString()).build();
+                          SweepstakeServiceOuterClass.Sweepstake grpcSweepstake = SweepstakeServiceOuterClass.Sweepstake.newBuilder().build();
 
                           try {
                               BeanUtils.copyProperties(grpcSweepstake, sweepstake);

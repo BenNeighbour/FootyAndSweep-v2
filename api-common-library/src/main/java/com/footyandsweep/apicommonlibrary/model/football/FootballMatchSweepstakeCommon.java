@@ -24,7 +24,6 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
-import java.util.UUID;
 
 @Setter
 @Getter
@@ -62,5 +61,5 @@ public class FootballMatchSweepstakeCommon extends SweepstakeCommon {
   @Column(name = "includeOwnGoals")
   private Boolean includeOwnGoals = false;
 
-  private UUID footballMatchId;
+  private String footballMatchId;
 }

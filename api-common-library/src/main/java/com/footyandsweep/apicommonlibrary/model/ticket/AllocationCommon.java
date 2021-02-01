@@ -21,12 +21,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.UUID;
 
 @Setter
 @Getter
@@ -37,15 +39,19 @@ public class AllocationCommon implements Serializable {
 
   private static final long serialVersionUID = -7048642523349496292L;
 
-  @Id @GeneratedValue private UUID id;
+  @Id
+  @GeneratedValue(generator="system-uuid")
+  @GenericGenerator(name="system-uuid",
+          strategy = "uuid")
+  private String id;
 
   private String description;
 
   private Integer code;
 
-  private UUID ticketId;
+  private String ticketId;
 
-  private UUID playerId;
+  private String playerId;
 
   @CreationTimestamp private Date created;
 

@@ -5818,39 +5818,39 @@ public final class SweepstakeServiceOuterClass {
   static {
     java.lang.String[] descriptorData = {
       "\n\027SweepstakeService.proto\022\021com.footyands" +
-      "weep\"\213\003\n\nSweepstake\022\n\n\002id\030\001 \001(\t\022\014\n\004name\030" +
-      "\002 \001(\t\022\020\n\010joinCode\030\003 \001(\t\0223\n\006status\030\004 \001(\0162" +
-      "#.com.footyandsweep.SweepstakeStatus\022\021\n\t" +
-      "isPrivate\030\005 \001(\010\022\017\n\007ownerId\030\006 \001(\t\022\031\n\021swee" +
-      "pstakeEventId\030\007 \001(\t\022?\n\016sweepstakeType\030\010 " +
-      "\001(\0162\'.com.footyandsweep.SweepstakeTypeCo" +
-      "mmon\022\032\n\022sweepstakeListSize\030\n \001(\005\022\026\n\016mini" +
-      "mumPlayers\030\013 \001(\005\022\034\n\024maximumPlayerTickets" +
-      "\030\014 \001(\005\022,\n\005stake\030\r \001(\0132\035.com.footyandswee" +
-      "p.BigDecimal\022\034\n\024totalNumberOfTickets\030\016 \001" +
-      "(\005\"K\n\nBigDecimal\022\r\n\005scale\030\001 \001(\005\022.\n\007int_v" +
-      "al\030\002 \001(\0132\035.com.footyandsweep.BigInteger\"" +
-      "\033\n\nBigInteger\022\r\n\005value\030\001 \001(\014\"\034\n\010JoinCode" +
-      "\022\020\n\010joinCode\030\001 \001(\t\"\020\n\002Id\022\n\n\002id\030\001 \001(\t\"e\n\003" +
-      "Map\0220\n\005pairs\030\001 \003(\0132!.com.footyandsweep.M" +
-      "ap.PairsEntry\032,\n\nPairsEntry\022\013\n\003key\030\001 \001(\003" +
-      "\022\r\n\005value\030\002 \001(\t:\0028\001\"D\n\016SweepstakeList\0222\n" +
-      "\013sweepstakes\030\001 \003(\0132\035.com.footyandsweep.S" +
-      "weepstake*7\n\020SweepstakeStatus\022\010\n\004OPEN\020\000\022" +
-      "\r\n\tALLOCATED\020\001\022\n\n\006CLOSED\020\002*B\n\024Sweepstake" +
-      "TypeCommon\022\024\n\020Correct_Score_FT\020\000\022\024\n\020Corr" +
-      "ect_Score_HT\020\0012\267\003\n\021SweepstakeService\022V\n\030" +
-      "findSweepstakeByJoinCode\022\033.com.footyands" +
-      "weep.JoinCode\032\035.com.footyandsweep.Sweeps" +
-      "take\022[\n\037findSweepstakeByFootballMatchId\022" +
-      "\025.com.footyandsweep.Id\032!.com.footyandswe" +
-      "ep.SweepstakeList\022J\n\022findSweepstakeById\022" +
-      "\025.com.footyandsweep.Id\032\035.com.footyandswe" +
-      "ep.Sweepstake\022K\n\022getResultHelperMap\022\035.co" +
-      "m.footyandsweep.Sweepstake\032\026.com.footyan" +
-      "dsweep.Map\022T\n\024requestNewSweepstake\022\035.com" +
-      ".footyandsweep.Sweepstake\032\035.com.footyand" +
-      "sweep.Sweepstakeb\006proto3"
+      "weep\032\014Common.proto\"\213\003\n\nSweepstake\022\n\n\002id\030" +
+      "\001 \001(\t\022\014\n\004name\030\002 \001(\t\022\020\n\010joinCode\030\003 \001(\t\0223\n" +
+      "\006status\030\004 \001(\0162#.com.footyandsweep.Sweeps" +
+      "takeStatus\022\021\n\tisPrivate\030\005 \001(\010\022\017\n\007ownerId" +
+      "\030\006 \001(\t\022\031\n\021sweepstakeEventId\030\007 \001(\t\022?\n\016swe" +
+      "epstakeType\030\010 \001(\0162\'.com.footyandsweep.Sw" +
+      "eepstakeTypeCommon\022\032\n\022sweepstakeListSize" +
+      "\030\n \001(\005\022\026\n\016minimumPlayers\030\013 \001(\005\022\034\n\024maximu" +
+      "mPlayerTickets\030\014 \001(\005\022,\n\005stake\030\r \001(\0132\035.co" +
+      "m.footyandsweep.BigDecimal\022\034\n\024totalNumbe" +
+      "rOfTickets\030\016 \001(\005\"K\n\nBigDecimal\022\r\n\005scale\030" +
+      "\001 \001(\005\022.\n\007int_val\030\002 \001(\0132\035.com.footyandswe" +
+      "ep.BigInteger\"\033\n\nBigInteger\022\r\n\005value\030\001 \001" +
+      "(\014\"\034\n\010JoinCode\022\020\n\010joinCode\030\001 \001(\t\"\020\n\002Id\022\n" +
+      "\n\002id\030\001 \001(\t\"e\n\003Map\0220\n\005pairs\030\001 \003(\0132!.com.f" +
+      "ootyandsweep.Map.PairsEntry\032,\n\nPairsEntr" +
+      "y\022\013\n\003key\030\001 \001(\003\022\r\n\005value\030\002 \001(\t:\0028\001\"D\n\016Swe" +
+      "epstakeList\0222\n\013sweepstakes\030\001 \003(\0132\035.com.f" +
+      "ootyandsweep.Sweepstake*7\n\020SweepstakeSta" +
+      "tus\022\010\n\004OPEN\020\000\022\r\n\tALLOCATED\020\001\022\n\n\006CLOSED\020\002" +
+      "*B\n\024SweepstakeTypeCommon\022\024\n\020Correct_Scor" +
+      "e_FT\020\000\022\024\n\020Correct_Score_HT\020\0012\267\003\n\021Sweepst" +
+      "akeService\022V\n\030findSweepstakeByJoinCode\022\033" +
+      ".com.footyandsweep.JoinCode\032\035.com.footya" +
+      "ndsweep.Sweepstake\022[\n\037findSweepstakeByFo" +
+      "otballMatchId\022\025.com.footyandsweep.Id\032!.c" +
+      "om.footyandsweep.SweepstakeList\022J\n\022findS" +
+      "weepstakeById\022\025.com.footyandsweep.Id\032\035.c" +
+      "om.footyandsweep.Sweepstake\022K\n\022getResult" +
+      "HelperMap\022\035.com.footyandsweep.Sweepstake" +
+      "\032\026.com.footyandsweep.Map\022T\n\024requestNewSw" +
+      "eepstake\022\035.com.footyandsweep.Sweepstake\032" +
+      "\035.com.footyandsweep.Sweepstakeb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -5863,6 +5863,7 @@ public final class SweepstakeServiceOuterClass {
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
+          com.footyandsweep.Common.getDescriptor(),
         }, assigner);
     internal_static_com_footyandsweep_Sweepstake_descriptor =
       getDescriptor().getMessageTypes().get(0);
@@ -5912,6 +5913,7 @@ public final class SweepstakeServiceOuterClass {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_footyandsweep_SweepstakeList_descriptor,
         new java.lang.String[] { "Sweepstakes", });
+    com.footyandsweep.Common.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)
