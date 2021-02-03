@@ -21,13 +21,11 @@ import com.footyandsweep.SweepstakeServiceOuterClass;
 import com.footyandsweep.apiallocationengine.engine.saga.AllocateSweepstakeSaga;
 import com.footyandsweep.apiallocationengine.engine.saga.AllocateSweepstakeSagaData;
 import com.footyandsweep.apiallocationengine.grpc.GrpcService;
+import com.footyandsweep.apicommonlibrary.helper.ProtoConverterUtils;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.google.protobuf.Empty;
 import io.eventuate.tram.sagas.orchestration.SagaInstanceFactory;
 import io.grpc.stub.StreamObserver;
-import org.apache.commons.beanutils.BeanUtils;
-
-import java.lang.reflect.InvocationTargetException;
 
 @GrpcService
 public class AllocationControllerGrpc extends AllocationServiceGrpc.AllocationServiceImplBase {
@@ -45,19 +43,15 @@ public class AllocationControllerGrpc extends AllocationServiceGrpc.AllocationSe
   public void allocateSweepstake(
       SweepstakeServiceOuterClass.Sweepstake request, StreamObserver<Empty> responseObserver) {
 
-    try {
       SweepstakeCommon sweepstake = new SweepstakeCommon();
-      sweepstake.setId(request.getId());
-
-      BeanUtils.copyProperties(sweepstake, request);
+      ProtoConverterUtils.convertToPojo(sweepstake.getClass(), request);
 
       AllocateSweepstakeSagaData data = new AllocateSweepstakeSagaData();
+      data.setSweepstake(sweepstake);
+
       sagaInstanceFactory.create(allocateSweepstakeSaga, data);
 
       responseObserver.onNext(Empty.newBuilder().build());
       responseObserver.onCompleted();
-    } catch (IllegalAccessException | InvocationTargetException e) {
-      /* Put gRPC Status here */
-    }
   }
 }

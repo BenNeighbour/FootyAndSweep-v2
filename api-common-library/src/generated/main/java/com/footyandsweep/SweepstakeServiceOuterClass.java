@@ -254,13 +254,9 @@ public final class SweepstakeServiceOuterClass {
         getJoinCodeBytes();
 
     /**
-     * <code>.com.footyandsweep.SweepstakeStatus status = 4;</code>
+     * <code>int32 statusCode = 4;</code>
      */
-    int getStatusValue();
-    /**
-     * <code>.com.footyandsweep.SweepstakeStatus status = 4;</code>
-     */
-    com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeStatus getStatus();
+    int getStatusCode();
 
     /**
      * <code>bool isPrivate = 5;</code>
@@ -288,13 +284,9 @@ public final class SweepstakeServiceOuterClass {
         getSweepstakeEventIdBytes();
 
     /**
-     * <code>.com.footyandsweep.SweepstakeTypeCommon sweepstakeType = 8;</code>
+     * <code>int32 sweepstakeTypeCode = 8;</code>
      */
-    int getSweepstakeTypeValue();
-    /**
-     * <code>.com.footyandsweep.SweepstakeTypeCommon sweepstakeType = 8;</code>
-     */
-    com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeTypeCommon getSweepstakeType();
+    int getSweepstakeTypeCode();
 
     /**
      * <code>int32 sweepstakeListSize = 10;</code>
@@ -312,22 +304,32 @@ public final class SweepstakeServiceOuterClass {
     int getMaximumPlayerTickets();
 
     /**
-     * <code>.com.footyandsweep.BigDecimal stake = 13;</code>
+     * <code>double stake = 13;</code>
      */
-    boolean hasStake();
-    /**
-     * <code>.com.footyandsweep.BigDecimal stake = 13;</code>
-     */
-    com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal getStake();
-    /**
-     * <code>.com.footyandsweep.BigDecimal stake = 13;</code>
-     */
-    com.footyandsweep.SweepstakeServiceOuterClass.BigDecimalOrBuilder getStakeOrBuilder();
+    double getStake();
 
     /**
      * <code>int32 totalNumberOfTickets = 14;</code>
      */
     int getTotalNumberOfTickets();
+
+    /**
+     * <code>.com.footyandsweep.SweepstakeTypeCommon sweepstakeType = 15;</code>
+     */
+    int getSweepstakeTypeValue();
+    /**
+     * <code>.com.footyandsweep.SweepstakeTypeCommon sweepstakeType = 15;</code>
+     */
+    com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeTypeCommon getSweepstakeType();
+
+    /**
+     * <code>.com.footyandsweep.SweepstakeStatus status = 16;</code>
+     */
+    int getStatusValue();
+    /**
+     * <code>.com.footyandsweep.SweepstakeStatus status = 16;</code>
+     */
+    com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeStatus getStatus();
   }
   /**
    * Protobuf type {@code com.footyandsweep.Sweepstake}
@@ -345,15 +347,18 @@ public final class SweepstakeServiceOuterClass {
       id_ = "";
       name_ = "";
       joinCode_ = "";
-      status_ = 0;
+      statusCode_ = 0;
       isPrivate_ = false;
       ownerId_ = "";
       sweepstakeEventId_ = "";
-      sweepstakeType_ = 0;
+      sweepstakeTypeCode_ = 0;
       sweepstakeListSize_ = 0;
       minimumPlayers_ = 0;
       maximumPlayerTickets_ = 0;
+      stake_ = 0D;
       totalNumberOfTickets_ = 0;
+      sweepstakeType_ = 0;
+      status_ = 0;
     }
 
     @java.lang.Override
@@ -399,9 +404,8 @@ public final class SweepstakeServiceOuterClass {
               break;
             }
             case 32: {
-              int rawValue = input.readEnum();
 
-              status_ = rawValue;
+              statusCode_ = input.readInt32();
               break;
             }
             case 40: {
@@ -422,9 +426,8 @@ public final class SweepstakeServiceOuterClass {
               break;
             }
             case 64: {
-              int rawValue = input.readEnum();
 
-              sweepstakeType_ = rawValue;
+              sweepstakeTypeCode_ = input.readInt32();
               break;
             }
             case 80: {
@@ -442,22 +445,26 @@ public final class SweepstakeServiceOuterClass {
               maximumPlayerTickets_ = input.readInt32();
               break;
             }
-            case 106: {
-              com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal.Builder subBuilder = null;
-              if (stake_ != null) {
-                subBuilder = stake_.toBuilder();
-              }
-              stake_ = input.readMessage(com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(stake_);
-                stake_ = subBuilder.buildPartial();
-              }
+            case 105: {
 
+              stake_ = input.readDouble();
               break;
             }
             case 112: {
 
               totalNumberOfTickets_ = input.readInt32();
+              break;
+            }
+            case 120: {
+              int rawValue = input.readEnum();
+
+              sweepstakeType_ = rawValue;
+              break;
+            }
+            case 128: {
+              int rawValue = input.readEnum();
+
+              status_ = rawValue;
               break;
             }
             default: {
@@ -594,21 +601,13 @@ public final class SweepstakeServiceOuterClass {
       }
     }
 
-    public static final int STATUS_FIELD_NUMBER = 4;
-    private int status_;
+    public static final int STATUSCODE_FIELD_NUMBER = 4;
+    private int statusCode_;
     /**
-     * <code>.com.footyandsweep.SweepstakeStatus status = 4;</code>
+     * <code>int32 statusCode = 4;</code>
      */
-    public int getStatusValue() {
-      return status_;
-    }
-    /**
-     * <code>.com.footyandsweep.SweepstakeStatus status = 4;</code>
-     */
-    public com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeStatus getStatus() {
-      @SuppressWarnings("deprecation")
-      com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeStatus result = com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeStatus.valueOf(status_);
-      return result == null ? com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeStatus.UNRECOGNIZED : result;
+    public int getStatusCode() {
+      return statusCode_;
     }
 
     public static final int ISPRIVATE_FIELD_NUMBER = 5;
@@ -688,21 +687,13 @@ public final class SweepstakeServiceOuterClass {
       }
     }
 
-    public static final int SWEEPSTAKETYPE_FIELD_NUMBER = 8;
-    private int sweepstakeType_;
+    public static final int SWEEPSTAKETYPECODE_FIELD_NUMBER = 8;
+    private int sweepstakeTypeCode_;
     /**
-     * <code>.com.footyandsweep.SweepstakeTypeCommon sweepstakeType = 8;</code>
+     * <code>int32 sweepstakeTypeCode = 8;</code>
      */
-    public int getSweepstakeTypeValue() {
-      return sweepstakeType_;
-    }
-    /**
-     * <code>.com.footyandsweep.SweepstakeTypeCommon sweepstakeType = 8;</code>
-     */
-    public com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeTypeCommon getSweepstakeType() {
-      @SuppressWarnings("deprecation")
-      com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeTypeCommon result = com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeTypeCommon.valueOf(sweepstakeType_);
-      return result == null ? com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeTypeCommon.UNRECOGNIZED : result;
+    public int getSweepstakeTypeCode() {
+      return sweepstakeTypeCode_;
     }
 
     public static final int SWEEPSTAKELISTSIZE_FIELD_NUMBER = 10;
@@ -733,24 +724,12 @@ public final class SweepstakeServiceOuterClass {
     }
 
     public static final int STAKE_FIELD_NUMBER = 13;
-    private com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal stake_;
+    private double stake_;
     /**
-     * <code>.com.footyandsweep.BigDecimal stake = 13;</code>
+     * <code>double stake = 13;</code>
      */
-    public boolean hasStake() {
-      return stake_ != null;
-    }
-    /**
-     * <code>.com.footyandsweep.BigDecimal stake = 13;</code>
-     */
-    public com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal getStake() {
-      return stake_ == null ? com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal.getDefaultInstance() : stake_;
-    }
-    /**
-     * <code>.com.footyandsweep.BigDecimal stake = 13;</code>
-     */
-    public com.footyandsweep.SweepstakeServiceOuterClass.BigDecimalOrBuilder getStakeOrBuilder() {
-      return getStake();
+    public double getStake() {
+      return stake_;
     }
 
     public static final int TOTALNUMBEROFTICKETS_FIELD_NUMBER = 14;
@@ -760,6 +739,40 @@ public final class SweepstakeServiceOuterClass {
      */
     public int getTotalNumberOfTickets() {
       return totalNumberOfTickets_;
+    }
+
+    public static final int SWEEPSTAKETYPE_FIELD_NUMBER = 15;
+    private int sweepstakeType_;
+    /**
+     * <code>.com.footyandsweep.SweepstakeTypeCommon sweepstakeType = 15;</code>
+     */
+    public int getSweepstakeTypeValue() {
+      return sweepstakeType_;
+    }
+    /**
+     * <code>.com.footyandsweep.SweepstakeTypeCommon sweepstakeType = 15;</code>
+     */
+    public com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeTypeCommon getSweepstakeType() {
+      @SuppressWarnings("deprecation")
+      com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeTypeCommon result = com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeTypeCommon.valueOf(sweepstakeType_);
+      return result == null ? com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeTypeCommon.UNRECOGNIZED : result;
+    }
+
+    public static final int STATUS_FIELD_NUMBER = 16;
+    private int status_;
+    /**
+     * <code>.com.footyandsweep.SweepstakeStatus status = 16;</code>
+     */
+    public int getStatusValue() {
+      return status_;
+    }
+    /**
+     * <code>.com.footyandsweep.SweepstakeStatus status = 16;</code>
+     */
+    public com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeStatus getStatus() {
+      @SuppressWarnings("deprecation")
+      com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeStatus result = com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeStatus.valueOf(status_);
+      return result == null ? com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeStatus.UNRECOGNIZED : result;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -785,8 +798,8 @@ public final class SweepstakeServiceOuterClass {
       if (!getJoinCodeBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 3, joinCode_);
       }
-      if (status_ != com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeStatus.OPEN.getNumber()) {
-        output.writeEnum(4, status_);
+      if (statusCode_ != 0) {
+        output.writeInt32(4, statusCode_);
       }
       if (isPrivate_ != false) {
         output.writeBool(5, isPrivate_);
@@ -797,8 +810,8 @@ public final class SweepstakeServiceOuterClass {
       if (!getSweepstakeEventIdBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 7, sweepstakeEventId_);
       }
-      if (sweepstakeType_ != com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeTypeCommon.Correct_Score_FT.getNumber()) {
-        output.writeEnum(8, sweepstakeType_);
+      if (sweepstakeTypeCode_ != 0) {
+        output.writeInt32(8, sweepstakeTypeCode_);
       }
       if (sweepstakeListSize_ != 0) {
         output.writeInt32(10, sweepstakeListSize_);
@@ -809,11 +822,17 @@ public final class SweepstakeServiceOuterClass {
       if (maximumPlayerTickets_ != 0) {
         output.writeInt32(12, maximumPlayerTickets_);
       }
-      if (stake_ != null) {
-        output.writeMessage(13, getStake());
+      if (stake_ != 0D) {
+        output.writeDouble(13, stake_);
       }
       if (totalNumberOfTickets_ != 0) {
         output.writeInt32(14, totalNumberOfTickets_);
+      }
+      if (sweepstakeType_ != com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeTypeCommon.Correct_Score_FT.getNumber()) {
+        output.writeEnum(15, sweepstakeType_);
+      }
+      if (status_ != com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeStatus.OPEN.getNumber()) {
+        output.writeEnum(16, status_);
       }
       unknownFields.writeTo(output);
     }
@@ -833,9 +852,9 @@ public final class SweepstakeServiceOuterClass {
       if (!getJoinCodeBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, joinCode_);
       }
-      if (status_ != com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeStatus.OPEN.getNumber()) {
+      if (statusCode_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(4, status_);
+          .computeInt32Size(4, statusCode_);
       }
       if (isPrivate_ != false) {
         size += com.google.protobuf.CodedOutputStream
@@ -847,9 +866,9 @@ public final class SweepstakeServiceOuterClass {
       if (!getSweepstakeEventIdBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, sweepstakeEventId_);
       }
-      if (sweepstakeType_ != com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeTypeCommon.Correct_Score_FT.getNumber()) {
+      if (sweepstakeTypeCode_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(8, sweepstakeType_);
+          .computeInt32Size(8, sweepstakeTypeCode_);
       }
       if (sweepstakeListSize_ != 0) {
         size += com.google.protobuf.CodedOutputStream
@@ -863,13 +882,21 @@ public final class SweepstakeServiceOuterClass {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(12, maximumPlayerTickets_);
       }
-      if (stake_ != null) {
+      if (stake_ != 0D) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(13, getStake());
+          .computeDoubleSize(13, stake_);
       }
       if (totalNumberOfTickets_ != 0) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(14, totalNumberOfTickets_);
+      }
+      if (sweepstakeType_ != com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeTypeCommon.Correct_Score_FT.getNumber()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(15, sweepstakeType_);
+      }
+      if (status_ != com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeStatus.OPEN.getNumber()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(16, status_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -893,27 +920,30 @@ public final class SweepstakeServiceOuterClass {
           .equals(other.getName());
       result = result && getJoinCode()
           .equals(other.getJoinCode());
-      result = result && status_ == other.status_;
+      result = result && (getStatusCode()
+          == other.getStatusCode());
       result = result && (getIsPrivate()
           == other.getIsPrivate());
       result = result && getOwnerId()
           .equals(other.getOwnerId());
       result = result && getSweepstakeEventId()
           .equals(other.getSweepstakeEventId());
-      result = result && sweepstakeType_ == other.sweepstakeType_;
+      result = result && (getSweepstakeTypeCode()
+          == other.getSweepstakeTypeCode());
       result = result && (getSweepstakeListSize()
           == other.getSweepstakeListSize());
       result = result && (getMinimumPlayers()
           == other.getMinimumPlayers());
       result = result && (getMaximumPlayerTickets()
           == other.getMaximumPlayerTickets());
-      result = result && (hasStake() == other.hasStake());
-      if (hasStake()) {
-        result = result && getStake()
-            .equals(other.getStake());
-      }
+      result = result && (
+          java.lang.Double.doubleToLongBits(getStake())
+          == java.lang.Double.doubleToLongBits(
+              other.getStake()));
       result = result && (getTotalNumberOfTickets()
           == other.getTotalNumberOfTickets());
+      result = result && sweepstakeType_ == other.sweepstakeType_;
+      result = result && status_ == other.status_;
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -931,8 +961,8 @@ public final class SweepstakeServiceOuterClass {
       hash = (53 * hash) + getName().hashCode();
       hash = (37 * hash) + JOINCODE_FIELD_NUMBER;
       hash = (53 * hash) + getJoinCode().hashCode();
-      hash = (37 * hash) + STATUS_FIELD_NUMBER;
-      hash = (53 * hash) + status_;
+      hash = (37 * hash) + STATUSCODE_FIELD_NUMBER;
+      hash = (53 * hash) + getStatusCode();
       hash = (37 * hash) + ISPRIVATE_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
           getIsPrivate());
@@ -940,20 +970,23 @@ public final class SweepstakeServiceOuterClass {
       hash = (53 * hash) + getOwnerId().hashCode();
       hash = (37 * hash) + SWEEPSTAKEEVENTID_FIELD_NUMBER;
       hash = (53 * hash) + getSweepstakeEventId().hashCode();
-      hash = (37 * hash) + SWEEPSTAKETYPE_FIELD_NUMBER;
-      hash = (53 * hash) + sweepstakeType_;
+      hash = (37 * hash) + SWEEPSTAKETYPECODE_FIELD_NUMBER;
+      hash = (53 * hash) + getSweepstakeTypeCode();
       hash = (37 * hash) + SWEEPSTAKELISTSIZE_FIELD_NUMBER;
       hash = (53 * hash) + getSweepstakeListSize();
       hash = (37 * hash) + MINIMUMPLAYERS_FIELD_NUMBER;
       hash = (53 * hash) + getMinimumPlayers();
       hash = (37 * hash) + MAXIMUMPLAYERTICKETS_FIELD_NUMBER;
       hash = (53 * hash) + getMaximumPlayerTickets();
-      if (hasStake()) {
-        hash = (37 * hash) + STAKE_FIELD_NUMBER;
-        hash = (53 * hash) + getStake().hashCode();
-      }
+      hash = (37 * hash) + STAKE_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          java.lang.Double.doubleToLongBits(getStake()));
       hash = (37 * hash) + TOTALNUMBEROFTICKETS_FIELD_NUMBER;
       hash = (53 * hash) + getTotalNumberOfTickets();
+      hash = (37 * hash) + SWEEPSTAKETYPE_FIELD_NUMBER;
+      hash = (53 * hash) + sweepstakeType_;
+      hash = (37 * hash) + STATUS_FIELD_NUMBER;
+      hash = (53 * hash) + status_;
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -1093,7 +1126,7 @@ public final class SweepstakeServiceOuterClass {
 
         joinCode_ = "";
 
-        status_ = 0;
+        statusCode_ = 0;
 
         isPrivate_ = false;
 
@@ -1101,7 +1134,7 @@ public final class SweepstakeServiceOuterClass {
 
         sweepstakeEventId_ = "";
 
-        sweepstakeType_ = 0;
+        sweepstakeTypeCode_ = 0;
 
         sweepstakeListSize_ = 0;
 
@@ -1109,13 +1142,13 @@ public final class SweepstakeServiceOuterClass {
 
         maximumPlayerTickets_ = 0;
 
-        if (stakeBuilder_ == null) {
-          stake_ = null;
-        } else {
-          stake_ = null;
-          stakeBuilder_ = null;
-        }
+        stake_ = 0D;
+
         totalNumberOfTickets_ = 0;
+
+        sweepstakeType_ = 0;
+
+        status_ = 0;
 
         return this;
       }
@@ -1146,20 +1179,18 @@ public final class SweepstakeServiceOuterClass {
         result.id_ = id_;
         result.name_ = name_;
         result.joinCode_ = joinCode_;
-        result.status_ = status_;
+        result.statusCode_ = statusCode_;
         result.isPrivate_ = isPrivate_;
         result.ownerId_ = ownerId_;
         result.sweepstakeEventId_ = sweepstakeEventId_;
-        result.sweepstakeType_ = sweepstakeType_;
+        result.sweepstakeTypeCode_ = sweepstakeTypeCode_;
         result.sweepstakeListSize_ = sweepstakeListSize_;
         result.minimumPlayers_ = minimumPlayers_;
         result.maximumPlayerTickets_ = maximumPlayerTickets_;
-        if (stakeBuilder_ == null) {
-          result.stake_ = stake_;
-        } else {
-          result.stake_ = stakeBuilder_.build();
-        }
+        result.stake_ = stake_;
         result.totalNumberOfTickets_ = totalNumberOfTickets_;
+        result.sweepstakeType_ = sweepstakeType_;
+        result.status_ = status_;
         onBuilt();
         return result;
       }
@@ -1220,8 +1251,8 @@ public final class SweepstakeServiceOuterClass {
           joinCode_ = other.joinCode_;
           onChanged();
         }
-        if (other.status_ != 0) {
-          setStatusValue(other.getStatusValue());
+        if (other.getStatusCode() != 0) {
+          setStatusCode(other.getStatusCode());
         }
         if (other.getIsPrivate() != false) {
           setIsPrivate(other.getIsPrivate());
@@ -1234,8 +1265,8 @@ public final class SweepstakeServiceOuterClass {
           sweepstakeEventId_ = other.sweepstakeEventId_;
           onChanged();
         }
-        if (other.sweepstakeType_ != 0) {
-          setSweepstakeTypeValue(other.getSweepstakeTypeValue());
+        if (other.getSweepstakeTypeCode() != 0) {
+          setSweepstakeTypeCode(other.getSweepstakeTypeCode());
         }
         if (other.getSweepstakeListSize() != 0) {
           setSweepstakeListSize(other.getSweepstakeListSize());
@@ -1246,11 +1277,17 @@ public final class SweepstakeServiceOuterClass {
         if (other.getMaximumPlayerTickets() != 0) {
           setMaximumPlayerTickets(other.getMaximumPlayerTickets());
         }
-        if (other.hasStake()) {
-          mergeStake(other.getStake());
+        if (other.getStake() != 0D) {
+          setStake(other.getStake());
         }
         if (other.getTotalNumberOfTickets() != 0) {
           setTotalNumberOfTickets(other.getTotalNumberOfTickets());
+        }
+        if (other.sweepstakeType_ != 0) {
+          setSweepstakeTypeValue(other.getSweepstakeTypeValue());
+        }
+        if (other.status_ != 0) {
+          setStatusValue(other.getStatusValue());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -1488,47 +1525,28 @@ public final class SweepstakeServiceOuterClass {
         return this;
       }
 
-      private int status_ = 0;
+      private int statusCode_ ;
       /**
-       * <code>.com.footyandsweep.SweepstakeStatus status = 4;</code>
+       * <code>int32 statusCode = 4;</code>
        */
-      public int getStatusValue() {
-        return status_;
+      public int getStatusCode() {
+        return statusCode_;
       }
       /**
-       * <code>.com.footyandsweep.SweepstakeStatus status = 4;</code>
+       * <code>int32 statusCode = 4;</code>
        */
-      public Builder setStatusValue(int value) {
-        status_ = value;
+      public Builder setStatusCode(int value) {
+        
+        statusCode_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>.com.footyandsweep.SweepstakeStatus status = 4;</code>
+       * <code>int32 statusCode = 4;</code>
        */
-      public com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeStatus getStatus() {
-        @SuppressWarnings("deprecation")
-        com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeStatus result = com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeStatus.valueOf(status_);
-        return result == null ? com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeStatus.UNRECOGNIZED : result;
-      }
-      /**
-       * <code>.com.footyandsweep.SweepstakeStatus status = 4;</code>
-       */
-      public Builder setStatus(com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeStatus value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
+      public Builder clearStatusCode() {
         
-        status_ = value.getNumber();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>.com.footyandsweep.SweepstakeStatus status = 4;</code>
-       */
-      public Builder clearStatus() {
-        
-        status_ = 0;
+        statusCode_ = 0;
         onChanged();
         return this;
       }
@@ -1697,47 +1715,28 @@ public final class SweepstakeServiceOuterClass {
         return this;
       }
 
-      private int sweepstakeType_ = 0;
+      private int sweepstakeTypeCode_ ;
       /**
-       * <code>.com.footyandsweep.SweepstakeTypeCommon sweepstakeType = 8;</code>
+       * <code>int32 sweepstakeTypeCode = 8;</code>
        */
-      public int getSweepstakeTypeValue() {
-        return sweepstakeType_;
+      public int getSweepstakeTypeCode() {
+        return sweepstakeTypeCode_;
       }
       /**
-       * <code>.com.footyandsweep.SweepstakeTypeCommon sweepstakeType = 8;</code>
+       * <code>int32 sweepstakeTypeCode = 8;</code>
        */
-      public Builder setSweepstakeTypeValue(int value) {
-        sweepstakeType_ = value;
+      public Builder setSweepstakeTypeCode(int value) {
+        
+        sweepstakeTypeCode_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>.com.footyandsweep.SweepstakeTypeCommon sweepstakeType = 8;</code>
+       * <code>int32 sweepstakeTypeCode = 8;</code>
        */
-      public com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeTypeCommon getSweepstakeType() {
-        @SuppressWarnings("deprecation")
-        com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeTypeCommon result = com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeTypeCommon.valueOf(sweepstakeType_);
-        return result == null ? com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeTypeCommon.UNRECOGNIZED : result;
-      }
-      /**
-       * <code>.com.footyandsweep.SweepstakeTypeCommon sweepstakeType = 8;</code>
-       */
-      public Builder setSweepstakeType(com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeTypeCommon value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
+      public Builder clearSweepstakeTypeCode() {
         
-        sweepstakeType_ = value.getNumber();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>.com.footyandsweep.SweepstakeTypeCommon sweepstakeType = 8;</code>
-       */
-      public Builder clearSweepstakeType() {
-        
-        sweepstakeType_ = 0;
+        sweepstakeTypeCode_ = 0;
         onChanged();
         return this;
       }
@@ -1820,121 +1819,30 @@ public final class SweepstakeServiceOuterClass {
         return this;
       }
 
-      private com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal stake_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal, com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal.Builder, com.footyandsweep.SweepstakeServiceOuterClass.BigDecimalOrBuilder> stakeBuilder_;
+      private double stake_ ;
       /**
-       * <code>.com.footyandsweep.BigDecimal stake = 13;</code>
+       * <code>double stake = 13;</code>
        */
-      public boolean hasStake() {
-        return stakeBuilder_ != null || stake_ != null;
+      public double getStake() {
+        return stake_;
       }
       /**
-       * <code>.com.footyandsweep.BigDecimal stake = 13;</code>
+       * <code>double stake = 13;</code>
        */
-      public com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal getStake() {
-        if (stakeBuilder_ == null) {
-          return stake_ == null ? com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal.getDefaultInstance() : stake_;
-        } else {
-          return stakeBuilder_.getMessage();
-        }
-      }
-      /**
-       * <code>.com.footyandsweep.BigDecimal stake = 13;</code>
-       */
-      public Builder setStake(com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal value) {
-        if (stakeBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          stake_ = value;
-          onChanged();
-        } else {
-          stakeBuilder_.setMessage(value);
-        }
-
+      public Builder setStake(double value) {
+        
+        stake_ = value;
+        onChanged();
         return this;
       }
       /**
-       * <code>.com.footyandsweep.BigDecimal stake = 13;</code>
-       */
-      public Builder setStake(
-          com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal.Builder builderForValue) {
-        if (stakeBuilder_ == null) {
-          stake_ = builderForValue.build();
-          onChanged();
-        } else {
-          stakeBuilder_.setMessage(builderForValue.build());
-        }
-
-        return this;
-      }
-      /**
-       * <code>.com.footyandsweep.BigDecimal stake = 13;</code>
-       */
-      public Builder mergeStake(com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal value) {
-        if (stakeBuilder_ == null) {
-          if (stake_ != null) {
-            stake_ =
-              com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal.newBuilder(stake_).mergeFrom(value).buildPartial();
-          } else {
-            stake_ = value;
-          }
-          onChanged();
-        } else {
-          stakeBuilder_.mergeFrom(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.com.footyandsweep.BigDecimal stake = 13;</code>
+       * <code>double stake = 13;</code>
        */
       public Builder clearStake() {
-        if (stakeBuilder_ == null) {
-          stake_ = null;
-          onChanged();
-        } else {
-          stake_ = null;
-          stakeBuilder_ = null;
-        }
-
-        return this;
-      }
-      /**
-       * <code>.com.footyandsweep.BigDecimal stake = 13;</code>
-       */
-      public com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal.Builder getStakeBuilder() {
         
+        stake_ = 0D;
         onChanged();
-        return getStakeFieldBuilder().getBuilder();
-      }
-      /**
-       * <code>.com.footyandsweep.BigDecimal stake = 13;</code>
-       */
-      public com.footyandsweep.SweepstakeServiceOuterClass.BigDecimalOrBuilder getStakeOrBuilder() {
-        if (stakeBuilder_ != null) {
-          return stakeBuilder_.getMessageOrBuilder();
-        } else {
-          return stake_ == null ?
-              com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal.getDefaultInstance() : stake_;
-        }
-      }
-      /**
-       * <code>.com.footyandsweep.BigDecimal stake = 13;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal, com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal.Builder, com.footyandsweep.SweepstakeServiceOuterClass.BigDecimalOrBuilder> 
-          getStakeFieldBuilder() {
-        if (stakeBuilder_ == null) {
-          stakeBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal, com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal.Builder, com.footyandsweep.SweepstakeServiceOuterClass.BigDecimalOrBuilder>(
-                  getStake(),
-                  getParentForChildren(),
-                  isClean());
-          stake_ = null;
-        }
-        return stakeBuilder_;
+        return this;
       }
 
       private int totalNumberOfTickets_ ;
@@ -1959,6 +1867,96 @@ public final class SweepstakeServiceOuterClass {
       public Builder clearTotalNumberOfTickets() {
         
         totalNumberOfTickets_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int sweepstakeType_ = 0;
+      /**
+       * <code>.com.footyandsweep.SweepstakeTypeCommon sweepstakeType = 15;</code>
+       */
+      public int getSweepstakeTypeValue() {
+        return sweepstakeType_;
+      }
+      /**
+       * <code>.com.footyandsweep.SweepstakeTypeCommon sweepstakeType = 15;</code>
+       */
+      public Builder setSweepstakeTypeValue(int value) {
+        sweepstakeType_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.com.footyandsweep.SweepstakeTypeCommon sweepstakeType = 15;</code>
+       */
+      public com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeTypeCommon getSweepstakeType() {
+        @SuppressWarnings("deprecation")
+        com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeTypeCommon result = com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeTypeCommon.valueOf(sweepstakeType_);
+        return result == null ? com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeTypeCommon.UNRECOGNIZED : result;
+      }
+      /**
+       * <code>.com.footyandsweep.SweepstakeTypeCommon sweepstakeType = 15;</code>
+       */
+      public Builder setSweepstakeType(com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeTypeCommon value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        
+        sweepstakeType_ = value.getNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.com.footyandsweep.SweepstakeTypeCommon sweepstakeType = 15;</code>
+       */
+      public Builder clearSweepstakeType() {
+        
+        sweepstakeType_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int status_ = 0;
+      /**
+       * <code>.com.footyandsweep.SweepstakeStatus status = 16;</code>
+       */
+      public int getStatusValue() {
+        return status_;
+      }
+      /**
+       * <code>.com.footyandsweep.SweepstakeStatus status = 16;</code>
+       */
+      public Builder setStatusValue(int value) {
+        status_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.com.footyandsweep.SweepstakeStatus status = 16;</code>
+       */
+      public com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeStatus getStatus() {
+        @SuppressWarnings("deprecation")
+        com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeStatus result = com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeStatus.valueOf(status_);
+        return result == null ? com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeStatus.UNRECOGNIZED : result;
+      }
+      /**
+       * <code>.com.footyandsweep.SweepstakeStatus status = 16;</code>
+       */
+      public Builder setStatus(com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeStatus value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        
+        status_ = value.getNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.com.footyandsweep.SweepstakeStatus status = 16;</code>
+       */
+      public Builder clearStatus() {
+        
+        status_ = 0;
         onChanged();
         return this;
       }
@@ -5818,39 +5816,40 @@ public final class SweepstakeServiceOuterClass {
   static {
     java.lang.String[] descriptorData = {
       "\n\027SweepstakeService.proto\022\021com.footyands" +
-      "weep\032\014Common.proto\"\213\003\n\nSweepstake\022\n\n\002id\030" +
-      "\001 \001(\t\022\014\n\004name\030\002 \001(\t\022\020\n\010joinCode\030\003 \001(\t\0223\n" +
-      "\006status\030\004 \001(\0162#.com.footyandsweep.Sweeps" +
-      "takeStatus\022\021\n\tisPrivate\030\005 \001(\010\022\017\n\007ownerId" +
-      "\030\006 \001(\t\022\031\n\021sweepstakeEventId\030\007 \001(\t\022?\n\016swe" +
-      "epstakeType\030\010 \001(\0162\'.com.footyandsweep.Sw" +
-      "eepstakeTypeCommon\022\032\n\022sweepstakeListSize" +
-      "\030\n \001(\005\022\026\n\016minimumPlayers\030\013 \001(\005\022\034\n\024maximu" +
-      "mPlayerTickets\030\014 \001(\005\022,\n\005stake\030\r \001(\0132\035.co" +
-      "m.footyandsweep.BigDecimal\022\034\n\024totalNumbe" +
-      "rOfTickets\030\016 \001(\005\"K\n\nBigDecimal\022\r\n\005scale\030" +
-      "\001 \001(\005\022.\n\007int_val\030\002 \001(\0132\035.com.footyandswe" +
-      "ep.BigInteger\"\033\n\nBigInteger\022\r\n\005value\030\001 \001" +
-      "(\014\"\034\n\010JoinCode\022\020\n\010joinCode\030\001 \001(\t\"\020\n\002Id\022\n" +
-      "\n\002id\030\001 \001(\t\"e\n\003Map\0220\n\005pairs\030\001 \003(\0132!.com.f" +
-      "ootyandsweep.Map.PairsEntry\032,\n\nPairsEntr" +
-      "y\022\013\n\003key\030\001 \001(\003\022\r\n\005value\030\002 \001(\t:\0028\001\"D\n\016Swe" +
-      "epstakeList\0222\n\013sweepstakes\030\001 \003(\0132\035.com.f" +
-      "ootyandsweep.Sweepstake*7\n\020SweepstakeSta" +
-      "tus\022\010\n\004OPEN\020\000\022\r\n\tALLOCATED\020\001\022\n\n\006CLOSED\020\002" +
-      "*B\n\024SweepstakeTypeCommon\022\024\n\020Correct_Scor" +
-      "e_FT\020\000\022\024\n\020Correct_Score_HT\020\0012\267\003\n\021Sweepst" +
-      "akeService\022V\n\030findSweepstakeByJoinCode\022\033" +
-      ".com.footyandsweep.JoinCode\032\035.com.footya" +
-      "ndsweep.Sweepstake\022[\n\037findSweepstakeByFo" +
-      "otballMatchId\022\025.com.footyandsweep.Id\032!.c" +
-      "om.footyandsweep.SweepstakeList\022J\n\022findS" +
-      "weepstakeById\022\025.com.footyandsweep.Id\032\035.c" +
-      "om.footyandsweep.Sweepstake\022K\n\022getResult" +
-      "HelperMap\022\035.com.footyandsweep.Sweepstake" +
-      "\032\026.com.footyandsweep.Map\022T\n\024requestNewSw" +
-      "eepstake\022\035.com.footyandsweep.Sweepstake\032" +
-      "\035.com.footyandsweep.Sweepstakeb\006proto3"
+      "weep\"\234\003\n\nSweepstake\022\n\n\002id\030\001 \001(\t\022\014\n\004name\030" +
+      "\002 \001(\t\022\020\n\010joinCode\030\003 \001(\t\022\022\n\nstatusCode\030\004 " +
+      "\001(\005\022\021\n\tisPrivate\030\005 \001(\010\022\017\n\007ownerId\030\006 \001(\t\022" +
+      "\031\n\021sweepstakeEventId\030\007 \001(\t\022\032\n\022sweepstake" +
+      "TypeCode\030\010 \001(\005\022\032\n\022sweepstakeListSize\030\n \001" +
+      "(\005\022\026\n\016minimumPlayers\030\013 \001(\005\022\034\n\024maximumPla" +
+      "yerTickets\030\014 \001(\005\022\r\n\005stake\030\r \001(\001\022\034\n\024total" +
+      "NumberOfTickets\030\016 \001(\005\022?\n\016sweepstakeType\030" +
+      "\017 \001(\0162\'.com.footyandsweep.SweepstakeType" +
+      "Common\0223\n\006status\030\020 \001(\0162#.com.footyandswe" +
+      "ep.SweepstakeStatus\"K\n\nBigDecimal\022\r\n\005sca" +
+      "le\030\001 \001(\005\022.\n\007int_val\030\002 \001(\0132\035.com.footyand" +
+      "sweep.BigInteger\"\033\n\nBigInteger\022\r\n\005value\030" +
+      "\001 \001(\014\"\034\n\010JoinCode\022\020\n\010joinCode\030\001 \001(\t\"\020\n\002I" +
+      "d\022\n\n\002id\030\001 \001(\t\"e\n\003Map\0220\n\005pairs\030\001 \003(\0132!.co" +
+      "m.footyandsweep.Map.PairsEntry\032,\n\nPairsE" +
+      "ntry\022\013\n\003key\030\001 \001(\003\022\r\n\005value\030\002 \001(\t:\0028\001\"D\n\016" +
+      "SweepstakeList\0222\n\013sweepstakes\030\001 \003(\0132\035.co" +
+      "m.footyandsweep.Sweepstake*7\n\020Sweepstake" +
+      "Status\022\010\n\004OPEN\020\000\022\r\n\tALLOCATED\020\001\022\n\n\006CLOSE" +
+      "D\020\002*B\n\024SweepstakeTypeCommon\022\024\n\020Correct_S" +
+      "core_FT\020\000\022\024\n\020Correct_Score_HT\020\0012\267\003\n\021Swee" +
+      "pstakeService\022V\n\030findSweepstakeByJoinCod" +
+      "e\022\033.com.footyandsweep.JoinCode\032\035.com.foo" +
+      "tyandsweep.Sweepstake\022[\n\037findSweepstakeB" +
+      "yFootballMatchId\022\025.com.footyandsweep.Id\032" +
+      "!.com.footyandsweep.SweepstakeList\022J\n\022fi" +
+      "ndSweepstakeById\022\025.com.footyandsweep.Id\032" +
+      "\035.com.footyandsweep.Sweepstake\022K\n\022getRes" +
+      "ultHelperMap\022\035.com.footyandsweep.Sweepst" +
+      "ake\032\026.com.footyandsweep.Map\022T\n\024requestNe" +
+      "wSweepstake\022\035.com.footyandsweep.Sweepsta" +
+      "ke\032\035.com.footyandsweep.Sweepstakeb\006proto" +
+      "3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -5863,14 +5862,13 @@ public final class SweepstakeServiceOuterClass {
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-          com.footyandsweep.Common.getDescriptor(),
         }, assigner);
     internal_static_com_footyandsweep_Sweepstake_descriptor =
       getDescriptor().getMessageTypes().get(0);
     internal_static_com_footyandsweep_Sweepstake_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_footyandsweep_Sweepstake_descriptor,
-        new java.lang.String[] { "Id", "Name", "JoinCode", "Status", "IsPrivate", "OwnerId", "SweepstakeEventId", "SweepstakeType", "SweepstakeListSize", "MinimumPlayers", "MaximumPlayerTickets", "Stake", "TotalNumberOfTickets", });
+        new java.lang.String[] { "Id", "Name", "JoinCode", "StatusCode", "IsPrivate", "OwnerId", "SweepstakeEventId", "SweepstakeTypeCode", "SweepstakeListSize", "MinimumPlayers", "MaximumPlayerTickets", "Stake", "TotalNumberOfTickets", "SweepstakeType", "Status", });
     internal_static_com_footyandsweep_BigDecimal_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_com_footyandsweep_BigDecimal_fieldAccessorTable = new
@@ -5913,7 +5911,6 @@ public final class SweepstakeServiceOuterClass {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_footyandsweep_SweepstakeList_descriptor,
         new java.lang.String[] { "Sweepstakes", });
-    com.footyandsweep.Common.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

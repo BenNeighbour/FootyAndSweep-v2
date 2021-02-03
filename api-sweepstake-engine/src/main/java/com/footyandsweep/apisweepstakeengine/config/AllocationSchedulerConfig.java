@@ -18,6 +18,7 @@ package com.footyandsweep.apisweepstakeengine.config;
 
 import com.footyandsweep.AllocationServiceGrpc;
 import com.footyandsweep.SweepstakeServiceOuterClass;
+import com.footyandsweep.apicommonlibrary.helper.ProtoConverterUtils;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
 import io.grpc.ManagedChannel;
@@ -57,20 +58,16 @@ public class AllocationSchedulerConfig {
               .forEach(
                       sweepstake -> {
                           /* Call the RPC, which in turn, calls the saga for each sweepstake */
-                          ManagedChannel channel = ManagedChannelBuilder.forAddress("api-allocation-engine", 9090)
+                           ManagedChannel channel = ManagedChannelBuilder.forAddress("api-allocation-engine", 9090)
                                   .usePlaintext()
                                   .build();
 
                           AllocationServiceGrpc.AllocationServiceBlockingStub clientStub = AllocationServiceGrpc.newBlockingStub(channel);
-                          SweepstakeServiceOuterClass.Sweepstake grpcSweepstake = SweepstakeServiceOuterClass.Sweepstake.newBuilder().build();
+                          SweepstakeServiceOuterClass.Sweepstake.Builder grpcSweepstake = SweepstakeServiceOuterClass.Sweepstake.newBuilder();
 
-                          try {
-                              BeanUtils.copyProperties(grpcSweepstake, sweepstake);
-                          } catch (IllegalAccessException | InvocationTargetException e) {
-                              e.printStackTrace();
-                          }
+                          ProtoConverterUtils.convertToProto(grpcSweepstake, sweepstake);
 
-                          clientStub.allocateSweepstake(grpcSweepstake);
+                          clientStub.allocateSweepstake(grpcSweepstake.build());
                       });
   }
 }

@@ -27,9 +27,4 @@ import javax.persistence.*;
 @Entity
 @Table(name = "sweepstake_event")
 @Inheritance(strategy = InheritanceType.JOINED)
-@AttributeOverrides({
-  @AttributeOverride(
-      name = "id",
-      column = @Column(columnDefinition = "uuid", updatable = false, name = "id"))
-})
 public class SweepstakeEvent extends SweepstakeEventCommon {}

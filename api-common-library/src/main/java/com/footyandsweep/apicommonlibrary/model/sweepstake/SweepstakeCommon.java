@@ -68,8 +68,6 @@ public class SweepstakeCommon implements Serializable {
   @Enumerated(EnumType.STRING)
   private SweepstakeTypeCommon sweepstakeType = this.getSweepstakeType();
 
-  @Transient private int sweepstakeListSize;
-
   @Min(2)
   @NotNull(message = "The Sweepstake must have at least 2 players!")
   private int minimumPlayers;

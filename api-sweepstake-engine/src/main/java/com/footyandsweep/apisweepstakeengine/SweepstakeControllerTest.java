@@ -16,6 +16,7 @@
 
 package com.footyandsweep.apisweepstakeengine;
 
+import com.footyandsweep.apisweepstakeengine.dao.ParticipantIdDao;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
 import com.footyandsweep.apisweepstakeengine.engine.saga.createSweepstake.CreateSweepstakeSaga;
 import com.footyandsweep.apisweepstakeengine.engine.saga.createSweepstake.CreateSweepstakeSagaData;
@@ -24,17 +25,23 @@ import com.footyandsweep.apisweepstakeengine.engine.saga.deleteSweepstake.Delete
 import com.footyandsweep.apisweepstakeengine.engine.saga.joinSweepstake.JoinSweepstakeSaga;
 import com.footyandsweep.apisweepstakeengine.engine.saga.joinSweepstake.JoinSweepstakeSagaData;
 import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
+import com.footyandsweep.apisweepstakeengine.relation.ParticipantIds;
 import io.eventuate.tram.sagas.orchestration.SagaInstanceFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/sweepstake/test")
 public class SweepstakeControllerTest {
 
   private final SweepstakeDao sweepstakeDao;
+  private final ParticipantIdDao participantIdDao;
 
   private final CreateSweepstakeSaga createSweepstakeSaga;
   private final DeleteSweepstakeSaga deleteSweepstakeSaga;
@@ -42,8 +49,9 @@ public class SweepstakeControllerTest {
 
   private final SagaInstanceFactory sagaInstanceFactory;
 
-  public SweepstakeControllerTest(SweepstakeDao sweepstakeDao, CreateSweepstakeSaga createSweepstakeSaga, DeleteSweepstakeSaga deleteSweepstakeSaga, JoinSweepstakeSaga joinSweepstakeSaga, SagaInstanceFactory sagaInstanceFactory) {
+  public SweepstakeControllerTest(SweepstakeDao sweepstakeDao, ParticipantIdDao participantIdDao, CreateSweepstakeSaga createSweepstakeSaga, DeleteSweepstakeSaga deleteSweepstakeSaga, JoinSweepstakeSaga joinSweepstakeSaga, SagaInstanceFactory sagaInstanceFactory) {
     this.sweepstakeDao = sweepstakeDao;
+    this.participantIdDao = participantIdDao;
     this.createSweepstakeSaga = createSweepstakeSaga;
     this.deleteSweepstakeSaga = deleteSweepstakeSaga;
     this.joinSweepstakeSaga = joinSweepstakeSaga;
@@ -83,5 +91,18 @@ public class SweepstakeControllerTest {
     sagaInstanceFactory.create(joinSweepstakeSaga, data);
 
     return ResponseEntity.ok("Joined Successfully");
+  }
+
+  @GetMapping("/by/{sweepstakeId}/participants")
+  public List<String> findAllSweepstakeParticipantRelations(
+          @PathVariable("sweepstakeId") String id) {
+
+    List<ParticipantIds> participantsInSweepstake =
+            participantIdDao.findAllParticipantIdsBySweepstakeId(id);
+
+    List<String> participantIds = new ArrayList<>();
+    participantsInSweepstake.forEach(curr -> participantIds.add(curr.getParticipantId()));
+
+    return participantIds;
   }
 }

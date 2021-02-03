@@ -1,9 +1,6 @@
 syntax = "proto3";
 package com.footyandsweep;
 
-import "google/type/date.proto";
-import "google/rpc/status.proto";
-
 message User {}
 
 message findUserByIdRequest {

@@ -95,7 +95,7 @@ public class AllocationEngineImpl implements AllocationEngine {
         new LinkedList<>(
             Arrays.asList(
                 restTemplate.getForObject(
-                    "http://api-sweepstake-engine:8080/internal/sweepstake/by/"
+                    "http://api-sweepstake-engine:8080/sweepstake/test/by/"
                         + sweepstakeId
                         + "/participants",
                     String[].class)));
@@ -199,7 +199,7 @@ public class AllocationEngineImpl implements AllocationEngine {
       Optional<SweepstakeCommon> sweepstake =
           Optional.ofNullable(
               restTemplate.getForObject(
-                  "http://api-sweepstake-engine:8080/internal/sweepstake/by/id/"
+                  "http://api-sweepstake-engine:8080/sweepstake/test/by/id/"
                       + ticket.getSweepstakeId(),
                   SweepstakeCommon.class));
 
@@ -236,7 +236,7 @@ public class AllocationEngineImpl implements AllocationEngine {
             new LinkedList<>(
                 Arrays.asList(
                     restTemplate.postForObject(
-                        "http://api-sweepstake-engine:8080/internal/sweepstake/result",
+                        "http://api-sweepstake-engine:8080/sweepstake/test/result",
                         sweepstake,
                         CustomMap[].class)));
       }

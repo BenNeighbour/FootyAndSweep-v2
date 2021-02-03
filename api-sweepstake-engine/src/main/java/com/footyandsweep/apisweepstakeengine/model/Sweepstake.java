@@ -29,11 +29,6 @@ import java.util.List;
 @Getter
 @Entity
 @Table(name = "sweepstake")
-@AttributeOverrides({
-  @AttributeOverride(
-      name = "id",
-      column = @Column(columnDefinition = "uuid", updatable = false, name = "id"))
-})
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Sweepstake extends SweepstakeCommon {
 

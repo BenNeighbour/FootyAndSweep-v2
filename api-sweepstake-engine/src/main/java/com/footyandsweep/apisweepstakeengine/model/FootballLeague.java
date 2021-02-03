@@ -26,11 +26,7 @@ import javax.persistence.*;
 @Getter
 @Entity
 @Table(name = "football_league")
-@AttributeOverrides({
-  @AttributeOverride(
-      name = "id",
-      column = @Column(columnDefinition = "uuid", updatable = false, name = "id"))
-})
+
 public class FootballLeague extends LeagueCommon {
 
   private static final long serialVersionUID = -5263027643657744679L;

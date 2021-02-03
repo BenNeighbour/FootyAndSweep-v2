@@ -1,8 +1,6 @@
 syntax = "proto3";
 package com.footyandsweep;
 
-import 'Common.proto';
-
 enum SweepstakeStatus {
   OPEN = 0;
   ALLOCATED = 1;
@@ -18,17 +16,20 @@ message Sweepstake {
   string id = 1;
   string name = 2;
   string joinCode = 3;
-  SweepstakeStatus status = 4;
+  int32 statusCode = 4;
   bool isPrivate = 5;
   string ownerId = 6;
   string sweepstakeEventId = 7;
-  SweepstakeTypeCommon sweepstakeType = 8;
+  int32 sweepstakeTypeCode = 8;
   int32 sweepstakeListSize = 10;
   int32 minimumPlayers = 11;
   int32 maximumPlayerTickets = 12;
-  BigDecimal stake = 13;
+  double stake = 13;
   int32 totalNumberOfTickets = 14;
+  SweepstakeTypeCommon sweepstakeType = 15;
+  SweepstakeStatus status = 16;
 }
+
 
 message BigDecimal {
   int32 scale = 1;
