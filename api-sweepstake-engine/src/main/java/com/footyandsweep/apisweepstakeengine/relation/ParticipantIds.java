@@ -40,14 +40,11 @@ public class ParticipantIds implements Serializable {
   @GeneratedValue(generator="system-uuid")
   @GenericGenerator(name="system-uuid",
           strategy = "uuid")
-  @Column(columnDefinition = "uuid", updatable = false, name = "id")
   private String id;
 
-  @Column(columnDefinition = "uuid", updatable = false)
   @JsonProperty
   private String sweepstakeId;
 
-  @Column(columnDefinition = "uuid", updatable = false)
   @JsonProperty
   private String participantId;
 

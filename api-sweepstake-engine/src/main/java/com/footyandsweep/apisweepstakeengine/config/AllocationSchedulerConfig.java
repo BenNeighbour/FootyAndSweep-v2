@@ -21,15 +21,14 @@ import com.footyandsweep.SweepstakeServiceOuterClass;
 import com.footyandsweep.apicommonlibrary.helper.ProtoConverterUtils;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
+import com.footyandsweep.apisweepstakeengine.model.FootballMatchSweepstake;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.InvocationTargetException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -55,10 +54,12 @@ public class AllocationSchedulerConfig {
       /* For each sweepstake that is open, get the event id */
       sweepstakeDao
               .findAllSweepstakesByStatus(SweepstakeCommon.SweepstakeStatus.OPEN)
+              .stream()
+              .filter(sweepstake -> sweepstake instanceof FootballMatchSweepstake)
               .forEach(
                       sweepstake -> {
                           /* Call the RPC, which in turn, calls the saga for each sweepstake */
-                           ManagedChannel channel = ManagedChannelBuilder.forAddress("api-allocation-engine", 9090)
+                          ManagedChannel channel = ManagedChannelBuilder.forAddress("api-allocation-engine", 9090)
                                   .usePlaintext()
                                   .build();
 

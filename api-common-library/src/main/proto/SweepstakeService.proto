@@ -1,6 +1,8 @@
 syntax = "proto3";
 package com.footyandsweep;
 
+import "google/protobuf/timestamp.proto";
+
 enum SweepstakeStatus {
   OPEN = 0;
   ALLOCATED = 1;
@@ -28,16 +30,16 @@ message Sweepstake {
   int32 totalNumberOfTickets = 14;
   SweepstakeTypeCommon sweepstakeType = 15;
   SweepstakeStatus status = 16;
-}
-
-
-message BigDecimal {
-  int32 scale = 1;
-  BigInteger int_val = 2;
-}
-
-message BigInteger {
-  bytes value = 1;
+  int32 numberOfRange = 17;
+  int32 numberOfMax = 18;
+  int32 maxNumberOfRanges = 19;
+  int64 correctScoreMax = 20;
+  int64 minuteRange = 21;
+  bool includeBench = 22;
+  bool includeStartingGoalkeeper = 23;
+  bool includeNoGoalScorer = 24;
+  bool includeOwnGoals = 25;
+  string footballMatchId = 26;
 }
 
 message JoinCode {

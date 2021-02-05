@@ -17,12 +17,16 @@
 package com.footyandsweep.apicommonlibrary.helper;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.protobuf.Message;
 import com.google.protobuf.util.JsonFormat;
 
 import java.io.IOException;
 
 public class ProtoConverterUtils {
+
+  private static final Gson gson = new GsonBuilder().serializeNulls().create();
+  private static final JsonFormat.Parser jsonParser = JsonFormat.parser().ignoringUnknownFields();
 
   public static <PojoType> PojoType convertToPojo(
       Class<PojoType> destPojoClass, Message sourceMessage) {
@@ -31,29 +35,27 @@ public class ProtoConverterUtils {
     try {
       if (destPojoClass == null) {
         throw new IllegalArgumentException("No destination pojo class specified");
-      }
-      if (sourceMessage == null) {
+      } if (sourceMessage == null) {
         throw new IllegalArgumentException("No source message specified");
       }
 
-      JsonFormat.printer().print(sourceMessage);
+      json = JsonFormat.printer().print(sourceMessage);
     } catch (IOException e) {
       e.printStackTrace();
     }
-    return new Gson().fromJson(json, destPojoClass);
+    return gson.fromJson(json, destPojoClass);
   }
 
   public static void convertToProto(Message.Builder destBuilder, Object sourcePojoBean) {
     try {
       if (destBuilder == null) {
         throw new IllegalArgumentException("No destination message builder specified");
-      }
-      if (sourcePojoBean == null) {
+      } if (sourcePojoBean == null) {
         throw new IllegalArgumentException("No source pojo specified");
       }
 
-      String json = new Gson().toJson(sourcePojoBean);
-      JsonFormat.parser().merge(json, destBuilder);
+      String json = gson.toJson(sourcePojoBean);
+      jsonParser.merge(json, destBuilder);
     } catch (IOException e) {
       e.printStackTrace();
     }

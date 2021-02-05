@@ -22,6 +22,7 @@ import com.footyandsweep.apiallocationengine.engine.saga.AllocateSweepstakeSaga;
 import com.footyandsweep.apiallocationengine.engine.saga.AllocateSweepstakeSagaData;
 import com.footyandsweep.apiallocationengine.grpc.GrpcService;
 import com.footyandsweep.apicommonlibrary.helper.ProtoConverterUtils;
+import com.footyandsweep.apicommonlibrary.model.football.FootballMatchSweepstakeCommon;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.google.protobuf.Empty;
 import io.eventuate.tram.sagas.orchestration.SagaInstanceFactory;
@@ -42,9 +43,7 @@ public class AllocationControllerGrpc extends AllocationServiceGrpc.AllocationSe
   @Override
   public void allocateSweepstake(
       SweepstakeServiceOuterClass.Sweepstake request, StreamObserver<Empty> responseObserver) {
-
-      SweepstakeCommon sweepstake = new SweepstakeCommon();
-      ProtoConverterUtils.convertToPojo(sweepstake.getClass(), request);
+      SweepstakeCommon sweepstake = ProtoConverterUtils.convertToPojo(FootballMatchSweepstakeCommon.class, request);
 
       AllocateSweepstakeSagaData data = new AllocateSweepstakeSagaData();
       data.setSweepstake(sweepstake);

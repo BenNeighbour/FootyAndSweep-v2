@@ -41,7 +41,7 @@ dependencies {
     implementation "io.grpc:grpc-protobuf:${grpcVersion}"
 
     compile group: 'com.googlecode.protobuf-java-format', name: 'protobuf-java-format', version: '1.4'
-    compile group: 'com.google.protobuf', name: 'protobuf-java-util', version: '3.14.0'
+    compile group: 'com.google.protobuf', name: 'protobuf-java-util', version: '4.0.0-rc-2'
 
     testCompileOnly 'org.projectlombok:lombok:1.18.14'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.14'

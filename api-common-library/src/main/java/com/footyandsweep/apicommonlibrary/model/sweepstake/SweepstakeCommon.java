@@ -16,6 +16,7 @@
 
 package com.footyandsweep.apicommonlibrary.model.sweepstake;
 
+import com.google.gson.annotations.Expose;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -80,8 +81,10 @@ public class SweepstakeCommon implements Serializable {
 
   private int totalNumberOfTickets;
 
+  @Expose(serialize = false, deserialize = false)
   @CreationTimestamp private Date created;
 
+  @Expose(serialize = false, deserialize = false)
   @UpdateTimestamp private Date updated;
 
   public Map<Integer, String> getSweepstakeResultMap() {

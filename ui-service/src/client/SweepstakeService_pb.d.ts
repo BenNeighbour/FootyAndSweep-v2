@@ -2,6 +2,7 @@
 // file: SweepstakeService.proto
 
 import * as jspb from "google-protobuf";
+import * as google_protobuf_timestamp_pb from "google-protobuf/google/protobuf/timestamp_pb";
 
 export class Sweepstake extends jspb.Message {
   getId(): string;
@@ -13,8 +14,8 @@ export class Sweepstake extends jspb.Message {
   getJoincode(): string;
   setJoincode(value: string): void;
 
-  getStatus(): SweepstakeStatusMap[keyof SweepstakeStatusMap];
-  setStatus(value: SweepstakeStatusMap[keyof SweepstakeStatusMap]): void;
+  getStatuscode(): number;
+  setStatuscode(value: number): void;
 
   getIsprivate(): boolean;
   setIsprivate(value: boolean): void;
@@ -25,8 +26,8 @@ export class Sweepstake extends jspb.Message {
   getSweepstakeeventid(): string;
   setSweepstakeeventid(value: string): void;
 
-  getSweepstaketype(): SweepstakeTypeCommonMap[keyof SweepstakeTypeCommonMap];
-  setSweepstaketype(value: SweepstakeTypeCommonMap[keyof SweepstakeTypeCommonMap]): void;
+  getSweepstaketypecode(): number;
+  setSweepstaketypecode(value: number): void;
 
   getSweepstakelistsize(): number;
   setSweepstakelistsize(value: number): void;
@@ -37,13 +38,47 @@ export class Sweepstake extends jspb.Message {
   getMaximumplayertickets(): number;
   setMaximumplayertickets(value: number): void;
 
-  hasStake(): boolean;
-  clearStake(): void;
-  getStake(): BigDecimal | undefined;
-  setStake(value?: BigDecimal): void;
+  getStake(): number;
+  setStake(value: number): void;
 
   getTotalnumberoftickets(): number;
   setTotalnumberoftickets(value: number): void;
+
+  getSweepstaketype(): SweepstakeTypeCommonMap[keyof SweepstakeTypeCommonMap];
+  setSweepstaketype(value: SweepstakeTypeCommonMap[keyof SweepstakeTypeCommonMap]): void;
+
+  getStatus(): SweepstakeStatusMap[keyof SweepstakeStatusMap];
+  setStatus(value: SweepstakeStatusMap[keyof SweepstakeStatusMap]): void;
+
+  getNumberofrange(): number;
+  setNumberofrange(value: number): void;
+
+  getNumberofmax(): number;
+  setNumberofmax(value: number): void;
+
+  getMaxnumberofranges(): number;
+  setMaxnumberofranges(value: number): void;
+
+  getCorrectscoremax(): number;
+  setCorrectscoremax(value: number): void;
+
+  getMinuterange(): number;
+  setMinuterange(value: number): void;
+
+  getIncludebench(): boolean;
+  setIncludebench(value: boolean): void;
+
+  getIncludestartinggoalkeeper(): boolean;
+  setIncludestartinggoalkeeper(value: boolean): void;
+
+  getIncludenogoalscorer(): boolean;
+  setIncludenogoalscorer(value: boolean): void;
+
+  getIncludeowngoals(): boolean;
+  setIncludeowngoals(value: boolean): void;
+
+  getFootballmatchid(): string;
+  setFootballmatchid(value: string): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): Sweepstake.AsObject;
@@ -60,64 +95,28 @@ export namespace Sweepstake {
     id: string,
     name: string,
     joincode: string,
-    status: SweepstakeStatusMap[keyof SweepstakeStatusMap],
+    statuscode: number,
     isprivate: boolean,
     ownerid: string,
     sweepstakeeventid: string,
-    sweepstaketype: SweepstakeTypeCommonMap[keyof SweepstakeTypeCommonMap],
+    sweepstaketypecode: number,
     sweepstakelistsize: number,
     minimumplayers: number,
     maximumplayertickets: number,
-    stake?: BigDecimal.AsObject,
+    stake: number,
     totalnumberoftickets: number,
-  }
-}
-
-export class BigDecimal extends jspb.Message {
-  getScale(): number;
-  setScale(value: number): void;
-
-  hasIntVal(): boolean;
-  clearIntVal(): void;
-  getIntVal(): BigInteger | undefined;
-  setIntVal(value?: BigInteger): void;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): BigDecimal.AsObject;
-  static toObject(includeInstance: boolean, msg: BigDecimal): BigDecimal.AsObject;
-  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-  static serializeBinaryToWriter(message: BigDecimal, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): BigDecimal;
-  static deserializeBinaryFromReader(message: BigDecimal, reader: jspb.BinaryReader): BigDecimal;
-}
-
-export namespace BigDecimal {
-  export type AsObject = {
-    scale: number,
-    intVal?: BigInteger.AsObject,
-  }
-}
-
-export class BigInteger extends jspb.Message {
-  getValue(): Uint8Array | string;
-  getValue_asU8(): Uint8Array;
-  getValue_asB64(): string;
-  setValue(value: Uint8Array | string): void;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): BigInteger.AsObject;
-  static toObject(includeInstance: boolean, msg: BigInteger): BigInteger.AsObject;
-  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-  static serializeBinaryToWriter(message: BigInteger, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): BigInteger;
-  static deserializeBinaryFromReader(message: BigInteger, reader: jspb.BinaryReader): BigInteger;
-}
-
-export namespace BigInteger {
-  export type AsObject = {
-    value: Uint8Array | string,
+    sweepstaketype: SweepstakeTypeCommonMap[keyof SweepstakeTypeCommonMap],
+    status: SweepstakeStatusMap[keyof SweepstakeStatusMap],
+    numberofrange: number,
+    numberofmax: number,
+    maxnumberofranges: number,
+    correctscoremax: number,
+    minuterange: number,
+    includebench: boolean,
+    includestartinggoalkeeper: boolean,
+    includenogoalscorer: boolean,
+    includeowngoals: boolean,
+    footballmatchid: string,
   }
 }
 

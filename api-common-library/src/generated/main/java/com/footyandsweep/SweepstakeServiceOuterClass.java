@@ -330,6 +330,61 @@ public final class SweepstakeServiceOuterClass {
      * <code>.com.footyandsweep.SweepstakeStatus status = 16;</code>
      */
     com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeStatus getStatus();
+
+    /**
+     * <code>int32 numberOfRange = 17;</code>
+     */
+    int getNumberOfRange();
+
+    /**
+     * <code>int32 numberOfMax = 18;</code>
+     */
+    int getNumberOfMax();
+
+    /**
+     * <code>int32 maxNumberOfRanges = 19;</code>
+     */
+    int getMaxNumberOfRanges();
+
+    /**
+     * <code>int64 correctScoreMax = 20;</code>
+     */
+    long getCorrectScoreMax();
+
+    /**
+     * <code>int64 minuteRange = 21;</code>
+     */
+    long getMinuteRange();
+
+    /**
+     * <code>bool includeBench = 22;</code>
+     */
+    boolean getIncludeBench();
+
+    /**
+     * <code>bool includeStartingGoalkeeper = 23;</code>
+     */
+    boolean getIncludeStartingGoalkeeper();
+
+    /**
+     * <code>bool includeNoGoalScorer = 24;</code>
+     */
+    boolean getIncludeNoGoalScorer();
+
+    /**
+     * <code>bool includeOwnGoals = 25;</code>
+     */
+    boolean getIncludeOwnGoals();
+
+    /**
+     * <code>string footballMatchId = 26;</code>
+     */
+    java.lang.String getFootballMatchId();
+    /**
+     * <code>string footballMatchId = 26;</code>
+     */
+    com.google.protobuf.ByteString
+        getFootballMatchIdBytes();
   }
   /**
    * Protobuf type {@code com.footyandsweep.Sweepstake}
@@ -359,6 +414,16 @@ public final class SweepstakeServiceOuterClass {
       totalNumberOfTickets_ = 0;
       sweepstakeType_ = 0;
       status_ = 0;
+      numberOfRange_ = 0;
+      numberOfMax_ = 0;
+      maxNumberOfRanges_ = 0;
+      correctScoreMax_ = 0L;
+      minuteRange_ = 0L;
+      includeBench_ = false;
+      includeStartingGoalkeeper_ = false;
+      includeNoGoalScorer_ = false;
+      includeOwnGoals_ = false;
+      footballMatchId_ = "";
     }
 
     @java.lang.Override
@@ -465,6 +530,57 @@ public final class SweepstakeServiceOuterClass {
               int rawValue = input.readEnum();
 
               status_ = rawValue;
+              break;
+            }
+            case 136: {
+
+              numberOfRange_ = input.readInt32();
+              break;
+            }
+            case 144: {
+
+              numberOfMax_ = input.readInt32();
+              break;
+            }
+            case 152: {
+
+              maxNumberOfRanges_ = input.readInt32();
+              break;
+            }
+            case 160: {
+
+              correctScoreMax_ = input.readInt64();
+              break;
+            }
+            case 168: {
+
+              minuteRange_ = input.readInt64();
+              break;
+            }
+            case 176: {
+
+              includeBench_ = input.readBool();
+              break;
+            }
+            case 184: {
+
+              includeStartingGoalkeeper_ = input.readBool();
+              break;
+            }
+            case 192: {
+
+              includeNoGoalScorer_ = input.readBool();
+              break;
+            }
+            case 200: {
+
+              includeOwnGoals_ = input.readBool();
+              break;
+            }
+            case 210: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              footballMatchId_ = s;
               break;
             }
             default: {
@@ -775,6 +891,121 @@ public final class SweepstakeServiceOuterClass {
       return result == null ? com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeStatus.UNRECOGNIZED : result;
     }
 
+    public static final int NUMBEROFRANGE_FIELD_NUMBER = 17;
+    private int numberOfRange_;
+    /**
+     * <code>int32 numberOfRange = 17;</code>
+     */
+    public int getNumberOfRange() {
+      return numberOfRange_;
+    }
+
+    public static final int NUMBEROFMAX_FIELD_NUMBER = 18;
+    private int numberOfMax_;
+    /**
+     * <code>int32 numberOfMax = 18;</code>
+     */
+    public int getNumberOfMax() {
+      return numberOfMax_;
+    }
+
+    public static final int MAXNUMBEROFRANGES_FIELD_NUMBER = 19;
+    private int maxNumberOfRanges_;
+    /**
+     * <code>int32 maxNumberOfRanges = 19;</code>
+     */
+    public int getMaxNumberOfRanges() {
+      return maxNumberOfRanges_;
+    }
+
+    public static final int CORRECTSCOREMAX_FIELD_NUMBER = 20;
+    private long correctScoreMax_;
+    /**
+     * <code>int64 correctScoreMax = 20;</code>
+     */
+    public long getCorrectScoreMax() {
+      return correctScoreMax_;
+    }
+
+    public static final int MINUTERANGE_FIELD_NUMBER = 21;
+    private long minuteRange_;
+    /**
+     * <code>int64 minuteRange = 21;</code>
+     */
+    public long getMinuteRange() {
+      return minuteRange_;
+    }
+
+    public static final int INCLUDEBENCH_FIELD_NUMBER = 22;
+    private boolean includeBench_;
+    /**
+     * <code>bool includeBench = 22;</code>
+     */
+    public boolean getIncludeBench() {
+      return includeBench_;
+    }
+
+    public static final int INCLUDESTARTINGGOALKEEPER_FIELD_NUMBER = 23;
+    private boolean includeStartingGoalkeeper_;
+    /**
+     * <code>bool includeStartingGoalkeeper = 23;</code>
+     */
+    public boolean getIncludeStartingGoalkeeper() {
+      return includeStartingGoalkeeper_;
+    }
+
+    public static final int INCLUDENOGOALSCORER_FIELD_NUMBER = 24;
+    private boolean includeNoGoalScorer_;
+    /**
+     * <code>bool includeNoGoalScorer = 24;</code>
+     */
+    public boolean getIncludeNoGoalScorer() {
+      return includeNoGoalScorer_;
+    }
+
+    public static final int INCLUDEOWNGOALS_FIELD_NUMBER = 25;
+    private boolean includeOwnGoals_;
+    /**
+     * <code>bool includeOwnGoals = 25;</code>
+     */
+    public boolean getIncludeOwnGoals() {
+      return includeOwnGoals_;
+    }
+
+    public static final int FOOTBALLMATCHID_FIELD_NUMBER = 26;
+    private volatile java.lang.Object footballMatchId_;
+    /**
+     * <code>string footballMatchId = 26;</code>
+     */
+    public java.lang.String getFootballMatchId() {
+      java.lang.Object ref = footballMatchId_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        footballMatchId_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string footballMatchId = 26;</code>
+     */
+    public com.google.protobuf.ByteString
+        getFootballMatchIdBytes() {
+      java.lang.Object ref = footballMatchId_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        footballMatchId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -833,6 +1064,36 @@ public final class SweepstakeServiceOuterClass {
       }
       if (status_ != com.footyandsweep.SweepstakeServiceOuterClass.SweepstakeStatus.OPEN.getNumber()) {
         output.writeEnum(16, status_);
+      }
+      if (numberOfRange_ != 0) {
+        output.writeInt32(17, numberOfRange_);
+      }
+      if (numberOfMax_ != 0) {
+        output.writeInt32(18, numberOfMax_);
+      }
+      if (maxNumberOfRanges_ != 0) {
+        output.writeInt32(19, maxNumberOfRanges_);
+      }
+      if (correctScoreMax_ != 0L) {
+        output.writeInt64(20, correctScoreMax_);
+      }
+      if (minuteRange_ != 0L) {
+        output.writeInt64(21, minuteRange_);
+      }
+      if (includeBench_ != false) {
+        output.writeBool(22, includeBench_);
+      }
+      if (includeStartingGoalkeeper_ != false) {
+        output.writeBool(23, includeStartingGoalkeeper_);
+      }
+      if (includeNoGoalScorer_ != false) {
+        output.writeBool(24, includeNoGoalScorer_);
+      }
+      if (includeOwnGoals_ != false) {
+        output.writeBool(25, includeOwnGoals_);
+      }
+      if (!getFootballMatchIdBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 26, footballMatchId_);
       }
       unknownFields.writeTo(output);
     }
@@ -898,6 +1159,45 @@ public final class SweepstakeServiceOuterClass {
         size += com.google.protobuf.CodedOutputStream
           .computeEnumSize(16, status_);
       }
+      if (numberOfRange_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(17, numberOfRange_);
+      }
+      if (numberOfMax_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(18, numberOfMax_);
+      }
+      if (maxNumberOfRanges_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(19, maxNumberOfRanges_);
+      }
+      if (correctScoreMax_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(20, correctScoreMax_);
+      }
+      if (minuteRange_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(21, minuteRange_);
+      }
+      if (includeBench_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(22, includeBench_);
+      }
+      if (includeStartingGoalkeeper_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(23, includeStartingGoalkeeper_);
+      }
+      if (includeNoGoalScorer_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(24, includeNoGoalScorer_);
+      }
+      if (includeOwnGoals_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(25, includeOwnGoals_);
+      }
+      if (!getFootballMatchIdBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(26, footballMatchId_);
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -944,6 +1244,26 @@ public final class SweepstakeServiceOuterClass {
           == other.getTotalNumberOfTickets());
       result = result && sweepstakeType_ == other.sweepstakeType_;
       result = result && status_ == other.status_;
+      result = result && (getNumberOfRange()
+          == other.getNumberOfRange());
+      result = result && (getNumberOfMax()
+          == other.getNumberOfMax());
+      result = result && (getMaxNumberOfRanges()
+          == other.getMaxNumberOfRanges());
+      result = result && (getCorrectScoreMax()
+          == other.getCorrectScoreMax());
+      result = result && (getMinuteRange()
+          == other.getMinuteRange());
+      result = result && (getIncludeBench()
+          == other.getIncludeBench());
+      result = result && (getIncludeStartingGoalkeeper()
+          == other.getIncludeStartingGoalkeeper());
+      result = result && (getIncludeNoGoalScorer()
+          == other.getIncludeNoGoalScorer());
+      result = result && (getIncludeOwnGoals()
+          == other.getIncludeOwnGoals());
+      result = result && getFootballMatchId()
+          .equals(other.getFootballMatchId());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -987,6 +1307,32 @@ public final class SweepstakeServiceOuterClass {
       hash = (53 * hash) + sweepstakeType_;
       hash = (37 * hash) + STATUS_FIELD_NUMBER;
       hash = (53 * hash) + status_;
+      hash = (37 * hash) + NUMBEROFRANGE_FIELD_NUMBER;
+      hash = (53 * hash) + getNumberOfRange();
+      hash = (37 * hash) + NUMBEROFMAX_FIELD_NUMBER;
+      hash = (53 * hash) + getNumberOfMax();
+      hash = (37 * hash) + MAXNUMBEROFRANGES_FIELD_NUMBER;
+      hash = (53 * hash) + getMaxNumberOfRanges();
+      hash = (37 * hash) + CORRECTSCOREMAX_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getCorrectScoreMax());
+      hash = (37 * hash) + MINUTERANGE_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getMinuteRange());
+      hash = (37 * hash) + INCLUDEBENCH_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getIncludeBench());
+      hash = (37 * hash) + INCLUDESTARTINGGOALKEEPER_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getIncludeStartingGoalkeeper());
+      hash = (37 * hash) + INCLUDENOGOALSCORER_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getIncludeNoGoalScorer());
+      hash = (37 * hash) + INCLUDEOWNGOALS_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getIncludeOwnGoals());
+      hash = (37 * hash) + FOOTBALLMATCHID_FIELD_NUMBER;
+      hash = (53 * hash) + getFootballMatchId().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -1150,6 +1496,26 @@ public final class SweepstakeServiceOuterClass {
 
         status_ = 0;
 
+        numberOfRange_ = 0;
+
+        numberOfMax_ = 0;
+
+        maxNumberOfRanges_ = 0;
+
+        correctScoreMax_ = 0L;
+
+        minuteRange_ = 0L;
+
+        includeBench_ = false;
+
+        includeStartingGoalkeeper_ = false;
+
+        includeNoGoalScorer_ = false;
+
+        includeOwnGoals_ = false;
+
+        footballMatchId_ = "";
+
         return this;
       }
 
@@ -1191,6 +1557,16 @@ public final class SweepstakeServiceOuterClass {
         result.totalNumberOfTickets_ = totalNumberOfTickets_;
         result.sweepstakeType_ = sweepstakeType_;
         result.status_ = status_;
+        result.numberOfRange_ = numberOfRange_;
+        result.numberOfMax_ = numberOfMax_;
+        result.maxNumberOfRanges_ = maxNumberOfRanges_;
+        result.correctScoreMax_ = correctScoreMax_;
+        result.minuteRange_ = minuteRange_;
+        result.includeBench_ = includeBench_;
+        result.includeStartingGoalkeeper_ = includeStartingGoalkeeper_;
+        result.includeNoGoalScorer_ = includeNoGoalScorer_;
+        result.includeOwnGoals_ = includeOwnGoals_;
+        result.footballMatchId_ = footballMatchId_;
         onBuilt();
         return result;
       }
@@ -1288,6 +1664,37 @@ public final class SweepstakeServiceOuterClass {
         }
         if (other.status_ != 0) {
           setStatusValue(other.getStatusValue());
+        }
+        if (other.getNumberOfRange() != 0) {
+          setNumberOfRange(other.getNumberOfRange());
+        }
+        if (other.getNumberOfMax() != 0) {
+          setNumberOfMax(other.getNumberOfMax());
+        }
+        if (other.getMaxNumberOfRanges() != 0) {
+          setMaxNumberOfRanges(other.getMaxNumberOfRanges());
+        }
+        if (other.getCorrectScoreMax() != 0L) {
+          setCorrectScoreMax(other.getCorrectScoreMax());
+        }
+        if (other.getMinuteRange() != 0L) {
+          setMinuteRange(other.getMinuteRange());
+        }
+        if (other.getIncludeBench() != false) {
+          setIncludeBench(other.getIncludeBench());
+        }
+        if (other.getIncludeStartingGoalkeeper() != false) {
+          setIncludeStartingGoalkeeper(other.getIncludeStartingGoalkeeper());
+        }
+        if (other.getIncludeNoGoalScorer() != false) {
+          setIncludeNoGoalScorer(other.getIncludeNoGoalScorer());
+        }
+        if (other.getIncludeOwnGoals() != false) {
+          setIncludeOwnGoals(other.getIncludeOwnGoals());
+        }
+        if (!other.getFootballMatchId().isEmpty()) {
+          footballMatchId_ = other.footballMatchId_;
+          onChanged();
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -1960,6 +2367,309 @@ public final class SweepstakeServiceOuterClass {
         onChanged();
         return this;
       }
+
+      private int numberOfRange_ ;
+      /**
+       * <code>int32 numberOfRange = 17;</code>
+       */
+      public int getNumberOfRange() {
+        return numberOfRange_;
+      }
+      /**
+       * <code>int32 numberOfRange = 17;</code>
+       */
+      public Builder setNumberOfRange(int value) {
+        
+        numberOfRange_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 numberOfRange = 17;</code>
+       */
+      public Builder clearNumberOfRange() {
+        
+        numberOfRange_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int numberOfMax_ ;
+      /**
+       * <code>int32 numberOfMax = 18;</code>
+       */
+      public int getNumberOfMax() {
+        return numberOfMax_;
+      }
+      /**
+       * <code>int32 numberOfMax = 18;</code>
+       */
+      public Builder setNumberOfMax(int value) {
+        
+        numberOfMax_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 numberOfMax = 18;</code>
+       */
+      public Builder clearNumberOfMax() {
+        
+        numberOfMax_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int maxNumberOfRanges_ ;
+      /**
+       * <code>int32 maxNumberOfRanges = 19;</code>
+       */
+      public int getMaxNumberOfRanges() {
+        return maxNumberOfRanges_;
+      }
+      /**
+       * <code>int32 maxNumberOfRanges = 19;</code>
+       */
+      public Builder setMaxNumberOfRanges(int value) {
+        
+        maxNumberOfRanges_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 maxNumberOfRanges = 19;</code>
+       */
+      public Builder clearMaxNumberOfRanges() {
+        
+        maxNumberOfRanges_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private long correctScoreMax_ ;
+      /**
+       * <code>int64 correctScoreMax = 20;</code>
+       */
+      public long getCorrectScoreMax() {
+        return correctScoreMax_;
+      }
+      /**
+       * <code>int64 correctScoreMax = 20;</code>
+       */
+      public Builder setCorrectScoreMax(long value) {
+        
+        correctScoreMax_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int64 correctScoreMax = 20;</code>
+       */
+      public Builder clearCorrectScoreMax() {
+        
+        correctScoreMax_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private long minuteRange_ ;
+      /**
+       * <code>int64 minuteRange = 21;</code>
+       */
+      public long getMinuteRange() {
+        return minuteRange_;
+      }
+      /**
+       * <code>int64 minuteRange = 21;</code>
+       */
+      public Builder setMinuteRange(long value) {
+        
+        minuteRange_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int64 minuteRange = 21;</code>
+       */
+      public Builder clearMinuteRange() {
+        
+        minuteRange_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private boolean includeBench_ ;
+      /**
+       * <code>bool includeBench = 22;</code>
+       */
+      public boolean getIncludeBench() {
+        return includeBench_;
+      }
+      /**
+       * <code>bool includeBench = 22;</code>
+       */
+      public Builder setIncludeBench(boolean value) {
+        
+        includeBench_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool includeBench = 22;</code>
+       */
+      public Builder clearIncludeBench() {
+        
+        includeBench_ = false;
+        onChanged();
+        return this;
+      }
+
+      private boolean includeStartingGoalkeeper_ ;
+      /**
+       * <code>bool includeStartingGoalkeeper = 23;</code>
+       */
+      public boolean getIncludeStartingGoalkeeper() {
+        return includeStartingGoalkeeper_;
+      }
+      /**
+       * <code>bool includeStartingGoalkeeper = 23;</code>
+       */
+      public Builder setIncludeStartingGoalkeeper(boolean value) {
+        
+        includeStartingGoalkeeper_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool includeStartingGoalkeeper = 23;</code>
+       */
+      public Builder clearIncludeStartingGoalkeeper() {
+        
+        includeStartingGoalkeeper_ = false;
+        onChanged();
+        return this;
+      }
+
+      private boolean includeNoGoalScorer_ ;
+      /**
+       * <code>bool includeNoGoalScorer = 24;</code>
+       */
+      public boolean getIncludeNoGoalScorer() {
+        return includeNoGoalScorer_;
+      }
+      /**
+       * <code>bool includeNoGoalScorer = 24;</code>
+       */
+      public Builder setIncludeNoGoalScorer(boolean value) {
+        
+        includeNoGoalScorer_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool includeNoGoalScorer = 24;</code>
+       */
+      public Builder clearIncludeNoGoalScorer() {
+        
+        includeNoGoalScorer_ = false;
+        onChanged();
+        return this;
+      }
+
+      private boolean includeOwnGoals_ ;
+      /**
+       * <code>bool includeOwnGoals = 25;</code>
+       */
+      public boolean getIncludeOwnGoals() {
+        return includeOwnGoals_;
+      }
+      /**
+       * <code>bool includeOwnGoals = 25;</code>
+       */
+      public Builder setIncludeOwnGoals(boolean value) {
+        
+        includeOwnGoals_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool includeOwnGoals = 25;</code>
+       */
+      public Builder clearIncludeOwnGoals() {
+        
+        includeOwnGoals_ = false;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object footballMatchId_ = "";
+      /**
+       * <code>string footballMatchId = 26;</code>
+       */
+      public java.lang.String getFootballMatchId() {
+        java.lang.Object ref = footballMatchId_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          footballMatchId_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string footballMatchId = 26;</code>
+       */
+      public com.google.protobuf.ByteString
+          getFootballMatchIdBytes() {
+        java.lang.Object ref = footballMatchId_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          footballMatchId_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string footballMatchId = 26;</code>
+       */
+      public Builder setFootballMatchId(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        footballMatchId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string footballMatchId = 26;</code>
+       */
+      public Builder clearFootballMatchId() {
+        
+        footballMatchId_ = getDefaultInstance().getFootballMatchId();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string footballMatchId = 26;</code>
+       */
+      public Builder setFootballMatchIdBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        footballMatchId_ = value;
+        onChanged();
+        return this;
+      }
       @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -2008,1155 +2718,6 @@ public final class SweepstakeServiceOuterClass {
 
     @java.lang.Override
     public com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface BigDecimalOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.footyandsweep.BigDecimal)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>int32 scale = 1;</code>
-     */
-    int getScale();
-
-    /**
-     * <code>.com.footyandsweep.BigInteger int_val = 2;</code>
-     */
-    boolean hasIntVal();
-    /**
-     * <code>.com.footyandsweep.BigInteger int_val = 2;</code>
-     */
-    com.footyandsweep.SweepstakeServiceOuterClass.BigInteger getIntVal();
-    /**
-     * <code>.com.footyandsweep.BigInteger int_val = 2;</code>
-     */
-    com.footyandsweep.SweepstakeServiceOuterClass.BigIntegerOrBuilder getIntValOrBuilder();
-  }
-  /**
-   * Protobuf type {@code com.footyandsweep.BigDecimal}
-   */
-  public  static final class BigDecimal extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:com.footyandsweep.BigDecimal)
-      BigDecimalOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use BigDecimal.newBuilder() to construct.
-    private BigDecimal(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private BigDecimal() {
-      scale_ = 0;
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private BigDecimal(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 8: {
-
-              scale_ = input.readInt32();
-              break;
-            }
-            case 18: {
-              com.footyandsweep.SweepstakeServiceOuterClass.BigInteger.Builder subBuilder = null;
-              if (intVal_ != null) {
-                subBuilder = intVal_.toBuilder();
-              }
-              intVal_ = input.readMessage(com.footyandsweep.SweepstakeServiceOuterClass.BigInteger.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(intVal_);
-                intVal_ = subBuilder.buildPartial();
-              }
-
-              break;
-            }
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return com.footyandsweep.SweepstakeServiceOuterClass.internal_static_com_footyandsweep_BigDecimal_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.footyandsweep.SweepstakeServiceOuterClass.internal_static_com_footyandsweep_BigDecimal_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal.class, com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal.Builder.class);
-    }
-
-    public static final int SCALE_FIELD_NUMBER = 1;
-    private int scale_;
-    /**
-     * <code>int32 scale = 1;</code>
-     */
-    public int getScale() {
-      return scale_;
-    }
-
-    public static final int INT_VAL_FIELD_NUMBER = 2;
-    private com.footyandsweep.SweepstakeServiceOuterClass.BigInteger intVal_;
-    /**
-     * <code>.com.footyandsweep.BigInteger int_val = 2;</code>
-     */
-    public boolean hasIntVal() {
-      return intVal_ != null;
-    }
-    /**
-     * <code>.com.footyandsweep.BigInteger int_val = 2;</code>
-     */
-    public com.footyandsweep.SweepstakeServiceOuterClass.BigInteger getIntVal() {
-      return intVal_ == null ? com.footyandsweep.SweepstakeServiceOuterClass.BigInteger.getDefaultInstance() : intVal_;
-    }
-    /**
-     * <code>.com.footyandsweep.BigInteger int_val = 2;</code>
-     */
-    public com.footyandsweep.SweepstakeServiceOuterClass.BigIntegerOrBuilder getIntValOrBuilder() {
-      return getIntVal();
-    }
-
-    private byte memoizedIsInitialized = -1;
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (scale_ != 0) {
-        output.writeInt32(1, scale_);
-      }
-      if (intVal_ != null) {
-        output.writeMessage(2, getIntVal());
-      }
-      unknownFields.writeTo(output);
-    }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (scale_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(1, scale_);
-      }
-      if (intVal_ != null) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, getIntVal());
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal)) {
-        return super.equals(obj);
-      }
-      com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal other = (com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal) obj;
-
-      boolean result = true;
-      result = result && (getScale()
-          == other.getScale());
-      result = result && (hasIntVal() == other.hasIntVal());
-      if (hasIntVal()) {
-        result = result && getIntVal()
-            .equals(other.getIntVal());
-      }
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + SCALE_FIELD_NUMBER;
-      hash = (53 * hash) + getScale();
-      if (hasIntVal()) {
-        hash = (37 * hash) + INT_VAL_FIELD_NUMBER;
-        hash = (53 * hash) + getIntVal().hashCode();
-      }
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * Protobuf type {@code com.footyandsweep.BigDecimal}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.footyandsweep.BigDecimal)
-        com.footyandsweep.SweepstakeServiceOuterClass.BigDecimalOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return com.footyandsweep.SweepstakeServiceOuterClass.internal_static_com_footyandsweep_BigDecimal_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return com.footyandsweep.SweepstakeServiceOuterClass.internal_static_com_footyandsweep_BigDecimal_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal.class, com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal.Builder.class);
-      }
-
-      // Construct using com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        scale_ = 0;
-
-        if (intValBuilder_ == null) {
-          intVal_ = null;
-        } else {
-          intVal_ = null;
-          intValBuilder_ = null;
-        }
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return com.footyandsweep.SweepstakeServiceOuterClass.internal_static_com_footyandsweep_BigDecimal_descriptor;
-      }
-
-      @java.lang.Override
-      public com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal getDefaultInstanceForType() {
-        return com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal build() {
-        com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal buildPartial() {
-        com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal result = new com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal(this);
-        result.scale_ = scale_;
-        if (intValBuilder_ == null) {
-          result.intVal_ = intVal_;
-        } else {
-          result.intVal_ = intValBuilder_.build();
-        }
-        onBuilt();
-        return result;
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return (Builder) super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal) {
-          return mergeFrom((com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal other) {
-        if (other == com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal.getDefaultInstance()) return this;
-        if (other.getScale() != 0) {
-          setScale(other.getScale());
-        }
-        if (other.hasIntVal()) {
-          mergeIntVal(other.getIntVal());
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-
-      private int scale_ ;
-      /**
-       * <code>int32 scale = 1;</code>
-       */
-      public int getScale() {
-        return scale_;
-      }
-      /**
-       * <code>int32 scale = 1;</code>
-       */
-      public Builder setScale(int value) {
-        
-        scale_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>int32 scale = 1;</code>
-       */
-      public Builder clearScale() {
-        
-        scale_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private com.footyandsweep.SweepstakeServiceOuterClass.BigInteger intVal_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          com.footyandsweep.SweepstakeServiceOuterClass.BigInteger, com.footyandsweep.SweepstakeServiceOuterClass.BigInteger.Builder, com.footyandsweep.SweepstakeServiceOuterClass.BigIntegerOrBuilder> intValBuilder_;
-      /**
-       * <code>.com.footyandsweep.BigInteger int_val = 2;</code>
-       */
-      public boolean hasIntVal() {
-        return intValBuilder_ != null || intVal_ != null;
-      }
-      /**
-       * <code>.com.footyandsweep.BigInteger int_val = 2;</code>
-       */
-      public com.footyandsweep.SweepstakeServiceOuterClass.BigInteger getIntVal() {
-        if (intValBuilder_ == null) {
-          return intVal_ == null ? com.footyandsweep.SweepstakeServiceOuterClass.BigInteger.getDefaultInstance() : intVal_;
-        } else {
-          return intValBuilder_.getMessage();
-        }
-      }
-      /**
-       * <code>.com.footyandsweep.BigInteger int_val = 2;</code>
-       */
-      public Builder setIntVal(com.footyandsweep.SweepstakeServiceOuterClass.BigInteger value) {
-        if (intValBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          intVal_ = value;
-          onChanged();
-        } else {
-          intValBuilder_.setMessage(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.com.footyandsweep.BigInteger int_val = 2;</code>
-       */
-      public Builder setIntVal(
-          com.footyandsweep.SweepstakeServiceOuterClass.BigInteger.Builder builderForValue) {
-        if (intValBuilder_ == null) {
-          intVal_ = builderForValue.build();
-          onChanged();
-        } else {
-          intValBuilder_.setMessage(builderForValue.build());
-        }
-
-        return this;
-      }
-      /**
-       * <code>.com.footyandsweep.BigInteger int_val = 2;</code>
-       */
-      public Builder mergeIntVal(com.footyandsweep.SweepstakeServiceOuterClass.BigInteger value) {
-        if (intValBuilder_ == null) {
-          if (intVal_ != null) {
-            intVal_ =
-              com.footyandsweep.SweepstakeServiceOuterClass.BigInteger.newBuilder(intVal_).mergeFrom(value).buildPartial();
-          } else {
-            intVal_ = value;
-          }
-          onChanged();
-        } else {
-          intValBuilder_.mergeFrom(value);
-        }
-
-        return this;
-      }
-      /**
-       * <code>.com.footyandsweep.BigInteger int_val = 2;</code>
-       */
-      public Builder clearIntVal() {
-        if (intValBuilder_ == null) {
-          intVal_ = null;
-          onChanged();
-        } else {
-          intVal_ = null;
-          intValBuilder_ = null;
-        }
-
-        return this;
-      }
-      /**
-       * <code>.com.footyandsweep.BigInteger int_val = 2;</code>
-       */
-      public com.footyandsweep.SweepstakeServiceOuterClass.BigInteger.Builder getIntValBuilder() {
-        
-        onChanged();
-        return getIntValFieldBuilder().getBuilder();
-      }
-      /**
-       * <code>.com.footyandsweep.BigInteger int_val = 2;</code>
-       */
-      public com.footyandsweep.SweepstakeServiceOuterClass.BigIntegerOrBuilder getIntValOrBuilder() {
-        if (intValBuilder_ != null) {
-          return intValBuilder_.getMessageOrBuilder();
-        } else {
-          return intVal_ == null ?
-              com.footyandsweep.SweepstakeServiceOuterClass.BigInteger.getDefaultInstance() : intVal_;
-        }
-      }
-      /**
-       * <code>.com.footyandsweep.BigInteger int_val = 2;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          com.footyandsweep.SweepstakeServiceOuterClass.BigInteger, com.footyandsweep.SweepstakeServiceOuterClass.BigInteger.Builder, com.footyandsweep.SweepstakeServiceOuterClass.BigIntegerOrBuilder> 
-          getIntValFieldBuilder() {
-        if (intValBuilder_ == null) {
-          intValBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              com.footyandsweep.SweepstakeServiceOuterClass.BigInteger, com.footyandsweep.SweepstakeServiceOuterClass.BigInteger.Builder, com.footyandsweep.SweepstakeServiceOuterClass.BigIntegerOrBuilder>(
-                  getIntVal(),
-                  getParentForChildren(),
-                  isClean());
-          intVal_ = null;
-        }
-        return intValBuilder_;
-      }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:com.footyandsweep.BigDecimal)
-    }
-
-    // @@protoc_insertion_point(class_scope:com.footyandsweep.BigDecimal)
-    private static final com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal();
-    }
-
-    public static com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<BigDecimal>
-        PARSER = new com.google.protobuf.AbstractParser<BigDecimal>() {
-      @java.lang.Override
-      public BigDecimal parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new BigDecimal(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<BigDecimal> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<BigDecimal> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.footyandsweep.SweepstakeServiceOuterClass.BigDecimal getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface BigIntegerOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.footyandsweep.BigInteger)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>bytes value = 1;</code>
-     */
-    com.google.protobuf.ByteString getValue();
-  }
-  /**
-   * Protobuf type {@code com.footyandsweep.BigInteger}
-   */
-  public  static final class BigInteger extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:com.footyandsweep.BigInteger)
-      BigIntegerOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use BigInteger.newBuilder() to construct.
-    private BigInteger(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private BigInteger() {
-      value_ = com.google.protobuf.ByteString.EMPTY;
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private BigInteger(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10: {
-
-              value_ = input.readBytes();
-              break;
-            }
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return com.footyandsweep.SweepstakeServiceOuterClass.internal_static_com_footyandsweep_BigInteger_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.footyandsweep.SweepstakeServiceOuterClass.internal_static_com_footyandsweep_BigInteger_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.footyandsweep.SweepstakeServiceOuterClass.BigInteger.class, com.footyandsweep.SweepstakeServiceOuterClass.BigInteger.Builder.class);
-    }
-
-    public static final int VALUE_FIELD_NUMBER = 1;
-    private com.google.protobuf.ByteString value_;
-    /**
-     * <code>bytes value = 1;</code>
-     */
-    public com.google.protobuf.ByteString getValue() {
-      return value_;
-    }
-
-    private byte memoizedIsInitialized = -1;
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (!value_.isEmpty()) {
-        output.writeBytes(1, value_);
-      }
-      unknownFields.writeTo(output);
-    }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (!value_.isEmpty()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(1, value_);
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof com.footyandsweep.SweepstakeServiceOuterClass.BigInteger)) {
-        return super.equals(obj);
-      }
-      com.footyandsweep.SweepstakeServiceOuterClass.BigInteger other = (com.footyandsweep.SweepstakeServiceOuterClass.BigInteger) obj;
-
-      boolean result = true;
-      result = result && getValue()
-          .equals(other.getValue());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + VALUE_FIELD_NUMBER;
-      hash = (53 * hash) + getValue().hashCode();
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static com.footyandsweep.SweepstakeServiceOuterClass.BigInteger parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.footyandsweep.SweepstakeServiceOuterClass.BigInteger parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static com.footyandsweep.SweepstakeServiceOuterClass.BigInteger parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.footyandsweep.SweepstakeServiceOuterClass.BigInteger parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static com.footyandsweep.SweepstakeServiceOuterClass.BigInteger parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.footyandsweep.SweepstakeServiceOuterClass.BigInteger parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static com.footyandsweep.SweepstakeServiceOuterClass.BigInteger parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static com.footyandsweep.SweepstakeServiceOuterClass.BigInteger parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static com.footyandsweep.SweepstakeServiceOuterClass.BigInteger parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static com.footyandsweep.SweepstakeServiceOuterClass.BigInteger parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static com.footyandsweep.SweepstakeServiceOuterClass.BigInteger parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static com.footyandsweep.SweepstakeServiceOuterClass.BigInteger parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(com.footyandsweep.SweepstakeServiceOuterClass.BigInteger prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * Protobuf type {@code com.footyandsweep.BigInteger}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.footyandsweep.BigInteger)
-        com.footyandsweep.SweepstakeServiceOuterClass.BigIntegerOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return com.footyandsweep.SweepstakeServiceOuterClass.internal_static_com_footyandsweep_BigInteger_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return com.footyandsweep.SweepstakeServiceOuterClass.internal_static_com_footyandsweep_BigInteger_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                com.footyandsweep.SweepstakeServiceOuterClass.BigInteger.class, com.footyandsweep.SweepstakeServiceOuterClass.BigInteger.Builder.class);
-      }
-
-      // Construct using com.footyandsweep.SweepstakeServiceOuterClass.BigInteger.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        value_ = com.google.protobuf.ByteString.EMPTY;
-
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return com.footyandsweep.SweepstakeServiceOuterClass.internal_static_com_footyandsweep_BigInteger_descriptor;
-      }
-
-      @java.lang.Override
-      public com.footyandsweep.SweepstakeServiceOuterClass.BigInteger getDefaultInstanceForType() {
-        return com.footyandsweep.SweepstakeServiceOuterClass.BigInteger.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public com.footyandsweep.SweepstakeServiceOuterClass.BigInteger build() {
-        com.footyandsweep.SweepstakeServiceOuterClass.BigInteger result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public com.footyandsweep.SweepstakeServiceOuterClass.BigInteger buildPartial() {
-        com.footyandsweep.SweepstakeServiceOuterClass.BigInteger result = new com.footyandsweep.SweepstakeServiceOuterClass.BigInteger(this);
-        result.value_ = value_;
-        onBuilt();
-        return result;
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return (Builder) super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.footyandsweep.SweepstakeServiceOuterClass.BigInteger) {
-          return mergeFrom((com.footyandsweep.SweepstakeServiceOuterClass.BigInteger)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(com.footyandsweep.SweepstakeServiceOuterClass.BigInteger other) {
-        if (other == com.footyandsweep.SweepstakeServiceOuterClass.BigInteger.getDefaultInstance()) return this;
-        if (other.getValue() != com.google.protobuf.ByteString.EMPTY) {
-          setValue(other.getValue());
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        com.footyandsweep.SweepstakeServiceOuterClass.BigInteger parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (com.footyandsweep.SweepstakeServiceOuterClass.BigInteger) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-
-      private com.google.protobuf.ByteString value_ = com.google.protobuf.ByteString.EMPTY;
-      /**
-       * <code>bytes value = 1;</code>
-       */
-      public com.google.protobuf.ByteString getValue() {
-        return value_;
-      }
-      /**
-       * <code>bytes value = 1;</code>
-       */
-      public Builder setValue(com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        value_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>bytes value = 1;</code>
-       */
-      public Builder clearValue() {
-        
-        value_ = getDefaultInstance().getValue();
-        onChanged();
-        return this;
-      }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:com.footyandsweep.BigInteger)
-    }
-
-    // @@protoc_insertion_point(class_scope:com.footyandsweep.BigInteger)
-    private static final com.footyandsweep.SweepstakeServiceOuterClass.BigInteger DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new com.footyandsweep.SweepstakeServiceOuterClass.BigInteger();
-    }
-
-    public static com.footyandsweep.SweepstakeServiceOuterClass.BigInteger getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<BigInteger>
-        PARSER = new com.google.protobuf.AbstractParser<BigInteger>() {
-      @java.lang.Override
-      public BigInteger parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new BigInteger(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<BigInteger> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<BigInteger> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.footyandsweep.SweepstakeServiceOuterClass.BigInteger getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -5772,16 +5333,6 @@ public final class SweepstakeServiceOuterClass {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_com_footyandsweep_Sweepstake_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_footyandsweep_BigDecimal_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_com_footyandsweep_BigDecimal_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_footyandsweep_BigInteger_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_com_footyandsweep_BigInteger_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_com_footyandsweep_JoinCode_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -5816,40 +5367,44 @@ public final class SweepstakeServiceOuterClass {
   static {
     java.lang.String[] descriptorData = {
       "\n\027SweepstakeService.proto\022\021com.footyands" +
-      "weep\"\234\003\n\nSweepstake\022\n\n\002id\030\001 \001(\t\022\014\n\004name\030" +
-      "\002 \001(\t\022\020\n\010joinCode\030\003 \001(\t\022\022\n\nstatusCode\030\004 " +
-      "\001(\005\022\021\n\tisPrivate\030\005 \001(\010\022\017\n\007ownerId\030\006 \001(\t\022" +
-      "\031\n\021sweepstakeEventId\030\007 \001(\t\022\032\n\022sweepstake" +
-      "TypeCode\030\010 \001(\005\022\032\n\022sweepstakeListSize\030\n \001" +
-      "(\005\022\026\n\016minimumPlayers\030\013 \001(\005\022\034\n\024maximumPla" +
-      "yerTickets\030\014 \001(\005\022\r\n\005stake\030\r \001(\001\022\034\n\024total" +
-      "NumberOfTickets\030\016 \001(\005\022?\n\016sweepstakeType\030" +
-      "\017 \001(\0162\'.com.footyandsweep.SweepstakeType" +
-      "Common\0223\n\006status\030\020 \001(\0162#.com.footyandswe" +
-      "ep.SweepstakeStatus\"K\n\nBigDecimal\022\r\n\005sca" +
-      "le\030\001 \001(\005\022.\n\007int_val\030\002 \001(\0132\035.com.footyand" +
-      "sweep.BigInteger\"\033\n\nBigInteger\022\r\n\005value\030" +
-      "\001 \001(\014\"\034\n\010JoinCode\022\020\n\010joinCode\030\001 \001(\t\"\020\n\002I" +
-      "d\022\n\n\002id\030\001 \001(\t\"e\n\003Map\0220\n\005pairs\030\001 \003(\0132!.co" +
-      "m.footyandsweep.Map.PairsEntry\032,\n\nPairsE" +
-      "ntry\022\013\n\003key\030\001 \001(\003\022\r\n\005value\030\002 \001(\t:\0028\001\"D\n\016" +
-      "SweepstakeList\0222\n\013sweepstakes\030\001 \003(\0132\035.co" +
-      "m.footyandsweep.Sweepstake*7\n\020Sweepstake" +
-      "Status\022\010\n\004OPEN\020\000\022\r\n\tALLOCATED\020\001\022\n\n\006CLOSE" +
-      "D\020\002*B\n\024SweepstakeTypeCommon\022\024\n\020Correct_S" +
-      "core_FT\020\000\022\024\n\020Correct_Score_HT\020\0012\267\003\n\021Swee" +
-      "pstakeService\022V\n\030findSweepstakeByJoinCod" +
-      "e\022\033.com.footyandsweep.JoinCode\032\035.com.foo" +
-      "tyandsweep.Sweepstake\022[\n\037findSweepstakeB" +
-      "yFootballMatchId\022\025.com.footyandsweep.Id\032" +
-      "!.com.footyandsweep.SweepstakeList\022J\n\022fi" +
-      "ndSweepstakeById\022\025.com.footyandsweep.Id\032" +
-      "\035.com.footyandsweep.Sweepstake\022K\n\022getRes" +
-      "ultHelperMap\022\035.com.footyandsweep.Sweepst" +
-      "ake\032\026.com.footyandsweep.Map\022T\n\024requestNe" +
-      "wSweepstake\022\035.com.footyandsweep.Sweepsta" +
-      "ke\032\035.com.footyandsweep.Sweepstakeb\006proto" +
-      "3"
+      "weep\032\037google/protobuf/timestamp.proto\"\231\005" +
+      "\n\nSweepstake\022\n\n\002id\030\001 \001(\t\022\014\n\004name\030\002 \001(\t\022\020" +
+      "\n\010joinCode\030\003 \001(\t\022\022\n\nstatusCode\030\004 \001(\005\022\021\n\t" +
+      "isPrivate\030\005 \001(\010\022\017\n\007ownerId\030\006 \001(\t\022\031\n\021swee" +
+      "pstakeEventId\030\007 \001(\t\022\032\n\022sweepstakeTypeCod" +
+      "e\030\010 \001(\005\022\032\n\022sweepstakeListSize\030\n \001(\005\022\026\n\016m" +
+      "inimumPlayers\030\013 \001(\005\022\034\n\024maximumPlayerTick" +
+      "ets\030\014 \001(\005\022\r\n\005stake\030\r \001(\001\022\034\n\024totalNumberO" +
+      "fTickets\030\016 \001(\005\022?\n\016sweepstakeType\030\017 \001(\0162\'" +
+      ".com.footyandsweep.SweepstakeTypeCommon\022" +
+      "3\n\006status\030\020 \001(\0162#.com.footyandsweep.Swee" +
+      "pstakeStatus\022\025\n\rnumberOfRange\030\021 \001(\005\022\023\n\013n" +
+      "umberOfMax\030\022 \001(\005\022\031\n\021maxNumberOfRanges\030\023 " +
+      "\001(\005\022\027\n\017correctScoreMax\030\024 \001(\003\022\023\n\013minuteRa" +
+      "nge\030\025 \001(\003\022\024\n\014includeBench\030\026 \001(\010\022!\n\031inclu" +
+      "deStartingGoalkeeper\030\027 \001(\010\022\033\n\023includeNoG" +
+      "oalScorer\030\030 \001(\010\022\027\n\017includeOwnGoals\030\031 \001(\010" +
+      "\022\027\n\017footballMatchId\030\032 \001(\t\"\034\n\010JoinCode\022\020\n" +
+      "\010joinCode\030\001 \001(\t\"\020\n\002Id\022\n\n\002id\030\001 \001(\t\"e\n\003Map" +
+      "\0220\n\005pairs\030\001 \003(\0132!.com.footyandsweep.Map." +
+      "PairsEntry\032,\n\nPairsEntry\022\013\n\003key\030\001 \001(\003\022\r\n" +
+      "\005value\030\002 \001(\t:\0028\001\"D\n\016SweepstakeList\0222\n\013sw" +
+      "eepstakes\030\001 \003(\0132\035.com.footyandsweep.Swee" +
+      "pstake*7\n\020SweepstakeStatus\022\010\n\004OPEN\020\000\022\r\n\t" +
+      "ALLOCATED\020\001\022\n\n\006CLOSED\020\002*B\n\024SweepstakeTyp" +
+      "eCommon\022\024\n\020Correct_Score_FT\020\000\022\024\n\020Correct" +
+      "_Score_HT\020\0012\267\003\n\021SweepstakeService\022V\n\030fin" +
+      "dSweepstakeByJoinCode\022\033.com.footyandswee" +
+      "p.JoinCode\032\035.com.footyandsweep.Sweepstak" +
+      "e\022[\n\037findSweepstakeByFootballMatchId\022\025.c" +
+      "om.footyandsweep.Id\032!.com.footyandsweep." +
+      "SweepstakeList\022J\n\022findSweepstakeById\022\025.c" +
+      "om.footyandsweep.Id\032\035.com.footyandsweep." +
+      "Sweepstake\022K\n\022getResultHelperMap\022\035.com.f" +
+      "ootyandsweep.Sweepstake\032\026.com.footyandsw" +
+      "eep.Map\022T\n\024requestNewSweepstake\022\035.com.fo" +
+      "otyandsweep.Sweepstake\032\035.com.footyandswe" +
+      "ep.Sweepstakeb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -5862,39 +5417,28 @@ public final class SweepstakeServiceOuterClass {
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
+          com.google.protobuf.TimestampProto.getDescriptor(),
         }, assigner);
     internal_static_com_footyandsweep_Sweepstake_descriptor =
       getDescriptor().getMessageTypes().get(0);
     internal_static_com_footyandsweep_Sweepstake_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_footyandsweep_Sweepstake_descriptor,
-        new java.lang.String[] { "Id", "Name", "JoinCode", "StatusCode", "IsPrivate", "OwnerId", "SweepstakeEventId", "SweepstakeTypeCode", "SweepstakeListSize", "MinimumPlayers", "MaximumPlayerTickets", "Stake", "TotalNumberOfTickets", "SweepstakeType", "Status", });
-    internal_static_com_footyandsweep_BigDecimal_descriptor =
-      getDescriptor().getMessageTypes().get(1);
-    internal_static_com_footyandsweep_BigDecimal_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_com_footyandsweep_BigDecimal_descriptor,
-        new java.lang.String[] { "Scale", "IntVal", });
-    internal_static_com_footyandsweep_BigInteger_descriptor =
-      getDescriptor().getMessageTypes().get(2);
-    internal_static_com_footyandsweep_BigInteger_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_com_footyandsweep_BigInteger_descriptor,
-        new java.lang.String[] { "Value", });
+        new java.lang.String[] { "Id", "Name", "JoinCode", "StatusCode", "IsPrivate", "OwnerId", "SweepstakeEventId", "SweepstakeTypeCode", "SweepstakeListSize", "MinimumPlayers", "MaximumPlayerTickets", "Stake", "TotalNumberOfTickets", "SweepstakeType", "Status", "NumberOfRange", "NumberOfMax", "MaxNumberOfRanges", "CorrectScoreMax", "MinuteRange", "IncludeBench", "IncludeStartingGoalkeeper", "IncludeNoGoalScorer", "IncludeOwnGoals", "FootballMatchId", });
     internal_static_com_footyandsweep_JoinCode_descriptor =
-      getDescriptor().getMessageTypes().get(3);
+      getDescriptor().getMessageTypes().get(1);
     internal_static_com_footyandsweep_JoinCode_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_footyandsweep_JoinCode_descriptor,
         new java.lang.String[] { "JoinCode", });
     internal_static_com_footyandsweep_Id_descriptor =
-      getDescriptor().getMessageTypes().get(4);
+      getDescriptor().getMessageTypes().get(2);
     internal_static_com_footyandsweep_Id_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_footyandsweep_Id_descriptor,
         new java.lang.String[] { "Id", });
     internal_static_com_footyandsweep_Map_descriptor =
-      getDescriptor().getMessageTypes().get(5);
+      getDescriptor().getMessageTypes().get(3);
     internal_static_com_footyandsweep_Map_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_footyandsweep_Map_descriptor,
@@ -5906,11 +5450,12 @@ public final class SweepstakeServiceOuterClass {
         internal_static_com_footyandsweep_Map_PairsEntry_descriptor,
         new java.lang.String[] { "Key", "Value", });
     internal_static_com_footyandsweep_SweepstakeList_descriptor =
-      getDescriptor().getMessageTypes().get(6);
+      getDescriptor().getMessageTypes().get(4);
     internal_static_com_footyandsweep_SweepstakeList_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_footyandsweep_SweepstakeList_descriptor,
         new java.lang.String[] { "Sweepstakes", });
+    com.google.protobuf.TimestampProto.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

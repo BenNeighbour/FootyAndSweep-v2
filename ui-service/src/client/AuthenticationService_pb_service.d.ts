@@ -1,23 +1,21 @@
 // package: com.footyandsweep
-// file: AllocationService.proto
+// file: AuthenticationService.proto
 
-import * as AllocationService_pb from "./AllocationService_pb";
-import * as SweepstakeService_pb from "./SweepstakeService_pb";
-import * as google_protobuf_empty_pb from "google-protobuf/google/protobuf/empty_pb";
+import * as AuthenticationService_pb from "./AuthenticationService_pb";
 import {grpc} from "@improbable-eng/grpc-web";
 
-type AllocationServiceallocateSweepstake = {
+type AuthenticationServicefindUserByUserId = {
   readonly methodName: string;
-  readonly service: typeof AllocationService;
+  readonly service: typeof AuthenticationService;
   readonly requestStream: false;
   readonly responseStream: false;
-  readonly requestType: typeof SweepstakeService_pb.Sweepstake;
-  readonly responseType: typeof google_protobuf_empty_pb.Empty;
+  readonly requestType: typeof AuthenticationService_pb.findUserByIdRequest;
+  readonly responseType: typeof AuthenticationService_pb.User;
 };
 
-export class AllocationService {
+export class AuthenticationService {
   static readonly serviceName: string;
-  static readonly allocateSweepstake: AllocationServiceallocateSweepstake;
+  static readonly findUserByUserId: AuthenticationServicefindUserByUserId;
 }
 
 export type ServiceError = { message: string, code: number; metadata: grpc.Metadata }
@@ -48,18 +46,18 @@ interface BidirectionalStream<ReqT, ResT> {
   on(type: 'status', handler: (status: Status) => void): BidirectionalStream<ReqT, ResT>;
 }
 
-export class AllocationServiceClient {
+export class AuthenticationServiceClient {
   readonly serviceHost: string;
 
   constructor(serviceHost: string, options?: grpc.RpcOptions);
-  allocateSweepstake(
-    requestMessage: SweepstakeService_pb.Sweepstake,
+  findUserByUserId(
+    requestMessage: AuthenticationService_pb.findUserByIdRequest,
     metadata: grpc.Metadata,
-    callback: (error: ServiceError|null, responseMessage: google_protobuf_empty_pb.Empty|null) => void
+    callback: (error: ServiceError|null, responseMessage: AuthenticationService_pb.User|null) => void
   ): UnaryResponse;
-  allocateSweepstake(
-    requestMessage: SweepstakeService_pb.Sweepstake,
-    callback: (error: ServiceError|null, responseMessage: google_protobuf_empty_pb.Empty|null) => void
+  findUserByUserId(
+    requestMessage: AuthenticationService_pb.findUserByIdRequest,
+    callback: (error: ServiceError|null, responseMessage: AuthenticationService_pb.User|null) => void
   ): UnaryResponse;
 }
 
