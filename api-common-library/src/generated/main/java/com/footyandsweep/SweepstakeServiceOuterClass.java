@@ -7,6 +7,8 @@ public final class SweepstakeServiceOuterClass {
   private SweepstakeServiceOuterClass() {}
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistryLite registry) {
+    registry.add(com.footyandsweep.SweepstakeServiceOuterClass.sweepstakeStatus);
+    registry.add(com.footyandsweep.SweepstakeServiceOuterClass.sweepstakeType);
   }
 
   public static void registerAllExtensions(
@@ -20,30 +22,30 @@ public final class SweepstakeServiceOuterClass {
   public enum SweepstakeStatus
       implements com.google.protobuf.ProtocolMessageEnum {
     /**
-     * <code>OPEN = 0;</code>
+     * <code>OPEN = 0 [(.com.footyandsweep.sweepstakeStatus) = "OPEN"];</code>
      */
     OPEN(0),
     /**
-     * <code>ALLOCATED = 1;</code>
+     * <code>ALLOCATED = 1 [(.com.footyandsweep.sweepstakeStatus) = "ALLOCATED"];</code>
      */
     ALLOCATED(1),
     /**
-     * <code>CLOSED = 2;</code>
+     * <code>CLOSED = 2 [(.com.footyandsweep.sweepstakeStatus) = "CLOSED"];</code>
      */
     CLOSED(2),
     UNRECOGNIZED(-1),
     ;
 
     /**
-     * <code>OPEN = 0;</code>
+     * <code>OPEN = 0 [(.com.footyandsweep.sweepstakeStatus) = "OPEN"];</code>
      */
     public static final int OPEN_VALUE = 0;
     /**
-     * <code>ALLOCATED = 1;</code>
+     * <code>ALLOCATED = 1 [(.com.footyandsweep.sweepstakeStatus) = "ALLOCATED"];</code>
      */
     public static final int ALLOCATED_VALUE = 1;
     /**
-     * <code>CLOSED = 2;</code>
+     * <code>CLOSED = 2 [(.com.footyandsweep.sweepstakeStatus) = "CLOSED"];</code>
      */
     public static final int CLOSED_VALUE = 2;
 
@@ -127,22 +129,22 @@ public final class SweepstakeServiceOuterClass {
   public enum SweepstakeTypeCommon
       implements com.google.protobuf.ProtocolMessageEnum {
     /**
-     * <code>Correct_Score_FT = 0;</code>
+     * <code>Correct_Score_FT = 0 [(.com.footyandsweep.sweepstakeType) = "Correct Score F/T"];</code>
      */
     Correct_Score_FT(0),
     /**
-     * <code>Correct_Score_HT = 1;</code>
+     * <code>Correct_Score_HT = 1 [(.com.footyandsweep.sweepstakeType) = "Correct Score H/T"];</code>
      */
     Correct_Score_HT(1),
     UNRECOGNIZED(-1),
     ;
 
     /**
-     * <code>Correct_Score_FT = 0;</code>
+     * <code>Correct_Score_FT = 0 [(.com.footyandsweep.sweepstakeType) = "Correct Score F/T"];</code>
      */
     public static final int Correct_Score_FT_VALUE = 0;
     /**
-     * <code>Correct_Score_HT = 1;</code>
+     * <code>Correct_Score_HT = 1 [(.com.footyandsweep.sweepstakeType) = "Correct Score H/T"];</code>
      */
     public static final int Correct_Score_HT_VALUE = 1;
 
@@ -5327,6 +5329,28 @@ public final class SweepstakeServiceOuterClass {
 
   }
 
+  public static final int SWEEPSTAKESTATUS_FIELD_NUMBER = 5000;
+  /**
+   * <code>extend .google.protobuf.EnumValueOptions { ... }</code>
+   */
+  public static final
+    com.google.protobuf.GeneratedMessage.GeneratedExtension<
+      com.google.protobuf.DescriptorProtos.EnumValueOptions,
+      java.lang.String> sweepstakeStatus = com.google.protobuf.GeneratedMessage
+          .newFileScopedGeneratedExtension(
+        java.lang.String.class,
+        null);
+  public static final int SWEEPSTAKETYPE_FIELD_NUMBER = 5001;
+  /**
+   * <code>extend .google.protobuf.EnumValueOptions { ... }</code>
+   */
+  public static final
+    com.google.protobuf.GeneratedMessage.GeneratedExtension<
+      com.google.protobuf.DescriptorProtos.EnumValueOptions,
+      java.lang.String> sweepstakeType = com.google.protobuf.GeneratedMessage
+          .newFileScopedGeneratedExtension(
+        java.lang.String.class,
+        null);
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_com_footyandsweep_Sweepstake_descriptor;
   private static final 
@@ -5367,44 +5391,49 @@ public final class SweepstakeServiceOuterClass {
   static {
     java.lang.String[] descriptorData = {
       "\n\027SweepstakeService.proto\022\021com.footyands" +
-      "weep\032\037google/protobuf/timestamp.proto\"\231\005" +
-      "\n\nSweepstake\022\n\n\002id\030\001 \001(\t\022\014\n\004name\030\002 \001(\t\022\020" +
-      "\n\010joinCode\030\003 \001(\t\022\022\n\nstatusCode\030\004 \001(\005\022\021\n\t" +
-      "isPrivate\030\005 \001(\010\022\017\n\007ownerId\030\006 \001(\t\022\031\n\021swee" +
-      "pstakeEventId\030\007 \001(\t\022\032\n\022sweepstakeTypeCod" +
-      "e\030\010 \001(\005\022\032\n\022sweepstakeListSize\030\n \001(\005\022\026\n\016m" +
-      "inimumPlayers\030\013 \001(\005\022\034\n\024maximumPlayerTick" +
-      "ets\030\014 \001(\005\022\r\n\005stake\030\r \001(\001\022\034\n\024totalNumberO" +
-      "fTickets\030\016 \001(\005\022?\n\016sweepstakeType\030\017 \001(\0162\'" +
-      ".com.footyandsweep.SweepstakeTypeCommon\022" +
-      "3\n\006status\030\020 \001(\0162#.com.footyandsweep.Swee" +
-      "pstakeStatus\022\025\n\rnumberOfRange\030\021 \001(\005\022\023\n\013n" +
-      "umberOfMax\030\022 \001(\005\022\031\n\021maxNumberOfRanges\030\023 " +
-      "\001(\005\022\027\n\017correctScoreMax\030\024 \001(\003\022\023\n\013minuteRa" +
-      "nge\030\025 \001(\003\022\024\n\014includeBench\030\026 \001(\010\022!\n\031inclu" +
-      "deStartingGoalkeeper\030\027 \001(\010\022\033\n\023includeNoG" +
-      "oalScorer\030\030 \001(\010\022\027\n\017includeOwnGoals\030\031 \001(\010" +
-      "\022\027\n\017footballMatchId\030\032 \001(\t\"\034\n\010JoinCode\022\020\n" +
-      "\010joinCode\030\001 \001(\t\"\020\n\002Id\022\n\n\002id\030\001 \001(\t\"e\n\003Map" +
-      "\0220\n\005pairs\030\001 \003(\0132!.com.footyandsweep.Map." +
-      "PairsEntry\032,\n\nPairsEntry\022\013\n\003key\030\001 \001(\003\022\r\n" +
-      "\005value\030\002 \001(\t:\0028\001\"D\n\016SweepstakeList\0222\n\013sw" +
-      "eepstakes\030\001 \003(\0132\035.com.footyandsweep.Swee" +
-      "pstake*7\n\020SweepstakeStatus\022\010\n\004OPEN\020\000\022\r\n\t" +
-      "ALLOCATED\020\001\022\n\n\006CLOSED\020\002*B\n\024SweepstakeTyp" +
-      "eCommon\022\024\n\020Correct_Score_FT\020\000\022\024\n\020Correct" +
-      "_Score_HT\020\0012\267\003\n\021SweepstakeService\022V\n\030fin" +
-      "dSweepstakeByJoinCode\022\033.com.footyandswee" +
-      "p.JoinCode\032\035.com.footyandsweep.Sweepstak" +
-      "e\022[\n\037findSweepstakeByFootballMatchId\022\025.c" +
-      "om.footyandsweep.Id\032!.com.footyandsweep." +
-      "SweepstakeList\022J\n\022findSweepstakeById\022\025.c" +
-      "om.footyandsweep.Id\032\035.com.footyandsweep." +
-      "Sweepstake\022K\n\022getResultHelperMap\022\035.com.f" +
-      "ootyandsweep.Sweepstake\032\026.com.footyandsw" +
-      "eep.Map\022T\n\024requestNewSweepstake\022\035.com.fo" +
-      "otyandsweep.Sweepstake\032\035.com.footyandswe" +
-      "ep.Sweepstakeb\006proto3"
+      "weep\032 google/protobuf/descriptor.proto\"\231" +
+      "\005\n\nSweepstake\022\n\n\002id\030\001 \001(\t\022\014\n\004name\030\002 \001(\t\022" +
+      "\020\n\010joinCode\030\003 \001(\t\022\022\n\nstatusCode\030\004 \001(\005\022\021\n" +
+      "\tisPrivate\030\005 \001(\010\022\017\n\007ownerId\030\006 \001(\t\022\031\n\021swe" +
+      "epstakeEventId\030\007 \001(\t\022\032\n\022sweepstakeTypeCo" +
+      "de\030\010 \001(\005\022\032\n\022sweepstakeListSize\030\n \001(\005\022\026\n\016" +
+      "minimumPlayers\030\013 \001(\005\022\034\n\024maximumPlayerTic" +
+      "kets\030\014 \001(\005\022\r\n\005stake\030\r \001(\001\022\034\n\024totalNumber" +
+      "OfTickets\030\016 \001(\005\022?\n\016sweepstakeType\030\017 \001(\0162" +
+      "\'.com.footyandsweep.SweepstakeTypeCommon" +
+      "\0223\n\006status\030\020 \001(\0162#.com.footyandsweep.Swe" +
+      "epstakeStatus\022\025\n\rnumberOfRange\030\021 \001(\005\022\023\n\013" +
+      "numberOfMax\030\022 \001(\005\022\031\n\021maxNumberOfRanges\030\023" +
+      " \001(\005\022\027\n\017correctScoreMax\030\024 \001(\003\022\023\n\013minuteR" +
+      "ange\030\025 \001(\003\022\024\n\014includeBench\030\026 \001(\010\022!\n\031incl" +
+      "udeStartingGoalkeeper\030\027 \001(\010\022\033\n\023includeNo" +
+      "GoalScorer\030\030 \001(\010\022\027\n\017includeOwnGoals\030\031 \001(" +
+      "\010\022\027\n\017footballMatchId\030\032 \001(\t\"\034\n\010JoinCode\022\020" +
+      "\n\010joinCode\030\001 \001(\t\"\020\n\002Id\022\n\n\002id\030\001 \001(\t\"e\n\003Ma" +
+      "p\0220\n\005pairs\030\001 \003(\0132!.com.footyandsweep.Map" +
+      ".PairsEntry\032,\n\nPairsEntry\022\013\n\003key\030\001 \001(\003\022\r" +
+      "\n\005value\030\002 \001(\t:\0028\001\"D\n\016SweepstakeList\0222\n\013s" +
+      "weepstakes\030\001 \003(\0132\035.com.footyandsweep.Swe" +
+      "epstake*\\\n\020SweepstakeStatus\022\022\n\004OPEN\020\000\032\010\302" +
+      "\270\002\004OPEN\022\034\n\tALLOCATED\020\001\032\r\302\270\002\tALLOCATED\022\026\n" +
+      "\006CLOSED\020\002\032\n\302\270\002\006CLOSED*p\n\024SweepstakeTypeC" +
+      "ommon\022+\n\020Correct_Score_FT\020\000\032\025\312\270\002\021Correct" +
+      " Score F/T\022+\n\020Correct_Score_HT\020\001\032\025\312\270\002\021Co" +
+      "rrect Score H/T2\267\003\n\021SweepstakeService\022V\n" +
+      "\030findSweepstakeByJoinCode\022\033.com.footyand" +
+      "sweep.JoinCode\032\035.com.footyandsweep.Sweep" +
+      "stake\022[\n\037findSweepstakeByFootballMatchId" +
+      "\022\025.com.footyandsweep.Id\032!.com.footyandsw" +
+      "eep.SweepstakeList\022J\n\022findSweepstakeById" +
+      "\022\025.com.footyandsweep.Id\032\035.com.footyandsw" +
+      "eep.Sweepstake\022K\n\022getResultHelperMap\022\035.c" +
+      "om.footyandsweep.Sweepstake\032\026.com.footya" +
+      "ndsweep.Map\022T\n\024requestNewSweepstake\022\035.co" +
+      "m.footyandsweep.Sweepstake\032\035.com.footyan" +
+      "dsweep.Sweepstake:<\n\020sweepstakeStatus\022!." +
+      "google.protobuf.EnumValueOptions\030\210\' \001(\t:" +
+      ":\n\016sweepstakeType\022!.google.protobuf.Enum" +
+      "ValueOptions\030\211\' \001(\tb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -5417,7 +5446,7 @@ public final class SweepstakeServiceOuterClass {
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-          com.google.protobuf.TimestampProto.getDescriptor(),
+          com.google.protobuf.DescriptorProtos.getDescriptor(),
         }, assigner);
     internal_static_com_footyandsweep_Sweepstake_descriptor =
       getDescriptor().getMessageTypes().get(0);
@@ -5455,7 +5484,15 @@ public final class SweepstakeServiceOuterClass {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_footyandsweep_SweepstakeList_descriptor,
         new java.lang.String[] { "Sweepstakes", });
-    com.google.protobuf.TimestampProto.getDescriptor();
+    sweepstakeStatus.internalInit(descriptor.getExtensions().get(0));
+    sweepstakeType.internalInit(descriptor.getExtensions().get(1));
+    com.google.protobuf.ExtensionRegistry registry =
+        com.google.protobuf.ExtensionRegistry.newInstance();
+    registry.add(com.footyandsweep.SweepstakeServiceOuterClass.sweepstakeStatus);
+    registry.add(com.footyandsweep.SweepstakeServiceOuterClass.sweepstakeType);
+    com.google.protobuf.Descriptors.FileDescriptor
+        .internalUpdateFileDescriptor(descriptor, registry);
+    com.google.protobuf.DescriptorProtos.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

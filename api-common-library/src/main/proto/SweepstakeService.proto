@@ -1,17 +1,22 @@
 syntax = "proto3";
 package com.footyandsweep;
 
-import "google/protobuf/timestamp.proto";
+import "google/protobuf/descriptor.proto";
+
+extend google.protobuf.EnumValueOptions {
+  string sweepstakeStatus = 5000;
+  string sweepstakeType = 5001;
+}
 
 enum SweepstakeStatus {
-  OPEN = 0;
-  ALLOCATED = 1;
-  CLOSED = 2;
+  OPEN = 0 [(sweepstakeStatus) = "OPEN"];
+  ALLOCATED = 1 [(sweepstakeStatus) = "ALLOCATED"];
+  CLOSED = 2 [(sweepstakeStatus) = "CLOSED"];
 }
 
 enum SweepstakeTypeCommon {
-  Correct_Score_FT = 0;
-  Correct_Score_HT = 1;
+  Correct_Score_FT = 0 [(sweepstakeType) = "Correct Score F/T"];
+  Correct_Score_HT = 1 [(sweepstakeType) = "Correct Score H/T"];
 }
 
 message Sweepstake {
