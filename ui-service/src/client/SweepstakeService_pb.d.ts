@@ -2,7 +2,7 @@
 // file: SweepstakeService.proto
 
 import * as jspb from "google-protobuf";
-import * as google_protobuf_timestamp_pb from "google-protobuf/google/protobuf/timestamp_pb";
+import * as google_protobuf_descriptor_pb from "google-protobuf/google/protobuf/descriptor_pb";
 
 export class Sweepstake extends jspb.Message {
   getId(): string;
@@ -200,6 +200,10 @@ export namespace SweepstakeList {
     sweepstakesList: Array<Sweepstake.AsObject>,
   }
 }
+
+  export const sweepstakeStatus: jspb.ExtensionFieldInfo<string>;
+
+  export const sweepstakeType: jspb.ExtensionFieldInfo<string>;
 
 export interface SweepstakeStatusMap {
   OPEN: 0;

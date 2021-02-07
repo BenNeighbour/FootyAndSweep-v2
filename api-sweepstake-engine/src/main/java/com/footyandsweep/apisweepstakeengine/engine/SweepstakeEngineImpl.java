@@ -19,6 +19,8 @@ package com.footyandsweep.apisweepstakeengine.engine;
 import com.footyandsweep.apicommonlibrary.cqrs.sweepstake.delete.DeleteAllSweepstakeRelationsCommand;
 import com.footyandsweep.apicommonlibrary.cqrs.user.LinkParticipantToSweepstakeCommand;
 import com.footyandsweep.apicommonlibrary.exceptions.ParticipantAlreadyJoinedException;
+import com.footyandsweep.apicommonlibrary.exceptions.SweepstakeDoesNotExistException;
+import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apisweepstakeengine.dao.ParticipantIdDao;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
 import com.footyandsweep.apisweepstakeengine.engine.saga.createSweepstake.CreateSweepstakeSagaData;
@@ -83,6 +85,18 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
   }
 
   @Override
+  public void updateSweepstakeStatus(String sweepstakeId, SweepstakeCommon.SweepstakeStatus status) {
+    try {
+      Sweepstake sweepstake = sweepstakeDao.findSweepstakeById(sweepstakeId);
+      sweepstake.setStatus(status);
+
+      sweepstakeDao.saveAndFlush(sweepstake);
+    } catch (NullPointerException e) {
+      throw new SweepstakeDoesNotExistException();
+    }
+  }
+
+  @Override
   public CommandWithDestination linkParticipantToSweepstake(
           String sweepstakeId, String participantId) {
     /* Do the remote service invocation here */
@@ -121,4 +135,6 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
     assert participantIds != null;
     participantIds.forEach(participantIdDao::delete);
   }
+
+
 }

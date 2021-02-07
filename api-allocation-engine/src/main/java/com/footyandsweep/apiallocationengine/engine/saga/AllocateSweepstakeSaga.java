@@ -17,6 +17,7 @@
 package com.footyandsweep.apiallocationengine.engine.saga;
 
 import com.footyandsweep.apiallocationengine.engine.AllocationEngine;
+import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import io.eventuate.tram.sagas.orchestration.SagaDefinition;
 import io.eventuate.tram.sagas.simpledsl.SimpleSaga;
 import org.springframework.stereotype.Component;
@@ -33,19 +34,19 @@ public class AllocateSweepstakeSaga implements SimpleSaga<AllocateSweepstakeSaga
     @Override
     public SagaDefinition<AllocateSweepstakeSagaData> getSagaDefinition() {
         return step()
+                .invokeParticipant(sagaData -> allocationEngine.updateSweepstakeStatus(sagaData.getSweepstake().getId(), SweepstakeCommon.SweepstakeStatus.ALLOCATED))
+                .withCompensation(sagaData -> allocationEngine.updateSweepstakeStatus(sagaData.getSweepstake().getId(), SweepstakeCommon.SweepstakeStatus.OPEN))
+                .step()
                 .invokeLocal(allocationEngine::allocateSweepstakeTickets)
                 .withCompensation(sagaData -> {
                 })
                 .step()
                 .invokeParticipant(sagaData -> allocationEngine.allocateTickets(sagaData.getTickets()))
-                .step()
-                .invokeParticipant(sagaData -> allocationEngine.updateSweepstakeStatus(sagaData.getSweepstake().getId()))
                 .build();
     }
 
     @Override
     public void onSagaCompletedSuccessfully(String sagaId, AllocateSweepstakeSagaData sagaData) {
-        System.out.println("Ayo, fam dat allocate thing got completed");
-        System.out.println(sagaId);
+        System.out.println("Allocate Sweepstake Saga: " + sagaId + " has been completed successfully");
     }
 }

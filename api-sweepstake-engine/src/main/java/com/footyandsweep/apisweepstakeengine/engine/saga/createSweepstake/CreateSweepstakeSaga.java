@@ -80,7 +80,6 @@ public class CreateSweepstakeSaga implements SimpleSaga<CreateSweepstakeSagaData
 
     @Override
     public void onSagaCompletedSuccessfully(String sagaId, CreateSweepstakeSagaData sagaData) {
-        System.out.println("Ayo, fam dat create thing got completed");
-    System.out.println(sagaId);
+        System.out.println("Create Sweepstake Saga: " + sagaId + " has been completed successfully");
     }
 }

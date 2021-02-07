@@ -16,6 +16,7 @@
 
 package com.footyandsweep.apisweepstakeengine.engine;
 
+import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apisweepstakeengine.engine.saga.createSweepstake.CreateSweepstakeSagaData;
 import com.footyandsweep.apisweepstakeengine.engine.saga.deleteSweepstake.DeleteSweepstakeSagaData;
 import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
@@ -39,5 +40,7 @@ public interface SweepstakeEngine {
   void deleteAllSweepstakeRelationsBySweepstakeId(String sweepstakeId);
 
   CommandWithDestination linkParticipantToSweepstake(String sweepstakeId, String participantId);
+
+  void updateSweepstakeStatus(String sweepstakeId, SweepstakeCommon.SweepstakeStatus status);
 
 }

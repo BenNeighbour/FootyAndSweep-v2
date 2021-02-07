@@ -20,7 +20,11 @@ import com.footyandsweep.apisweepstakeengine.dao.ParticipantIdDao;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
 import com.footyandsweep.apisweepstakeengine.engine.SweepstakeEngine;
 import com.footyandsweep.apisweepstakeengine.engine.SweepstakeEngineImpl;
+import com.footyandsweep.apisweepstakeengine.engine.handlers.SweepstakeCommandHandler;
+import io.eventuate.tram.commands.consumer.CommandDispatcher;
+import io.eventuate.tram.sagas.participant.SagaCommandDispatcherFactory;
 import io.eventuate.tram.sagas.spring.orchestration.SagaOrchestratorConfiguration;
+import io.eventuate.tram.sagas.spring.participant.SagaParticipantConfiguration;
 import io.eventuate.tram.spring.optimisticlocking.OptimisticLockingDecoratorConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -29,7 +33,7 @@ import org.springframework.context.annotation.Import;
 
 @Configuration
 @EnableAutoConfiguration
-@Import({SagaOrchestratorConfiguration.class, OptimisticLockingDecoratorConfiguration.class})
+@Import({SagaOrchestratorConfiguration.class, OptimisticLockingDecoratorConfiguration.class, SagaParticipantConfiguration.class})
 public class SweepstakeEngineConfiguration {
 
   @Bean
@@ -38,4 +42,15 @@ public class SweepstakeEngineConfiguration {
     return new SweepstakeEngineImpl(sweepstakeDao, participantIdDao);
   }
 
+  @Bean
+  public SweepstakeCommandHandler sweepstakeCommandHandler(SweepstakeEngine sweepstakeEngine) {
+    return new SweepstakeCommandHandler(sweepstakeEngine);
+  }
+
+  @Bean
+  public CommandDispatcher consumerCommandDispatcher(
+          SweepstakeCommandHandler target, SagaCommandDispatcherFactory sagaCommandDispatcherFactory) {
+    return sagaCommandDispatcherFactory.make(
+            "sweepstake-engine-events-dispatcher", target.commandHandlerDefinitions());
+  }
 }

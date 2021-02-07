@@ -17,6 +17,7 @@
 package com.footyandsweep.apiallocationengine.engine;
 
 import com.footyandsweep.apiallocationengine.engine.saga.AllocateSweepstakeSagaData;
+import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
 import io.eventuate.tram.commands.consumer.CommandWithDestination;
 
@@ -29,5 +30,5 @@ public interface AllocationEngine {
 
   CommandWithDestination allocateTickets(List<TicketCommon> tickets);
 
-  CommandWithDestination updateSweepstakeStatus(String sweepstakeId);
+  CommandWithDestination updateSweepstakeStatus(String sweepstakeId, SweepstakeCommon.SweepstakeStatus status);
 }

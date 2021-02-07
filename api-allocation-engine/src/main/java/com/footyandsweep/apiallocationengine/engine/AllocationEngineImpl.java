@@ -262,8 +262,8 @@ public class AllocationEngineImpl implements AllocationEngine {
   }
 
   @Override
-  public CommandWithDestination updateSweepstakeStatus(String sweepstakeId) {
-    return send(new UpdateSweepstakeStatusCommand(sweepstakeId, SweepstakeCommon.SweepstakeStatus.ALLOCATED))
+  public CommandWithDestination updateSweepstakeStatus(String sweepstakeId, SweepstakeCommon.SweepstakeStatus status) {
+    return send(new UpdateSweepstakeStatusCommand(sweepstakeId, status))
             .to("sweepstake-engine-events")
             .build();
   }

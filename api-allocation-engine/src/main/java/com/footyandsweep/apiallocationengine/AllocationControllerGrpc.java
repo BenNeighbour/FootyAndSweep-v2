@@ -48,7 +48,7 @@ public class AllocationControllerGrpc extends AllocationServiceGrpc.AllocationSe
       AllocateSweepstakeSagaData data = new AllocateSweepstakeSagaData();
       data.setSweepstake(sweepstake);
 
-      new Thread(() -> sagaInstanceFactory.create(allocateSweepstakeSaga, data)).start();
+      sagaInstanceFactory.create(allocateSweepstakeSaga, data);
 
       responseObserver.onNext(Empty.newBuilder().build());
       responseObserver.onCompleted();
