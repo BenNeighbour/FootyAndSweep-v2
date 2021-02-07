@@ -19,6 +19,7 @@ package com.footyandsweep.apiallocationengine.engine;
 import com.footyandsweep.apiallocationengine.dao.AllocationDao;
 import com.footyandsweep.apiallocationengine.engine.saga.AllocateSweepstakeSagaData;
 import com.footyandsweep.apiallocationengine.model.Allocation;
+import com.footyandsweep.apicommonlibrary.cqrs.sweepstake.update.UpdateSweepstakeStatusCommand;
 import com.footyandsweep.apicommonlibrary.cqrs.ticket.AllocateTicketsCommand;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeTypeCommon;
@@ -150,13 +151,13 @@ public class AllocationEngineImpl implements AllocationEngine {
       /* Meanwhile there are still users left to allocate */
       while (!userIdAllocationList.isEmpty()) {
         /* Get the first user id of the list, then remove so it does not get allocated again during this round */
-        String userId = userIdAllocationList.get(0);
+        String userId = userIdAllocationList.remove(0);
 
         /* Obtain the tickets for that user in the user tickets map */
         List<TicketCommon> userTickets = userTicketsMap.get(userId);
 
         /* Checking if the tickets are void/null */
-        if (userTickets.isEmpty()) {
+        if (userTickets == null || userTickets.isEmpty()) {
           /* Remove those tickets from their maps */
           userTicketsMap.remove(userId);
           participantIds.remove(userId);
@@ -167,9 +168,11 @@ public class AllocationEngineImpl implements AllocationEngine {
           /* Otherwise, get the current ticket (popping each one off each time), and run it through the allocateTicket function */
           TicketCommon ticket = userTickets.remove(0);
 
+          System.out.println("Allocate User: " + userId + " Ticket: " + ticket);
+
           /* Logs here */
           sagaData.getTickets().add(this.allocateTicket(
-              sweepstakeResultMap, sweepstakeResultIdList, ticket, userTickets.isEmpty()));
+              sweepstakeResultMap, sweepstakeResultIdList, ticket));
         }
       }
 
@@ -181,8 +184,7 @@ public class AllocationEngineImpl implements AllocationEngine {
   private TicketCommon allocateTicket(
       Map<Integer, String> sweepstakeResultMap,
       List<Integer> sweepstakeResultIdList,
-      TicketCommon ticket,
-      boolean isLastTicket) {
+      TicketCommon ticket) {
     try {
       /* Creating a new instance of the allocation object that is about to be persisted */
       Allocation allocation = new Allocation();
@@ -256,6 +258,13 @@ public class AllocationEngineImpl implements AllocationEngine {
   public CommandWithDestination allocateTickets(List<TicketCommon> tickets) {
     return send(new AllocateTicketsCommand(tickets))
             .to("ticket-engine-events")
+            .build();
+  }
+
+  @Override
+  public CommandWithDestination updateSweepstakeStatus(String sweepstakeId) {
+    return send(new UpdateSweepstakeStatusCommand(sweepstakeId, SweepstakeCommon.SweepstakeStatus.ALLOCATED))
+            .to("sweepstake-engine-events")
             .build();
   }
 }

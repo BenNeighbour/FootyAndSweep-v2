@@ -34,9 +34,18 @@ public class AllocateSweepstakeSaga implements SimpleSaga<AllocateSweepstakeSaga
     public SagaDefinition<AllocateSweepstakeSagaData> getSagaDefinition() {
         return step()
                 .invokeLocal(allocationEngine::allocateSweepstakeTickets)
-                .withCompensation(sagaData -> {})
+                .withCompensation(sagaData -> {
+                })
                 .step()
                 .invokeParticipant(sagaData -> allocationEngine.allocateTickets(sagaData.getTickets()))
+                .step()
+                .invokeParticipant(sagaData -> allocationEngine.updateSweepstakeStatus(sagaData.getSweepstake().getId()))
                 .build();
+    }
+
+    @Override
+    public void onSagaCompletedSuccessfully(String sagaId, AllocateSweepstakeSagaData sagaData) {
+        System.out.println("Ayo, fam dat allocate thing got completed");
+        System.out.println(sagaId);
     }
 }

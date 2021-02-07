@@ -14,20 +14,20 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apiallocationengine.engine;
+package com.footyandsweep.apicommonlibrary.cqrs.sweepstake.update;
 
-import com.footyandsweep.apiallocationengine.engine.saga.AllocateSweepstakeSagaData;
-import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
-import io.eventuate.tram.commands.consumer.CommandWithDestination;
+import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
+import io.eventuate.tram.commands.common.Command;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.util.List;
-import java.util.UUID;
-
-public interface AllocationEngine {
-
-  void allocateSweepstakeTickets(AllocateSweepstakeSagaData sagaData);
-
-  CommandWithDestination allocateTickets(List<TicketCommon> tickets);
-
-  CommandWithDestination updateSweepstakeStatus(String sweepstakeId);
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+public class UpdateSweepstakeStatusCommand implements Command {
+    private String sweepstakeId;
+    private SweepstakeCommon.SweepstakeStatus status;
 }

@@ -122,4 +122,9 @@ public class SweepstakeControllerTest {
 
     return customMap;
   }
+
+  @GetMapping("/by/id/{sweepstakeId}")
+  public SweepstakeCommon findSweepstakeById(@PathVariable("sweepstakeId") String sweepstakeId) {
+    return sweepstakeDao.findSweepstakeById(sweepstakeId);
+  }
 }

@@ -77,4 +77,10 @@ public class CreateSweepstakeSaga implements SimpleSaga<CreateSweepstakeSagaData
 
         .build();
   }
+
+    @Override
+    public void onSagaCompletedSuccessfully(String sagaId, CreateSweepstakeSagaData sagaData) {
+        System.out.println("Ayo, fam dat create thing got completed");
+    System.out.println(sagaId);
+    }
 }
