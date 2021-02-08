@@ -72,6 +72,8 @@ public class ResultEngineImpl implements ResultEngine {
 
     SweepstakeServiceOuterClass.SweepstakeList sweepstakesWithResult = clientStub.findSweepstakeByFootballMatchId(SweepstakeServiceOuterClass.Id.newBuilder().setId(footballMatchResult.getFootballMatchId().toString()).build());
 
+    channel.shutdown();
+
     /* For each sweepstake, process the tickets for it */
     sweepstakesWithResult.getSweepstakesList().forEach(
             sweepstake -> {

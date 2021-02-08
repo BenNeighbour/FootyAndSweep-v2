@@ -56,6 +56,8 @@ public class ResultSchedulerConfig {
 
                           ResultServiceGrpc.ResultServiceBlockingStub clientStub = ResultServiceGrpc.newBlockingStub(channel);
                           clientStub.checkForSweepstakeResults(Empty.newBuilder().build());
+
+                          channel.shutdown();
                       });
   }
 }

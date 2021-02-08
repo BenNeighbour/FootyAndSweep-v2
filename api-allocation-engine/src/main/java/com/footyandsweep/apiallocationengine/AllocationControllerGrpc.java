@@ -25,6 +25,7 @@ import com.footyandsweep.apicommonlibrary.helper.ProtoConverterUtils;
 import com.footyandsweep.apicommonlibrary.model.football.FootballMatchSweepstakeCommon;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.google.protobuf.Empty;
+import io.eventuate.tram.sagas.orchestration.SagaInstance;
 import io.eventuate.tram.sagas.orchestration.SagaInstanceFactory;
 import io.grpc.stub.StreamObserver;
 
@@ -48,7 +49,7 @@ public class AllocationControllerGrpc extends AllocationServiceGrpc.AllocationSe
       AllocateSweepstakeSagaData data = new AllocateSweepstakeSagaData();
       data.setSweepstake(sweepstake);
 
-      sagaInstanceFactory.create(allocateSweepstakeSaga, data);
+      SagaInstance instance = sagaInstanceFactory.create(allocateSweepstakeSaga, data);
 
       responseObserver.onNext(Empty.newBuilder().build());
       responseObserver.onCompleted();

@@ -45,7 +45,7 @@ public class AllocationSchedulerConfig {
   }
 
   /* Scheduled for every 2 minutes */
-  @Scheduled(fixedRate = 60000)
+  @Scheduled(fixedRate = 240000)
   public void checkAndAllocateSweepstakes() {
       /* Logging the periodic check */
       log.info("Periodic check for unallocated sweepstakes at {}", dateFormat.format(new
@@ -55,6 +55,7 @@ public class AllocationSchedulerConfig {
       sweepstakeDao
               .findAllSweepstakesByStatus(SweepstakeCommon.SweepstakeStatus.OPEN)
               .stream()
+              /* TODO: CHECK IF SWEEPSTAKE TICKETS HAVE ALLOCATION IDS */
               .filter(sweepstake -> sweepstake instanceof FootballMatchSweepstake)
               .forEach(
                       sweepstake -> {
@@ -69,6 +70,8 @@ public class AllocationSchedulerConfig {
                           ProtoConverterUtils.convertToProto(grpcSweepstake, sweepstake);
 
                           clientStub.allocateSweepstake(grpcSweepstake.build());
+
+                          channel.shutdown();
                       });
   }
 }

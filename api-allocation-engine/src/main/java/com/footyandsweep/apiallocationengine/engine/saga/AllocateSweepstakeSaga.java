@@ -17,6 +17,7 @@
 package com.footyandsweep.apiallocationengine.engine.saga;
 
 import com.footyandsweep.apiallocationengine.engine.AllocationEngine;
+import com.footyandsweep.apicommonlibrary.cqrs.sweepstake.update.UpdateSweepstakeStatusFailure;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import io.eventuate.tram.sagas.orchestration.SagaDefinition;
 import io.eventuate.tram.sagas.simpledsl.SimpleSaga;
@@ -34,12 +35,12 @@ public class AllocateSweepstakeSaga implements SimpleSaga<AllocateSweepstakeSaga
     @Override
     public SagaDefinition<AllocateSweepstakeSagaData> getSagaDefinition() {
         return step()
-                .invokeParticipant(sagaData -> allocationEngine.updateSweepstakeStatus(sagaData.getSweepstake().getId(), SweepstakeCommon.SweepstakeStatus.ALLOCATED))
-                .withCompensation(sagaData -> allocationEngine.updateSweepstakeStatus(sagaData.getSweepstake().getId(), SweepstakeCommon.SweepstakeStatus.OPEN))
-                .step()
                 .invokeLocal(allocationEngine::allocateSweepstakeTickets)
                 .withCompensation(sagaData -> {
                 })
+                .step()
+                .invokeParticipant(sagaData -> allocationEngine.updateSweepstakeStatus(sagaData.getSweepstake().getId(), SweepstakeCommon.SweepstakeStatus.ALLOCATED))
+                .onReply(UpdateSweepstakeStatusFailure.class, (sagaData, failure) -> allocationEngine.updateSweepstakeStatus(sagaData.getSweepstake().getId(), SweepstakeCommon.SweepstakeStatus.OPEN))
                 .step()
                 .invokeParticipant(sagaData -> allocationEngine.allocateTickets(sagaData.getTickets()))
                 .build();

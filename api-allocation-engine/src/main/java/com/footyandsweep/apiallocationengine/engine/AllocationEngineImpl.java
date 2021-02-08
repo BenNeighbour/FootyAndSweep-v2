@@ -143,6 +143,9 @@ public class AllocationEngineImpl implements AllocationEngine {
     /* List that stores user ids to keep track of what user we are on - it's ordered and gets refilled */
     List<String> userIdAllocationList = new ArrayList<>();
 
+    /* Modified Tickets */
+    List<TicketCommon> modifiedTickets = new ArrayList<>();
+
     /* Iterating over the user tickets map */
     while (!userTicketsMap.isEmpty()) {
       /* Refill the user allocation list */
@@ -150,6 +153,7 @@ public class AllocationEngineImpl implements AllocationEngine {
 
       /* Meanwhile there are still users left to allocate */
       while (!userIdAllocationList.isEmpty()) {
+
         /* Get the first user id of the list, then remove so it does not get allocated again during this round */
         String userId = userIdAllocationList.remove(0);
 
@@ -170,11 +174,12 @@ public class AllocationEngineImpl implements AllocationEngine {
 
           System.out.println("Allocate User: " + userId + " Ticket: " + ticket);
 
-          /* Logs here */
-          sagaData.getTickets().add(this.allocateTicket(
+          modifiedTickets.add(this.allocateTicket(
               sweepstakeResultMap, sweepstakeResultIdList, ticket));
         }
       }
+
+      sagaData.setTickets(modifiedTickets);
 
       /* Reverse the order of the 'random' shuffled user id list and go over it all again until there is nothing left to allocate */
       Collections.reverse(participantIds);

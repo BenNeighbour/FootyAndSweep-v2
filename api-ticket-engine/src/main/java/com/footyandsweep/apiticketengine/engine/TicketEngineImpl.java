@@ -24,11 +24,13 @@ import com.footyandsweep.apiticketengine.dao.TicketDao;
 import com.footyandsweep.apiticketengine.engine.saga.BuyTicketSagaData;
 import com.footyandsweep.apiticketengine.model.Ticket;
 import io.eventuate.tram.commands.consumer.CommandWithDestination;
+import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -144,8 +146,11 @@ public class TicketEngineImpl implements TicketEngine {
   }
 
   @Override
-  public void modifyTickets(Ticket ticket) {
-    ticketDao.saveAndFlush(ticket);
+  public void modifyTickets(TicketCommon ticket) throws InvocationTargetException, IllegalAccessException {
+    Ticket persistingTicket = new Ticket();
+
+    BeanUtils.copyProperties(persistingTicket, ticket);
+    ticketDao.saveAndFlush(persistingTicket);
   }
 
   @Override

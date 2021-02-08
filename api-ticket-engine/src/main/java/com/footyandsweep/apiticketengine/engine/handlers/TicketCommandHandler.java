@@ -17,12 +17,10 @@
 package com.footyandsweep.apiticketengine.engine.handlers;
 
 import com.footyandsweep.apicommonlibrary.cqrs.ticket.AllocateTicketsCommand;
+import com.footyandsweep.apicommonlibrary.cqrs.ticket.AllocateTicketsFailure;
 import com.footyandsweep.apicommonlibrary.cqrs.ticket.TicketsAllocated;
-import com.footyandsweep.apicommonlibrary.cqrs.user.UpdateUserBalanceFailure;
-import com.footyandsweep.apicommonlibrary.exceptions.InsufficientCreditsException;
-import com.footyandsweep.apicommonlibrary.exceptions.UserDoesNotExistException;
+import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
 import com.footyandsweep.apiticketengine.engine.TicketEngine;
-import com.footyandsweep.apiticketengine.model.Ticket;
 import io.eventuate.tram.commands.consumer.CommandHandlers;
 import io.eventuate.tram.commands.consumer.CommandMessage;
 import io.eventuate.tram.messaging.common.Message;
@@ -48,11 +46,11 @@ public class TicketCommandHandler {
   private Message allocateTickets(CommandMessage<AllocateTicketsCommand> allocateTicketsCommand) {
     try {
       AllocateTicketsCommand command = allocateTicketsCommand.getCommand();
-      command.getTickets().forEach(ticket -> ticketEngine.modifyTickets((Ticket) ticket));
+      for (TicketCommon ticket : command.getTickets()) ticketEngine.modifyTickets(ticket);
 
       return withSuccess(new TicketsAllocated());
-    } catch (UserDoesNotExistException | InsufficientCreditsException e) {
-      return withFailure(new UpdateUserBalanceFailure());
+    } catch (Exception e) {
+      return withFailure(new AllocateTicketsFailure());
     }
   }
 }
