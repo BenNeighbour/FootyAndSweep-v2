@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apisweepstakeengine;
+package com.footyandsweep.apisweepstakeengine.grpc.controller;
 
 import com.footyandsweep.SweepstakeServiceGrpc;
 import com.footyandsweep.SweepstakeServiceOuterClass;
@@ -22,7 +22,7 @@ import com.footyandsweep.apisweepstakeengine.dao.FootballMatchDao;
 import com.footyandsweep.apisweepstakeengine.dao.ParticipantIdDao;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
 import com.footyandsweep.apisweepstakeengine.engine.SweepstakeEngineImpl;
-import com.footyandsweep.apisweepstakeengine.grpc.GrpcService;
+import com.footyandsweep.apisweepstakeengine.grpc.util.GrpcService;
 import com.footyandsweep.apisweepstakeengine.helper.ResultHelper;
 import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
 import com.google.rpc.Code;
@@ -34,7 +34,6 @@ import org.apache.commons.beanutils.BeanUtils;
 import javax.validation.ValidationException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import java.util.UUID;
 
 @GrpcService
 public class SweepstakeControllerGrpc extends SweepstakeServiceGrpc.SweepstakeServiceImplBase {

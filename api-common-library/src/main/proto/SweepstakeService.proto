@@ -2,6 +2,7 @@ syntax = "proto3";
 package com.footyandsweep;
 
 import "google/protobuf/descriptor.proto";
+import "Common.proto";
 
 extend google.protobuf.EnumValueOptions {
   string sweepstakeStatus = 5000;
@@ -51,14 +52,6 @@ message JoinCode {
   string joinCode = 1;
 }
 
-message Id {
-  string id = 1;
-}
-
-message Map {
-  map<int64, string> pairs = 1;
-}
-
 message SweepstakeList {
   repeated Sweepstake sweepstakes = 1;
 }
@@ -69,4 +62,5 @@ service SweepstakeService {
   rpc findSweepstakeById(Id) returns (Sweepstake);
   rpc getResultHelperMap(Sweepstake) returns (Map);
   rpc requestNewSweepstake(Sweepstake) returns (Sweepstake);
+  rpc getAllSweepstakeParticipants(Id) returns (Ids);
 }

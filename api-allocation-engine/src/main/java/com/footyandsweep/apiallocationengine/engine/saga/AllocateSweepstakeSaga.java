@@ -37,6 +37,7 @@ public class AllocateSweepstakeSaga implements SimpleSaga<AllocateSweepstakeSaga
         return step()
                 .invokeLocal(allocationEngine::allocateSweepstakeTickets)
                 .withCompensation(sagaData -> {
+                    /* TODO */
                 })
                 .step()
                 .invokeParticipant(sagaData -> allocationEngine.updateSweepstakeStatus(sagaData.getSweepstake().getId(), SweepstakeCommon.SweepstakeStatus.ALLOCATED))

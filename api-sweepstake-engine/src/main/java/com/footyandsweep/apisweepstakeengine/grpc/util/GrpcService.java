@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apiallocationengine.grpc;
+package com.footyandsweep.apisweepstakeengine.grpc.util;
 
 import io.grpc.BindableService;
 import org.springframework.stereotype.Service;

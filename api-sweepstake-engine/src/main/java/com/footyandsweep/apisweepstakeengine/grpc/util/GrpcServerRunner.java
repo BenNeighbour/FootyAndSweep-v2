@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apisweepstakeengine.grpc;
+package com.footyandsweep.apisweepstakeengine.grpc.util;
 
 import io.grpc.BindableService;
 import io.grpc.Server;

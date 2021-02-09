@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apiallocationengine.grpc;
+package com.footyandsweep.apiallocationengine.grpc.util;
 
 import io.grpc.BindableService;
 import io.grpc.Server;

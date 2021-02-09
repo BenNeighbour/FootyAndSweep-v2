@@ -16,11 +16,15 @@
 
 package com.footyandsweep.apiallocationengine.config;
 
+import com.footyandsweep.SweepstakeServiceGrpc;
 import com.footyandsweep.apiallocationengine.dao.AllocationDao;
 import com.footyandsweep.apiallocationengine.engine.AllocationEngine;
 import com.footyandsweep.apiallocationengine.engine.AllocationEngineImpl;
+import com.footyandsweep.apiallocationengine.grpc.client.AllocationClientGrpc;
 import io.eventuate.tram.sagas.spring.orchestration.SagaOrchestratorConfiguration;
 import io.eventuate.tram.spring.optimisticlocking.OptimisticLockingDecoratorConfiguration;
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,7 +37,16 @@ import org.springframework.web.client.RestTemplate;
 public class AllocationEngineConfiguration {
 
   @Bean
-  public AllocationEngine allocationEngine(AllocationDao allocationDao, RestTemplate restTemplate) {
-    return new AllocationEngineImpl(allocationDao, restTemplate);
+  public SweepstakeServiceGrpc.SweepstakeServiceBlockingStub sweepstakeEngineChannel() {
+    ManagedChannel channel = ManagedChannelBuilder.forAddress("api-sweepstake-engine", 9090)
+            .usePlaintext()
+            .build();
+
+    return SweepstakeServiceGrpc.newBlockingStub(channel);
+  }
+
+  @Bean
+  public AllocationEngine allocationEngine(AllocationDao allocationDao, RestTemplate restTemplate, AllocationClientGrpc allocationClientGrpc) {
+    return new AllocationEngineImpl(allocationDao, restTemplate, allocationClientGrpc);
   }
 }

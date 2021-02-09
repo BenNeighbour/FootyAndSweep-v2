@@ -14,13 +14,13 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apiallocationengine;
+package com.footyandsweep.apiallocationengine.grpc.controller;
 
 import com.footyandsweep.AllocationServiceGrpc;
 import com.footyandsweep.SweepstakeServiceOuterClass;
 import com.footyandsweep.apiallocationengine.engine.saga.AllocateSweepstakeSaga;
 import com.footyandsweep.apiallocationengine.engine.saga.AllocateSweepstakeSagaData;
-import com.footyandsweep.apiallocationengine.grpc.GrpcService;
+import com.footyandsweep.apiallocationengine.grpc.util.GrpcService;
 import com.footyandsweep.apicommonlibrary.helper.ProtoConverterUtils;
 import com.footyandsweep.apicommonlibrary.model.football.FootballMatchSweepstakeCommon;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;

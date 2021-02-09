@@ -18,6 +18,7 @@ package com.footyandsweep.apiallocationengine.engine;
 
 import com.footyandsweep.apiallocationengine.dao.AllocationDao;
 import com.footyandsweep.apiallocationengine.engine.saga.AllocateSweepstakeSagaData;
+import com.footyandsweep.apiallocationengine.grpc.client.AllocationClientGrpc;
 import com.footyandsweep.apiallocationengine.model.Allocation;
 import com.footyandsweep.apicommonlibrary.cqrs.sweepstake.update.UpdateSweepstakeStatusCommand;
 import com.footyandsweep.apicommonlibrary.cqrs.ticket.AllocateTicketsCommand;
@@ -45,17 +46,17 @@ public class AllocationEngineImpl implements AllocationEngine {
 
   private final AllocationDao allocationDao;
   private final RestTemplate restTemplate;
+  private final AllocationClientGrpc allocationClient;
 
-  public AllocationEngineImpl(
-      final AllocationDao allocationDao,
-      final RestTemplate restTemplate) {
+  public AllocationEngineImpl(AllocationDao allocationDao, RestTemplate restTemplate, AllocationClientGrpc allocationClient) {
     this.allocationDao = allocationDao;
     this.restTemplate = restTemplate;
+    this.allocationClient = allocationClient;
   }
 
   /*
-    This method is called by either the sweepstake sold out event listener or by the cron job batch-processor
-  */
+      This method is called by either the sweepstake sold out event listener or by the cron job batch-processor
+    */
   @Override
   public void allocateSweepstakeTickets(AllocateSweepstakeSagaData sagaData) {
     try {
@@ -77,7 +78,7 @@ public class AllocationEngineImpl implements AllocationEngine {
       this.processAllTickets(
           sagaData, uniqueUserList, sweepstakeResultMap.get(), sweepstakeResultIdList);
     } catch (Exception e) {
-      /* Throw error to WebSocket client */
+      /* Throw error to */
       e.getCause();
     }
   }
@@ -92,16 +93,8 @@ public class AllocationEngineImpl implements AllocationEngine {
 
   private List<String> sweepstakeParticipantsHelper(String sweepstakeId) {
     /* Get a list of participants that might have purchased tickets */
-    List<String> participantIds =
-        new LinkedList<>(
-            Arrays.asList(
-                restTemplate.getForObject(
-                    "http://api-sweepstake-engine:8080/sweepstake/test/by/"
-                        + sweepstakeId
-                        + "/participants",
-                    String[].class)));
+    List<String> participantIds = allocationClient.getAllSweepstakeParticipants(sweepstakeId);
 
-    /* Shuffle the user list and return it back to caller */
     Collections.shuffle(participantIds);
     return participantIds;
   }
