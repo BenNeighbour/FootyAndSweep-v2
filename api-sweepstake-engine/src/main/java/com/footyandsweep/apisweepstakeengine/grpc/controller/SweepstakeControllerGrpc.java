@@ -19,7 +19,6 @@ package com.footyandsweep.apisweepstakeengine.grpc.controller;
 import com.footyandsweep.Common;
 import com.footyandsweep.SweepstakeServiceGrpc;
 import com.footyandsweep.SweepstakeServiceOuterClass;
-import com.footyandsweep.TicketServiceOuterClass;
 import com.footyandsweep.apicommonlibrary.helper.ProtoConverterUtils;
 import com.footyandsweep.apisweepstakeengine.dao.FootballMatchDao;
 import com.footyandsweep.apisweepstakeengine.dao.ParticipantIdDao;
