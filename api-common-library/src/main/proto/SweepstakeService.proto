@@ -3,6 +3,7 @@ package com.footyandsweep;
 
 import "google/protobuf/descriptor.proto";
 import "Common.proto";
+import "TicketService.proto";
 
 extend google.protobuf.EnumValueOptions {
   string sweepstakeStatus = 5000;

@@ -16,8 +16,10 @@
 
 package com.footyandsweep.apiallocationengine.grpc.client;
 
+import com.footyandsweep.Common;
 import com.footyandsweep.SweepstakeServiceGrpc;
-import com.footyandsweep.SweepstakeServiceOuterClass;
+import com.footyandsweep.TicketServiceGrpc;
+import com.footyandsweep.TicketServiceOuterClass;
 import com.footyandsweep.apicommonlibrary.helper.ProtoConverterUtils;
 import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
 import org.springframework.stereotype.Service;
@@ -29,23 +31,27 @@ import java.util.List;
 public class AllocationClientGrpc {
 
   private final SweepstakeServiceGrpc.SweepstakeServiceBlockingStub sweepstakeEngineChannel;
+  private final TicketServiceGrpc.TicketServiceBlockingStub ticketEgineChannel;
 
-  public AllocationClientGrpc(
-          SweepstakeServiceGrpc.SweepstakeServiceBlockingStub sweepstakeEngineChannel) {
+  public AllocationClientGrpc(SweepstakeServiceGrpc.SweepstakeServiceBlockingStub sweepstakeEngineChannel, TicketServiceGrpc.TicketServiceBlockingStub ticketEgineChannel) {
     this.sweepstakeEngineChannel = sweepstakeEngineChannel;
+    this.ticketEgineChannel = ticketEgineChannel;
   }
 
   public List<String> getAllSweepstakeParticipants(String sweepstakeId) {
-    SweepstakeServiceOuterClass.Id id = SweepstakeServiceOuterClass.Id.newBuilder().setId(sweepstakeId).build();
+    Common.Id id = Common.Id.newBuilder().setId(sweepstakeId).build();
 
-    SweepstakeServiceOuterClass.Ids participantIdProto =
+    Common.Ids participantIdProto =
             sweepstakeEngineChannel.getAllSweepstakeParticipants(id);
 
     return Arrays.asList(ProtoConverterUtils.convertToPojo(String[].class, participantIdProto));
   }
 
   public List<TicketCommon> getSweepstakeTickets(String sweepstakeId) {
-    SweepstakeServiceOuterClass.Id id = SweepstakeServiceOuterClass.Id.newBuilder().setId(sweepstakeId).build();
+    Common.Id id = Common.Id.newBuilder().setId(sweepstakeId).build();
 
+    TicketServiceOuterClass.TicketList ticketsProto = ticketEgineChannel.getAllTicketsBySweepstakeId(id);
+
+    return Arrays.asList(ProtoConverterUtils.convertToPojo(TicketCommon[].class, ticketsProto));
   }
 }

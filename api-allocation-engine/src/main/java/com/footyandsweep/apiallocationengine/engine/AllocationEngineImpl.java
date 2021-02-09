@@ -100,18 +100,8 @@ public class AllocationEngineImpl implements AllocationEngine {
   }
 
   private List<TicketCommon> getSweepstakeTicketsHelper(String sweepstakeId) {
-    /* Get a list of tickets that belong to the sweepstake */
-    Optional<List<TicketCommon>> ticketList =
-        Optional.of(
-            new LinkedList<>(
-                Arrays.asList(
-                    restTemplate.getForObject(
-                        "http://api-ticket-engine:8080/internal/ticket/by/sweepstake/"
-                            + sweepstakeId,
-                        TicketCommon[].class))));
-
-    /* Return those tickets if they are valid, otherwise an empty array */
-    return ticketList.get();
+    /* Return all sweepstake tickets */
+    return allocationClient.getSweepstakeTickets(sweepstakeId);
   }
 
   private void processAllTickets(

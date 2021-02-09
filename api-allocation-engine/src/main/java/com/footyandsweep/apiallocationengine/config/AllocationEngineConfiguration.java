@@ -17,6 +17,7 @@
 package com.footyandsweep.apiallocationengine.config;
 
 import com.footyandsweep.SweepstakeServiceGrpc;
+import com.footyandsweep.TicketServiceGrpc;
 import com.footyandsweep.apiallocationengine.dao.AllocationDao;
 import com.footyandsweep.apiallocationengine.engine.AllocationEngine;
 import com.footyandsweep.apiallocationengine.engine.AllocationEngineImpl;
@@ -43,6 +44,15 @@ public class AllocationEngineConfiguration {
             .build();
 
     return SweepstakeServiceGrpc.newBlockingStub(channel);
+  }
+
+  @Bean
+  public TicketServiceGrpc.TicketServiceBlockingStub ticketEngineChannel() {
+    ManagedChannel channel = ManagedChannelBuilder.forAddress("api-ticket-engine", 9090)
+            .usePlaintext()
+            .build();
+
+    return TicketServiceGrpc.newBlockingStub(channel);
   }
 
   @Bean

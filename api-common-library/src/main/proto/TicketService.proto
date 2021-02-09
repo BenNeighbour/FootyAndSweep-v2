@@ -25,6 +25,11 @@ message Ticket {
   string userId = 6;
 }
 
+message TicketList {
+  repeated Ticket ticket = 1;
+}
+
 service TicketService {
   rpc findTicketById(Id) returns (Ticket);
+  rpc getAllTicketsBySweepstakeId(Id) returns (TicketList);
 }

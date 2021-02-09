@@ -16,8 +16,11 @@
 
 package com.footyandsweep.apisweepstakeengine.grpc.controller;
 
+import com.footyandsweep.Common;
 import com.footyandsweep.SweepstakeServiceGrpc;
 import com.footyandsweep.SweepstakeServiceOuterClass;
+import com.footyandsweep.TicketServiceOuterClass;
+import com.footyandsweep.apicommonlibrary.helper.ProtoConverterUtils;
 import com.footyandsweep.apisweepstakeengine.dao.FootballMatchDao;
 import com.footyandsweep.apisweepstakeengine.dao.ParticipantIdDao;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
@@ -25,6 +28,7 @@ import com.footyandsweep.apisweepstakeengine.engine.SweepstakeEngineImpl;
 import com.footyandsweep.apisweepstakeengine.grpc.util.GrpcService;
 import com.footyandsweep.apisweepstakeengine.helper.ResultHelper;
 import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
+import com.footyandsweep.apisweepstakeengine.relation.ParticipantIds;
 import com.google.rpc.Code;
 import com.google.rpc.Status;
 import io.grpc.protobuf.StatusProto;
@@ -80,8 +84,8 @@ public class SweepstakeControllerGrpc extends SweepstakeServiceGrpc.SweepstakeSe
 
   @Override
   public void findSweepstakeById(
-      SweepstakeServiceOuterClass.Id request,
-      StreamObserver<SweepstakeServiceOuterClass.Sweepstake> responseObserver) {
+          Common.Id request,
+          StreamObserver<SweepstakeServiceOuterClass.Sweepstake> responseObserver) {
     try {
       SweepstakeServiceOuterClass.Sweepstake sweepstake =
           this.castHelper(
@@ -96,8 +100,8 @@ public class SweepstakeControllerGrpc extends SweepstakeServiceGrpc.SweepstakeSe
 
   @Override
   public void getResultHelperMap(
-      SweepstakeServiceOuterClass.Sweepstake request,
-      StreamObserver<SweepstakeServiceOuterClass.Map> responseObserver) {
+          SweepstakeServiceOuterClass.Sweepstake request,
+          StreamObserver<Common.Map> responseObserver) {
     super.getResultHelperMap(request, responseObserver);
   }
 
@@ -131,7 +135,7 @@ public class SweepstakeControllerGrpc extends SweepstakeServiceGrpc.SweepstakeSe
   }
 
   @Override
-  public void findSweepstakeByFootballMatchId(SweepstakeServiceOuterClass.Id request, StreamObserver<SweepstakeServiceOuterClass.SweepstakeList> responseObserver) {
+  public void findSweepstakeByFootballMatchId(Common.Id request, StreamObserver<SweepstakeServiceOuterClass.SweepstakeList> responseObserver) {
     try {
       List<Sweepstake> sweepstakes = sweepstakeDao.findAllSweepstakeBySweepstakeEventId(request.getId());
       SweepstakeServiceOuterClass.SweepstakeList sweepstakeList = SweepstakeServiceOuterClass.SweepstakeList.newBuilder().build();
@@ -157,13 +161,25 @@ public class SweepstakeControllerGrpc extends SweepstakeServiceGrpc.SweepstakeSe
     }
   }
 
+
+  @Override
+  public void getAllSweepstakeParticipants(Common.Id request, StreamObserver<Common.Ids> responseObserver) {
+    List<ParticipantIds> participantIds = participantIdDao.findAllParticipantIdsBySweepstakeId(request.getId());
+    Common.Ids.Builder idBuilder = Common.Ids.newBuilder();
+
+    ProtoConverterUtils.convertToProto(idBuilder, participantIds);
+
+    responseObserver.onNext(idBuilder.build());
+    responseObserver.onCompleted();
+  }
+
   private SweepstakeServiceOuterClass.Sweepstake castHelper(Sweepstake sweepstake)
           throws InvocationTargetException, IllegalAccessException {
     if (sweepstake != null) {
       /* Cast the sweepstake fields to the protobuf sweepstake */
       SweepstakeServiceOuterClass.Sweepstake response =
               SweepstakeServiceOuterClass.Sweepstake.newBuilder()
-                      .setId(sweepstake.getId().toString())
+                      .setId(sweepstake.getId())
                       .build();
       BeanUtils.copyProperties(response, sweepstake);
 

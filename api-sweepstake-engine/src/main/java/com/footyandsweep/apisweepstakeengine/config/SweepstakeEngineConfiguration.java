@@ -16,6 +16,8 @@
 
 package com.footyandsweep.apisweepstakeengine.config;
 
+import com.footyandsweep.AllocationServiceGrpc;
+import com.footyandsweep.SweepstakeServiceGrpc;
 import com.footyandsweep.apisweepstakeengine.dao.ParticipantIdDao;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
 import com.footyandsweep.apisweepstakeengine.engine.SweepstakeEngine;
@@ -26,6 +28,8 @@ import io.eventuate.tram.sagas.participant.SagaCommandDispatcherFactory;
 import io.eventuate.tram.sagas.spring.orchestration.SagaOrchestratorConfiguration;
 import io.eventuate.tram.sagas.spring.participant.SagaParticipantConfiguration;
 import io.eventuate.tram.spring.optimisticlocking.OptimisticLockingDecoratorConfiguration;
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,6 +39,15 @@ import org.springframework.context.annotation.Import;
 @EnableAutoConfiguration
 @Import({SagaOrchestratorConfiguration.class, OptimisticLockingDecoratorConfiguration.class, SagaParticipantConfiguration.class})
 public class SweepstakeEngineConfiguration {
+
+  @Bean
+  public AllocationServiceGrpc.AllocationServiceBlockingStub allocationEngineChannel() {
+    ManagedChannel channel = ManagedChannelBuilder.forAddress("api-allocation-engine", 9090)
+            .usePlaintext()
+            .build();
+
+    return  AllocationServiceGrpc.newBlockingStub(channel);
+  }
 
   @Bean
   public SweepstakeEngine sweepstakeEngine(

@@ -16,6 +16,7 @@
 
 package com.footyandsweep.apiresultengine.engine;
 
+import com.footyandsweep.Common;
 import com.footyandsweep.SweepstakeServiceGrpc;
 import com.footyandsweep.SweepstakeServiceOuterClass;
 import com.footyandsweep.apicommonlibrary.cqrs.user.UpdateUserBalanceCommand;
@@ -70,7 +71,7 @@ public class ResultEngineImpl implements ResultEngine {
 
     SweepstakeServiceGrpc.SweepstakeServiceBlockingStub clientStub = SweepstakeServiceGrpc.newBlockingStub(channel);
 
-    SweepstakeServiceOuterClass.SweepstakeList sweepstakesWithResult = clientStub.findSweepstakeByFootballMatchId(SweepstakeServiceOuterClass.Id.newBuilder().setId(footballMatchResult.getFootballMatchId().toString()).build());
+    SweepstakeServiceOuterClass.SweepstakeList sweepstakesWithResult = clientStub.findSweepstakeByFootballMatchId(Common.Id.newBuilder().setId(footballMatchResult.getFootballMatchId().toString()).build());
 
     channel.shutdown();
 
