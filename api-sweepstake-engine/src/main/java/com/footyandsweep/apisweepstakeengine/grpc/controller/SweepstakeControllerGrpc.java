@@ -20,12 +20,14 @@ import com.footyandsweep.Common;
 import com.footyandsweep.SweepstakeServiceGrpc;
 import com.footyandsweep.SweepstakeServiceOuterClass;
 import com.footyandsweep.apicommonlibrary.helper.ProtoConverterUtils;
+import com.footyandsweep.apicommonlibrary.other.CustomMap;
 import com.footyandsweep.apisweepstakeengine.dao.FootballMatchDao;
 import com.footyandsweep.apisweepstakeengine.dao.ParticipantIdDao;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
 import com.footyandsweep.apisweepstakeengine.engine.SweepstakeEngineImpl;
 import com.footyandsweep.apisweepstakeengine.grpc.util.GrpcService;
 import com.footyandsweep.apisweepstakeengine.helper.ResultHelper;
+import com.footyandsweep.apisweepstakeengine.model.FootballMatchSweepstake;
 import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
 import com.google.rpc.Code;
 import com.google.rpc.Status;
@@ -189,5 +191,16 @@ public class SweepstakeControllerGrpc extends SweepstakeServiceGrpc.SweepstakeSe
     }
   }
 
+  @Override
+  public void resultHelper(SweepstakeServiceOuterClass.Sweepstake request, StreamObserver<SweepstakeServiceOuterClass.PairList> responseObserver) {
+    FootballMatchSweepstake footballMatchSweepstake = sweepstakeDao.findFootballMatchSweepstakeById(request.getId());
+    SweepstakeServiceOuterClass.PairList.Builder pairList = SweepstakeServiceOuterClass.PairList.newBuilder();
 
+    resultHelper.buildResultsForSweepstakeType(footballMatchSweepstake.getSweepstakeType(), footballMatchSweepstake).forEach((integer, s) -> {
+      pairList.addPairs(SweepstakeServiceOuterClass.Pair.newBuilder().setKey(integer).setValue(s).build());
+    });
+
+    responseObserver.onNext(pairList.build());
+    responseObserver.onCompleted();
+  }
 }

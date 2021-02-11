@@ -16,15 +16,14 @@
 
 package com.footyandsweep.apiallocationengine.grpc.client;
 
-import com.footyandsweep.Common;
-import com.footyandsweep.SweepstakeServiceGrpc;
-import com.footyandsweep.TicketServiceGrpc;
-import com.footyandsweep.TicketServiceOuterClass;
+import com.footyandsweep.*;
 import com.footyandsweep.apicommonlibrary.helper.ProtoConverterUtils;
+import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -60,5 +59,17 @@ public class AllocationClientGrpc {
     });
 
     return tickets;
+  }
+
+  public HashMap<Integer, String> resultHelper(SweepstakeCommon sweepstake) {
+    SweepstakeServiceOuterClass.Sweepstake.Builder sweepstakeBuilder = SweepstakeServiceOuterClass.Sweepstake.newBuilder();
+    ProtoConverterUtils.convertToProto(sweepstakeBuilder, sweepstake);
+
+    HashMap<Integer, String> returnMap = new HashMap<>();
+    sweepstakeEngineChannel.resultHelper(sweepstakeBuilder.build()).getPairsList().forEach(pair -> {
+      returnMap.put(pair.getKey(), pair.getValue());
+    });
+
+    return returnMap;
   }
 }

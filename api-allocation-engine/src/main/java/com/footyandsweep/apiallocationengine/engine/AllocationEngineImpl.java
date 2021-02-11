@@ -25,7 +25,6 @@ import com.footyandsweep.apicommonlibrary.cqrs.ticket.AllocateTicketsCommand;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeTypeCommon;
 import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
-import com.footyandsweep.apicommonlibrary.other.CustomMap;
 import io.eventuate.tram.commands.consumer.CommandWithDestination;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -216,33 +215,19 @@ public class AllocationEngineImpl implements AllocationEngine {
   }
 
   private Map<Integer, String> getSweepstakeResultMap(SweepstakeCommon sweepstake) {
-    List<CustomMap> resultMap = new ArrayList<>();
+    HashMap<Integer, String> resultMap = new HashMap<>();
 
     /* Going over all of the sweepstake types in the enum in order to programmatically determine what method will be invoked on the result helper */
     for (SweepstakeTypeCommon i : SweepstakeTypeCommon.values()) {
 
-      /* TODO: CHANGE THIS TO GRPC */
-
       /* Call result helper to get the field and return a function that returns the right maps to back */
       if (sweepstake.getSweepstakeType().equals(i)) {
         resultMap =
-            new LinkedList<>(
-                Arrays.asList(
-                    restTemplate.postForObject(
-                        "http://api-sweepstake-engine:8080/sweepstake/test/result",
-                        sweepstake,
-                        CustomMap[].class)));
+                new HashMap<>(allocationClient.resultHelper(sweepstake));
       }
     }
 
-    HashMap<Integer, String> deserializedMap = new HashMap<>();
-
-    resultMap.forEach(
-        customMap -> {
-          deserializedMap.put(customMap.getIntegerKey(), customMap.getStringValue());
-        });
-
-    return deserializedMap;
+    return resultMap;
   }
 
   @Override

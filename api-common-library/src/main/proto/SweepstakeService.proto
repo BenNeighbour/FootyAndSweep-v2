@@ -53,6 +53,15 @@ message JoinCode {
   string joinCode = 1;
 }
 
+message Pair {
+  int32 key = 1;
+  string value = 2;
+}
+
+message PairList {
+  repeated Pair pairs = 1;
+}
+
 message SweepstakeList {
   repeated Sweepstake sweepstakes = 1;
 }
@@ -64,4 +73,5 @@ service SweepstakeService {
   rpc getResultHelperMap(Sweepstake) returns (Map);
   rpc requestNewSweepstake(Sweepstake) returns (Sweepstake);
   rpc getAllSweepstakeParticipants(Id) returns (Ids);
+  rpc resultHelper(Sweepstake) returns (PairList);
 }
