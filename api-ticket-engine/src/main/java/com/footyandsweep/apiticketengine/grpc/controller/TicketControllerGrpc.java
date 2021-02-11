@@ -22,7 +22,10 @@ import com.footyandsweep.TicketServiceOuterClass;
 import com.footyandsweep.apicommonlibrary.helper.ProtoConverterUtils;
 import com.footyandsweep.apiticketengine.dao.TicketDao;
 import com.footyandsweep.apiticketengine.grpc.util.GrpcService;
+import com.footyandsweep.apiticketengine.model.Ticket;
 import io.grpc.stub.StreamObserver;
+
+import java.util.List;
 
 @GrpcService
 public class TicketControllerGrpc extends TicketServiceGrpc.TicketServiceImplBase {
@@ -48,9 +51,15 @@ public class TicketControllerGrpc extends TicketServiceGrpc.TicketServiceImplBas
   public void getAllTicketsBySweepstakeId(
       Common.Id request, StreamObserver<TicketServiceOuterClass.TicketList> responseObserver) {
     TicketServiceOuterClass.TicketList.Builder ticketListBuilder =
-        TicketServiceOuterClass.TicketList.newBuilder();
-    ProtoConverterUtils.convertToProto(
-        ticketListBuilder, ticketDao.findAllTicketsBySweepstakeId(request.getId()));
+            TicketServiceOuterClass.TicketList.newBuilder();
+
+    List<Ticket> tickets = ticketDao.findAllTicketsBySweepstakeId(request.getId()).get();
+    tickets.forEach(ticket -> {
+      TicketServiceOuterClass.Ticket.Builder current = TicketServiceOuterClass.Ticket.newBuilder();
+      ProtoConverterUtils.convertToProto(current, ticket);
+
+      ticketListBuilder.addTicket(current.build());
+    });
 
     responseObserver.onNext(ticketListBuilder.build());
     responseObserver.onCompleted();

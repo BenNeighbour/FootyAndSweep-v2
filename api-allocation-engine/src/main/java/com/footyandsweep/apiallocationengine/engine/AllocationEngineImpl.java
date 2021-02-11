@@ -93,7 +93,7 @@ public class AllocationEngineImpl implements AllocationEngine {
 
   private List<String> sweepstakeParticipantsHelper(String sweepstakeId) {
     /* Get a list of participants that might have purchased tickets */
-    List<String> participantIds = allocationClient.getAllSweepstakeParticipants(sweepstakeId);
+    List<String> participantIds = new LinkedList<>(allocationClient.getAllSweepstakeParticipants(sweepstakeId));
 
     Collections.shuffle(participantIds);
     return participantIds;

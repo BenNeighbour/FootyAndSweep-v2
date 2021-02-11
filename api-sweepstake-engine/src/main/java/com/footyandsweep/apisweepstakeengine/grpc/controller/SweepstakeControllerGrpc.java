@@ -27,7 +27,6 @@ import com.footyandsweep.apisweepstakeengine.engine.SweepstakeEngineImpl;
 import com.footyandsweep.apisweepstakeengine.grpc.util.GrpcService;
 import com.footyandsweep.apisweepstakeengine.helper.ResultHelper;
 import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
-import com.footyandsweep.apisweepstakeengine.relation.ParticipantIds;
 import com.google.rpc.Code;
 import com.google.rpc.Status;
 import io.grpc.protobuf.StatusProto;
@@ -36,6 +35,7 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import javax.validation.ValidationException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 
 @GrpcService
@@ -160,15 +160,15 @@ public class SweepstakeControllerGrpc extends SweepstakeServiceGrpc.SweepstakeSe
     }
   }
 
-
   @Override
   public void getAllSweepstakeParticipants(Common.Id request, StreamObserver<Common.Ids> responseObserver) {
-    List<ParticipantIds> participantIds = participantIdDao.findAllParticipantIdsBySweepstakeId(request.getId());
-    Common.Ids.Builder idBuilder = Common.Ids.newBuilder();
+    Common.Ids.Builder participantIdsBuilder = Common.Ids.newBuilder();
 
-    ProtoConverterUtils.convertToProto(idBuilder, participantIds);
+    participantIdDao.findAllParticipantIdsBySweepstakeId(request.getId()).forEach(each -> {
+      participantIdsBuilder.addId(each.getParticipantId());
+    });
 
-    responseObserver.onNext(idBuilder.build());
+    responseObserver.onNext(participantIdsBuilder.build());
     responseObserver.onCompleted();
   }
 
@@ -188,4 +188,6 @@ public class SweepstakeControllerGrpc extends SweepstakeServiceGrpc.SweepstakeSe
       return null;
     }
   }
+
+
 }

@@ -24,18 +24,18 @@ import com.footyandsweep.apicommonlibrary.helper.ProtoConverterUtils;
 import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class AllocationClientGrpc {
 
   private final SweepstakeServiceGrpc.SweepstakeServiceBlockingStub sweepstakeEngineChannel;
-  private final TicketServiceGrpc.TicketServiceBlockingStub ticketEgineChannel;
+  private final TicketServiceGrpc.TicketServiceBlockingStub ticketEngineChannel;
 
   public AllocationClientGrpc(SweepstakeServiceGrpc.SweepstakeServiceBlockingStub sweepstakeEngineChannel, TicketServiceGrpc.TicketServiceBlockingStub ticketEgineChannel) {
     this.sweepstakeEngineChannel = sweepstakeEngineChannel;
-    this.ticketEgineChannel = ticketEgineChannel;
+    this.ticketEngineChannel = ticketEgineChannel;
   }
 
   public List<String> getAllSweepstakeParticipants(String sweepstakeId) {
@@ -44,14 +44,21 @@ public class AllocationClientGrpc {
     Common.Ids participantIdProto =
             sweepstakeEngineChannel.getAllSweepstakeParticipants(id);
 
-    return Arrays.asList(ProtoConverterUtils.convertToPojo(String[].class, participantIdProto));
+    return participantIdProto.getIdList();
   }
 
   public List<TicketCommon> getSweepstakeTickets(String sweepstakeId) {
     Common.Id id = Common.Id.newBuilder().setId(sweepstakeId).build();
 
-    TicketServiceOuterClass.TicketList ticketsProto = ticketEgineChannel.getAllTicketsBySweepstakeId(id);
+    TicketServiceOuterClass.TicketList ticketsProto = ticketEngineChannel.getAllTicketsBySweepstakeId(id);
 
-    return Arrays.asList(ProtoConverterUtils.convertToPojo(TicketCommon[].class, ticketsProto));
+    /* Convert proto "list" object to a POJO */
+    List<TicketCommon> tickets = new ArrayList<>();
+    ticketsProto.getTicketList().forEach(ticket -> {
+      TicketCommon ticketCommon = ProtoConverterUtils.convertToPojo(TicketCommon.class, ticket);
+      tickets.add(ticketCommon);
+    });
+
+    return tickets;
   }
 }
