@@ -19,7 +19,6 @@ package com.footyandsweep.apiticketengine.engine.handlers;
 import com.footyandsweep.apicommonlibrary.cqrs.ticket.AllocateTicketsCommand;
 import com.footyandsweep.apicommonlibrary.cqrs.ticket.AllocateTicketsFailure;
 import com.footyandsweep.apicommonlibrary.cqrs.ticket.TicketsAllocated;
-import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
 import com.footyandsweep.apiticketengine.engine.TicketEngine;
 import io.eventuate.tram.commands.consumer.CommandHandlers;
 import io.eventuate.tram.commands.consumer.CommandMessage;
@@ -46,7 +45,7 @@ public class TicketCommandHandler {
   private Message allocateTickets(CommandMessage<AllocateTicketsCommand> allocateTicketsCommand) {
     try {
       AllocateTicketsCommand command = allocateTicketsCommand.getCommand();
-      for (TicketCommon ticket : command.getTickets()) ticketEngine.modifyTickets(ticket);
+      command.getTicketAllocationIdMap().keySet().forEach(one -> ticketEngine.modifyTickets(one, command.getTicketAllocationIdMap().get(one)));
 
       return withSuccess(new TicketsAllocated());
     } catch (Exception e) {

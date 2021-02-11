@@ -31,7 +31,7 @@ public interface TicketEngine {
 
   void deleteTicket(String ticketId);
 
-  void modifyTickets(TicketCommon ticket) throws InvocationTargetException, IllegalAccessException;
+  void modifyTickets(String ticketId, String allocationId);
 
   CommandWithDestination updateUserBalance(BuyTicketSagaData buyTicketSagaData);
 }

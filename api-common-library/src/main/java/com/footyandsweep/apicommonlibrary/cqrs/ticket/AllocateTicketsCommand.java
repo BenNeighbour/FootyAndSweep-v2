@@ -16,19 +16,18 @@
 
 package com.footyandsweep.apicommonlibrary.cqrs.ticket;
 
-import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
 import io.eventuate.tram.commands.common.Command;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
+import java.util.HashMap;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class AllocateTicketsCommand implements Command {
-    private List<TicketCommon> tickets;
+    private HashMap<String, String> ticketAllocationIdMap;
 }

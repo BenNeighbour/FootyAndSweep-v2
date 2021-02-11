@@ -220,6 +220,9 @@ public class AllocationEngineImpl implements AllocationEngine {
 
     /* Going over all of the sweepstake types in the enum in order to programmatically determine what method will be invoked on the result helper */
     for (SweepstakeTypeCommon i : SweepstakeTypeCommon.values()) {
+
+      /* TODO: CHANGE THIS TO GRPC */
+
       /* Call result helper to get the field and return a function that returns the right maps to back */
       if (sweepstake.getSweepstakeType().equals(i)) {
         resultMap =
@@ -244,7 +247,10 @@ public class AllocationEngineImpl implements AllocationEngine {
 
   @Override
   public CommandWithDestination allocateTickets(List<TicketCommon> tickets) {
-    return send(new AllocateTicketsCommand(tickets))
+    HashMap<String, String> ticketAllocationIds = new HashMap<>();
+    tickets.forEach(ticket -> ticketAllocationIds.put(ticket.getId(), ticket.getAllocationId()));
+
+    return send(new AllocateTicketsCommand(ticketAllocationIds))
             .to("ticket-engine-events")
             .build();
   }
