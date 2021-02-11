@@ -4,82 +4,40 @@
 package allocation;
 
 public final class AllocationGrpcService {
-  private static final com.google.protobuf.Descriptors.Descriptor
-      internal_static_allocation_Allocation_descriptor;
-  private static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_allocation_Allocation_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.FileDescriptor descriptor;
-
-  static {
-    java.lang.String[] descriptorData = {
-      "\n\027AllocationService.proto\022\nallocation\"\014\n"
-          + "\nAllocationB#\n\nallocationB\025AllocationGrp"
-          + "cServiceb\006proto3"
-    };
-    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-        new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
-          public com.google.protobuf.ExtensionRegistry assignDescriptors(
-              com.google.protobuf.Descriptors.FileDescriptor root) {
-            descriptor = root;
-            return null;
-          }
-        };
-    com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(
-        descriptorData, new com.google.protobuf.Descriptors.FileDescriptor[] {}, assigner);
-    internal_static_allocation_Allocation_descriptor = getDescriptor().getMessageTypes().get(0);
-    internal_static_allocation_Allocation_fieldAccessorTable =
-        new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-            internal_static_allocation_Allocation_descriptor, new java.lang.String[] {});
-  }
   private AllocationGrpcService() {}
-
-  public static void registerAllExtensions(com.google.protobuf.ExtensionRegistryLite registry) {}
-
-  public static void registerAllExtensions(com.google.protobuf.ExtensionRegistry registry) {
-    registerAllExtensions((com.google.protobuf.ExtensionRegistryLite) registry);
+  public static void registerAllExtensions(
+      com.google.protobuf.ExtensionRegistryLite registry) {
   }
 
-  public static com.google.protobuf.Descriptors.FileDescriptor getDescriptor() {
-    return descriptor;
+  public static void registerAllExtensions(
+      com.google.protobuf.ExtensionRegistry registry) {
+    registerAllExtensions(
+        (com.google.protobuf.ExtensionRegistryLite) registry);
   }
-
-  public interface AllocationOrBuilder
-      extends
+  public interface AllocationOrBuilder extends
       // @@protoc_insertion_point(interface_extends:allocation.Allocation)
-      com.google.protobuf.MessageOrBuilder {}
-
-  /** Protobuf type {@code allocation.Allocation} */
-  public static final class Allocation extends com.google.protobuf.GeneratedMessageV3
-      implements
+      com.google.protobuf.MessageOrBuilder {
+  }
+  /**
+   * Protobuf type {@code allocation.Allocation}
+   */
+  public  static final class Allocation extends
+      com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:allocation.Allocation)
       AllocationOrBuilder {
-    private static final long serialVersionUID = 0L;
-    // @@protoc_insertion_point(class_scope:allocation.Allocation)
-    private static final allocation.AllocationGrpcService.Allocation DEFAULT_INSTANCE;
-    private static final com.google.protobuf.Parser<Allocation> PARSER =
-        new com.google.protobuf.AbstractParser<Allocation>() {
-          @java.lang.Override
-          public Allocation parsePartialFrom(
-              com.google.protobuf.CodedInputStream input,
-              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-              throws com.google.protobuf.InvalidProtocolBufferException {
-            return new Allocation(input, extensionRegistry);
-          }
-        };
-
-    static {
-      DEFAULT_INSTANCE = new allocation.AllocationGrpcService.Allocation();
-    }
-
-    private byte memoizedIsInitialized = -1;
-
+  private static final long serialVersionUID = 0L;
     // Use Allocation.newBuilder() to construct.
     private Allocation(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
+    private Allocation() {
+    }
 
-    private Allocation() {}
-
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
     private Allocation(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -98,132 +56,39 @@ public final class AllocationGrpcService {
             case 0:
               done = true;
               break;
-            default:
-              {
-                if (!parseUnknownFieldProto3(input, unknownFields, extensionRegistry, tag)) {
-                  done = true;
-                }
-                break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
               }
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
-
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
       return allocation.AllocationGrpcService.internal_static_allocation_Allocation_descriptor;
-    }
-
-    public static allocation.AllocationGrpcService.Allocation parseFrom(java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-
-    public static allocation.AllocationGrpcService.Allocation parseFrom(
-        java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-
-    public static allocation.AllocationGrpcService.Allocation parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-
-    public static allocation.AllocationGrpcService.Allocation parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-
-    public static allocation.AllocationGrpcService.Allocation parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-
-    public static allocation.AllocationGrpcService.Allocation parseFrom(
-        byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-
-    public static allocation.AllocationGrpcService.Allocation parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
-    }
-
-    public static allocation.AllocationGrpcService.Allocation parseFrom(
-        java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-          PARSER, input, extensionRegistry);
-    }
-
-    public static allocation.AllocationGrpcService.Allocation parseDelimitedFrom(
-        java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
-    }
-
-    public static allocation.AllocationGrpcService.Allocation parseDelimitedFrom(
-        java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-          PARSER, input, extensionRegistry);
-    }
-
-    public static allocation.AllocationGrpcService.Allocation parseFrom(
-        com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
-    }
-
-    public static allocation.AllocationGrpcService.Allocation parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-          PARSER, input, extensionRegistry);
-    }
-
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-
-    public static Builder newBuilder(allocation.AllocationGrpcService.Allocation prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-
-    public static allocation.AllocationGrpcService.Allocation getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    public static com.google.protobuf.Parser<Allocation> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-      return this.unknownFields;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return allocation.AllocationGrpcService
-          .internal_static_allocation_Allocation_fieldAccessorTable
+      return allocation.AllocationGrpcService.internal_static_allocation_Allocation_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              allocation.AllocationGrpcService.Allocation.class,
-              allocation.AllocationGrpcService.Allocation.Builder.class);
+              allocation.AllocationGrpcService.Allocation.class, allocation.AllocationGrpcService.Allocation.Builder.class);
     }
 
+    private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -235,7 +100,8 @@ public final class AllocationGrpcService {
     }
 
     @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
       unknownFields.writeTo(output);
     }
 
@@ -253,13 +119,12 @@ public final class AllocationGrpcService {
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
-        return true;
+       return true;
       }
       if (!(obj instanceof allocation.AllocationGrpcService.Allocation)) {
         return super.equals(obj);
       }
-      allocation.AllocationGrpcService.Allocation other =
-          (allocation.AllocationGrpcService.Allocation) obj;
+      allocation.AllocationGrpcService.Allocation other = (allocation.AllocationGrpcService.Allocation) obj;
 
       boolean result = true;
       result = result && unknownFields.equals(other.unknownFields);
@@ -278,14 +143,88 @@ public final class AllocationGrpcService {
       return hash;
     }
 
-    @java.lang.Override
-    public Builder newBuilderForType() {
-      return newBuilder();
+    public static allocation.AllocationGrpcService.Allocation parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static allocation.AllocationGrpcService.Allocation parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static allocation.AllocationGrpcService.Allocation parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static allocation.AllocationGrpcService.Allocation parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static allocation.AllocationGrpcService.Allocation parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static allocation.AllocationGrpcService.Allocation parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static allocation.AllocationGrpcService.Allocation parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static allocation.AllocationGrpcService.Allocation parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static allocation.AllocationGrpcService.Allocation parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static allocation.AllocationGrpcService.Allocation parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static allocation.AllocationGrpcService.Allocation parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static allocation.AllocationGrpcService.Allocation parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
     @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(allocation.AllocationGrpcService.Allocation prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
     public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
     }
 
     @java.lang.Override
@@ -294,51 +233,41 @@ public final class AllocationGrpcService {
       Builder builder = new Builder(parent);
       return builder;
     }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<Allocation> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public allocation.AllocationGrpcService.Allocation getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-    /** Protobuf type {@code allocation.Allocation} */
-    public static final class Builder
-        extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
-        implements
+    /**
+     * Protobuf type {@code allocation.Allocation}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:allocation.Allocation)
         allocation.AllocationGrpcService.AllocationOrBuilder {
-      // Construct using allocation.AllocationGrpcService.Allocation.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-
-      public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
         return allocation.AllocationGrpcService.internal_static_allocation_Allocation_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return allocation.AllocationGrpcService
-            .internal_static_allocation_Allocation_fieldAccessorTable
+        return allocation.AllocationGrpcService.internal_static_allocation_Allocation_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                allocation.AllocationGrpcService.Allocation.class,
-                allocation.AllocationGrpcService.Allocation.Builder.class);
+                allocation.AllocationGrpcService.Allocation.class, allocation.AllocationGrpcService.Allocation.Builder.class);
       }
 
+      // Construct using allocation.AllocationGrpcService.Allocation.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {}
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
       }
-
       @java.lang.Override
       public Builder clear() {
         super.clear();
@@ -346,7 +275,8 @@ public final class AllocationGrpcService {
       }
 
       @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
         return allocation.AllocationGrpcService.internal_static_allocation_Allocation_descriptor;
       }
 
@@ -366,8 +296,7 @@ public final class AllocationGrpcService {
 
       @java.lang.Override
       public allocation.AllocationGrpcService.Allocation buildPartial() {
-        allocation.AllocationGrpcService.Allocation result =
-            new allocation.AllocationGrpcService.Allocation(this);
+        allocation.AllocationGrpcService.Allocation result = new allocation.AllocationGrpcService.Allocation(this);
         onBuilt();
         return result;
       }
@@ -376,41 +305,38 @@ public final class AllocationGrpcService {
       public Builder clone() {
         return (Builder) super.clone();
       }
-
       @java.lang.Override
       public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
-
       @java.lang.Override
-      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
-
       @java.lang.Override
-      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
-
       @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index,
-          java.lang.Object value) {
+          int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
-
       @java.lang.Override
       public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof allocation.AllocationGrpcService.Allocation) {
-          return mergeFrom((allocation.AllocationGrpcService.Allocation) other);
+          return mergeFrom((allocation.AllocationGrpcService.Allocation)other);
         } else {
           super.mergeFrom(other);
           return this;
@@ -447,7 +373,6 @@ public final class AllocationGrpcService {
         }
         return this;
       }
-
       @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -460,8 +385,83 @@ public final class AllocationGrpcService {
         return super.mergeUnknownFields(unknownFields);
       }
 
+
       // @@protoc_insertion_point(builder_scope:allocation.Allocation)
     }
+
+    // @@protoc_insertion_point(class_scope:allocation.Allocation)
+    private static final allocation.AllocationGrpcService.Allocation DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new allocation.AllocationGrpcService.Allocation();
+    }
+
+    public static allocation.AllocationGrpcService.Allocation getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<Allocation>
+        PARSER = new com.google.protobuf.AbstractParser<Allocation>() {
+      @java.lang.Override
+      public Allocation parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new Allocation(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<Allocation> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Allocation> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public allocation.AllocationGrpcService.Allocation getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_allocation_Allocation_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_allocation_Allocation_fieldAccessorTable;
+
+  public static com.google.protobuf.Descriptors.FileDescriptor
+      getDescriptor() {
+    return descriptor;
+  }
+  private static  com.google.protobuf.Descriptors.FileDescriptor
+      descriptor;
+  static {
+    java.lang.String[] descriptorData = {
+      "\n\027AllocationService.proto\022\nallocation\"\014\n" +
+      "\nAllocationB#\n\nallocationB\025AllocationGrp" +
+      "cServiceb\006proto3"
+    };
+    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
+        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
+          public com.google.protobuf.ExtensionRegistry assignDescriptors(
+              com.google.protobuf.Descriptors.FileDescriptor root) {
+            descriptor = root;
+            return null;
+          }
+        };
+    com.google.protobuf.Descriptors.FileDescriptor
+      .internalBuildGeneratedFileFrom(descriptorData,
+        new com.google.protobuf.Descriptors.FileDescriptor[] {
+        }, assigner);
+    internal_static_allocation_Allocation_descriptor =
+      getDescriptor().getMessageTypes().get(0);
+    internal_static_allocation_Allocation_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_allocation_Allocation_descriptor,
+        new java.lang.String[] { });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

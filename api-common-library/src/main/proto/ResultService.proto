@@ -1,0 +1,8 @@
+syntax = "proto3";
+package com.footyandsweep;
+
+import 'google/protobuf/empty.proto';
+
+service ResultService {
+  rpc checkForSweepstakeResults(google.protobuf.Empty) returns (google.protobuf.Empty);
+}

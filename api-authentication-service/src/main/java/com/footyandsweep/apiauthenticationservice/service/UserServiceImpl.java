@@ -18,20 +18,20 @@ package com.footyandsweep.apiauthenticationservice.service;
 
 import com.footyandsweep.apiauthenticationservice.dao.SweepstakeIdDao;
 import com.footyandsweep.apiauthenticationservice.dao.UserDao;
-import com.footyandsweep.apiauthenticationservice.event.UserMessageDispatcher;
 import com.footyandsweep.apiauthenticationservice.exception.SignUpException;
 import com.footyandsweep.apiauthenticationservice.model.User;
 import com.footyandsweep.apiauthenticationservice.payload.SignUpRequest;
 import com.footyandsweep.apiauthenticationservice.relation.SweepstakeIds;
-import com.footyandsweep.apicommonlibrary.events.EventType;
-import com.footyandsweep.apicommonlibrary.events.SweepstakeEvent;
-import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
+import com.footyandsweep.apicommonlibrary.exceptions.InsufficientCreditsException;
+import com.footyandsweep.apicommonlibrary.exceptions.UserDoesNotExistException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -41,15 +41,10 @@ public class UserServiceImpl implements UserService {
 
   private final UserDao userDao;
   private final SweepstakeIdDao sweepstakeIdDao;
-  private final UserMessageDispatcher userMessageDispatcher;
 
-  public UserServiceImpl(
-      final UserDao userDao,
-      final SweepstakeIdDao sweepstakeIdDao,
-      UserMessageDispatcher userMessageDispatcher) {
+  public UserServiceImpl(final UserDao userDao, final SweepstakeIdDao sweepstakeIdDao) {
     this.userDao = userDao;
     this.sweepstakeIdDao = sweepstakeIdDao;
-    this.userMessageDispatcher = userMessageDispatcher;
   }
 
   @Override
@@ -59,40 +54,62 @@ public class UserServiceImpl implements UserService {
       throw new SignUpException("Password and Confirm Password do not match up!");
     } else if (userDao.existsByEmail(request.getEmail())) {
       throw new SignUpException(
-          "Another account is using this email address. Please log into your account.");
+              "Another account is using this email address. Please log into your account.");
     }
   }
 
   @Override
-  public void addOwnerToSweepstake(SweepstakeCommon sweepstake) {
+  public void saveSweepstakeId(String sweepstakeId, String participantId) {
+    /* Check if the user actually exists */
+    User joiningUser = userDao.findUserById(participantId);
+
+    if (joiningUser != null) {
+      /* If the user exists, save the new relation */
+      SweepstakeIds sweepstakeIds = new SweepstakeIds(participantId, sweepstakeId);
+      sweepstakeIdDao.save(sweepstakeIds);
+    } else {
+      throw new UserDoesNotExistException();
+    }
+  }
+
+  @Override
+  public void addOwnerToSweepstake(String sweepstakeId, String ownerId) {
+    User addingParticipant = userDao.findUserById(ownerId);
+
+    if (addingParticipant != null) {
+      sweepstakeIdDao.save(new SweepstakeIds(ownerId, sweepstakeId));
+    } else {
+      /* Throw a user does not exist error */
+      throw new UserDoesNotExistException();
+    }
+  }
+
+  @Override
+  public void deleteAllSweepstakeRelations(String sweepstakeId) {
+    Optional<List<SweepstakeIds>> sweepstakeIdsList =
+            sweepstakeIdDao.findAllSweepstakeIdsBySweepstakeId(sweepstakeId);
+
+    assert sweepstakeIdsList.isPresent();
+    sweepstakeIdsList.get().forEach(sweepstakeIdDao::delete);
+  }
+
+  @Override
+  public void updateUserBalance(String userId, BigDecimal amountDeducted) {
     try {
-      User addingParticipant = userDao.findUserById(sweepstake.getOwnerId());
+      User user = userDao.findUserById(userId);
 
-      if (addingParticipant != null) {
-        sweepstakeIdDao.save(new SweepstakeIds(sweepstake.getOwnerId(), sweepstake.getId()));
+      if (user == null) throw new UserDoesNotExistException();
 
-        /* Inform the sweepstake engine that the process has completed */
-        SweepstakeEvent processCompletedEvent =
-            new SweepstakeEvent(sweepstake, EventType.PROCESS_ENDED);
-        userMessageDispatcher.publishEvent(processCompletedEvent, "api-sweepstake-events-topic");
-      } else {
-        /* Dispatch a sweepstake relation deleted event */
-        SweepstakeEvent relationDeleted =
-            new SweepstakeEvent(sweepstake, EventType.RELATION_DELETED);
+      /* Check if the user can afford the amount deducted */
+      if (!(user.getBalance().add(amountDeducted).compareTo(new BigDecimal("0")) >= 0))
+        throw new InsufficientCreditsException();
 
-        /* The sweepstake engine will consume this broadcast and delete it's relation with this
-        sweepstake, then it will remove the sweepstake with the message string given by the event
-        above */
-        userMessageDispatcher.publishEvent(relationDeleted, "api-sweepstake-events-topic");
-
-        /* Log the event */
-        log.info(
-            "Sweepstake relation {} has been purged! {}",
-            relationDeleted.getSweepstake().getId(),
-            dateFormat.format(new Date()));
-      }
-    } catch (Exception e) {
-      /* Get the error message and ping it back to the client */
+      user.setBalance(user.getBalance().add(amountDeducted));
+      userDao.saveAndFlush(user);
+    } catch (UserDoesNotExistException | NullPointerException e) {
+      throw new UserDoesNotExistException();
+    } catch (InsufficientCreditsException e) {
+      throw new InsufficientCreditsException();
     }
   }
 }

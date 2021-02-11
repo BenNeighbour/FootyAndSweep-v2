@@ -16,6 +16,10 @@
 
 package com.footyandsweep.apiresultengine.engine;
 
+import com.footyandsweep.apiresultengine.engine.saga.ProcessSweepstakeResultSagaData;
+import io.eventuate.tram.commands.consumer.CommandWithDestination;
+
 public interface ResultEngine {
-  void processWinningTickets();
+  void processSweepstakeResult(ProcessSweepstakeResultSagaData sagaData);
+  CommandWithDestination updateUserBalance(ProcessSweepstakeResultSagaData sagaData);
 }

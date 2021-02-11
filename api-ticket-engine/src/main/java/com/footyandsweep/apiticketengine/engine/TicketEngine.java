@@ -16,9 +16,22 @@
 
 package com.footyandsweep.apiticketengine.engine;
 
-import java.util.UUID;
+import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
+import com.footyandsweep.apiticketengine.engine.saga.BuyTicketSagaData;
+import com.footyandsweep.apiticketengine.model.Ticket;
+import io.eventuate.tram.commands.consumer.CommandWithDestination;
+
+import java.lang.reflect.InvocationTargetException;
 
 public interface TicketEngine {
 
-  void buyTickets(UUID userId, int numberOfTickets, String joinCode);
+  void buyTickets(BuyTicketSagaData sagaData);
+
+  void getParentSweepstakeAndParticipant(BuyTicketSagaData sagaData);
+
+  void deleteTicket(String ticketId);
+
+  void modifyTickets(String ticketId, String allocationId);
+
+  CommandWithDestination updateUserBalance(BuyTicketSagaData buyTicketSagaData);
 }

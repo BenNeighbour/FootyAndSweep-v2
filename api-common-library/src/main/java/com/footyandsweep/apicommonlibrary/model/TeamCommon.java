@@ -20,12 +20,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
-import java.util.UUID;
 
 @Setter
 @Getter
@@ -36,7 +36,11 @@ public class TeamCommon implements Serializable {
 
   private static final long serialVersionUID = 2018604269715991826L;
 
-  @Id @GeneratedValue private UUID id;
+  @Id
+  @GeneratedValue(generator="system-uuid")
+  @GenericGenerator(name="system-uuid",
+          strategy = "uuid")
+  private String id;
 
   private String name;
 

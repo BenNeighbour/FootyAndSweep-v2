@@ -25,18 +25,17 @@ import org.springframework.stereotype.Repository;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Repository
-public interface ParticipantIdDao extends JpaRepository<ParticipantIds, UUID> {
+public interface ParticipantIdDao extends JpaRepository<ParticipantIds, String> {
 
   @Transactional
   @Cacheable(value = "sweepstakeParticipantCache", key = "#sweepstakeId")
-  Optional<List<ParticipantIds>> findAllParticipantIdsBySweepstakeId(UUID sweepstakeId);
+  List<ParticipantIds> findAllParticipantIdsBySweepstakeId(String sweepstakeId);
 
   @Transactional
   @Cacheable(value = "sweepstakeParticipantCache", key = "#result.get().getSweepstakeId()")
-  Optional<List<ParticipantIds>> findAllParticipantIdsByParticipantId(UUID participantId);
+  Optional<List<ParticipantIds>> findAllParticipantIdsByParticipantId(String participantId);
 
   @Transactional
   @CacheEvict(value = "sweepstakeParticipantCache", key = "#participantIds.getSweepstakeId()")
@@ -45,4 +44,8 @@ public interface ParticipantIdDao extends JpaRepository<ParticipantIds, UUID> {
   @Transactional
   @CacheEvict(value = "sweepstakeParticipantCache", key = "#participantIds.getSweepstakeId()")
   void delete(ParticipantIds participantIds);
+
+  @Transactional
+  @CacheEvict(value = "sweepstakeParticipantCache", key = "#participantIds.getSweepstakeId()")
+  void deleteBySweepstakeId(String sweepstakeId);
 }

@@ -20,10 +20,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.UUID;
 
 @Setter
 @Getter
@@ -36,17 +36,16 @@ public class SweepstakeIds implements Serializable {
   private static final long serialVersionUID = 5778408986459720940L;
 
   @Id
-  @GeneratedValue
-  @Column(columnDefinition = "uuid", updatable = false, name = "id")
-  private UUID id;
+  @GeneratedValue(generator="system-uuid")
+  @GenericGenerator(name="system-uuid",
+          strategy = "uuid")
+  private String id;
 
-  @Column(columnDefinition = "uuid")
-  private UUID participantId;
+  private String participantId;
 
-  @Column(columnDefinition = "uuid")
-  private UUID sweepstakeId;
+  private String sweepstakeId;
 
-  public SweepstakeIds(UUID participantId, UUID sweepstakeId) {
+  public SweepstakeIds(String participantId, String sweepstakeId) {
     this.participantId = participantId;
     this.sweepstakeId = sweepstakeId;
   }

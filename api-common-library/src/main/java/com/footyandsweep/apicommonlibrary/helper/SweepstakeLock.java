@@ -18,14 +18,13 @@ package com.footyandsweep.apicommonlibrary.helper;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
 public class SweepstakeLock {
 
-  private static final Set<UUID> lockedUserKeys = new HashSet<>();
+  private static final Set<String> lockedUserKeys = new HashSet<>();
   private static final Set<String> lockedSweepstakeKeys = new HashSet<>();
 
-  public static void userLock(UUID userKey) throws InterruptedException {
+  public static void userLock(String userKey) throws InterruptedException {
     synchronized (lockedUserKeys) {
       while (!lockedUserKeys.add(userKey)) {
         lockedUserKeys.wait();
@@ -33,7 +32,7 @@ public class SweepstakeLock {
     }
   }
 
-  public static void userUnlock(UUID userKey) {
+  public static void userUnlock(String userKey) {
     synchronized (lockedUserKeys) {
       lockedUserKeys.remove(userKey);
       lockedUserKeys.notifyAll();

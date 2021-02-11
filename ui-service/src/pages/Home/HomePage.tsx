@@ -25,6 +25,7 @@ type Props = OwnProps;
 
 const HomePage: FunctionComponent<Props> = (props) => {
     joinSweepstake(undefined);
+
     return (
         <>
             <NavBar/>

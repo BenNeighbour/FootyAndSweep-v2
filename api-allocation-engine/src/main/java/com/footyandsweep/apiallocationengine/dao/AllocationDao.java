@@ -22,18 +22,17 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
-import java.util.UUID;
 
 @Repository
-public interface AllocationDao extends JpaRepository<Allocation, UUID> {
+public interface AllocationDao extends JpaRepository<Allocation, String> {
 
   @Transactional
   @CacheEvict(value = "allocationCache", key = "#id")
-  Allocation findAllocationById(UUID id);
+  Allocation findAllocationById(String id);
 
   @Transactional
   @CacheEvict(value = "allocationCache", key = "#id")
-  Allocation findAllocationByTicketId(UUID ticketId);
+  Allocation findAllocationByTicketId(String ticketId);
 
   @Transactional
   @CacheEvict(value = "allocationCache", key = "#allocation.getId()")

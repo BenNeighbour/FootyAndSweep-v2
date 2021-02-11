@@ -22,14 +22,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
-import java.util.UUID;
 
 @Repository
-public interface ResultDao extends JpaRepository<Result, UUID> {
+public interface ResultDao extends JpaRepository<Result, String> {
 
   @Transactional
   @CacheEvict(value = "resultCache", key = "#id")
-  Result findResultById(UUID id);
+  Result findResultById(String id);
 
   @Transactional
   @CacheEvict(value = "resultCache", key = "#result.getId()")

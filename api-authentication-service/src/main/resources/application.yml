@@ -2,25 +2,24 @@ spring:
   application:
     name: 'api-authentication-service'
 
-  kafka:
-    bootstrap-servers: ${KAFKA_CONNECT}
-    consumer:
-      auto-offset-reset: earliest
-      group-id: api-event
-      enable-auto-commit: true
+  sleuth:
+    enabled: true
+    sampler:
+      probability: 1
 
-    acks: all
-    retries: 5
-    retry:
-      backoff:
-        ms: 5000
+  zipkin:
+    base:
+      url: http://${ZIPKIN_CONNECT}
 
   jpa:
-    datasource:
-      url: ${SPRING_DATASOURCE_URL}
-      username: ${SPRING_DATASOURCE_USERNAME}
-      password: ${SPRING_DATASOURCE_PASSWORD}
-      driver-class-name: org.postgresql.Driver
+    hibernate:
+      ddl-auto: update
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
 
   redis:
     host: ${REDIS_CONNECT}
@@ -34,8 +33,8 @@ spring:
       client:
         registration:
           google:
-            clientId: 718687795151-9ssqtao7g22pck10lbf5u213se1c60tc.apps.googleusercontent.com
-            clientSecret: JVpzRT3XaKwcP78j6v6gDZWd
+            clientId: 741479066693-5r73putvt12rf6flqphppn6181hu9ldg.apps.googleusercontent.com
+            clientSecret: YSiO4fR5oA68IG04bl5NcnIP
             redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
             scope:
               - email
@@ -75,3 +74,12 @@ server:
     key-store-type: PKCS12
     key-store: classpath:ssl/api-authentication-service.p12
     key-store-password:
+
+eventuatelocal:
+  kafka:
+    bootstrap:
+      servers: ${KAFKA_CONNECT}
+
+  zookeeper:
+    connection:
+      string: ${ZOOKEEPER_CONNECT}

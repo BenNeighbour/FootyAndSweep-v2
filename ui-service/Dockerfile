@@ -1,9 +1,11 @@
-ENV DEBUG=*
+FROM node:14.15.4
 
-FROM node:alpine
 RUN mkdir /app
-COPY . /app
 WORKDIR /app
-COPY package*.json ./
+
+COPY package.json .
 RUN npm install
+
+COPY . .
+
 CMD ["npm", "start"]

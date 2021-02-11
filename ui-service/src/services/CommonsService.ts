@@ -14,9 +14,7 @@
  *   limitations under the License.
  */
 
-import grpcWeb from "grpc-web";
-
-export const handleErrors = (error: grpcWeb.Error) => {
+export const handleErrors = (error: any) => {
     if (error.code === 16) {
         /* Log the user out, then redirect to portal page */
     }

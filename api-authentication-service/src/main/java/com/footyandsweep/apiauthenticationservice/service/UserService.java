@@ -18,11 +18,18 @@ package com.footyandsweep.apiauthenticationservice.service;
 
 import com.footyandsweep.apiauthenticationservice.exception.SignUpException;
 import com.footyandsweep.apiauthenticationservice.payload.SignUpRequest;
-import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
+
+import java.math.BigDecimal;
 
 public interface UserService {
 
-  void addOwnerToSweepstake(SweepstakeCommon sweepstake);
+  void addOwnerToSweepstake(String sweepstakeId, String ownerId);
 
   void checkSignUpRequestIsValid(SignUpRequest request) throws SignUpException;
+
+  void deleteAllSweepstakeRelations(String sweepstakeId);
+
+  void saveSweepstakeId(String sweepstakeId, String participantId);
+
+  void updateUserBalance(String userId, BigDecimal amountDeducted);
 }

@@ -27,11 +27,6 @@ import java.util.List;
 @Getter
 @Entity
 @Table(name = "football_match_squad")
-@AttributeOverrides({
-  @AttributeOverride(
-      name = "id",
-      column = @Column(columnDefinition = "uuid", updatable = false, name = "id"))
-})
 public class FootballMatchSquad extends FootballMatchSquadCommon {
 
   private static final long serialVersionUID = -8212707326087935006L;

@@ -2,24 +2,24 @@ spring:
   application:
     name: 'api-allocation-engine'
 
-  kafka:
-    bootstrap-servers: ${KAFKA_CONNECT}
-    consumer:
-      auto-offset-reset: earliest
-      group-id: api-event
+  sleuth:
+    enabled: true
+    sampler:
+      probability: 1
 
-    acks: all
-    retries: 5
-    retry:
-      backoff:
-        ms: 5000
+  zipkin:
+    base:
+      url: http://${ZIPKIN_CONNECT}
 
   jpa:
-    datasource:
-      url: ${SPRING_DATASOURCE_URL}
-      username: ${SPRING_DATASOURCE_USERNAME}
-      password: ${SPRING_DATASOURCE_PASSWORD}
-      driver-class-name: org.postgresql.Driver
+    hibernate:
+      ddl-auto: update
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
 
   redis:
     host: ${REDIS_CONNECT}
@@ -27,3 +27,16 @@ spring:
 
   cache:
     type: redis
+
+grpc:
+  server:
+    port: 9090
+
+eventuatelocal:
+  kafka:
+    bootstrap:
+      servers: ${KAFKA_CONNECT}
+
+  zookeeper:
+    connection:
+      string: ${ZOOKEEPER_CONNECT}

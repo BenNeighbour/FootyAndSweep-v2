@@ -1,0 +1,77 @@
+syntax = "proto3";
+package com.footyandsweep;
+
+import "google/protobuf/descriptor.proto";
+import "Common.proto";
+import "TicketService.proto";
+
+extend google.protobuf.EnumValueOptions {
+  string sweepstakeStatus = 5000;
+  string sweepstakeType = 5001;
+}
+
+enum SweepstakeStatus {
+  OPEN = 0 [(sweepstakeStatus) = "OPEN"];
+  ALLOCATED = 1 [(sweepstakeStatus) = "ALLOCATED"];
+  CLOSED = 2 [(sweepstakeStatus) = "CLOSED"];
+}
+
+enum SweepstakeTypeCommon {
+  Correct_Score_FT = 0 [(sweepstakeType) = "Correct Score F/T"];
+  Correct_Score_HT = 1 [(sweepstakeType) = "Correct Score H/T"];
+}
+
+message Sweepstake {
+  string id = 1;
+  string name = 2;
+  string joinCode = 3;
+  int32 statusCode = 4;
+  bool isPrivate = 5;
+  string ownerId = 6;
+  string sweepstakeEventId = 7;
+  int32 sweepstakeTypeCode = 8;
+  int32 sweepstakeListSize = 10;
+  int32 minimumPlayers = 11;
+  int32 maximumPlayerTickets = 12;
+  double stake = 13;
+  int32 totalNumberOfTickets = 14;
+  SweepstakeTypeCommon sweepstakeType = 15;
+  SweepstakeStatus status = 16;
+  int32 numberOfRange = 17;
+  int32 numberOfMax = 18;
+  int32 maxNumberOfRanges = 19;
+  int64 correctScoreMax = 20;
+  int64 minuteRange = 21;
+  bool includeBench = 22;
+  bool includeStartingGoalkeeper = 23;
+  bool includeNoGoalScorer = 24;
+  bool includeOwnGoals = 25;
+  string footballMatchId = 26;
+}
+
+message JoinCode {
+  string joinCode = 1;
+}
+
+message Pair {
+  int32 key = 1;
+  string value = 2;
+}
+
+message PairList {
+  repeated Pair pairs = 1;
+}
+
+message SweepstakeList {
+  repeated Sweepstake sweepstakes = 1;
+}
+
+service SweepstakeService {
+  rpc findSweepstakeByJoinCode(JoinCode) returns (Sweepstake);
+  rpc findSweepstakeByFootballMatchId(Id) returns (SweepstakeList);
+  rpc findSweepstakeById(Id) returns (Sweepstake);
+  rpc getResultHelperMap(Sweepstake) returns (Map);
+  rpc requestNewSweepstake(Sweepstake) returns (Sweepstake);
+  rpc getAllSweepstakeParticipants(Id) returns (Ids);
+  rpc resultHelper(Sweepstake) returns (PairList);
+}

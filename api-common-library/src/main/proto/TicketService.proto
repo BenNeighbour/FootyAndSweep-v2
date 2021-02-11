@@ -1,0 +1,35 @@
+syntax = "proto3";
+package com.footyandsweep;
+
+import "google/protobuf/descriptor.proto";
+import "Common.proto";
+
+extend google.protobuf.EnumValueOptions {
+  string ticketStatus = 5000;
+}
+
+enum TicketStatus {
+  PENDING = 0 [(ticketStatus) = "PENDING"];
+  INPLAY = 1 [(ticketStatus) = "INPLAY"];
+  REFUNDED = 2 [(ticketStatus) = "REFUNDED"];
+  WON = 3 [(ticketStatus) = "WON"];
+  LOST = 4 [(ticketStatus) = "LOST"];
+}
+
+message Ticket {
+  string id = 1;
+  TicketStatus status = 2;
+  string sweepstakeId = 3;
+  string allocationId = 4;
+  bool isWinner = 5;
+  string userId = 6;
+}
+
+message TicketList {
+  repeated Ticket ticket = 1;
+}
+
+service TicketService {
+  rpc findTicketById(Id) returns (Ticket);
+  rpc getAllTicketsBySweepstakeId(Id) returns (TicketList);
+}

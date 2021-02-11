@@ -16,11 +16,10 @@
 
 package com.footyandsweep.apisweepstakeengine.config;
 
-import com.footyandsweep.apicommonlibrary.events.EventType;
-import com.footyandsweep.apicommonlibrary.events.SweepstakeEvent;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
-import com.footyandsweep.apisweepstakeengine.event.SweepstakeMessageDispatcher;
+import com.footyandsweep.apisweepstakeengine.grpc.client.SweepstakeClientGrpc;
+import com.footyandsweep.apisweepstakeengine.model.FootballMatchSweepstake;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -32,36 +31,32 @@ import java.util.Date;
 @Component
 public class AllocationSchedulerConfig {
 
-  private static final Logger log = LoggerFactory.getLogger(AllocationSchedulerConfig.class);
-  private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ");
+    private static final Logger log = LoggerFactory.getLogger(AllocationSchedulerConfig.class);
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ");
 
-  private final SweepstakeDao sweepstakeDao;
-  private final SweepstakeMessageDispatcher sweepstakeMessageDispatcher;
+    private final SweepstakeDao sweepstakeDao;
+    private final SweepstakeClientGrpc sweepstakeClient;
 
-  public AllocationSchedulerConfig(
-      SweepstakeDao sweepstakeDao, SweepstakeMessageDispatcher sweepstakeMessageDispatcher) {
-    this.sweepstakeDao = sweepstakeDao;
-    this.sweepstakeMessageDispatcher = sweepstakeMessageDispatcher;
-  }
+    public AllocationSchedulerConfig(SweepstakeDao sweepstakeDao, SweepstakeClientGrpc sweepstakeClient) {
+        this.sweepstakeDao = sweepstakeDao;
+        this.sweepstakeClient = sweepstakeClient;
+    }
 
-  /* Scheduled for every 2 minutes */
-  @Scheduled(fixedRate = 120000)
-  public void checkAndAllocateSweepstakes() {
-    /* Logging the periodic check */
-    log.info("Periodic check for unallocated sweepstakes at {}", dateFormat.format(new Date()));
+    /* Scheduled for every 2 minutes */
+    @Scheduled(fixedRate = 60000)
+    public void checkAndAllocateSweepstakes() {
+        /* Logging the periodic check */
+        log.info("Periodic check for unallocated sweepstakes at {}", dateFormat.format(new
+                Date()));
 
-    /* For each sweepstake that is open, get the event id */
-    sweepstakeDao
-        .findAllSweepstakesByStatus(SweepstakeCommon.SweepstakeStatus.OPEN)
-        .forEach(
-            sweepstake -> {
-              /* Create the event object to be sent over */
-              SweepstakeEvent sweepstakeEvent =
-                  new SweepstakeEvent(sweepstake, EventType.NEEDS_ALLOCATING);
-
-              /* Send a sweepstake needs allocating message */
-              sweepstakeMessageDispatcher.publishEvent(
-                  sweepstakeEvent, "api-sweepstake-events-topic");
-            });
+        /* For each sweepstake that is open, get the event id */
+        /* Call the RPC, which in turn, calls the saga for each sweepstake */
+        sweepstakeDao
+              .findAllSweepstakesByStatus(SweepstakeCommon.SweepstakeStatus.OPEN)
+              .stream()
+                /* TODO: CHECK IF THERE ARE TICKETS */
+                /* TODO: CHECK IF SWEEPSTAKE TICKETS DON'T HAVE ALLOCATION IDS */
+              .filter(sweepstake -> sweepstake instanceof FootballMatchSweepstake)
+              .forEach(sweepstakeClient::allocateSweepstake);
   }
 }

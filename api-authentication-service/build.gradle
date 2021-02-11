@@ -19,7 +19,6 @@ apply plugin: 'java'
 apply plugin: 'application'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
-apply plugin: 'com.google.protobuf'
 
 targetCompatibility = 1.8
 sourceCompatibility = 1.8
@@ -38,7 +37,6 @@ buildscript {
     dependencies {
         classpath "io.spring.gradle:dependency-management-plugin:1.0.10.RELEASE"
         classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion"
-        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.13'
     }
 }
 
@@ -71,8 +69,6 @@ dependencies {
 
     compileOnly "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
 
-    compile group: 'org.postgresql', name: 'postgresql', version: '42.1.1'
-
     compile 'commons-beanutils:commons-beanutils:1.9.4'
     compile group: 'org.hibernate.validator', name: 'hibernate-validator', version: '7.0.0.Final'
 
@@ -93,11 +89,17 @@ dependencies {
     implementation("io.grpc:grpc-protobuf:${grpcVersion}")
     implementation("io.grpc:grpc-netty:${grpcVersion}")
 
+    compile "io.eventuate.tram.sagas:eventuate-tram-sagas-spring-orchestration-simple-dsl:$eventuateTramSagasVersion"
+    compile "io.eventuate.tram.core:eventuate-tram-spring-producer-jdbc:$eventuateTramVersion"
+    compile "io.eventuate.tram.core:eventuate-tram-spring-consumer-kafka:$eventuateTramVersion"
+    compile "io.eventuate.tram.core:eventuate-tram-spring-consumer-jdbc:$eventuateTramVersion"
+    compile "io.eventuate.tram.core:eventuate-tram-spring-optimistic-locking:$eventuateTramVersion"
+    compile "io.eventuate.tram.sagas:eventuate-tram-sagas-spring-participant:$eventuateTramSagasVersion"
+
+    compile group: 'org.postgresql', name: 'postgresql', version: '42.1.1'
+
     implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-config:1.1.0.RELEASE'
     implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes:1.1.0.RELEASE'
-
-    compile "org.springframework.kafka:spring-kafka"
-    compile 'org.springframework.cloud:spring-cloud-starter-sleuth'
 
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
@@ -106,23 +108,6 @@ dependencies {
 
 test {
     useJUnitPlatform()
-}
-
-protobuf {
-    protoc {
-        artifact = "com.google.protobuf:protoc:${protobufVersion}"
-    }
-    plugins {
-        grpc {
-            artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}"
-        }
-    }
-    generateProtoTasks {
-        all()*.plugins {
-            grpc {}
-        }
-    }
-    generatedFilesBaseDir = "$projectDir/src/generated"
 }
 
 idea {

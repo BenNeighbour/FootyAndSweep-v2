@@ -27,11 +27,6 @@ import javax.persistence.*;
 @Getter
 @Entity
 @Table(name = "allocation")
-@AttributeOverrides({
-  @AttributeOverride(
-      name = "id",
-      column = @Column(columnDefinition = "uuid", updatable = false, name = "id"))
-})
 public class Allocation extends AllocationCommon {
 
   private static final long serialVersionUID = 672721687138663108L;

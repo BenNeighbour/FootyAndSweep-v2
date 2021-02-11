@@ -29,15 +29,15 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface SweepstakeDao extends JpaRepository<Sweepstake, UUID> {
+public interface SweepstakeDao extends JpaRepository<Sweepstake, String> {
 
   @Transactional
   @CachePut(value = "sweepstakeCache", key = "#id")
-  Sweepstake findSweepstakeById(UUID id);
+  Sweepstake findSweepstakeById(String id);
 
   @Transactional
   @CachePut(value = "sweepstakeCache", key = "#id")
-  FootballMatchSweepstake findFootballMatchSweepstakeById(UUID id);
+  FootballMatchSweepstake findFootballMatchSweepstakeById(String id);
 
   @Transactional
   @CachePut(value = "sweepstakeCache", key = "#result.getId()")
@@ -53,4 +53,6 @@ public interface SweepstakeDao extends JpaRepository<Sweepstake, UUID> {
   @Transactional
   @CacheEvict(value = "sweepstakeCache", key = "#sweepstake.getId()")
   void delete(Sweepstake sweepstake);
+
+  List<Sweepstake> findAllSweepstakeBySweepstakeEventId(String sweepstakeEventId);
 }

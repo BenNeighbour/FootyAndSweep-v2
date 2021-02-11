@@ -20,6 +20,7 @@ spec:
           imagePullPolicy: Never
           ports:
             - containerPort: 9090
+            - containerPort: 8080
           env:
             - name: SPRING_DATASOURCE_USERNAME
               valueFrom:
@@ -55,6 +56,10 @@ metadata:
 spec:
   ports:
     - port: 9090
+      name: http2
+      protocol: TCP
+    - port: 8080
+      name: http1
       protocol: TCP
   selector:
     app: api-sweepstake-engine

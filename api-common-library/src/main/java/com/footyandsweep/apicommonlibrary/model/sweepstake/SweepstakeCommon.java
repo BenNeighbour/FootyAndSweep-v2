@@ -16,7 +16,7 @@
 
 package com.footyandsweep.apicommonlibrary.model.sweepstake;
 
-import com.footyandsweep.apicommonlibrary.events.ProcessStatus;
+import com.google.gson.annotations.Expose;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -25,6 +25,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
@@ -33,7 +34,6 @@ import java.math.BigDecimal;
 import java.security.SecureRandom;
 import java.util.Date;
 import java.util.Map;
-import java.util.UUID;
 
 @Setter
 @Getter
@@ -44,7 +44,11 @@ public class SweepstakeCommon implements Serializable {
 
   private static final long serialVersionUID = -771315870335755392L;
 
-  @Id @GeneratedValue private UUID id;
+  @Id
+  @GeneratedValue(generator="system-uuid")
+  @GenericGenerator(name="system-uuid",
+          strategy = "uuid")
+  private String id;
 
   @NotNull(message = "There must be a Sweepstake name")
   private String name;
@@ -56,19 +60,14 @@ public class SweepstakeCommon implements Serializable {
   private Boolean isPrivate;
 
   @NotNull(message = "There must be a an owner id!")
-  private UUID ownerId;
+  private String ownerId;
 
   @NotNull(message = "The Sweepstake must be a linked event!")
-  private UUID sweepstakeEventId;
+  private String sweepstakeEventId;
 
   @NotNull(message = "You must select a sweepstake type!")
   @Enumerated(EnumType.STRING)
   private SweepstakeTypeCommon sweepstakeType = this.getSweepstakeType();
-
-  @Enumerated(EnumType.STRING)
-  private ProcessStatus processStatus = ProcessStatus.RELATIONS_PENDING;
-
-  @Transient private int sweepstakeListSize;
 
   @Min(2)
   @NotNull(message = "The Sweepstake must have at least 2 players!")
@@ -82,8 +81,10 @@ public class SweepstakeCommon implements Serializable {
 
   private int totalNumberOfTickets;
 
+  @Expose(serialize = false, deserialize = false)
   @CreationTimestamp private Date created;
 
+  @Expose(serialize = false, deserialize = false)
   @UpdateTimestamp private Date updated;
 
   public Map<Integer, String> getSweepstakeResultMap() {

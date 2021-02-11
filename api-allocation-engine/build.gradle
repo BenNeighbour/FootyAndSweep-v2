@@ -54,6 +54,9 @@ dependencyManagement {
     }
 }
 
+def protobufVersion = '3.6.1'
+def grpcVersion = '1.16.1'
+
 dependencies {
     implementation project(':api-common-library')
 
@@ -67,6 +70,7 @@ dependencies {
 
     compile group: 'org.postgresql', name: 'postgresql', version: '42.1.1'
 
+    compile "commons-lang:commons-lang:2.6"
     implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
     implementation "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
 
@@ -74,13 +78,22 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
     implementation "org.springframework.boot:spring-boot-starter-data-redis:$springBootVersion"
 
+    implementation("io.grpc:grpc-stub:${grpcVersion}")
+    implementation("io.grpc:grpc-core:${grpcVersion}")
+    implementation("io.grpc:grpc-protobuf:${grpcVersion}")
+    implementation("io.grpc:grpc-netty:${grpcVersion}")
+
     implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-config:1.1.0.RELEASE'
     implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes:1.1.0.RELEASE'
 
+    compile 'commons-beanutils:commons-beanutils:1.9.4'
     compile group: 'org.hibernate.validator', name: 'hibernate-validator', version: '7.0.0.Final'
 
-    compile "org.springframework.kafka:spring-kafka"
-    compile 'org.springframework.cloud:spring-cloud-starter-sleuth'
+    compile "io.eventuate.tram.sagas:eventuate-tram-sagas-spring-orchestration-simple-dsl:$eventuateTramSagasVersion"
+    compile "io.eventuate.tram.core:eventuate-tram-spring-producer-jdbc:$eventuateTramVersion"
+    compile "io.eventuate.tram.core:eventuate-tram-spring-consumer-kafka:$eventuateTramVersion"
+    compile "io.eventuate.tram.core:eventuate-tram-spring-consumer-jdbc:$eventuateTramVersion"
+    compile "io.eventuate.tram.core:eventuate-tram-spring-optimistic-locking:$eventuateTramVersion"
 
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'

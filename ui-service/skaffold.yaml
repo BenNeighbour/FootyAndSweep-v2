@@ -1,4 +1,4 @@
-apiVersion: skaffold/v1
+apiVersion: skaffold/v2beta10
 kind: Config
 build:
   artifacts:
@@ -6,8 +6,7 @@ build:
       docker:
         dockerfile: Dockerfile
   local: { }
-
 deploy:
   kubectl:
     manifests:
-      - '../kubernetes/ui-service/ui-service.yaml'
+      - ../kubernetes/ui-service/ui-service.yaml

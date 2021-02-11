@@ -1,261 +1,222 @@
-/*
- *   Copyright 2021 FootyAndSweep
- *
- *   Licensed under the Apache License, Version 2.0 (the "License");
- *   you may not use this file except in compliance with the License.
- *   You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- *   Unless required by applicable law or agreed to in writing, software
- *   distributed under the License is distributed on an "AS IS" BASIS,
- *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *   See the License for the specific language governing permissions and
- *   limitations under the License.
- */
+// package: com.footyandsweep
+// file: SweepstakeService.proto
 
-import * as jspb from 'google-protobuf'
-
+import * as jspb from "google-protobuf";
+import * as google_protobuf_descriptor_pb from "google-protobuf/google/protobuf/descriptor_pb";
 
 export class Sweepstake extends jspb.Message {
-    static toObject(includeInstance: boolean, msg: Sweepstake): Sweepstake.AsObject;
+  getId(): string;
+  setId(value: string): void;
 
-    static serializeBinaryToWriter(message: Sweepstake, writer: jspb.BinaryWriter): void;
+  getName(): string;
+  setName(value: string): void;
 
-    static deserializeBinary(bytes: Uint8Array): Sweepstake;
+  getJoincode(): string;
+  setJoincode(value: string): void;
 
-    static deserializeBinaryFromReader(message: Sweepstake, reader: jspb.BinaryReader): Sweepstake;
+  getStatuscode(): number;
+  setStatuscode(value: number): void;
 
-    getId(): string;
+  getIsprivate(): boolean;
+  setIsprivate(value: boolean): void;
 
-    setId(value: string): Sweepstake;
+  getOwnerid(): string;
+  setOwnerid(value: string): void;
 
-    getName(): string;
+  getSweepstakeeventid(): string;
+  setSweepstakeeventid(value: string): void;
 
-    setName(value: string): Sweepstake;
+  getSweepstaketypecode(): number;
+  setSweepstaketypecode(value: number): void;
 
-    getJoincode(): string;
+  getSweepstakelistsize(): number;
+  setSweepstakelistsize(value: number): void;
 
-    setJoincode(value: string): Sweepstake;
+  getMinimumplayers(): number;
+  setMinimumplayers(value: number): void;
 
-    getStatus(): SweepstakeStatus;
+  getMaximumplayertickets(): number;
+  setMaximumplayertickets(value: number): void;
 
-    setStatus(value: SweepstakeStatus): Sweepstake;
+  getStake(): number;
+  setStake(value: number): void;
 
-    getIsprivate(): boolean;
+  getTotalnumberoftickets(): number;
+  setTotalnumberoftickets(value: number): void;
 
-    setIsprivate(value: boolean): Sweepstake;
+  getSweepstaketype(): SweepstakeTypeCommonMap[keyof SweepstakeTypeCommonMap];
+  setSweepstaketype(value: SweepstakeTypeCommonMap[keyof SweepstakeTypeCommonMap]): void;
 
-    getOwnerid(): string;
+  getStatus(): SweepstakeStatusMap[keyof SweepstakeStatusMap];
+  setStatus(value: SweepstakeStatusMap[keyof SweepstakeStatusMap]): void;
 
-    setOwnerid(value: string): Sweepstake;
+  getNumberofrange(): number;
+  setNumberofrange(value: number): void;
 
-    getSweepstakeeventid(): string;
+  getNumberofmax(): number;
+  setNumberofmax(value: number): void;
 
-    setSweepstakeeventid(value: string): Sweepstake;
+  getMaxnumberofranges(): number;
+  setMaxnumberofranges(value: number): void;
 
-    getSweepstaketype(): SweepstakeTypeCommon;
+  getCorrectscoremax(): number;
+  setCorrectscoremax(value: number): void;
 
-    setSweepstaketype(value: SweepstakeTypeCommon): Sweepstake;
+  getMinuterange(): number;
+  setMinuterange(value: number): void;
 
-    getProcessstatus(): ProcessStatus;
+  getIncludebench(): boolean;
+  setIncludebench(value: boolean): void;
 
-    setProcessstatus(value: ProcessStatus): Sweepstake;
+  getIncludestartinggoalkeeper(): boolean;
+  setIncludestartinggoalkeeper(value: boolean): void;
 
-    getSweepstakelistsize(): number;
+  getIncludenogoalscorer(): boolean;
+  setIncludenogoalscorer(value: boolean): void;
 
-    setSweepstakelistsize(value: number): Sweepstake;
+  getIncludeowngoals(): boolean;
+  setIncludeowngoals(value: boolean): void;
 
-    getMinimumplayers(): number;
+  getFootballmatchid(): string;
+  setFootballmatchid(value: string): void;
 
-    setMinimumplayers(value: number): Sweepstake;
-
-    getMaximumplayertickets(): number;
-
-    setMaximumplayertickets(value: number): Sweepstake;
-
-    getStake(): BigDecimal | undefined;
-
-    setStake(value?: BigDecimal): Sweepstake;
-
-    hasStake(): boolean;
-
-    clearStake(): Sweepstake;
-
-    getTotalnumberoftickets(): number;
-
-    setTotalnumberoftickets(value: number): Sweepstake;
-
-    serializeBinary(): Uint8Array;
-
-    toObject(includeInstance?: boolean): Sweepstake.AsObject;
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): Sweepstake.AsObject;
+  static toObject(includeInstance: boolean, msg: Sweepstake): Sweepstake.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: Sweepstake, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): Sweepstake;
+  static deserializeBinaryFromReader(message: Sweepstake, reader: jspb.BinaryReader): Sweepstake;
 }
 
 export namespace Sweepstake {
-    export type AsObject = {
-        id: string,
-        name: string,
-        joincode: string,
-        status: SweepstakeStatus,
-        isprivate: boolean,
-        ownerid: string,
-        sweepstakeeventid: string,
-        sweepstaketype: SweepstakeTypeCommon,
-        processstatus: ProcessStatus,
-        sweepstakelistsize: number,
-        minimumplayers: number,
-        maximumplayertickets: number,
-        stake?: BigDecimal.AsObject,
-        totalnumberoftickets: number,
-    }
-}
-
-export class BigDecimal extends jspb.Message {
-    static toObject(includeInstance: boolean, msg: BigDecimal): BigDecimal.AsObject;
-
-    static serializeBinaryToWriter(message: BigDecimal, writer: jspb.BinaryWriter): void;
-
-    static deserializeBinary(bytes: Uint8Array): BigDecimal;
-
-    static deserializeBinaryFromReader(message: BigDecimal, reader: jspb.BinaryReader): BigDecimal;
-
-    getScale(): number;
-
-    setScale(value: number): BigDecimal;
-
-    getIntVal(): BigInteger | undefined;
-
-    setIntVal(value?: BigInteger): BigDecimal;
-
-    hasIntVal(): boolean;
-
-    clearIntVal(): BigDecimal;
-
-    serializeBinary(): Uint8Array;
-
-    toObject(includeInstance?: boolean): BigDecimal.AsObject;
-}
-
-export namespace BigDecimal {
-    export type AsObject = {
-        scale: number,
-        intVal?: BigInteger.AsObject,
-    }
-}
-
-export class BigInteger extends jspb.Message {
-    static toObject(includeInstance: boolean, msg: BigInteger): BigInteger.AsObject;
-
-    static serializeBinaryToWriter(message: BigInteger, writer: jspb.BinaryWriter): void;
-
-    static deserializeBinary(bytes: Uint8Array): BigInteger;
-
-    static deserializeBinaryFromReader(message: BigInteger, reader: jspb.BinaryReader): BigInteger;
-
-    getValue(): Uint8Array | string;
-
-    getValue_asU8(): Uint8Array;
-
-    getValue_asB64(): string;
-
-    setValue(value: Uint8Array | string): BigInteger;
-
-    serializeBinary(): Uint8Array;
-
-    toObject(includeInstance?: boolean): BigInteger.AsObject;
-}
-
-export namespace BigInteger {
-    export type AsObject = {
-        value: Uint8Array | string,
-    }
+  export type AsObject = {
+    id: string,
+    name: string,
+    joincode: string,
+    statuscode: number,
+    isprivate: boolean,
+    ownerid: string,
+    sweepstakeeventid: string,
+    sweepstaketypecode: number,
+    sweepstakelistsize: number,
+    minimumplayers: number,
+    maximumplayertickets: number,
+    stake: number,
+    totalnumberoftickets: number,
+    sweepstaketype: SweepstakeTypeCommonMap[keyof SweepstakeTypeCommonMap],
+    status: SweepstakeStatusMap[keyof SweepstakeStatusMap],
+    numberofrange: number,
+    numberofmax: number,
+    maxnumberofranges: number,
+    correctscoremax: number,
+    minuterange: number,
+    includebench: boolean,
+    includestartinggoalkeeper: boolean,
+    includenogoalscorer: boolean,
+    includeowngoals: boolean,
+    footballmatchid: string,
+  }
 }
 
 export class JoinCode extends jspb.Message {
-    static toObject(includeInstance: boolean, msg: JoinCode): JoinCode.AsObject;
+  getJoincode(): string;
+  setJoincode(value: string): void;
 
-    static serializeBinaryToWriter(message: JoinCode, writer: jspb.BinaryWriter): void;
-
-    static deserializeBinary(bytes: Uint8Array): JoinCode;
-
-    static deserializeBinaryFromReader(message: JoinCode, reader: jspb.BinaryReader): JoinCode;
-
-    getJoincode(): string;
-
-    setJoincode(value: string): JoinCode;
-
-    serializeBinary(): Uint8Array;
-
-    toObject(includeInstance?: boolean): JoinCode.AsObject;
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): JoinCode.AsObject;
+  static toObject(includeInstance: boolean, msg: JoinCode): JoinCode.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: JoinCode, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): JoinCode;
+  static deserializeBinaryFromReader(message: JoinCode, reader: jspb.BinaryReader): JoinCode;
 }
 
 export namespace JoinCode {
-    export type AsObject = {
-        joincode: string,
-    }
+  export type AsObject = {
+    joincode: string,
+  }
 }
 
-export class SweepstakeId extends jspb.Message {
-    static toObject(includeInstance: boolean, msg: SweepstakeId): SweepstakeId.AsObject;
+export class Id extends jspb.Message {
+  getId(): string;
+  setId(value: string): void;
 
-    static serializeBinaryToWriter(message: SweepstakeId, writer: jspb.BinaryWriter): void;
-
-    static deserializeBinary(bytes: Uint8Array): SweepstakeId;
-
-    static deserializeBinaryFromReader(message: SweepstakeId, reader: jspb.BinaryReader): SweepstakeId;
-
-    getSweepstakeid(): string;
-
-    setSweepstakeid(value: string): SweepstakeId;
-
-    serializeBinary(): Uint8Array;
-
-    toObject(includeInstance?: boolean): SweepstakeId.AsObject;
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): Id.AsObject;
+  static toObject(includeInstance: boolean, msg: Id): Id.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: Id, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): Id;
+  static deserializeBinaryFromReader(message: Id, reader: jspb.BinaryReader): Id;
 }
 
-export namespace SweepstakeId {
-    export type AsObject = {
-        sweepstakeid: string,
-    }
+export namespace Id {
+  export type AsObject = {
+    id: string,
+  }
 }
 
 export class Map extends jspb.Message {
-    static toObject(includeInstance: boolean, msg: Map): Map.AsObject;
-
-    static serializeBinaryToWriter(message: Map, writer: jspb.BinaryWriter): void;
-
-    static deserializeBinary(bytes: Uint8Array): Map;
-
-    static deserializeBinaryFromReader(message: Map, reader: jspb.BinaryReader): Map;
-
-    getPairsMap(): jspb.Map<number, string>;
-
-    clearPairsMap(): Map;
-
-    serializeBinary(): Uint8Array;
-
-    toObject(includeInstance?: boolean): Map.AsObject;
+  getPairsMap(): jspb.Map<number, string>;
+  clearPairsMap(): void;
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): Map.AsObject;
+  static toObject(includeInstance: boolean, msg: Map): Map.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: Map, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): Map;
+  static deserializeBinaryFromReader(message: Map, reader: jspb.BinaryReader): Map;
 }
 
 export namespace Map {
-    export type AsObject = {
-        pairsMap: Array<[number, string]>,
-    }
+  export type AsObject = {
+    pairsMap: Array<[number, string]>,
+  }
 }
 
-export enum SweepstakeStatus {
-    OPEN = 0,
-    ALLOCATED = 1,
-    CLOSED = 2,
+export class SweepstakeList extends jspb.Message {
+  clearSweepstakesList(): void;
+  getSweepstakesList(): Array<Sweepstake>;
+  setSweepstakesList(value: Array<Sweepstake>): void;
+  addSweepstakes(value?: Sweepstake, index?: number): Sweepstake;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): SweepstakeList.AsObject;
+  static toObject(includeInstance: boolean, msg: SweepstakeList): SweepstakeList.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: SweepstakeList, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): SweepstakeList;
+  static deserializeBinaryFromReader(message: SweepstakeList, reader: jspb.BinaryReader): SweepstakeList;
 }
 
-export enum SweepstakeTypeCommon {
-    CORRECT_SCORE_FT = 0,
-    CORRECT_SCORE_HT = 1,
+export namespace SweepstakeList {
+  export type AsObject = {
+    sweepstakesList: Array<Sweepstake.AsObject>,
+  }
 }
 
-export enum ProcessStatus {
-    PENDING = 0,
-    INVALID = 1,
-    PERSISTED = 2,
+  export const sweepstakeStatus: jspb.ExtensionFieldInfo<string>;
+
+  export const sweepstakeType: jspb.ExtensionFieldInfo<string>;
+
+export interface SweepstakeStatusMap {
+  OPEN: 0;
+  ALLOCATED: 1;
+  CLOSED: 2;
 }
+
+export const SweepstakeStatus: SweepstakeStatusMap;
+
+export interface SweepstakeTypeCommonMap {
+  CORRECT_SCORE_FT: 0;
+  CORRECT_SCORE_HT: 1;
+}
+
+export const SweepstakeTypeCommon: SweepstakeTypeCommonMap;
+

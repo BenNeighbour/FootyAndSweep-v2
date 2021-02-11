@@ -25,6 +25,9 @@ sourceCompatibility = 1.8
 group = 'com.footyandsweep'
 version = '0.0.1-SNAPSHOT'
 
+def protobufVersion = '3.6.1'
+def grpcVersion = '1.16.1'
+
 buildscript {
     repositories {
         mavenCentral()
@@ -76,13 +79,22 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
     implementation "org.springframework.boot:spring-boot-starter-data-redis:$springBootVersion"
 
+    implementation "io.grpc:grpc-stub:${grpcVersion}"
+    implementation "io.grpc:grpc-core:${grpcVersion}"
+    implementation "io.grpc:grpc-protobuf:${grpcVersion}"
+    implementation "io.grpc:grpc-netty:${grpcVersion}"
+
     implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-config:1.1.0.RELEASE'
     implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes:1.1.0.RELEASE'
 
-    compile group: 'org.hibernate.validator', name: 'hibernate-validator', version: '7.0.0.Final'
+    compile "io.eventuate.tram.sagas:eventuate-tram-sagas-spring-orchestration-simple-dsl:$eventuateTramSagasVersion"
+    compile "io.eventuate.tram.core:eventuate-tram-spring-producer-jdbc:$eventuateTramVersion"
+    compile "io.eventuate.tram.core:eventuate-tram-spring-consumer-kafka:$eventuateTramVersion"
+    compile "io.eventuate.tram.core:eventuate-tram-spring-consumer-jdbc:$eventuateTramVersion"
+    compile "io.eventuate.tram.core:eventuate-tram-spring-optimistic-locking:$eventuateTramVersion"
+    compile "io.eventuate.tram.sagas:eventuate-tram-sagas-spring-participant:$eventuateTramSagasVersion"
 
-    compile "org.springframework.kafka:spring-kafka"
-    compile 'org.springframework.cloud:spring-cloud-starter-sleuth'
+    compile group: 'org.hibernate.validator', name: 'hibernate-validator', version: '7.0.0.Final'
 
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'

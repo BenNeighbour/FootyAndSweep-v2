@@ -16,16 +16,14 @@
 
 package com.footyandsweep.apiticketengine.engine;
 
-import com.footyandsweep.apicommonlibrary.events.EventType;
-import com.footyandsweep.apicommonlibrary.events.SweepstakeEvent;
-import com.footyandsweep.apicommonlibrary.events.TicketEvent;
+import com.footyandsweep.apicommonlibrary.cqrs.user.UpdateUserBalanceCommand;
 import com.footyandsweep.apicommonlibrary.helper.SweepstakeLock;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
-import com.footyandsweep.apicommonlibrary.model.user.UserCommon;
 import com.footyandsweep.apiticketengine.dao.TicketDao;
-import com.footyandsweep.apiticketengine.event.TicketMessageDispatcher;
+import com.footyandsweep.apiticketengine.engine.saga.BuyTicketSagaData;
 import com.footyandsweep.apiticketengine.model.Ticket;
+import io.eventuate.tram.commands.consumer.CommandWithDestination;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -33,10 +31,11 @@ import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
+
+import static io.eventuate.tram.commands.consumer.CommandWithDestinationBuilder.send;
 
 @Service
 public class TicketEngineImpl implements TicketEngine {
@@ -46,94 +45,67 @@ public class TicketEngineImpl implements TicketEngine {
 
   private final TicketDao ticketDao;
   private final RestTemplate restTemplate;
-  private final TicketMessageDispatcher ticketMessageDispatcher;
 
-  public TicketEngineImpl(
-      final TicketDao ticketDao,
-      final RestTemplate restTemplate,
-      final TicketMessageDispatcher ticketMessageDispatcher) {
+  public TicketEngineImpl(TicketDao ticketDao, RestTemplate restTemplate) {
     this.ticketDao = ticketDao;
     this.restTemplate = restTemplate;
-    this.ticketMessageDispatcher = ticketMessageDispatcher;
+  }
+
+  /* TODO: REPLACE WITH GRPC CLIENTS */
+  @Override
+  public void getParentSweepstakeAndParticipant(BuyTicketSagaData sagaData) {
+    /* Get the sweepstake object that has the joinCode */
+    Optional<SweepstakeCommon> parentSweepstake =
+            Optional.ofNullable(
+                    restTemplate.getForObject(
+                            "http://api-sweepstake-engine:8080/sweepstake/test/by/joinCode/" + sagaData.getParentSweepstake().getJoinCode(),
+                            SweepstakeCommon.class));
+
+    assert parentSweepstake.isPresent();
+    sagaData.setParentSweepstake(parentSweepstake.get());
   }
 
   @Override
-  public void buyTickets(UUID userId, int numberOfTickets, String joinCode) {
+  public void buyTickets(BuyTicketSagaData sagaData) {
     try {
-      /* Get the user object by the id provided */
-      Optional<UserCommon> user =
-          Optional.ofNullable(
-              restTemplate.getForObject(
-                  "http://api-gateway-service:8080/internal/user/by/id/" + userId,
-                  UserCommon.class));
-
-      /* Check if the user sent back is not malformed or null */
-      if (!user.isPresent()) throw new Exception();
-
-      /* Get the sweepstake object that has the joinCode */
-      Optional<SweepstakeCommon> parentSweepstake =
-          Optional.ofNullable(
-              restTemplate.getForObject(
-                  "http://api-sweepstake-engine:8080/internal/sweepstake/by/joinCode/" + joinCode,
-                  SweepstakeCommon.class));
-
-      /* Check if the sweepstake sent back is not malformed or null - meaning it's an invalid join code */
-      if (!parentSweepstake.isPresent()) throw new Exception();
-
       /* Validate the sweepstake status */
-      if (!parentSweepstake.get().getStatus().equals(SweepstakeCommon.SweepstakeStatus.OPEN))
+      if (!sagaData.getParentSweepstake().getStatus().equals(SweepstakeCommon.SweepstakeStatus.OPEN))
         throw new Exception();
-
-      /* TODO: Validate whether the user is actually part of the sweepstake */
 
       /* Locking condition */
       boolean isSweepstakeLocked = false;
 
       try {
         /* Lock the user */
-        SweepstakeLock.userLock(user.get().getId());
-
-        /* If the user cannot afford tickets, throw an error/send error message to client via WebSocket */
-        if (!this.canUserAffordTickets(
-            user.get().getBalance(), numberOfTickets, parentSweepstake.get().getStake()))
-          throw new Exception();
+        SweepstakeLock.userLock(sagaData.getParticipant().getId());
 
         /* Lock the sweepstake - and all of the other participants*/
-        SweepstakeLock.lockSweepstake(parentSweepstake.get().getJoinCode());
+        SweepstakeLock.lockSweepstake(sagaData.getParentSweepstake().getJoinCode());
         isSweepstakeLocked = true;
 
         /* Invoking the helper function to deal with database iterations/transactions */
-        this.ticketIteratorHelper(numberOfTickets, userId, parentSweepstake.get());
+        this.ticketIteratorHelper(sagaData);
 
         /* Fetching all of the tickets with this sweepstake id from the database */
         Optional<List<Ticket>> allSweepstakeTickets =
-            ticketDao.findAllTicketsBySweepstakeId(parentSweepstake.get().getId());
+                ticketDao.findAllTicketsBySweepstakeId(sagaData.getParentSweepstake().getId());
 
         /* Checking if the tickets can be allocated already */
         if (allSweepstakeTickets.isPresent()) {
           if (allSweepstakeTickets.get().size()
-              >= parentSweepstake.get().getTotalNumberOfTickets()) {
-            /* Creating the sweepstake sold out object for the other services to react to */
-            SweepstakeEvent sweepstakeSoldOut =
-                new SweepstakeEvent(parentSweepstake.get(), EventType.SOLD_OUT);
+                  >= sagaData.getParentSweepstake().getTotalNumberOfTickets()) {
+            /* TODO: Sold out! */
 
-            /* Dispatch the sweepstake sold out event */
-            ticketMessageDispatcher.publishEvent(sweepstakeSoldOut, "api-sweepstake-events-topic");
-
-            /* Log the event */
-            log.info(
-                "Sweepstake {} has been sold out! {}",
-                sweepstakeSoldOut.getSweepstake().getId(),
-                dateFormat.format(new Date()));
           }
         }
+
       } catch (InterruptedException ignored) {
       } finally {
         if (isSweepstakeLocked) {
-          SweepstakeLock.unlockSweepstake(parentSweepstake.get().getJoinCode());
+          SweepstakeLock.unlockSweepstake(sagaData.getParentSweepstake().getJoinCode());
         }
 
-        SweepstakeLock.userUnlock(userId);
+        SweepstakeLock.userUnlock(sagaData.getParticipant().getId());
       }
 
     } catch (Exception e) {
@@ -141,46 +113,46 @@ public class TicketEngineImpl implements TicketEngine {
     }
   }
 
-  private void ticketIteratorHelper(
-      int numberOfTickets, UUID userId, SweepstakeCommon parentSweepstake) {
+  private void ticketIteratorHelper(BuyTicketSagaData sagaData) {
+    sagaData.setSavedTickets(new ArrayList<>());
+
     try {
       /* When valid, buy each of the tickets for the user */
-      for (int i = 0; i < numberOfTickets; i++) {
+      for (int i = 0; i < sagaData.getNumberOfTickets(); i++) {
         Ticket ticket = new Ticket();
 
         /* Fill in those properties in the new ticket object */
-        ticket.setUserId(userId);
+        ticket.setUserId(sagaData.getParticipant().getId());
         ticket.setStatus(TicketCommon.TicketStatus.PENDING);
-        ticket.setSweepstakeId(parentSweepstake.getId());
-        ticket.setSweepstake(parentSweepstake);
+        ticket.setSweepstakeId(sagaData.getParentSweepstake().getId());
 
         /* Persist that ticket while adding it onto the list of bought tickets for that user */
         ticket = ticketDao.save(ticket);
-
-        /* Creating the sweepstake created object for the other services to react to */
-        TicketEvent ticketBought = new TicketEvent(ticket, EventType.PURCHASED, false);
-
-        /* Dispatch tickets bought event */
-        ticketMessageDispatcher.publishEvent(ticketBought, "api-ticket-events-topic");
-
-        /* Log the event */
-        log.info(
-            "Ticket {} on sweepstake {} has been bought! {}",
-            ticketBought.getTicket().getId(),
-            ticketBought.getTicket().getSweepstakeId(),
-            dateFormat.format(new Date()));
+        sagaData.getSavedTickets().add(ticket);
       }
     } catch (Exception e) {
       /* Get the error message and ping it back to the client */
     }
   }
 
-  private boolean canUserAffordTickets(
-      BigDecimal userBalance, int numberOfTickets, BigDecimal stake) {
-    /* Multiply the number of tickets by the stake */
-    BigDecimal total = stake.multiply(new BigDecimal(numberOfTickets));
+  @Override
+  public CommandWithDestination updateUserBalance(BuyTicketSagaData sagaData) {
+    return send(new UpdateUserBalanceCommand(sagaData.getParticipant().getId(),
+            sagaData.getParentSweepstake().getStake().multiply(new BigDecimal(sagaData.getNumberOfTickets())).multiply(new BigDecimal(-1))))
+            .to("user-service-events")
+            .build();
+  }
 
-    /* Validate whether the user balance is greater than the total cost and return */
-    return userBalance.compareTo(total) >= 0;
+  @Override
+  public void modifyTickets(String ticketId, String allocationId) {
+    Ticket ticket = ticketDao.findTicketById(ticketId);
+    ticket.setAllocationId(allocationId);
+
+    ticketDao.saveAndFlush(ticket);
+  }
+
+  @Override
+  public void deleteTicket(String ticketId) {
+    ticketDao.deleteById(ticketId);
   }
 }

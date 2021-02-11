@@ -16,18 +16,18 @@
 
 package com.footyandsweep.apisweepstakeengine.config;
 
-import com.footyandsweep.apicommonlibrary.events.EventType;
-import com.footyandsweep.apicommonlibrary.events.SweepstakeEvent;
+import com.footyandsweep.ResultServiceGrpc;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
-import com.footyandsweep.apisweepstakeengine.event.SweepstakeMessageDispatcher;
+import com.google.protobuf.Empty;
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 @Component
 public class ResultSchedulerConfig {
@@ -36,41 +36,28 @@ public class ResultSchedulerConfig {
   private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ");
 
   private final SweepstakeDao sweepstakeDao;
-  private final SweepstakeMessageDispatcher sweepstakeMessageDispatcher;
 
-  public ResultSchedulerConfig(
-      SweepstakeDao sweepstakeDao, SweepstakeMessageDispatcher sweepstakeMessageDispatcher) {
+  public ResultSchedulerConfig(SweepstakeDao sweepstakeDao) {
     this.sweepstakeDao = sweepstakeDao;
-    this.sweepstakeMessageDispatcher = sweepstakeMessageDispatcher;
   }
 
   /* Scheduled for every 4 minutes (240000) */
-  @Scheduled(fixedRate = 240000)
+  @Scheduled(fixedRate = 120000)
   public void fetchAndDecisionSweepstakes() {
-    /* Logging the periodic check */
-    log.info(
-        "Periodic scrape for results and decisioning sweepstakes at {}",
-        dateFormat.format(new Date()));
+      sweepstakeDao
+              .findAllSweepstakesByStatus(SweepstakeCommon.SweepstakeStatus.ALLOCATED)
+              /* TODO: Filter by the current football match id */
+              .forEach(
+                      sweepstake -> {
+                          /* Call the RPC, which in turn, calls the saga for each sweepstake */
+                          ManagedChannel channel = ManagedChannelBuilder.forAddress("api-result-engine", 9090)
+                                  .usePlaintext()
+                                  .build();
 
-    /* TODO: Check and scrape new results */
+                          ResultServiceGrpc.ResultServiceBlockingStub clientStub = ResultServiceGrpc.newBlockingStub(channel);
+                          clientStub.checkForSweepstakeResults(Empty.newBuilder().build());
 
-    /* TODO: Get all of the football match ids of the results brought back */
-
-    /* TODO: Iterate over the football match ids */
-
-    /* For each sweepstake that is open, get the event id, and decision the sweepstake and it's tickets */
-    sweepstakeDao
-        .findAllSweepstakesByStatus(SweepstakeCommon.SweepstakeStatus.ALLOCATED)
-        /* TODO: Filter by the current football match id */
-        .forEach(
-            sweepstake -> {
-              /* Create the event object to be sent over */
-              SweepstakeEvent sweepstakeEvent =
-                  new SweepstakeEvent(sweepstake, EventType.NEEDS_DECISIONING);
-
-              /* Send a sweepstake needs allocating message */
-              sweepstakeMessageDispatcher.publishEvent(
-                  sweepstakeEvent, "api-sweepstake-events-topic");
-            });
+                          channel.shutdown();
+                      });
   }
 }

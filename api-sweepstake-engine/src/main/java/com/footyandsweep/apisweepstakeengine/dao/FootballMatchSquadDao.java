@@ -23,14 +23,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
-import java.util.UUID;
 
 @Repository
-public interface FootballMatchSquadDao extends JpaRepository<FootballMatchSquad, UUID> {
+public interface FootballMatchSquadDao extends JpaRepository<FootballMatchSquad, String> {
 
   @Transactional
   @Cacheable(value = "footballMatchSquadCache", key = "#id")
-  FootballMatchSquad findFootballMatchSquadById(UUID id);
+  FootballMatchSquad findFootballMatchSquadById(String id);
 
   @Transactional
   @CacheEvict(value = "footballMatchSquadCache", key = "#footballMatchSquad.getId()")

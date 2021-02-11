@@ -24,7 +24,6 @@ import lombok.Setter;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -35,7 +34,7 @@ public class BuyTicketObject implements Serializable {
   private static final long serialVersionUID = -137905864975367114L;
 
   @NotNull(message = "There must be an owner of these tickets!")
-  private UUID ownerId;
+  private String ownerId;
 
   @NotNull(message = "You need to put in a join code to join a Sweepstake!")
   private String joinCode;

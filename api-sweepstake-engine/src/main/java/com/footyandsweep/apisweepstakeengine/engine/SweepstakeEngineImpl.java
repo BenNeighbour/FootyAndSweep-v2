@@ -16,22 +16,27 @@
 
 package com.footyandsweep.apisweepstakeengine.engine;
 
-import com.footyandsweep.apicommonlibrary.events.EventType;
-import com.footyandsweep.apicommonlibrary.events.SweepstakeEvent;
+import com.footyandsweep.apicommonlibrary.cqrs.sweepstake.delete.DeleteAllSweepstakeRelationsCommand;
+import com.footyandsweep.apicommonlibrary.cqrs.user.LinkParticipantToSweepstakeCommand;
+import com.footyandsweep.apicommonlibrary.exceptions.ParticipantAlreadyJoinedException;
+import com.footyandsweep.apicommonlibrary.exceptions.SweepstakeDoesNotExistException;
+import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apisweepstakeengine.dao.ParticipantIdDao;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
-import com.footyandsweep.apisweepstakeengine.event.SweepstakeMessageDispatcher;
+import com.footyandsweep.apisweepstakeengine.engine.saga.createSweepstake.CreateSweepstakeSagaData;
+import com.footyandsweep.apisweepstakeengine.engine.saga.deleteSweepstake.DeleteSweepstakeSagaData;
 import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
 import com.footyandsweep.apisweepstakeengine.relation.ParticipantIds;
+import io.eventuate.tram.commands.consumer.CommandWithDestination;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.stream.Collectors;
+
+import static io.eventuate.tram.commands.consumer.CommandWithDestinationBuilder.send;
 
 @Service
 public class SweepstakeEngineImpl implements SweepstakeEngine {
@@ -41,73 +46,95 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
 
   private final SweepstakeDao sweepstakeDao;
   private final ParticipantIdDao participantIdDao;
-  private final SweepstakeMessageDispatcher sweepstakeMessageDispatcher;
 
-  public SweepstakeEngineImpl(
-      final SweepstakeDao sweepstakeDao,
-      final ParticipantIdDao participantIdDao,
-      final SweepstakeMessageDispatcher sweepstakeMessageDispatcher) {
+  public SweepstakeEngineImpl(SweepstakeDao sweepstakeDao, ParticipantIdDao participantIdDao) {
     this.sweepstakeDao = sweepstakeDao;
     this.participantIdDao = participantIdDao;
-    this.sweepstakeMessageDispatcher = sweepstakeMessageDispatcher;
   }
 
   @Override
-  public Sweepstake saveSweepstake(UUID ownerId, Sweepstake sweepstake) {
+  public void saveSweepstake(CreateSweepstakeSagaData sagaData) {
+    Sweepstake sweepstake = (Sweepstake) sagaData.getSweepstake();
+
+    /* Saving the sweepstake */
+    sweepstake = sweepstakeDao.save(sweepstake);
+
+    sagaData.getSweepstake().setId(sweepstake.getId());
+  }
+
+  @Override
+  public ParticipantIds createSweepstakeParticipantRelation(String joinCode, String participantId) {
+      /* Find the sweepstake */
+      Sweepstake sweepstake = sweepstakeDao.findSweepstakeByJoinCode(joinCode);
+
+      /* Check if the user is already in the sweepstake */
+      List<ParticipantIds> sweepstakeParticipantIds = participantIdDao.findAllParticipantIdsBySweepstakeId(sweepstake.getId());
+
+      sweepstakeParticipantIds = sweepstakeParticipantIds.stream()
+              .filter(participantIds -> participantIds.getParticipantId().equals(participantId)).collect(Collectors.toList());
+
+      if (sweepstakeParticipantIds.isEmpty()) {
+        /* If the user isn't in the sweepstake, then add it to the participant list */
+        ParticipantIds newParticipant = new ParticipantIds(sweepstake.getId(), participantId);
+
+        newParticipant = participantIdDao.save(newParticipant);
+        return newParticipant;
+      } else {
+        throw new ParticipantAlreadyJoinedException("You are already part of this sweepstake!");
+      }
+  }
+
+  @Override
+  public void updateSweepstakeStatus(String sweepstakeId, SweepstakeCommon.SweepstakeStatus status) {
     try {
-      sweepstake.setOwnerId(ownerId);
+      Sweepstake sweepstake = sweepstakeDao.findSweepstakeById(sweepstakeId);
+      sweepstake.setStatus(status);
 
-      /* Persist the sweepstake and it's participant junction table */
-      sweepstake = sweepstakeDao.save(sweepstake);
-
-      /* Save the relation */
-      participantIdDao.save(new ParticipantIds(sweepstake.getId(), ownerId));
-
-      /* Creating the sweepstake created object for other services to react to */
-      SweepstakeEvent sweepstakeCreated = new SweepstakeEvent(sweepstake, EventType.CREATED);
-
-      /* This gets received by the gateway service, then that service adds the sweepstake and
-      user id into it's SweepstakeIds Junction Table */
-      sweepstakeMessageDispatcher.publishEvent(sweepstakeCreated, "api-sweepstake-events-topic");
-
-      /* Log the event */
-      log.info(
-          "Sweepstake {} has been created! {}",
-          sweepstakeCreated.getSweepstake().getId(),
-          dateFormat.format(new Date()));
-
-      return sweepstake;
-    } catch (Exception e) {
-      // TODO: FIX THIS!
-      return null;
+      sweepstakeDao.saveAndFlush(sweepstake);
+    } catch (NullPointerException e) {
+      throw new SweepstakeDoesNotExistException();
     }
   }
 
   @Override
-  public void deleteParticipantRelation(UUID sweepstakeId) {
-    Optional<List<ParticipantIds>> optionalParticipantIds =
-        participantIdDao.findAllParticipantIdsBySweepstakeId(sweepstakeId);
-
-    optionalParticipantIds.ifPresent(
-        ids ->
-            participantIdDao.delete(
-                ids.stream()
-                    .filter(participantIds -> participantIds.getSweepstakeId().equals(sweepstakeId))
-                    .findAny()
-                    .get()));
+  public CommandWithDestination linkParticipantToSweepstake(
+          String sweepstakeId, String participantId) {
+    /* Do the remote service invocation here */
+    return send(new LinkParticipantToSweepstakeCommand(participantId, sweepstakeId))
+            .to("user-service-events")
+            .build();
   }
 
   @Override
-  public Sweepstake deleteSweepstake(UUID sweepstakeId) {
-    Sweepstake sweepstake = sweepstakeDao.findSweepstakeById(sweepstakeId);
-    sweepstakeDao.delete(sweepstake);
-
-    /* Log the event */
-    log.info(
-        "Sweepstake {} has been purged! {}", sweepstake.getId(), dateFormat.format(new Date()));
-
-    // TODO: Broadcast websockets error message with the reason in it
-
-    return sweepstake;
+  public CommandWithDestination deleteRemoteSweepstakeRelation(DeleteSweepstakeSagaData sagaData) {
+    return send(new DeleteAllSweepstakeRelationsCommand(sagaData.getSweepstake().getId()))
+            .to("user-service-events")
+            .build();
   }
+
+  @Override
+  public void deleteSweepstakeById(String sweepstakeId) {
+    sweepstakeDao.deleteById(sweepstakeId);
+  }
+
+  @Override
+  public void deleteSweepstake(Sweepstake sweepstake) {
+    sweepstakeDao.delete(sweepstake);
+  }
+
+  @Override
+  public void deleteSweepstakeRelationById(String relationId) {
+    participantIdDao.deleteById(relationId);
+  }
+
+  @Override
+  public void deleteAllSweepstakeRelationsBySweepstakeId(String sweepstakeId) {
+    List<ParticipantIds> participantIds =
+            participantIdDao.findAllParticipantIdsBySweepstakeId(sweepstakeId);
+
+    assert participantIds != null;
+    participantIds.forEach(participantIdDao::delete);
+  }
+
+
 }

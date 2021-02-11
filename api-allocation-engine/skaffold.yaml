@@ -1,4 +1,4 @@
-apiVersion: skaffold/v1
+apiVersion: skaffold/v2beta10
 kind: Config
 build:
   artifacts:
@@ -6,8 +6,7 @@ build:
       docker:
         dockerfile: Dockerfile
   local: { }
-
 deploy:
   kubectl:
     manifests:
-      - '../kubernetes/api-allocation-engine/api-allocation-engine.yaml'
+      - ../kubernetes/api-allocation-engine/api-allocation-engine.yaml

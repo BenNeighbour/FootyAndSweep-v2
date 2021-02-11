@@ -1,0 +1,14 @@
+syntax = "proto3";
+package com.footyandsweep;
+
+message Id {
+  string id = 1;
+}
+
+message Ids {
+  repeated string id = 1;
+}
+
+message Map {
+  map<int64, string> pairs = 1;
+}

@@ -1,0 +1,12 @@
+syntax = "proto3";
+package com.footyandsweep;
+
+message User {}
+
+message findUserByIdRequest {
+  string userId = 1;
+}
+
+service AuthenticationService {
+  rpc findUserByUserId(findUserByIdRequest) returns (User);
+}

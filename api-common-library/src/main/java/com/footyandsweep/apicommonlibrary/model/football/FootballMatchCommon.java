@@ -24,7 +24,6 @@ import lombok.Setter;
 
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
-import java.util.UUID;
 
 @Setter
 @Getter
@@ -35,11 +34,11 @@ public class FootballMatchCommon extends SweepstakeEventCommon implements Serial
 
   private static final long serialVersionUID = -9169784048037914911L;
 
-  private UUID homeFootballTeamId;
+  private String homeFootballTeamId;
 
-  private UUID homeMatchSquadId;
+  private String homeMatchSquadId;
 
-  private UUID awayFootballTeamId;
+  private String awayFootballTeamId;
 
-  private UUID awayMatchSquadId;
+  private String awayMatchSquadId;
 }

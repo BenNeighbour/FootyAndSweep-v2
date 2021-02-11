@@ -115,4 +115,9 @@ public class AuthenticationController {
     return ResponseEntity.created(location)
         .body(new ApiResponse(true, "User registered successfully@"));
   }
+
+  @GetMapping("/by/id/{userId}")
+  public User findUserById(@PathVariable("userId") String userId) {
+    return userDao.findUserById(userId);
+  }
 }

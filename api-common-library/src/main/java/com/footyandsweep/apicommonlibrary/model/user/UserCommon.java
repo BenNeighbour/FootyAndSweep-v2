@@ -16,19 +16,21 @@
 
 package com.footyandsweep.apicommonlibrary.model.user;
 
-import com.footyandsweep.apicommonlibrary.events.ProcessStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
+import javax.persistence.Embeddable;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.UUID;
 
 @Setter
 @Getter
@@ -40,7 +42,11 @@ public class UserCommon implements Serializable {
 
   private static final long serialVersionUID = -8782116311771480122L;
 
-  @Id @GeneratedValue private UUID id;
+  @Id
+  @GeneratedValue(generator="system-uuid")
+  @GenericGenerator(name="system-uuid",
+          strategy = "uuid")
+  private String id;
 
   private String username;
 
@@ -57,7 +63,4 @@ public class UserCommon implements Serializable {
   @CreationTimestamp private Date created;
 
   @UpdateTimestamp private Date updated;
-
-  @Enumerated(EnumType.STRING)
-  private ProcessStatus processStatus = ProcessStatus.RELATIONS_PENDING;
 }

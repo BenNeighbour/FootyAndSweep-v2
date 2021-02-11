@@ -1,7 +1,17 @@
 syntax = "proto3";
-package allocation;
+package com.footyandsweep;
 
-option java_package = "allocation";
-option java_outer_classname = "AllocationGrpcService";
+import 'SweepstakeService.proto';
+import 'google/protobuf/empty.proto';
 
-message Allocation {}
+message Allocation {
+  string id = 1;
+  string description = 2;
+  int32 code = 3;
+  string ticketId = 4;
+  string playerId = 5;
+}
+
+service AllocationService {
+  rpc allocateSweepstake(Sweepstake) returns (google.protobuf.Empty);
+}

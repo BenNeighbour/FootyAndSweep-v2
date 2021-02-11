@@ -23,11 +23,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "result")
 @Inheritance(strategy = InheritanceType.JOINED)
-@AttributeOverrides({
-  @AttributeOverride(
-      name = "id",
-      column = @Column(columnDefinition = "uuid", updatable = false, name = "id"))
-})
 public class Result extends ResultCommon {
 
   private static final long serialVersionUID = -3355728133978299652L;

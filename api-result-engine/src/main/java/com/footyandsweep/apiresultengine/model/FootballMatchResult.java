@@ -38,7 +38,7 @@ public class FootballMatchResult extends Result implements Serializable {
   private static final long serialVersionUID = 5062727639670623525L;
 
   @Column(name = "footballMatchId")
-  private UUID footballMatchId;
+  private String footballMatchId;
 
   @Column(name = "halfTimeHomeScore")
   private int halfTimeHomeScore;
@@ -68,8 +68,8 @@ public class FootballMatchResult extends Result implements Serializable {
   private int numberOfCornersFullTime;
 
   @Column(name = "firstGoalScorer")
-  private UUID firstGoalScorer;
+  private String firstGoalScorer;
 
   @Column(name = "lastGoalScorer")
-  private UUID lastGoalScorer;
+  private String lastGoalScorer;
 }

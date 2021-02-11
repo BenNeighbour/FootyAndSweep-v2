@@ -18,6 +18,8 @@ package com.footyandsweep.apiauthenticationservice;
 
 import com.footyandsweep.apiauthenticationservice.config.AppProperties;
 import com.footyandsweep.apiauthenticationservice.config.WebConfiguration;
+import io.eventuate.tram.spring.consumer.kafka.EventuateTramKafkaMessageConsumerConfiguration;
+import io.eventuate.tram.spring.messaging.producer.jdbc.TramMessageProducerJdbcConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -29,18 +31,20 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.Ordered;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.ForwardedHeaderFilter;
 
 @EnableCaching
 @SpringBootApplication
-@EnableJpaRepositories
 @EnableDiscoveryClient
-@EnableKafka
 @EnableScheduling
-@Import({WebConfiguration.class})
+@EnableJpaRepositories("com.footyandsweep.apiauthenticationservice.dao")
+@Import({
+  WebConfiguration.class,
+  TramMessageProducerJdbcConfiguration.class,
+  EventuateTramKafkaMessageConsumerConfiguration.class
+})
 @EnableConfigurationProperties(AppProperties.class)
 public class ApiAuthenticationServiceApplication {
 
