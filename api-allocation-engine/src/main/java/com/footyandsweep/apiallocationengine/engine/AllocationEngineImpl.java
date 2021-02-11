@@ -186,11 +186,7 @@ public class AllocationEngineImpl implements AllocationEngine {
 
       /* Getting sweepstake by the id so that it can be modified here */
       Optional<SweepstakeCommon> sweepstake =
-          Optional.ofNullable(
-              restTemplate.getForObject(
-                  "http://api-sweepstake-engine:8080/sweepstake/test/by/id/"
-                      + ticket.getSweepstakeId(),
-                  SweepstakeCommon.class));
+              Optional.ofNullable(allocationClient.findSweepstakeById(ticket.getSweepstakeId()));
 
       /* If the sweepstake is not valid, then throw an error */
       if (!sweepstake.isPresent()) throw new Exception();

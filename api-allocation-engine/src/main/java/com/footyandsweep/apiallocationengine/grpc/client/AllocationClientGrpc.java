@@ -61,6 +61,11 @@ public class AllocationClientGrpc {
     return tickets;
   }
 
+  public SweepstakeCommon findSweepstakeById(String id) {
+    SweepstakeServiceOuterClass.Sweepstake sweepstake = sweepstakeEngineChannel.findSweepstakeById(Common.Id.newBuilder().setId(id).build());
+    return ProtoConverterUtils.convertToPojo(SweepstakeCommon.class, sweepstake);
+  }
+
   public HashMap<Integer, String> resultHelper(SweepstakeCommon sweepstake) {
     SweepstakeServiceOuterClass.Sweepstake.Builder sweepstakeBuilder = SweepstakeServiceOuterClass.Sweepstake.newBuilder();
     ProtoConverterUtils.convertToProto(sweepstakeBuilder, sweepstake);
