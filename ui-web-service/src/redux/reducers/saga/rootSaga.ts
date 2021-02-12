@@ -14,16 +14,11 @@
  *   limitations under the License.
  */
 
-import { Store, createStore, applyMiddleware } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import {BaseState} from "./reducers";
+import { all } from 'redux-saga/effects';
+import authenticateSagas from "./authenticate/authenticateSagas";
 
-export function configureStore(initialState?: BaseState): Store<BaseState> {
-    let storeMiddleware = applyMiddleware();
-
-    if (process.env.NODE_ENV !== 'production') {
-        storeMiddleware = composeWithDevTools(storeMiddleware);
-    }
-
-    return createStore(rootReducer, initialState, storeMiddleware) as Store<BaseState>;
+export default function* start() {
+    yield all([
+        ...authenticateSagas,
+    ]);
 }

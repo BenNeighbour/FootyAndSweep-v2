@@ -14,20 +14,12 @@
  *   limitations under the License.
  */
 
-import {History} from "history";
-import {combineReducers} from "redux";
-import {routerReducer, RouterState} from 'react-router-redux';
-import {authenticationReducer, AuthenticationReducerType} from "./reducers/saga/authenticate";
 
-export interface RootState {
-    loginForm: AuthenticationReducerType
-    routerReducer: RouterState,
-}
+import {ActionType, LoginData} from '../../../model';
 
-const combinedReducers = (history: History) =>
-    combineReducers({
-        loginForm: authenticationReducer,
-        routerReducer,
-    });
-
-export default combinedReducers;
+export const loginUserAction = (payload: LoginData) => {
+    return {
+        type: ActionType.AUTHENTICATE_LOGIN_REQUEST,
+        payload
+    }
+};

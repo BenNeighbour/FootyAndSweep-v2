@@ -15,11 +15,4 @@
  */
 
 
-import {ActionType, LoginData} from '../../model';
-
-export const loginUserAction = (payload: LoginData) => {
-    return {
-        type: ActionType.AUTHENTICATE_LOGIN_REQUEST,
-        payload
-    }
-};
+export * from "./rootSaga";

@@ -15,8 +15,8 @@
  *   limitations under the License.
  */
 
-import { Action, ActionType } from "../../model";
-import createReducer from "../createReducer";
+import { Action, ActionType } from "../../../model";
+import createReducer from "../../createReducer";
 
 
 /* Types for the reducer to modify (the payload that comes in through the saga) */

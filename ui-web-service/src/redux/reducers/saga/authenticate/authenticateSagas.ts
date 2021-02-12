@@ -15,7 +15,7 @@
  */
 
 import {call, fork, put, takeLatest} from 'redux-saga/effects';
-import {ActionType, LoginData} from "../../model";
+import {ActionType, LoginData} from "../../../model";
 import axios from "axios";
 
 const loginRequest = (payload: LoginData) => {
@@ -46,6 +46,8 @@ function* onLoginSubmitWatcher() {
     yield takeLatest(ActionType.AUTHENTICATE_LOGIN_REQUEST as any, loginSaga);
 }
 
-export default [
+let authenticateSagas = [
     fork(onLoginSubmitWatcher),
 ];
+
+export default authenticateSagas;
