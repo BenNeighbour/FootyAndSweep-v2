@@ -1,4 +1,3 @@
-
 /*
  *   Copyright 2021 FootyAndSweep
  *
@@ -15,7 +14,7 @@
  *   limitations under the License.
  */
 
-import { Action, ActionType } from "../../../model";
+import {Action, ActionType} from "../../../model";
 import createReducer from "../../createReducer";
 
 
@@ -26,6 +25,7 @@ export interface AuthenticationReducerType {
     isLoading: boolean;
     error?: string;
 }
+
 const defaultState: AuthenticationReducerType = {
     username: '',
     password: '',
@@ -36,7 +36,7 @@ const defaultState: AuthenticationReducerType = {
 
 /* Authentication Reducer cases */
 export const authenticationReducer = createReducer<AuthenticationReducerType>(defaultState, {
-    [ActionType.AUTHENTICATE_LOGIN_REQUEST](state:AuthenticationReducerType) {
+    [ActionType.AUTHENTICATE_LOGIN_REQUEST](state: AuthenticationReducerType) {
         return {
             ...state,
             isLoading: true,

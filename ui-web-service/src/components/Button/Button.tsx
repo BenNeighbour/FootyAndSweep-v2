@@ -19,25 +19,29 @@ import React, {FunctionComponent} from 'react';
 import styled from "styled-components";
 
 interface OwnProps {
+    title: string;
+    onClick: () => void;
+    disabled?: boolean;
+    style?: React.CSSProperties | {}
 }
 
 type Props = OwnProps;
 
 const Button: FunctionComponent<Props> = (props) => {
     return (
-        <ButtonContainer>
-            <ButtonText>Hello</ButtonText>
+        <ButtonContainer style={props.style} disabled={props.disabled || false} onClick={props.onClick}>
+            {props.title}
         </ButtonContainer>
     );
 };
 
-const ButtonContainer = styled.div`
+const ButtonContainer = styled.button`
+border: 0;
+outline: 0;
 display: 'flex';
 cursor: pointer;
 width: 121px;
 height: 40px;
-margin: 70px 17px 42px;
-padding: 11px 15.1px;
 border-radius: 5px;
 place-items: 'center';
 text-align: 'center';
@@ -45,23 +49,41 @@ background-color: #3e66fb;
 line-height: 2;
 display: inline-block;
 vertical-align: middle;
+box-shadow: 0 2px 5px 0 rgb(0 0 0 / 50%);
 transition: background-color .2s,padding .4s,box-shadow .2s,border .2s;
-&:hover {
-    box-shadow: 0 2px 10px 2px rgba(0, 0, 0, 0.25);
-}
-`;
-
-const ButtonText = styled.div`
 place-items: 'center';
 text-align: 'center';
-height: 100%;
-font-family: 'Open Sans', sans-serif;
 font-size: 20px;
 font-weight: 600;
-font-stretch: normal;
-font-style: normal;
-text-align: center;
 color: #ffffff;
+font-family: 'Open Sans', sans-serif;
+&:disabled {
+    color: rgba(0, 0, 0, 0.26);
+    transition: none;
+    box-shadow: none;
+    background-color: rgba(0, 0, 0, 0.12);
+    cursor: default;
+}
+&:hover:enabled {
+    background-color: #2d50cf;
+    box-shadow: 0 2px 10px 0 rgb(0 0 0 / 50%);
+}
+background-color: #3e66fb;
+transition: background-color .2s,padding .4s,box-shadow .2s,border .2s;
 `;
+
+// const ButtonText = styled.div`
+// place-items: 'center';
+// text-align: 'center';
+// height: 100%;
+// font-family: 'Open Sans', sans-serif;
+// font-size: 20px;
+// font-weight: 600;
+// font-stretch: normal;
+// font-style: normal;
+// text-align: center;
+// color: #ffffff;
+// `;
+
 
 export default Button;

@@ -14,11 +14,10 @@
  *   limitations under the License.
  */
 
-import React, {FunctionComponent, useState} from 'react';
+import React, {FunctionComponent} from 'react';
 import {Route, Switch} from "react-router";
-import InputField from "./components/InputField/InputField";
-import LargeInputField from "./components/InputField/LargeInputField";
 import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
 
 interface OwnProps {
 }
@@ -32,6 +31,8 @@ const Routes: FunctionComponent<Props> = (props) => {
                 <Route>
                     <Route
                         component={HomePage} exact path="/"/>
+                    <Route
+                        component={LoginPage} exact path="/portal"/>
                 </Route>
             </Switch>
         </Route>

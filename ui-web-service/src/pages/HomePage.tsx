@@ -16,7 +16,6 @@
 
 
 import React, {FunctionComponent} from 'react';
-import LargeInputField from "../components/InputField/LargeInputField";
 import Button from "../components/Button/Button";
 
 interface OwnProps {
@@ -26,20 +25,13 @@ type Props = OwnProps;
 
 const HomePage: FunctionComponent<Props> = (props) => {
     return (
-
         <div style={{
             display: 'grid',
             placeItems: 'center'
         }}>
-
-            <Button/>
-            <LargeInputField name={"Email Address"}
-                             placeholder={"someone@someone.com"}
-                             size={"large"}
-                             type={"text"}
-                             onChange={() => {
-                             }}
-                             value={""}/>
+            <Button title={"Hello"} disabled onClick={() => {
+                console.log("hit")
+            }}/>
         </div>
     );
 };

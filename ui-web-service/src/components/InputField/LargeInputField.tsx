@@ -25,6 +25,7 @@ interface OwnProps {
     name: string;
     onChange: () => void;
     disabled?: boolean;
+    style?: React.CSSProperties | {}
 }
 
 type Props = OwnProps;
@@ -35,55 +36,39 @@ const LargeInputField: FunctionComponent<Props> = (props) => {
             <FieldName>{props.name}</FieldName>
             <Input disabled={props.disabled || false} value={props.value} onChange={props.onChange}
                    placeholder={props.placeholder}/>
-                   <InputLine/>
         </InputContainer>
     );
 };
 
 export default LargeInputField;
 
-const InputLine = styled.div`
-position: absolute;
-height: 2px;
-width: calc(100% - 20px);
-bottom: 17%;
-left: 10px;
-background: #6772e5;
-transform: scaleX(0);
-transition: transform .5s;
-transform-origin: 0% 50%;
-`;
-
 const Input = styled.input`
 box-sizing: border-box;
-width: 100%;
-border-top: 0;
-border-left: 0;
-border-right: 0;
+border: 0;
 outline: 0;
-padding: 6.8px 0 0 10.9px;
 font-family: 'Open Sans', sans-serif;
 font-size: 20px;
 font-weight: 600;
 font-stretch: normal;
-font-style: normal;
+font-style: normal;  
 line-height: 1.5;
 letter-spacing: normal;
 text-align: left;
-&:after {
-    content: '';
-    border-bottom: 2px solid #898989;
-    // display: 'block';
-    width: 50%;
-    position: relative;
-}
+width: 100%;
+color: #02203c;
+border: none;
+outline: none;
+padding: 0 1em;
 `;
 
 const InputContainer = styled.div`
-object-fit: fill;
-width: 472px;
-height: 83px;
+overflow: hidden;
+position: relative;
+height: 80px;
+object-fit: contain;
 border-radius: 5px;
+font-family: "Open Sans","Helvetica","Arial",sans-serif;
+line-height: 1.42857143;
 background-color: #ffffff;
 box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.25);
 -webkit-box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.25);
@@ -91,10 +76,8 @@ box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.25);
 `;
 
 const FieldName = styled.div`
-width: 161.9px;
-height: 20.4px;
-padding-top: 15px;
-padding-left: 10px;
+padding-top: 1em;
+padding-left: 1em;
 font-family: 'Open Sans', sans-serif;
 font-size: 17px;
 font-weight: 600;

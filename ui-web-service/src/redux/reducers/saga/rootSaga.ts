@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-import { all } from 'redux-saga/effects';
+import {all} from 'redux-saga/effects';
 import authenticateSagas from "./authenticate/authenticateSagas";
 
 export default function* start() {

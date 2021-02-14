@@ -25,6 +25,7 @@ interface OwnProps {
     name: string;
     onChange: () => void;
     disabled?: boolean;
+    style?: React.CSSProperties | {}
 }
 
 type Props = OwnProps;
@@ -44,28 +45,35 @@ export default InputField;
 
 const Input = styled.input`
 box-sizing: border-box;
-width: 100%;
 border: 0;
 outline: 0;
-padding-left: 6.8px;
 font-family: 'Open Sans', sans-serif;
 font-size: 15px;
 font-weight: 600;
 font-stretch: normal;
 font-style: normal;
-line-height: normal;
+line-height: 1.5;
 letter-spacing: normal;
 text-align: left;
-color: #8e8e8e;
-border-bottom: 3px solid red;
+width: 100%;
+color: #02203c;
+border: none;
+outline: none;
+padding-left: 1.5em;
+padding-right: 1.5em;
+padding-bottom: 1em;
+padding-top: 0;
 `;
 
 const InputContainer = styled.div`
-object-fit: fill;
-width: 347px;
-height: 61px;
-padding: 0 68px 0 0;
+overflow: hidden;
+position: relative;
 border-radius: 5px;
+min-height: 60px;
+object-fit: fill;
+border-radius: 5px;
+font-family: "Open Sans","Helvetica","Arial",sans-serif;
+line-height: 1.42857143;
 background-color: #ffffff;
 box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.25);
 -webkit-box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.25);
@@ -73,10 +81,10 @@ box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.25);
 `;
 
 const FieldName = styled.div`
-width: 119px;
-height: 15px;
-margin: 11px 147px 5px 8px;
+padding-top: 1em;
+padding-left: 1em;
 font-family: 'Open Sans', sans-serif;
+margin: 11px 147px 5px 8px;
 font-size: 12px;
 font-weight: 600;
 font-stretch: normal;
@@ -86,4 +94,6 @@ letter-spacing: normal;
 text-align: left;
 color: #b5b5b5;
 `;
+
+
 
