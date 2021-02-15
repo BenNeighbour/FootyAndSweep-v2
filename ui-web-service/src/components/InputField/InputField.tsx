@@ -15,13 +15,14 @@
  */
 
 import React, {FunctionComponent} from 'react';
+import PasswordBar from "./PasswordBar";
 import styled from "styled-components";
 
 interface OwnProps {
+    includePasswordStrengthChecker?: boolean;
     value: string;
-    placeholder: string;
-    type: 'text' | 'number' | 'password';
-    size: string;
+    placeholder?: string | null;
+    type: 'text' | 'number' | 'email' | 'password';
     name: string;
     onChange: () => void;
     disabled?: boolean;
@@ -32,11 +33,17 @@ type Props = OwnProps;
 
 const InputField: FunctionComponent<Props> = (props) => {
     return (
-        <InputContainer>
-            <FieldName>{props.name}</FieldName>
-            <Input disabled={props.disabled || false} value={props.value} onChange={props.onChange}
-                   placeholder={props.placeholder}/>
-        </InputContainer>
+        <>
+            <InputContainer>
+                <FieldName>{props.name}</FieldName>
+                <Input disabled={props.disabled || false} type={props.type} value={props.value}
+                       onChange={props.onChange}
+                       placeholder={props.placeholder || ""}/>
+            </InputContainer>
+            {props.type === "password" && props.includePasswordStrengthChecker ?
+                <div><PasswordBar password={"#"}/></div> : undefined}
+            <br/>
+        </>
     );
 };
 
@@ -59,17 +66,15 @@ width: 100%;
 color: #02203c;
 border: none;
 outline: none;
-padding-left: 1.5em;
-padding-right: 1.5em;
-padding-bottom: 1em;
-padding-top: 0;
+padding-left: 13px;
+padding-right: 1em;
+margin-top: 0;
 `;
 
 const InputContainer = styled.div`
-overflow: hidden;
 position: relative;
 border-radius: 5px;
-min-height: 60px;
+height: 60px;
 object-fit: fill;
 border-radius: 5px;
 font-family: "Open Sans","Helvetica","Arial",sans-serif;
@@ -84,7 +89,6 @@ const FieldName = styled.div`
 padding-top: 1em;
 padding-left: 1em;
 font-family: 'Open Sans', sans-serif;
-margin: 11px 147px 5px 8px;
 font-size: 12px;
 font-weight: 600;
 font-stretch: normal;

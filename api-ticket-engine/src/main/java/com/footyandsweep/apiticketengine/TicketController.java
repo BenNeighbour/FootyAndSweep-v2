@@ -38,7 +38,8 @@ public class TicketController {
 
   private final SagaInstanceFactory sagaInstanceFactory;
 
-  public TicketController(BuyTicketSaga buyTicketSaga, TicketDao ticketDao, SagaInstanceFactory sagaInstanceFactory) {
+  public TicketController(
+      BuyTicketSaga buyTicketSaga, TicketDao ticketDao, SagaInstanceFactory sagaInstanceFactory) {
     this.buyTicketSaga = buyTicketSaga;
     this.ticketDao = ticketDao;
     this.sagaInstanceFactory = sagaInstanceFactory;
@@ -46,7 +47,7 @@ public class TicketController {
 
   @GetMapping("/by/sweepstake/{sweepstakeId}")
   public Optional<List<Ticket>> findTicketBySweepstakeId(
-          @PathVariable("sweepstakeId") String sweepstakeId) {
+      @PathVariable("sweepstakeId") String sweepstakeId) {
     return ticketDao.findAllTicketsBySweepstakeId(sweepstakeId);
   }
 

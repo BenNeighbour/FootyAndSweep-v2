@@ -21,5 +21,6 @@ import io.eventuate.tram.commands.consumer.CommandWithDestination;
 
 public interface ResultEngine {
   void processSweepstakeResult(ProcessSweepstakeResultSagaData sagaData);
+
   CommandWithDestination updateUserBalance(ProcessSweepstakeResultSagaData sagaData);
 }

@@ -19,8 +19,6 @@ package com.footyandsweep.apisweepstakeengine.grpc.controller;
 import com.footyandsweep.Common;
 import com.footyandsweep.SweepstakeServiceGrpc;
 import com.footyandsweep.SweepstakeServiceOuterClass;
-import com.footyandsweep.apicommonlibrary.helper.ProtoConverterUtils;
-import com.footyandsweep.apicommonlibrary.other.CustomMap;
 import com.footyandsweep.apisweepstakeengine.dao.FootballMatchDao;
 import com.footyandsweep.apisweepstakeengine.dao.ParticipantIdDao;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
@@ -37,7 +35,6 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import javax.validation.ValidationException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.List;
 
 @GrpcService

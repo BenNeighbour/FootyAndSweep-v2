@@ -16,5 +16,4 @@
 
 package com.footyandsweep.apicommonlibrary.cqrs.user;
 
-public class UserBalanceUpdated extends UpdateUserBalanceCommand {
-}
+public class UserBalanceUpdated extends UpdateUserBalanceCommand {}

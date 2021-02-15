@@ -65,18 +65,24 @@ public class ResultEngineImpl implements ResultEngine {
     FootballMatchResult footballMatchResult = (FootballMatchResult) sagaData.getResult();
 
     /* TODO: CREATE A BEAN FOR THIS FOR EACH SERVICE IN EVERY SERVICE */
-    ManagedChannel channel = ManagedChannelBuilder.forAddress("api-sweepstake-engine", 9090)
-            .usePlaintext()
-            .build();
+    ManagedChannel channel =
+        ManagedChannelBuilder.forAddress("api-sweepstake-engine", 9090).usePlaintext().build();
 
-    SweepstakeServiceGrpc.SweepstakeServiceBlockingStub clientStub = SweepstakeServiceGrpc.newBlockingStub(channel);
+    SweepstakeServiceGrpc.SweepstakeServiceBlockingStub clientStub =
+        SweepstakeServiceGrpc.newBlockingStub(channel);
 
-    SweepstakeServiceOuterClass.SweepstakeList sweepstakesWithResult = clientStub.findSweepstakeByFootballMatchId(Common.Id.newBuilder().setId(footballMatchResult.getFootballMatchId().toString()).build());
+    SweepstakeServiceOuterClass.SweepstakeList sweepstakesWithResult =
+        clientStub.findSweepstakeByFootballMatchId(
+            Common.Id.newBuilder()
+                .setId(footballMatchResult.getFootballMatchId().toString())
+                .build());
 
     channel.shutdown();
 
     /* For each sweepstake, process the tickets for it */
-    sweepstakesWithResult.getSweepstakesList().forEach(
+    sweepstakesWithResult
+        .getSweepstakesList()
+        .forEach(
             sweepstake -> {
               SweepstakeCommon sweepstakeCommon = new SweepstakeCommon();
               try {
@@ -94,10 +100,10 @@ public class ResultEngineImpl implements ResultEngine {
 
     /* Log the event */
     log.info(
-            "Result {} for football match {} has been created! {}",
-            sagaData.getResult().getId(),
-            footballMatchResult.getFootballMatchId(),
-            dateFormat.format(new Date()));
+        "Result {} for football match {} has been created! {}",
+        sagaData.getResult().getId(),
+        footballMatchResult.getFootballMatchId(),
+        dateFormat.format(new Date()));
   }
 
   private void processTickets(ProcessSweepstakeResultSagaData sagaData) {
@@ -106,13 +112,13 @@ public class ResultEngineImpl implements ResultEngine {
 
     /* Get a list of tickets that belong to the sweepstake */
     Optional<List<TicketCommon>> ticketList =
-            Optional.of(
-                    Arrays.asList(
-                            Objects.requireNonNull(
-                                    restTemplate.getForObject(
-                                            "http://api-ticket-engine/internal/ticket/by/sweepstake/"
-                                                    + sagaData.getSweepstake().getId(),
-                                            TicketCommon[].class))));
+        Optional.of(
+            Arrays.asList(
+                Objects.requireNonNull(
+                    restTemplate.getForObject(
+                        "http://api-ticket-engine/internal/ticket/by/sweepstake/"
+                            + sagaData.getSweepstake().getId(),
+                        TicketCommon[].class))));
 
     /* Seeing if the winning ticket is present */
     boolean isWinningTicketPresent =
@@ -131,12 +137,15 @@ public class ResultEngineImpl implements ResultEngine {
                     this.getTicketAllocation(ticket.getId()).getCode())) {
                   ticket.setStatus(TicketCommon.TicketStatus.WON);
                   BigDecimal totalPot =
-                          sagaData.getSweepstake().getStake().multiply(new BigDecimal(ticketList.get().size()));
+                      sagaData
+                          .getSweepstake()
+                          .getStake()
+                          .multiply(new BigDecimal(ticketList.get().size()));
 
                   if (winningResultMap.values().size() > 1) {
                     totalPot =
-                            totalPot.divide(
-                                    new BigDecimal(winningResultMap.values().size()), RoundingMode.DOWN);
+                        totalPot.divide(
+                            new BigDecimal(winningResultMap.values().size()), RoundingMode.DOWN);
                     totalPot = totalPot.setScale(2, RoundingMode.DOWN);
                   }
 
@@ -149,8 +158,10 @@ public class ResultEngineImpl implements ResultEngine {
               } else {
                 ticket.setStatus(TicketCommon.TicketStatus.REFUNDED);
                 /* Update the user balance */
-//                sagaData.setUserBalanceMap(ticket.getUserId(), sagaData.getSweepstake().getStake());
-                sagaData.setUserBalanceMap(new ImmutablePair<>(ticket.getUserId(), sagaData.getSweepstake().getStake()));
+                //                sagaData.setUserBalanceMap(ticket.getUserId(),
+                // sagaData.getSweepstake().getStake());
+                sagaData.setUserBalanceMap(
+                    new ImmutablePair<>(ticket.getUserId(), sagaData.getSweepstake().getStake()));
               }
             });
   }
@@ -178,17 +189,17 @@ public class ResultEngineImpl implements ResultEngine {
 
   private AllocationCommon getTicketAllocation(String ticketId) {
     return restTemplate
-            .getForEntity(
-                    "http://api-allocation-engine:8080/internal/allocation/by/ticket/" + ticketId,
-                    AllocationCommon.class)
-            .getBody();
+        .getForEntity(
+            "http://api-allocation-engine:8080/internal/allocation/by/ticket/" + ticketId,
+            AllocationCommon.class)
+        .getBody();
   }
 
   @Override
   public CommandWithDestination updateUserBalance(ProcessSweepstakeResultSagaData sagaData) {
-    return send(new UpdateUserBalanceCommand(sagaData.getUserBalanceMap().getKey(),
-            sagaData.getUserBalanceMap().getValue()))
-            .to("user-service-events")
-            .build();
+    return send(new UpdateUserBalanceCommand(
+            sagaData.getUserBalanceMap().getKey(), sagaData.getUserBalanceMap().getValue()))
+        .to("user-service-events")
+        .build();
   }
 }

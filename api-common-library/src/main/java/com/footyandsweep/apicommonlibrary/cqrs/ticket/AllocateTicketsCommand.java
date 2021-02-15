@@ -29,5 +29,5 @@ import java.util.HashMap;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AllocateTicketsCommand implements Command {
-    private HashMap<String, String> ticketAllocationIdMap;
+  private HashMap<String, String> ticketAllocationIdMap;
 }

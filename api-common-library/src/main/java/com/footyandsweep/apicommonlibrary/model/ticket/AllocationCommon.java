@@ -40,9 +40,8 @@ public class AllocationCommon implements Serializable {
   private static final long serialVersionUID = -7048642523349496292L;
 
   @Id
-  @GeneratedValue(generator="system-uuid")
-  @GenericGenerator(name="system-uuid",
-          strategy = "uuid")
+  @GeneratedValue(generator = "system-uuid")
+  @GenericGenerator(name = "system-uuid", strategy = "uuid")
   private String id;
 
   private String description;

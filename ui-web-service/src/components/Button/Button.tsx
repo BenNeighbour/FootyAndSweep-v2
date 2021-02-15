@@ -72,18 +72,5 @@ background-color: #3e66fb;
 transition: background-color .2s,padding .4s,box-shadow .2s,border .2s;
 `;
 
-// const ButtonText = styled.div`
-// place-items: 'center';
-// text-align: 'center';
-// height: 100%;
-// font-family: 'Open Sans', sans-serif;
-// font-size: 20px;
-// font-weight: 600;
-// font-stretch: normal;
-// font-style: normal;
-// text-align: center;
-// color: #ffffff;
-// `;
-
 
 export default Button;

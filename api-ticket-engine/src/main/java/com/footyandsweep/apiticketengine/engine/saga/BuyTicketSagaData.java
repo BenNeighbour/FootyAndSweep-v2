@@ -31,8 +31,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BuyTicketSagaData {
-    private UserCommon participant;
-    private SweepstakeCommon parentSweepstake;
-    private List<Ticket> savedTickets;
-    private int numberOfTickets;
+  private UserCommon participant;
+  private SweepstakeCommon parentSweepstake;
+  private List<Ticket> savedTickets;
+  private int numberOfTickets;
 }

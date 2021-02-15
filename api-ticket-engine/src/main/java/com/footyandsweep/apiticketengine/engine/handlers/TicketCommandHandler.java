@@ -45,7 +45,11 @@ public class TicketCommandHandler {
   private Message allocateTickets(CommandMessage<AllocateTicketsCommand> allocateTicketsCommand) {
     try {
       AllocateTicketsCommand command = allocateTicketsCommand.getCommand();
-      command.getTicketAllocationIdMap().keySet().forEach(one -> ticketEngine.modifyTickets(one, command.getTicketAllocationIdMap().get(one)));
+      command
+          .getTicketAllocationIdMap()
+          .keySet()
+          .forEach(
+              one -> ticketEngine.modifyTickets(one, command.getTicketAllocationIdMap().get(one)));
 
       return withSuccess(new TicketsAllocated());
     } catch (Exception e) {

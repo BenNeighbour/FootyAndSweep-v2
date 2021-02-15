@@ -18,7 +18,10 @@ package com.footyandsweep.apiresultengine.model;
 
 import com.footyandsweep.apicommonlibrary.model.result.ResultCommon;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "result")

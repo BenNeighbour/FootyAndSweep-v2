@@ -17,7 +17,7 @@
 package com.footyandsweep.apicommonlibrary.exceptions;
 
 public class ParticipantAlreadyJoinedException extends RuntimeException {
-    public ParticipantAlreadyJoinedException(String message) {
-        super(message);
-    }
+  public ParticipantAlreadyJoinedException(String message) {
+    super(message);
+  }
 }

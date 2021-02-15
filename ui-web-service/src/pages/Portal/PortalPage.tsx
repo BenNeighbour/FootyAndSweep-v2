@@ -14,42 +14,41 @@
  *   limitations under the License.
  */
 
-import React, {FunctionComponent} from 'react';
+import React, {FunctionComponent, useState} from 'react';
 import styled from "styled-components";
-import LargeInputField from "../components/InputField/LargeInputField";
+import LoginForm from "./LoginForm";
+import SignupForm from "./SignupForm";
 
 interface OwnProps {
 }
 
 type Props = OwnProps;
 
-const LoginPage: FunctionComponent<Props> = (props) => {
+const PortalPage: FunctionComponent<Props> = (props) => {
+    const [isLoggingIn, setIsLoggingIn] = useState(true);
+
     return (
         <Container>
-            <LeftSection>
-            </LeftSection>
+            <LeftSection/>
             <RightSection>
-                <LargeInputField name={"Email Address"}
-                                 placeholder={"someone@someone.com"}
-                                 size={"large"}
-                                 type={"text"}
-                                 onChange={() => {
-                                 }}
-                                 value={""}/>
+                {!isLoggingIn ? <LoginForm onSubmit={() => setIsLoggingIn(true)}/> :
+                    <SignupForm onSubmit={() => setIsLoggingIn(false)}/>}
             </RightSection>
         </Container>
     );
 };
 
 const Container = styled.div`
-width: 100%;
+width: 100vw;
+height: 100%;
 display: flex;
 flex-wrap: wrap;
 box-sizing: border-box;
 `;
 
 const LeftSection = styled.div`
-margin: 0;
+height: 100%;
+width: 100%;
 box-sizing: border-box;
 @media (min-width: 1280px) {
     flex-grow: 0;
@@ -60,9 +59,8 @@ box-sizing: border-box;
 
 const RightSection = styled.div`
 height: 100%;
-display: flex;
-flex-direction: column;
-
+width: 100%;
+box-sizing: border-box;
 @media (min-width: 1280px) {
     flex-grow: 0;
     max-width: 50%;
@@ -70,4 +68,4 @@ flex-direction: column;
 }
 `;
 
-export default LoginPage;
+export default PortalPage;

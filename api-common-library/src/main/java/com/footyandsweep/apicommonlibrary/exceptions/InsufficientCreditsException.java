@@ -17,7 +17,5 @@
 package com.footyandsweep.apicommonlibrary.exceptions;
 
 public class InsufficientCreditsException extends RuntimeException {
-    public InsufficientCreditsException() {
-
-    }
+  public InsufficientCreditsException() {}
 }

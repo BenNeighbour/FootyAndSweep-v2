@@ -20,7 +20,8 @@ import com.footyandsweep.apicommonlibrary.model.football.FootballPlayerCommon;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Setter
 @Getter

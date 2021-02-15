@@ -17,7 +17,6 @@
 package com.footyandsweep.apisweepstakeengine.config;
 
 import com.footyandsweep.AllocationServiceGrpc;
-import com.footyandsweep.SweepstakeServiceGrpc;
 import com.footyandsweep.apisweepstakeengine.dao.ParticipantIdDao;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
 import com.footyandsweep.apisweepstakeengine.engine.SweepstakeEngine;

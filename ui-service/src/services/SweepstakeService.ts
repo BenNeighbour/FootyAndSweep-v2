@@ -18,7 +18,7 @@ import {grpc} from "@improbable-eng/grpc-web";
 import {JoinCode} from "../client/SweepstakeService_pb";
 import {SweepstakeService} from "../client/SweepstakeService_pb_service";
 
-const transportConfig = grpc.CrossBrowserHttpTransport({ withCredentials: true });
+const transportConfig = grpc.CrossBrowserHttpTransport({withCredentials: true});
 grpc.setDefaultTransport(transportConfig);
 
 export const joinSweepstake = (action: any) => {

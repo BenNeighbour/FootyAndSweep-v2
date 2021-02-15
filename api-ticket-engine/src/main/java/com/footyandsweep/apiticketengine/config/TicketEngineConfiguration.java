@@ -33,7 +33,11 @@ import org.springframework.web.client.RestTemplate;
 
 @Configuration
 @EnableAutoConfiguration
-@Import({SagaOrchestratorConfiguration.class, OptimisticLockingDecoratorConfiguration.class, SagaParticipantConfiguration.class})
+@Import({
+  SagaOrchestratorConfiguration.class,
+  OptimisticLockingDecoratorConfiguration.class,
+  SagaParticipantConfiguration.class
+})
 public class TicketEngineConfiguration {
 
   @Bean
@@ -48,8 +52,8 @@ public class TicketEngineConfiguration {
 
   @Bean
   public CommandDispatcher consumerCommandDispatcher(
-          TicketCommandHandler target, SagaCommandDispatcherFactory sagaCommandDispatcherFactory) {
+      TicketCommandHandler target, SagaCommandDispatcherFactory sagaCommandDispatcherFactory) {
     return sagaCommandDispatcherFactory.make(
-            "ticket-engine-events-dispatcher", target.commandHandlerDefinitions());
+        "ticket-engine-events-dispatcher", target.commandHandlerDefinitions());
   }
 }

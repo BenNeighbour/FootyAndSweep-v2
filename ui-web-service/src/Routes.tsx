@@ -17,7 +17,7 @@
 import React, {FunctionComponent} from 'react';
 import {Route, Switch} from "react-router";
 import HomePage from "./pages/HomePage";
-import LoginPage from "./pages/LoginPage";
+import PortalPage from "./pages/Portal/PortalPage";
 
 interface OwnProps {
 }
@@ -32,7 +32,7 @@ const Routes: FunctionComponent<Props> = (props) => {
                     <Route
                         component={HomePage} exact path="/"/>
                     <Route
-                        component={LoginPage} exact path="/portal"/>
+                        component={PortalPage} exact path="/portal"/>
                 </Route>
             </Switch>
         </Route>

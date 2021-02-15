@@ -25,9 +25,11 @@ import java.io.IOException;
 
 public class ProtoConverterUtils {
 
-  private static final Gson gson = new GsonBuilder().serializeNulls().generateNonExecutableJson().create();
+  private static final Gson gson =
+      new GsonBuilder().serializeNulls().generateNonExecutableJson().create();
   private static final JsonFormat.Parser jsonParser = JsonFormat.parser().ignoringUnknownFields();
-  private static final JsonFormat.Printer jsonPrinter = JsonFormat.printer().includingDefaultValueFields();
+  private static final JsonFormat.Printer jsonPrinter =
+      JsonFormat.printer().includingDefaultValueFields();
 
   public static <PojoType> PojoType convertToPojo(
       Class<PojoType> destPojoClass, Message sourceMessage) {
@@ -36,7 +38,8 @@ public class ProtoConverterUtils {
     try {
       if (destPojoClass == null) {
         throw new IllegalArgumentException("No destination pojo class specified");
-      } if (sourceMessage == null) {
+      }
+      if (sourceMessage == null) {
         throw new IllegalArgumentException("No source message specified");
       }
 
@@ -51,7 +54,8 @@ public class ProtoConverterUtils {
     try {
       if (destBuilder == null) {
         throw new IllegalArgumentException("No destination message builder specified");
-      } if (sourcePojoBean == null) {
+      }
+      if (sourcePojoBean == null) {
         throw new IllegalArgumentException("No source pojo specified");
       }
 

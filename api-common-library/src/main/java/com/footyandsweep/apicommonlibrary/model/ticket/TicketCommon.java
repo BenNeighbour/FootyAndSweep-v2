@@ -42,9 +42,8 @@ public class TicketCommon implements Serializable {
   private static final long serialVersionUID = -7269123358093904648L;
 
   @Id
-  @GeneratedValue(generator="system-uuid")
-  @GenericGenerator(name="system-uuid",
-          strategy = "uuid")
+  @GeneratedValue(generator = "system-uuid")
+  @GenericGenerator(name = "system-uuid", strategy = "uuid")
   private String id;
 
   private TicketStatus status = TicketStatus.PENDING;

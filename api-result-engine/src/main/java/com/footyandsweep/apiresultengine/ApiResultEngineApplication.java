@@ -39,9 +39,9 @@ import org.springframework.web.filter.ForwardedHeaderFilter;
 @EnableDiscoveryClient
 @EnableScheduling
 @Import({
-        WebConfiguration.class,
-        TramMessageProducerJdbcConfiguration.class,
-        EventuateTramKafkaMessageConsumerConfiguration.class
+  WebConfiguration.class,
+  TramMessageProducerJdbcConfiguration.class,
+  EventuateTramKafkaMessageConsumerConfiguration.class
 })
 public class ApiResultEngineApplication {
 

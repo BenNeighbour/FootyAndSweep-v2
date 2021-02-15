@@ -28,6 +28,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateSweepstakeStatusCommand implements Command {
-    private String sweepstakeId;
-    private SweepstakeCommon.SweepstakeStatus status;
+  private String sweepstakeId;
+  private SweepstakeCommon.SweepstakeStatus status;
 }

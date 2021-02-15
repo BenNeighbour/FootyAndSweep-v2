@@ -37,11 +37,9 @@ public class ResultCommon implements Serializable {
   private static final long serialVersionUID = 519661879048243632L;
 
   @Id
-  @GeneratedValue(generator="system-uuid")
-  @GenericGenerator(name="system-uuid",
-          strategy = "uuid")
+  @GeneratedValue(generator = "system-uuid")
+  @GenericGenerator(name = "system-uuid", strategy = "uuid")
   private String id;
 
   private boolean isProcessed = false;
-
 }

@@ -22,7 +22,6 @@ import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
 import io.eventuate.tram.commands.consumer.CommandWithDestination;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface AllocationEngine {
 
