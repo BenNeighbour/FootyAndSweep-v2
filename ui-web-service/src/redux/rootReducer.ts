@@ -21,12 +21,14 @@ import {authenticationReducer, AuthenticationReducerType} from "./reducers/saga/
 
 export interface RootState {
     loginForm: AuthenticationReducerType
+    signupForm: AuthenticationReducerType
     routerReducer: RouterState,
 }
 
 const combinedReducers = (history: History) =>
     combineReducers({
         loginForm: authenticationReducer,
+        signupForm: authenticationReducer,
         routerReducer,
     });
 

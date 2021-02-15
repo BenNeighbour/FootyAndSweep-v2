@@ -16,8 +16,8 @@
 
 import React, {FunctionComponent, useState} from 'react';
 import styled from "styled-components";
-import LoginForm from "./LoginForm";
-import SignupForm from "./SignupForm";
+import LoginForm from "./Form/LoginForm";
+import SignupForm from "./Form/SignupForm";
 
 interface OwnProps {
 }
@@ -31,8 +31,8 @@ const PortalPage: FunctionComponent<Props> = (props) => {
         <Container>
             <LeftSection/>
             <RightSection>
-                {!isLoggingIn ? <LoginForm onSubmit={() => setIsLoggingIn(true)}/> :
-                    <SignupForm onSubmit={() => setIsLoggingIn(false)}/>}
+                {isLoggingIn ? <LoginForm/> :
+                    <SignupForm/>}
             </RightSection>
         </Container>
     );

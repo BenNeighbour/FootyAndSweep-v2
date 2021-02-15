@@ -20,7 +20,8 @@ import styled from "styled-components";
 
 interface OwnProps {
     title: string;
-    onClick: () => void;
+    type?: 'submit' | null;
+    onClick?: (value: any) => void;
     disabled?: boolean;
     style?: React.CSSProperties | {}
 }
@@ -29,7 +30,8 @@ type Props = OwnProps;
 
 const Button: FunctionComponent<Props> = (props) => {
     return (
-        <ButtonContainer style={props.style} disabled={props.disabled || false} onClick={props.onClick}>
+        <ButtonContainer type={props.type || undefined} style={props.style} disabled={props.disabled || false}
+                         onClick={props.onClick}>
             {props.title}
         </ButtonContainer>
     );

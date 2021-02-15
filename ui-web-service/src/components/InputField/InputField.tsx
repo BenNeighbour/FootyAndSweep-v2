@@ -24,7 +24,8 @@ interface OwnProps {
     placeholder?: string | null;
     type: 'text' | 'number' | 'email' | 'password';
     name: string;
-    onChange: () => void;
+    label: string;
+    onChange: (value: any) => void;
     disabled?: boolean;
     style?: React.CSSProperties | {}
 }
@@ -35,13 +36,13 @@ const InputField: FunctionComponent<Props> = (props) => {
     return (
         <>
             <InputContainer>
-                <FieldName>{props.name}</FieldName>
-                <Input disabled={props.disabled || false} type={props.type} value={props.value}
+                <FieldName>{props.label}</FieldName>
+                <Input name={props.name} disabled={props.disabled || false} type={props.type} value={props.value}
                        onChange={props.onChange}
                        placeholder={props.placeholder || ""}/>
             </InputContainer>
             {props.type === "password" && props.includePasswordStrengthChecker ?
-                <div><PasswordBar password={"#"}/></div> : undefined}
+                <div><PasswordBar password={props.value}/></div> : undefined}
             <br/>
         </>
     );

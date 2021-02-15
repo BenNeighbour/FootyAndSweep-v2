@@ -58,4 +58,28 @@ export const authenticationReducer = createReducer<AuthenticationReducerType>(de
             error: action.payload,
         };
     },
+
+
+    [ActionType.AUTHENTICATE_SIGNUP_REQUEST](state: AuthenticationReducerType) {
+        return {
+            ...state,
+            isLoading: true,
+        };
+    },
+
+    [ActionType.AUTHENTICATE_SIGNUP_SUCCESS](state: AuthenticationReducerType) {
+        return {
+            ...state,
+            isLoading: false,
+            error: null
+        };
+    },
+
+    [ActionType.AUTHENTICATE_SIGNUP_ERROR](state: AuthenticationReducerType, action: Action<number>) {
+        return {
+            ...state,
+            loading: false,
+            error: action.payload,
+        };
+    },
 });

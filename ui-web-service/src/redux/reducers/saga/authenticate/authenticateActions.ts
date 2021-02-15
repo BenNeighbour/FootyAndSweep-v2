@@ -15,11 +15,18 @@
  */
 
 
-import {ActionType, LoginData} from '../../../model';
+import {ActionType, LoginData, SignupData} from '../../../model';
 
 export const loginUserAction = (payload: LoginData) => {
     return {
         type: ActionType.AUTHENTICATE_LOGIN_REQUEST,
+        payload
+    }
+};
+
+export const signupUserAction = (payload: SignupData) => {
+    return {
+        type: ActionType.AUTHENTICATE_SIGNUP_REQUEST,
         payload
     }
 };

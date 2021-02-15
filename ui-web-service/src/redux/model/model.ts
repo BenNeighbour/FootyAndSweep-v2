@@ -23,7 +23,12 @@ export enum ActionType {
     /* Login */
     AUTHENTICATE_LOGIN_REQUEST = 'action/AUTHENTICATE_LOGIN_REQUEST',
     AUTHENTICATE_LOGIN_SUCCESS = 'action/AUTHENTICATE_LOGIN_SUCCESS',
-    AUTHENTICATE_LOGIN_ERROR = 'action/AUTHENTICATE_LOGIN_ERROR'
+    AUTHENTICATE_LOGIN_ERROR = 'action/AUTHENTICATE_LOGIN_ERROR',
+
+    /* Signup */
+    AUTHENTICATE_SIGNUP_REQUEST = 'action/AUTHENTICATE_SIGNUP_REQUEST',
+    AUTHENTICATE_SIGNUP_SUCCESS = 'action/AUTHENTICATE_SIGNUP_SUCCESS',
+    AUTHENTICATE_SIGNUP_ERROR = 'action/AUTHENTICATE_SIGNUP_ERROR'
 }
 
 export interface UserData {
@@ -35,4 +40,12 @@ export interface UserData {
 export interface LoginData {
     username: string | null;
     password: string | null;
+}
+
+export interface SignupData {
+    username: string | null;
+    email: string | null;
+    dateOfBirth: Date | null;
+    password: string | null;
+    confirmPassword: string | null;
 }

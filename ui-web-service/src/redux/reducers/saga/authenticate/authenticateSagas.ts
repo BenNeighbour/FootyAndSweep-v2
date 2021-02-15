@@ -15,13 +15,22 @@
  */
 
 import {call, fork, put, takeLatest} from 'redux-saga/effects';
-import {ActionType, LoginData} from "../../../model";
+import {ActionType, LoginData, SignupData} from "../../../model";
 import axios from "axios";
 
 const loginRequest = (payload: LoginData) => {
     return axios.request({
         method: "post",
         url: "https://api.footyandsweep-dev.com:30389/com.footyandsweep.AuthenticationService/login",
+        data: payload,
+        withCredentials: true
+    });
+}
+
+const signupRequest = (payload: SignupData) => {
+    return axios.request({
+        method: "post",
+        url: "https://api.footyandsweep-dev.com:30389/com.footyandsweep.AuthenticationService/signup",
         data: payload,
         withCredentials: true
     });
@@ -41,13 +50,31 @@ function* loginSaga({payload}: { payload: LoginData }) {
     }
 }
 
+function* signupSaga({payload}: { payload: SignupData }) {
+    try {
+        let {response} = yield call(signupRequest, payload);
+
+        if (response.status === 200) {
+            yield put({type: ActionType.AUTHENTICATE_SIGNUP_SUCCESS, payload: response.username});
+        } else {
+            yield put({type: ActionType.AUTHENTICATE_SIGNUP_ERROR, payload: 'error'})
+        }
+    } catch (error) {
+        yield put({type: ActionType.AUTHENTICATE_SIGNUP_ERROR, payload: 'error'})
+    }
+}
+
 
 function* onLoginSubmitWatcher() {
     yield takeLatest(ActionType.AUTHENTICATE_LOGIN_REQUEST as any, loginSaga);
 }
+function* onSignupSubmitWatcher() {
+    yield takeLatest(ActionType.AUTHENTICATE_SIGNUP_REQUEST as any, signupSaga);
+}
 
 let authenticateSagas = [
     fork(onLoginSubmitWatcher),
+    fork(onSignupSubmitWatcher),
 ];
 
 export default authenticateSagas;
