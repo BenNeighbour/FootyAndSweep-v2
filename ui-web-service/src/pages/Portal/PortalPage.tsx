@@ -18,8 +18,9 @@ import React, {FunctionComponent, useState} from 'react';
 import styled from "styled-components";
 import LoginForm from "./Form/LoginForm";
 import SignupForm from "./Form/SignupForm";
+import { RouteComponentProps } from "react-router-dom";
 
-interface OwnProps {
+interface OwnProps extends RouteComponentProps<any> {
 }
 
 type Props = OwnProps;
@@ -28,13 +29,15 @@ const PortalPage: FunctionComponent<Props> = (props) => {
     const [isLoggingIn, setIsLoggingIn] = useState(true);
 
     return (
-        <Container>
-            <LeftSection/>
-            <RightSection>
-                {isLoggingIn ? <LoginForm/> :
-                    <SignupForm/>}
-            </RightSection>
-        </Container>
+        <>
+            <Container>
+                <LeftSection/>
+                <RightSection>
+                    {isLoggingIn ? <LoginForm setIsLoggingIn={(value: boolean) => setIsLoggingIn(value)}/> :
+                        <SignupForm setIsLoggingIn={(value: boolean) => setIsLoggingIn(value)}/>}
+                </RightSection>
+            </Container>
+        </>
     );
 };
 
@@ -67,5 +70,6 @@ box-sizing: border-box;
     flex-basis: 50%;
 }
 `;
+;
 
 export default PortalPage;

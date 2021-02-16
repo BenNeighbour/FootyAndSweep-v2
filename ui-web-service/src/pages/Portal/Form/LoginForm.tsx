@@ -25,9 +25,11 @@ import {Form, Formik} from "formik";
 import styled from "styled-components";
 import {connect} from "react-redux";
 import {RootState} from "../../../redux/rootReducer";
+import DontHaveAccount from "./DontHaveAccount";
 
 interface OwnProps {
     actions: typeof AuthenticateActions;
+    setIsLoggingIn: (value: boolean) => void;
 }
 
 type Props = OwnProps;
@@ -60,6 +62,8 @@ const LoginForm: FunctionComponent<Props> = (props) => {
                                 height: "45px",
                                 marginBottom: "1em"
                             }}/>
+
+                            <DontHaveAccount isLoggingIn={true} setIsLoggingIn={props.setIsLoggingIn} />
 
                             <OrSignInWithText>OR</OrSignInWithText>
 

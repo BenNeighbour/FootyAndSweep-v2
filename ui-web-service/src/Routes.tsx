@@ -18,6 +18,7 @@ import React, {FunctionComponent} from 'react';
 import {Route, Switch} from "react-router";
 import HomePage from "./pages/HomePage";
 import PortalPage from "./pages/Portal/PortalPage";
+import Navbar from "./components/NavBar/Navbar";
 
 interface OwnProps {
 }
@@ -27,6 +28,7 @@ type Props = OwnProps;
 const Routes: FunctionComponent<Props> = (props) => {
     return (
         <Route>
+            <Navbar/>
             <Switch>
                 <Route>
                     <Route

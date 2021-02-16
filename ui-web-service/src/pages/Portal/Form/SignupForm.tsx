@@ -25,9 +25,11 @@ import {RootState} from "../../../redux/rootReducer";
 import {bindActionCreators} from "redux";
 import * as AuthenticateActions from "../../../redux/reducers/saga/authenticate/authenticateActions";
 import {connect} from "react-redux";
+import DontHaveAccount from "./DontHaveAccount";
 
 interface OwnProps {
     actions: typeof AuthenticateActions;
+    setIsLoggingIn: (value: boolean) => void;
 }
 
 type Props = OwnProps;
@@ -81,6 +83,8 @@ const SignupForm: FunctionComponent<Props> = (props) => {
                                 height: "45px",
                                 marginBottom: "1em"
                             }}/>
+
+                            <DontHaveAccount isLoggingIn={false} setIsLoggingIn={props.setIsLoggingIn} />
 
                             <OrSignInWithText>OR</OrSignInWithText>
 
