@@ -14,30 +14,29 @@
  *   limitations under the License.
  */
 
+
 import React, {FunctionComponent} from 'react';
-import {Route, Switch} from "react-router";
-import HomePage from "./pages/HomePage";
-import PortalPage from "./pages/Portal/PortalPage";
+import Spinner from "../../components/Spinner/Spinner";
+import styled from "styled-components";
 
 interface OwnProps {
 }
 
 type Props = OwnProps;
 
-const Routes: FunctionComponent<Props> = (props) => {
+const LoadingPage: FunctionComponent<Props> = (props) => {
     return (
-        <Route>
-            <Switch>
-                <Route>
-                    <Route
-                        component={HomePage} exact path="/"/>
-                    <Route
-                        component={PortalPage} exact path="/portal"/>
-                </Route>
-            </Switch>
-        </Route>
+        <Container>
+            <Spinner color={"#2d50cf"}/>
+        </Container>
     );
 };
 
-export default Routes;
+export default LoadingPage;
 
+const Container = styled.div`
+display: flex;  
+height: 80vh;
+justify-content: center;
+place-items: center;
+`;

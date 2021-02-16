@@ -70,6 +70,5 @@ box-sizing: border-box;
     flex-basis: 50%;
 }
 `;
-;
 
 export default PortalPage;

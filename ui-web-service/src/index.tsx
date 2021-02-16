@@ -18,11 +18,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import Routes from './Routes';
-import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from "react-router-dom";
 import {PersistGate} from "redux-persist/integration/react";
 import {Provider} from "react-redux";
 import configureStore from "./redux/configureStore";
+import Spinner from "./components/Spinner/Spinner";
+import reportWebVitals from "./reportWebVitals";
+import LoadingPage from "./pages/Loading/LoadingPage";
 
 const {persistor, store} = configureStore();
 
@@ -31,7 +33,7 @@ ReactDOM.render(
         <BrowserRouter>
             <Provider store={store}>
                 <PersistGate
-                    loading={<h1>Loading...</h1>}
+                    loading={<LoadingPage />}
                     persistor={persistor}
                 >
                     <Routes/>

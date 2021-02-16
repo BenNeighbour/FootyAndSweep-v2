@@ -17,6 +17,7 @@
 
 import React, {FunctionComponent} from 'react';
 import Button from "../components/Button/Button";
+import Navbar from "../components/NavBar/Navbar";
 
 interface OwnProps {
 }
@@ -25,13 +26,13 @@ type Props = OwnProps;
 
 const HomePage: FunctionComponent<Props> = (props) => {
     return (
-        <div style={{
-            display: 'grid',
-            placeItems: 'center'
-        }}>
-            <Button title={"Hello"} disabled onClick={() => {
-                console.log("hit")
-            }}/>
+        <div>
+            <Navbar/>
+            {/*<div>*/}
+            {/*    <Button title={"Hello"} disabled onClick={() => {*/}
+            {/*        console.log("hit")*/}
+            {/*    }}/>*/}
+            {/*</div>*/}
         </div>
     );
 };
