@@ -20,6 +20,7 @@ import Spinner from "../../components/Spinner/Spinner";
 import styled from "styled-components";
 
 interface OwnProps {
+    message?: string;
 }
 
 type Props = OwnProps;

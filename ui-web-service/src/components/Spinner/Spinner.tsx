@@ -32,18 +32,18 @@ const Spinner: FunctionComponent<Props> = (props) => {
 };
 
 const motion = (p: any) => keyframes`
-  0% {
-      transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+0% {
+  transform: rotate(0deg);
+}
+100% {
+transform: rotate(360deg);
+}
 `
 
 const Wrapper = styled.div`
-  display: inline-block;
-  position: relative;
-  width: 100px;
+display: inline-block;
+position: relative;
+width: 100px;
 height: 100px;
 `
 

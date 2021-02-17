@@ -47,7 +47,7 @@ line-height: 21px;
 
 const DontHaveAccountLink = styled.a`
 font-family: 'Open Sans', sans-serif;
-color: #3e66fb;
+color: #2d50cf;
 font-size: 14px;
 font-weight: 600;
 line-height: 21px;

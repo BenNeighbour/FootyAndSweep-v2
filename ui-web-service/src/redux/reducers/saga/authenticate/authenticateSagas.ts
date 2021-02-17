@@ -16,37 +16,57 @@
 
 import {call, fork, put, takeLatest} from 'redux-saga/effects';
 import {ActionType, LoginData, SignupData} from "../../../model";
-import axios from "axios";
+import Axios from "axios";
 
-const loginRequest = (payload: LoginData) => {
-    return axios.request({
-        method: "post",
-        url: "https://api.footyandsweep-dev.com:30389/com.footyandsweep.AuthenticationService/login",
-        data: payload,
-        withCredentials: true
-    });
+const loginRequest = async (payload: LoginData) => {
+    try {
+        let response = await Axios({
+            method: "post",
+            url: "http://api.footyandsweep-dev.com:30389/com.footyandsweep.AuthenticationService/login",
+            data: payload,
+            withCredentials: true
+        });
+
+        return response.data;
+    } catch (error) {
+        return error.response;
+    }
 }
 
-const signupRequest = (payload: SignupData) => {
-    return axios.request({
-        method: "post",
-        url: "https://api.footyandsweep-dev.com:30389/com.footyandsweep.AuthenticationService/signup",
-        data: payload,
-        withCredentials: true
-    });
+const signupRequest = async (payload: SignupData) => {
+    try {
+        let response = await Axios({
+            method: "post",
+            url: "http://api.footyandsweep-dev.com:30389/com.footyandsweep.AuthenticationService/signup",
+            data: payload,
+            withCredentials: true
+        });
+
+        return response.data;
+    } catch (error) {
+        return error.response;
+    }
 }
 
 function* loginSaga({payload}: { payload: LoginData }) {
     try {
-        let {response} = yield call(loginRequest, payload);
+        const response = yield call(loginRequest, payload);
 
         if (response.status === 200) {
             yield put({type: ActionType.AUTHENTICATE_LOGIN_SUCCESS, payload: response.username});
+        } else if (response.status === 401) {
+            yield put({type: ActionType.AUTHENTICATE_LOGIN_ERROR, payload: "Your Username/Password are invalid!"})
         } else {
-            yield put({type: ActionType.AUTHENTICATE_LOGIN_ERROR, payload: 'error'})
+            yield put({
+                type: ActionType.AUTHENTICATE_LOGIN_ERROR,
+                payload: "Hmm, Something's not quite right! Try again later!"
+            })
         }
     } catch (error) {
-        yield put({type: ActionType.AUTHENTICATE_LOGIN_ERROR, payload: 'error'})
+        yield put({
+            type: ActionType.AUTHENTICATE_LOGIN_ERROR,
+            payload: "Hmm, Something's not quite right! Try again later!"
+        })
     }
 }
 
@@ -57,10 +77,16 @@ function* signupSaga({payload}: { payload: SignupData }) {
         if (response.status === 200) {
             yield put({type: ActionType.AUTHENTICATE_SIGNUP_SUCCESS, payload: response.username});
         } else {
-            yield put({type: ActionType.AUTHENTICATE_SIGNUP_ERROR, payload: 'error'})
+            yield put({
+                type: ActionType.AUTHENTICATE_SIGNUP_ERROR,
+                payload: "Hmm, Something's not quite right! Try again later!"
+            })
         }
     } catch (error) {
-        yield put({type: ActionType.AUTHENTICATE_SIGNUP_ERROR, payload: 'error'})
+        yield put({
+            type: ActionType.AUTHENTICATE_SIGNUP_ERROR,
+            payload: "Hmm, Something's not quite right! Try again later!"
+        })
     }
 }
 

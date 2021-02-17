@@ -26,8 +26,11 @@ import styled from "styled-components";
 import {connect} from "react-redux";
 import {RootState} from "../../../redux/rootReducer";
 import DontHaveAccount from "./DontHaveAccount";
+import {LoginAuthenticationReducerType} from "../../../redux/reducers/saga/authenticate";
+import LoadingPage from "../../Loading/LoadingPage";
 
 interface OwnProps {
+    state: LoginAuthenticationReducerType;
     actions: typeof AuthenticateActions;
     setIsLoggingIn: (value: boolean) => void;
 }
@@ -35,6 +38,8 @@ interface OwnProps {
 type Props = OwnProps;
 
 const LoginForm: FunctionComponent<Props> = (props) => {
+    if (props.state.isLoading) return <LoadingPage />
+
     return (
         <FormContainer>
             <FormDiv>
@@ -63,6 +68,8 @@ const LoginForm: FunctionComponent<Props> = (props) => {
                                 marginBottom: "1em"
                             }}/>
 
+                            <ErrorTextMessage>{props.state.error}</ErrorTextMessage>
+
                             <DontHaveAccount isLoggingIn={true} setIsLoggingIn={props.setIsLoggingIn}/>
 
                             <OrSignInWithText>OR</OrSignInWithText>
@@ -76,11 +83,11 @@ const LoginForm: FunctionComponent<Props> = (props) => {
     );
 };
 
-const mapStateToProps = (state: RootState) => (
-    {
-        loginForm: state.loginForm
+const mapStateToProps = (state: RootState) => {
+    return {
+        state: state.loginForm
     }
-);
+};
 
 function mapDispatchToProps(dispatch: any) {
     return {
@@ -111,4 +118,11 @@ const OrSignInWithText = styled.div`
 text-align: center;
 font-family: 'Open Sans', sans-serif;
 color: #b5b5b5;
+`;
+
+const ErrorTextMessage = styled.div`
+text-align: left;
+font-family: 'Open Sans', sans-serif;
+font-size: 14px;
+color: red;
 `;

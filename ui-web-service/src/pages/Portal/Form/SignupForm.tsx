@@ -26,8 +26,11 @@ import {bindActionCreators} from "redux";
 import * as AuthenticateActions from "../../../redux/reducers/saga/authenticate/authenticateActions";
 import {connect} from "react-redux";
 import DontHaveAccount from "./DontHaveAccount";
+import {SignupAuthenticationReducerType} from "../../../redux/reducers/saga/authenticate";
+import LoadingPage from "../../Loading/LoadingPage";
 
 interface OwnProps {
+    state: SignupAuthenticationReducerType;
     actions: typeof AuthenticateActions;
     setIsLoggingIn: (value: boolean) => void;
 }
@@ -35,6 +38,8 @@ interface OwnProps {
 type Props = OwnProps;
 
 const SignupForm: FunctionComponent<Props> = (props) => {
+    if (props.state.isLoading) return <LoadingPage/>
+
     return (
         <FormContainer>
             <FormDiv>
@@ -97,11 +102,12 @@ const SignupForm: FunctionComponent<Props> = (props) => {
     );
 };
 
-const mapStateToProps = (state: RootState) => (
-    {
-        signupForm: state.signupForm
+const mapStateToProps = (state: RootState) => {
+    return {
+        state: state.signupForm
     }
-);
+};
+
 
 function mapDispatchToProps(dispatch: any) {
     return {
