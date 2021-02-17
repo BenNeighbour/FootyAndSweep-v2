@@ -113,10 +113,9 @@ function mapDispatchToProps(dispatch: any) {
 export default connect(mapStateToProps, mapDispatchToProps)(SignupForm);
 
 const FormContainer = styled.div`
-margin: auto;
 display: flex;
 flex-grow: 1;
-height: 100vh;
+height: 100%;
 align-items: center;
 place-items: center;
 `;
@@ -126,7 +125,6 @@ margin: auto;
 flex-basis: 725px;
 padding-left: 1em;
 padding-right: 1em;
-padding-bottom: 5em;
 padding-top: 5em;
 `;
 

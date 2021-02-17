@@ -26,6 +26,7 @@ import styled from "styled-components";
 import {connect} from "react-redux";
 import {RootState} from "../../../redux/rootReducer";
 import DontHaveAccount from "./DontHaveAccount";
+import Footer from "../../../components/Footer/Footer";
 
 interface OwnProps {
     actions: typeof AuthenticateActions;
@@ -63,7 +64,7 @@ const LoginForm: FunctionComponent<Props> = (props) => {
                                 marginBottom: "1em"
                             }}/>
 
-                            <DontHaveAccount isLoggingIn={true} setIsLoggingIn={props.setIsLoggingIn} />
+                            <DontHaveAccount isLoggingIn={true} setIsLoggingIn={props.setIsLoggingIn}/>
 
                             <OrSignInWithText>OR</OrSignInWithText>
 
@@ -92,10 +93,9 @@ function mapDispatchToProps(dispatch: any) {
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
 
 const FormContainer = styled.div`
-margin: auto;
 display: flex;
 flex-grow: 1;
-height: 100vh;
+height: 100%;
 align-items: center;
 place-items: center;
 `;
@@ -105,7 +105,6 @@ margin: auto;
 flex-basis: 725px;
 padding-left: 1em;
 padding-right: 1em;
-padding-bottom: 5em;
 padding-top: 5em;
 `;
 

@@ -18,7 +18,8 @@ import React, {FunctionComponent, useState} from 'react';
 import styled from "styled-components";
 import LoginForm from "./Form/LoginForm";
 import SignupForm from "./Form/SignupForm";
-import { RouteComponentProps } from "react-router-dom";
+import {RouteComponentProps} from "react-router-dom";
+import Footer from "../../components/Footer/Footer";
 
 interface OwnProps extends RouteComponentProps<any> {
 }
@@ -35,6 +36,9 @@ const PortalPage: FunctionComponent<Props> = (props) => {
                 <RightSection>
                     {isLoggingIn ? <LoginForm setIsLoggingIn={(value: boolean) => setIsLoggingIn(value)}/> :
                         <SignupForm setIsLoggingIn={(value: boolean) => setIsLoggingIn(value)}/>}
+                    <footer>
+                        <Footer/>
+                    </footer>
                 </RightSection>
             </Container>
         </>
@@ -61,7 +65,11 @@ box-sizing: border-box;
 `;
 
 const RightSection = styled.div`
-height: 100%;
+height: 100vh;
+width: 100%;
+margin: 0;
+display: flex;
+flex-direction: column;
 width: 100%;
 box-sizing: border-box;
 @media (min-width: 1280px) {
