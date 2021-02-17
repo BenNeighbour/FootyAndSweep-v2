@@ -64,28 +64,32 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
 
   @Override
   public ParticipantIds createSweepstakeParticipantRelation(String joinCode, String participantId) {
-      /* Find the sweepstake */
-      Sweepstake sweepstake = sweepstakeDao.findSweepstakeByJoinCode(joinCode);
+    /* Find the sweepstake */
+    Sweepstake sweepstake = sweepstakeDao.findSweepstakeByJoinCode(joinCode);
 
-      /* Check if the user is already in the sweepstake */
-      List<ParticipantIds> sweepstakeParticipantIds = participantIdDao.findAllParticipantIdsBySweepstakeId(sweepstake.getId());
+    /* Check if the user is already in the sweepstake */
+    List<ParticipantIds> sweepstakeParticipantIds =
+        participantIdDao.findAllParticipantIdsBySweepstakeId(sweepstake.getId());
 
-      sweepstakeParticipantIds = sweepstakeParticipantIds.stream()
-              .filter(participantIds -> participantIds.getParticipantId().equals(participantId)).collect(Collectors.toList());
+    sweepstakeParticipantIds =
+        sweepstakeParticipantIds.stream()
+            .filter(participantIds -> participantIds.getParticipantId().equals(participantId))
+            .collect(Collectors.toList());
 
-      if (sweepstakeParticipantIds.isEmpty()) {
-        /* If the user isn't in the sweepstake, then add it to the participant list */
-        ParticipantIds newParticipant = new ParticipantIds(sweepstake.getId(), participantId);
+    if (sweepstakeParticipantIds.isEmpty()) {
+      /* If the user isn't in the sweepstake, then add it to the participant list */
+      ParticipantIds newParticipant = new ParticipantIds(sweepstake.getId(), participantId);
 
-        newParticipant = participantIdDao.save(newParticipant);
-        return newParticipant;
-      } else {
-        throw new ParticipantAlreadyJoinedException("You are already part of this sweepstake!");
-      }
+      newParticipant = participantIdDao.save(newParticipant);
+      return newParticipant;
+    } else {
+      throw new ParticipantAlreadyJoinedException("You are already part of this sweepstake!");
+    }
   }
 
   @Override
-  public void updateSweepstakeStatus(String sweepstakeId, SweepstakeCommon.SweepstakeStatus status) {
+  public void updateSweepstakeStatus(
+      String sweepstakeId, SweepstakeCommon.SweepstakeStatus status) {
     try {
       Sweepstake sweepstake = sweepstakeDao.findSweepstakeById(sweepstakeId);
       sweepstake.setStatus(status);
@@ -98,18 +102,18 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
 
   @Override
   public CommandWithDestination linkParticipantToSweepstake(
-          String sweepstakeId, String participantId) {
+      String sweepstakeId, String participantId) {
     /* Do the remote service invocation here */
     return send(new LinkParticipantToSweepstakeCommand(participantId, sweepstakeId))
-            .to("user-service-events")
-            .build();
+        .to("user-service-events")
+        .build();
   }
 
   @Override
   public CommandWithDestination deleteRemoteSweepstakeRelation(DeleteSweepstakeSagaData sagaData) {
     return send(new DeleteAllSweepstakeRelationsCommand(sagaData.getSweepstake().getId()))
-            .to("user-service-events")
-            .build();
+        .to("user-service-events")
+        .build();
   }
 
   @Override
@@ -130,11 +134,9 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
   @Override
   public void deleteAllSweepstakeRelationsBySweepstakeId(String sweepstakeId) {
     List<ParticipantIds> participantIds =
-            participantIdDao.findAllParticipantIdsBySweepstakeId(sweepstakeId);
+        participantIdDao.findAllParticipantIdsBySweepstakeId(sweepstakeId);
 
     assert participantIds != null;
     participantIds.forEach(participantIdDao::delete);
   }
-
-
 }

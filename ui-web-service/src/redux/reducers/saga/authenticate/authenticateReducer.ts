@@ -19,14 +19,14 @@ import createReducer from "../../createReducer";
 
 
 /* Types for the reducer to modify (the payload that comes in through the saga) */
-export interface AuthenticationReducerType {
+export interface LoginAuthenticationReducerType {
     username: string;
     password: string;
     isLoading: boolean;
     error?: string;
 }
 
-const defaultState: AuthenticationReducerType = {
+const defaultLoginState: LoginAuthenticationReducerType = {
     username: '',
     password: '',
     isLoading: false,
@@ -34,16 +34,36 @@ const defaultState: AuthenticationReducerType = {
 }
 
 
+/* Types for the reducer to modify (the payload that comes in through the saga) */
+export interface SignupAuthenticationReducerType {
+    username: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+    isLoading: boolean;
+    error?: string;
+}
+
+const defaultSignupState: SignupAuthenticationReducerType = {
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    isLoading: false,
+    error: undefined,
+}
+
+
 /* Authentication Reducer cases */
-export const authenticationReducer = createReducer<AuthenticationReducerType>(defaultState, {
-    [ActionType.AUTHENTICATE_LOGIN_REQUEST](state: AuthenticationReducerType) {
+export const loginAuthenticationReducer = createReducer<LoginAuthenticationReducerType>(defaultLoginState, {
+    [ActionType.AUTHENTICATE_LOGIN_REQUEST](state: LoginAuthenticationReducerType) {
         return {
             ...state,
             isLoading: true,
         };
     },
 
-    [ActionType.AUTHENTICATE_LOGIN_SUCCESS](state: AuthenticationReducerType) {
+    [ActionType.AUTHENTICATE_LOGIN_SUCCESS](state: LoginAuthenticationReducerType) {
         return {
             ...state,
             isLoading: false,
@@ -51,23 +71,24 @@ export const authenticationReducer = createReducer<AuthenticationReducerType>(de
         };
     },
 
-    [ActionType.AUTHENTICATE_LOGIN_ERROR](state: AuthenticationReducerType, action: Action<number>) {
+    [ActionType.AUTHENTICATE_LOGIN_ERROR](state: LoginAuthenticationReducerType, action: Action<number>) {
         return {
             ...state,
-            loading: false,
+            isLoading: false,
             error: action.payload,
         };
     },
+});
 
-
-    [ActionType.AUTHENTICATE_SIGNUP_REQUEST](state: AuthenticationReducerType) {
+export const signupAuthenticationReducer = createReducer<SignupAuthenticationReducerType>(defaultSignupState, {
+    [ActionType.AUTHENTICATE_SIGNUP_REQUEST](state: SignupAuthenticationReducerType) {
         return {
             ...state,
             isLoading: true,
         };
     },
 
-    [ActionType.AUTHENTICATE_SIGNUP_SUCCESS](state: AuthenticationReducerType) {
+    [ActionType.AUTHENTICATE_SIGNUP_SUCCESS](state: SignupAuthenticationReducerType) {
         return {
             ...state,
             isLoading: false,
@@ -75,10 +96,10 @@ export const authenticationReducer = createReducer<AuthenticationReducerType>(de
         };
     },
 
-    [ActionType.AUTHENTICATE_SIGNUP_ERROR](state: AuthenticationReducerType, action: Action<number>) {
+    [ActionType.AUTHENTICATE_SIGNUP_ERROR](state: SignupAuthenticationReducerType, action: Action<number>) {
         return {
             ...state,
-            loading: false,
+            isLoading: false,
             error: action.payload,
         };
     },

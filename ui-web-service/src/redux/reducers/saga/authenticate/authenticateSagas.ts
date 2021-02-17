@@ -68,6 +68,7 @@ function* signupSaga({payload}: { payload: SignupData }) {
 function* onLoginSubmitWatcher() {
     yield takeLatest(ActionType.AUTHENTICATE_LOGIN_REQUEST as any, loginSaga);
 }
+
 function* onSignupSubmitWatcher() {
     yield takeLatest(ActionType.AUTHENTICATE_SIGNUP_REQUEST as any, signupSaga);
 }

@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-import React, { FunctionComponent } from 'react';
+import React, {FunctionComponent} from 'react';
 import styled, {keyframes} from "styled-components";
 
 interface OwnProps {
@@ -24,11 +24,11 @@ interface OwnProps {
 type Props = OwnProps;
 
 const Spinner: FunctionComponent<Props> = (props) => {
-  return (
-      <Wrapper>
-        <RingSpinner color={props.color} />
-      </Wrapper>
-  );
+    return (
+        <Wrapper>
+            <RingSpinner color={props.color}/>
+        </Wrapper>
+    );
 };
 
 const motion = (p: any) => keyframes`

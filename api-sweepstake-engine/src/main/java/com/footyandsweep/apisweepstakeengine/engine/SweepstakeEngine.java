@@ -42,5 +42,4 @@ public interface SweepstakeEngine {
   CommandWithDestination linkParticipantToSweepstake(String sweepstakeId, String participantId);
 
   void updateSweepstakeStatus(String sweepstakeId, SweepstakeCommon.SweepstakeStatus status);
-
 }

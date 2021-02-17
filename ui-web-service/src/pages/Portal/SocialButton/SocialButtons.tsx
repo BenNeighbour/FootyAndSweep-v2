@@ -15,30 +15,31 @@
  */
 
 
-import React, { FunctionComponent } from 'react';
+import React, {FunctionComponent} from 'react';
 import SocialButton from "../../../components/SocialButton/SocialButton";
 import {FcGoogle} from "react-icons/all";
 import Facebook from "../../../icons/Facebook";
 import styled from "styled-components";
 
-interface OwnProps {}
+interface OwnProps {
+}
 
 type Props = OwnProps;
 
 const SocialButtonSection: FunctionComponent<Props> = (props) => {
-  return (
-      <SocialButtons>
-          <SocialButton><FcGoogle style={{
-              padding: "5px 25px"
-          }} size={75}/>
-          </SocialButton>
-          <SocialButton>
-              <Facebook style={{
-                  padding: "5px 25px"
-              }} width={"75px"} height={"75px"}/>
-          </SocialButton>
-      </SocialButtons>
-  );
+    return (
+        <SocialButtons>
+            <SocialButton><FcGoogle style={{
+                padding: "5px 25px"
+            }} size={75}/>
+            </SocialButton>
+            <SocialButton>
+                <Facebook style={{
+                    padding: "5px 25px"
+                }} width={"75px"} height={"75px"}/>
+            </SocialButton>
+        </SocialButtons>
+    );
 };
 
 const SocialButtons = styled.div`

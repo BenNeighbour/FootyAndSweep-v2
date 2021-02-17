@@ -47,20 +47,24 @@ public class AllocationEngineImpl implements AllocationEngine {
   private final RestTemplate restTemplate;
   private final AllocationClientGrpc allocationClient;
 
-  public AllocationEngineImpl(AllocationDao allocationDao, RestTemplate restTemplate, AllocationClientGrpc allocationClient) {
+  public AllocationEngineImpl(
+      AllocationDao allocationDao,
+      RestTemplate restTemplate,
+      AllocationClientGrpc allocationClient) {
     this.allocationDao = allocationDao;
     this.restTemplate = restTemplate;
     this.allocationClient = allocationClient;
   }
 
   /*
-      This method is called by either the sweepstake sold out event listener or by the cron job batch-processor
-    */
+    This method is called by either the sweepstake sold out event listener or by the cron job batch-processor
+  */
   @Override
   public void allocateSweepstakeTickets(AllocateSweepstakeSagaData sagaData) {
     try {
       /* Get a unique shuffled list of unique user ids */
-      List<String> uniqueUserList = this.sweepstakeParticipantsHelper(sagaData.getSweepstake().getId());
+      List<String> uniqueUserList =
+          this.sweepstakeParticipantsHelper(sagaData.getSweepstake().getId());
 
       /* Get the built possible result maps from the sweepstake/result methods */
       Optional<Map<Integer, String>> sweepstakeResultMap =
@@ -70,7 +74,8 @@ public class AllocationEngineImpl implements AllocationEngine {
       List<Integer> sweepstakeResultIdList = getSweepstakeResultIdList(sweepstakeResultMap.get());
 
       /* Get a list of tickets that belong to this sweepstake */
-      List<TicketCommon> allPurchasedTickets = this.getSweepstakeTicketsHelper(sagaData.getSweepstake().getId());
+      List<TicketCommon> allPurchasedTickets =
+          this.getSweepstakeTicketsHelper(sagaData.getSweepstake().getId());
       sagaData.setTickets(allPurchasedTickets);
 
       /* Process each of the user bought tickets */
@@ -92,7 +97,8 @@ public class AllocationEngineImpl implements AllocationEngine {
 
   private List<String> sweepstakeParticipantsHelper(String sweepstakeId) {
     /* Get a list of participants that might have purchased tickets */
-    List<String> participantIds = new LinkedList<>(allocationClient.getAllSweepstakeParticipants(sweepstakeId));
+    List<String> participantIds =
+        new LinkedList<>(allocationClient.getAllSweepstakeParticipants(sweepstakeId));
 
     Collections.shuffle(participantIds);
     return participantIds;
@@ -104,7 +110,7 @@ public class AllocationEngineImpl implements AllocationEngine {
   }
 
   private void processAllTickets(
-          AllocateSweepstakeSagaData sagaData,
+      AllocateSweepstakeSagaData sagaData,
       List<String> participantIds,
       Map<Integer, String> sweepstakeResultMap,
       List<Integer> sweepstakeResultIdList) {
@@ -156,8 +162,8 @@ public class AllocationEngineImpl implements AllocationEngine {
 
           System.out.println("Allocate User: " + userId + " Ticket: " + ticket);
 
-          modifiedTickets.add(this.allocateTicket(
-              sweepstakeResultMap, sweepstakeResultIdList, ticket));
+          modifiedTickets.add(
+              this.allocateTicket(sweepstakeResultMap, sweepstakeResultIdList, ticket));
         }
       }
 
@@ -186,7 +192,7 @@ public class AllocationEngineImpl implements AllocationEngine {
 
       /* Getting sweepstake by the id so that it can be modified here */
       Optional<SweepstakeCommon> sweepstake =
-              Optional.ofNullable(allocationClient.findSweepstakeById(ticket.getSweepstakeId()));
+          Optional.ofNullable(allocationClient.findSweepstakeById(ticket.getSweepstakeId()));
 
       /* If the sweepstake is not valid, then throw an error */
       if (!sweepstake.isPresent()) throw new Exception();
@@ -218,8 +224,7 @@ public class AllocationEngineImpl implements AllocationEngine {
 
       /* Call result helper to get the field and return a function that returns the right maps to back */
       if (sweepstake.getSweepstakeType().equals(i)) {
-        resultMap =
-                new HashMap<>(allocationClient.resultHelper(sweepstake));
+        resultMap = new HashMap<>(allocationClient.resultHelper(sweepstake));
       }
     }
 
@@ -231,15 +236,14 @@ public class AllocationEngineImpl implements AllocationEngine {
     HashMap<String, String> ticketAllocationIds = new HashMap<>();
     tickets.forEach(ticket -> ticketAllocationIds.put(ticket.getId(), ticket.getAllocationId()));
 
-    return send(new AllocateTicketsCommand(ticketAllocationIds))
-            .to("ticket-engine-events")
-            .build();
+    return send(new AllocateTicketsCommand(ticketAllocationIds)).to("ticket-engine-events").build();
   }
 
   @Override
-  public CommandWithDestination updateSweepstakeStatus(String sweepstakeId, SweepstakeCommon.SweepstakeStatus status) {
+  public CommandWithDestination updateSweepstakeStatus(
+      String sweepstakeId, SweepstakeCommon.SweepstakeStatus status) {
     return send(new UpdateSweepstakeStatusCommand(sweepstakeId, status))
-            .to("sweepstake-engine-events")
-            .build();
+        .to("sweepstake-engine-events")
+        .build();
   }
 }

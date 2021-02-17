@@ -39,24 +39,25 @@ public class AllocationEngineConfiguration {
 
   @Bean
   public SweepstakeServiceGrpc.SweepstakeServiceBlockingStub sweepstakeEngineChannel() {
-    ManagedChannel channel = ManagedChannelBuilder.forAddress("api-sweepstake-engine", 9090)
-            .usePlaintext()
-            .build();
+    ManagedChannel channel =
+        ManagedChannelBuilder.forAddress("api-sweepstake-engine", 9090).usePlaintext().build();
 
     return SweepstakeServiceGrpc.newBlockingStub(channel);
   }
 
   @Bean
   public TicketServiceGrpc.TicketServiceBlockingStub ticketEngineChannel() {
-    ManagedChannel channel = ManagedChannelBuilder.forAddress("api-ticket-engine", 9090)
-            .usePlaintext()
-            .build();
+    ManagedChannel channel =
+        ManagedChannelBuilder.forAddress("api-ticket-engine", 9090).usePlaintext().build();
 
     return TicketServiceGrpc.newBlockingStub(channel);
   }
 
   @Bean
-  public AllocationEngine allocationEngine(AllocationDao allocationDao, RestTemplate restTemplate, AllocationClientGrpc allocationClientGrpc) {
+  public AllocationEngine allocationEngine(
+      AllocationDao allocationDao,
+      RestTemplate restTemplate,
+      AllocationClientGrpc allocationClientGrpc) {
     return new AllocationEngineImpl(allocationDao, restTemplate, allocationClientGrpc);
   }
 }

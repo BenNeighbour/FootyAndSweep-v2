@@ -22,7 +22,6 @@ import {BrowserRouter} from "react-router-dom";
 import {PersistGate} from "redux-persist/integration/react";
 import {Provider} from "react-redux";
 import configureStore from "./redux/configureStore";
-import Spinner from "./components/Spinner/Spinner";
 import reportWebVitals from "./reportWebVitals";
 import LoadingPage from "./pages/Loading/LoadingPage";
 
@@ -33,7 +32,7 @@ ReactDOM.render(
         <BrowserRouter>
             <Provider store={store}>
                 <PersistGate
-                    loading={<LoadingPage />}
+                    loading={<LoadingPage/>}
                     persistor={persistor}
                 >
                     <Routes/>

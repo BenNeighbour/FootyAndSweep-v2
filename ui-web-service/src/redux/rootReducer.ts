@@ -17,18 +17,23 @@
 import {History} from "history";
 import {combineReducers} from "redux";
 import {routerReducer, RouterState} from 'react-router-redux';
-import {authenticationReducer, AuthenticationReducerType} from "./reducers/saga/authenticate";
+import {
+    loginAuthenticationReducer,
+    LoginAuthenticationReducerType,
+    signupAuthenticationReducer,
+    SignupAuthenticationReducerType
+} from "./reducers/saga/authenticate";
 
 export interface RootState {
-    loginForm: AuthenticationReducerType
-    signupForm: AuthenticationReducerType
+    loginForm: LoginAuthenticationReducerType
+    signupForm: SignupAuthenticationReducerType
     routerReducer: RouterState,
 }
 
 const combinedReducers = (history: History) =>
     combineReducers({
-        loginForm: authenticationReducer,
-        signupForm: authenticationReducer,
+        loginForm: loginAuthenticationReducer,
+        signupForm: signupAuthenticationReducer,
         routerReducer,
     });
 

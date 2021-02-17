@@ -84,7 +84,7 @@ const SignupForm: FunctionComponent<Props> = (props) => {
                                 marginBottom: "1em"
                             }}/>
 
-                            <DontHaveAccount isLoggingIn={false} setIsLoggingIn={props.setIsLoggingIn} />
+                            <DontHaveAccount isLoggingIn={false} setIsLoggingIn={props.setIsLoggingIn}/>
 
                             <OrSignInWithText>OR</OrSignInWithText>
 

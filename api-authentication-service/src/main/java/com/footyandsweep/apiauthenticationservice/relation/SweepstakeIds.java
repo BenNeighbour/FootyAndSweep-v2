@@ -39,9 +39,8 @@ public class SweepstakeIds implements Serializable {
   private static final long serialVersionUID = 5778408986459720940L;
 
   @Id
-  @GeneratedValue(generator="system-uuid")
-  @GenericGenerator(name="system-uuid",
-          strategy = "uuid")
+  @GeneratedValue(generator = "system-uuid")
+  @GenericGenerator(name = "system-uuid", strategy = "uuid")
   private String id;
 
   private String participantId;

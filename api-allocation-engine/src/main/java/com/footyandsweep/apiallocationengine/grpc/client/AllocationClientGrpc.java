@@ -32,7 +32,9 @@ public class AllocationClientGrpc {
   private final SweepstakeServiceGrpc.SweepstakeServiceBlockingStub sweepstakeEngineChannel;
   private final TicketServiceGrpc.TicketServiceBlockingStub ticketEngineChannel;
 
-  public AllocationClientGrpc(SweepstakeServiceGrpc.SweepstakeServiceBlockingStub sweepstakeEngineChannel, TicketServiceGrpc.TicketServiceBlockingStub ticketEgineChannel) {
+  public AllocationClientGrpc(
+      SweepstakeServiceGrpc.SweepstakeServiceBlockingStub sweepstakeEngineChannel,
+      TicketServiceGrpc.TicketServiceBlockingStub ticketEgineChannel) {
     this.sweepstakeEngineChannel = sweepstakeEngineChannel;
     this.ticketEngineChannel = ticketEgineChannel;
   }
@@ -40,8 +42,7 @@ public class AllocationClientGrpc {
   public List<String> getAllSweepstakeParticipants(String sweepstakeId) {
     Common.Id id = Common.Id.newBuilder().setId(sweepstakeId).build();
 
-    Common.Ids participantIdProto =
-            sweepstakeEngineChannel.getAllSweepstakeParticipants(id);
+    Common.Ids participantIdProto = sweepstakeEngineChannel.getAllSweepstakeParticipants(id);
 
     return participantIdProto.getIdList();
   }
@@ -49,31 +50,42 @@ public class AllocationClientGrpc {
   public List<TicketCommon> getSweepstakeTickets(String sweepstakeId) {
     Common.Id id = Common.Id.newBuilder().setId(sweepstakeId).build();
 
-    TicketServiceOuterClass.TicketList ticketsProto = ticketEngineChannel.getAllTicketsBySweepstakeId(id);
+    TicketServiceOuterClass.TicketList ticketsProto =
+        ticketEngineChannel.getAllTicketsBySweepstakeId(id);
 
     /* Convert proto "list" object to a POJO */
     List<TicketCommon> tickets = new ArrayList<>();
-    ticketsProto.getTicketList().forEach(ticket -> {
-      TicketCommon ticketCommon = ProtoConverterUtils.convertToPojo(TicketCommon.class, ticket);
-      tickets.add(ticketCommon);
-    });
+    ticketsProto
+        .getTicketList()
+        .forEach(
+            ticket -> {
+              TicketCommon ticketCommon =
+                  ProtoConverterUtils.convertToPojo(TicketCommon.class, ticket);
+              tickets.add(ticketCommon);
+            });
 
     return tickets;
   }
 
   public SweepstakeCommon findSweepstakeById(String id) {
-    SweepstakeServiceOuterClass.Sweepstake sweepstake = sweepstakeEngineChannel.findSweepstakeById(Common.Id.newBuilder().setId(id).build());
+    SweepstakeServiceOuterClass.Sweepstake sweepstake =
+        sweepstakeEngineChannel.findSweepstakeById(Common.Id.newBuilder().setId(id).build());
     return ProtoConverterUtils.convertToPojo(SweepstakeCommon.class, sweepstake);
   }
 
   public HashMap<Integer, String> resultHelper(SweepstakeCommon sweepstake) {
-    SweepstakeServiceOuterClass.Sweepstake.Builder sweepstakeBuilder = SweepstakeServiceOuterClass.Sweepstake.newBuilder();
+    SweepstakeServiceOuterClass.Sweepstake.Builder sweepstakeBuilder =
+        SweepstakeServiceOuterClass.Sweepstake.newBuilder();
     ProtoConverterUtils.convertToProto(sweepstakeBuilder, sweepstake);
 
     HashMap<Integer, String> returnMap = new HashMap<>();
-    sweepstakeEngineChannel.resultHelper(sweepstakeBuilder.build()).getPairsList().forEach(pair -> {
-      returnMap.put(pair.getKey(), pair.getValue());
-    });
+    sweepstakeEngineChannel
+        .resultHelper(sweepstakeBuilder.build())
+        .getPairsList()
+        .forEach(
+            pair -> {
+              returnMap.put(pair.getKey(), pair.getValue());
+            });
 
     return returnMap;
   }

@@ -44,20 +44,22 @@ public class ResultSchedulerConfig {
   /* Scheduled for every 4 minutes (240000) */
   @Scheduled(fixedRate = 120000)
   public void fetchAndDecisionSweepstakes() {
-      sweepstakeDao
-              .findAllSweepstakesByStatus(SweepstakeCommon.SweepstakeStatus.ALLOCATED)
-              /* TODO: Filter by the current football match id */
-              .forEach(
-                      sweepstake -> {
-                          /* Call the RPC, which in turn, calls the saga for each sweepstake */
-                          ManagedChannel channel = ManagedChannelBuilder.forAddress("api-result-engine", 9090)
-                                  .usePlaintext()
-                                  .build();
+    sweepstakeDao
+        .findAllSweepstakesByStatus(SweepstakeCommon.SweepstakeStatus.ALLOCATED)
+        /* TODO: Filter by the current football match id */
+        .forEach(
+            sweepstake -> {
+              /* Call the RPC, which in turn, calls the saga for each sweepstake */
+              ManagedChannel channel =
+                  ManagedChannelBuilder.forAddress("api-result-engine", 9090)
+                      .usePlaintext()
+                      .build();
 
-                          ResultServiceGrpc.ResultServiceBlockingStub clientStub = ResultServiceGrpc.newBlockingStub(channel);
-                          clientStub.checkForSweepstakeResults(Empty.newBuilder().build());
+              ResultServiceGrpc.ResultServiceBlockingStub clientStub =
+                  ResultServiceGrpc.newBlockingStub(channel);
+              clientStub.checkForSweepstakeResults(Empty.newBuilder().build());
 
-                          channel.shutdown();
-                      });
+              channel.shutdown();
+            });
   }
 }

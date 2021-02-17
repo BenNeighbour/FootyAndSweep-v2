@@ -40,16 +40,13 @@ public class ParticipantIds implements Serializable {
   private static final long serialVersionUID = 6784017128307902451L;
 
   @Id
-  @GeneratedValue(generator="system-uuid")
-  @GenericGenerator(name="system-uuid",
-          strategy = "uuid")
+  @GeneratedValue(generator = "system-uuid")
+  @GenericGenerator(name = "system-uuid", strategy = "uuid")
   private String id;
 
-  @JsonProperty
-  private String sweepstakeId;
+  @JsonProperty private String sweepstakeId;
 
-  @JsonProperty
-  private String participantId;
+  @JsonProperty private String participantId;
 
   public ParticipantIds(String sweepstakeId, String participantId) {
     this.sweepstakeId = sweepstakeId;

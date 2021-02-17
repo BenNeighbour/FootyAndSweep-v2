@@ -46,6 +46,7 @@ public final class AllocationService {
         new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
             internal_static_com_footyandsweep_Allocation_descriptor, new java.lang.String[] {});
   }
+
   private AllocationService() {}
 
   public static void registerAllExtensions(com.google.protobuf.ExtensionRegistryLite registry) {}

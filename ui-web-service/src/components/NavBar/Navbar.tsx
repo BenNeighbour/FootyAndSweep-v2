@@ -44,7 +44,7 @@ const Navbar: FunctionComponent<Props> = (props) => {
                 <NavbarLink>Signup</NavbarLink>
             </NavbarLinkSectionRight>
         </NavbarContainer>
-  );
+    );
 };
 
 const NavbarContainer = styled.div`

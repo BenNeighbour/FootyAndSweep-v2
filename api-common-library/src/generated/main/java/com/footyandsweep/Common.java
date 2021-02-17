@@ -86,6 +86,7 @@ public final class Common {
               "Key", "Value",
             });
   }
+
   private Common() {}
 
   public static void registerAllExtensions(com.google.protobuf.ExtensionRegistryLite registry) {}
@@ -97,6 +98,7 @@ public final class Common {
   public static com.google.protobuf.Descriptors.FileDescriptor getDescriptor() {
     return descriptor;
   }
+
   public interface IdOrBuilder
       extends
       // @@protoc_insertion_point(interface_extends:com.footyandsweep.Id)
@@ -107,6 +109,7 @@ public final class Common {
     /** <code>string id = 1;</code> */
     com.google.protobuf.ByteString getIdBytes();
   }
+
   public interface IdsOrBuilder
       extends
       // @@protoc_insertion_point(interface_extends:com.footyandsweep.Ids)
@@ -121,6 +124,7 @@ public final class Common {
     /** <code>repeated string id = 1;</code> */
     com.google.protobuf.ByteString getIdBytes(int index);
   }
+
   public interface MapOrBuilder
       extends
       // @@protoc_insertion_point(interface_extends:com.footyandsweep.Map)
@@ -172,9 +176,11 @@ public final class Common {
     private Id(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
+
     private Id() {
       id_ = "";
     }
+
     private Id(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -692,9 +698,11 @@ public final class Common {
     private Ids(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
+
     private Ids() {
       id_ = com.google.protobuf.LazyStringArrayList.EMPTY;
     }
+
     private Ids(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)

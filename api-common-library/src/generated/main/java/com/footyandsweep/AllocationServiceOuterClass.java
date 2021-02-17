@@ -20,12 +20,59 @@
 package com.footyandsweep;
 
 public final class AllocationServiceOuterClass {
+  private static final com.google.protobuf.Descriptors.Descriptor
+      internal_static_com_footyandsweep_Allocation_descriptor;
+  private static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_com_footyandsweep_Allocation_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.FileDescriptor descriptor;
+
+  static {
+    java.lang.String[] descriptorData = {
+      "\n\027AllocationService.proto\022\021com.footyands"
+          + "weep\032\027SweepstakeService.proto\032\033google/pr"
+          + "otobuf/empty.proto\"_\n\nAllocation\022\n\n\002id\030\001"
+          + " \001(\t\022\023\n\013description\030\002 \001(\t\022\014\n\004code\030\003 \001(\005\022"
+          + "\020\n\010ticketId\030\004 \001(\t\022\020\n\010playerId\030\005 \001(\t2`\n\021A"
+          + "llocationService\022K\n\022allocateSweepstake\022\035"
+          + ".com.footyandsweep.Sweepstake\032\026.google.p"
+          + "rotobuf.Emptyb\006proto3"
+    };
+    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
+        new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
+          public com.google.protobuf.ExtensionRegistry assignDescriptors(
+              com.google.protobuf.Descriptors.FileDescriptor root) {
+            descriptor = root;
+            return null;
+          }
+        };
+    com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(
+        descriptorData,
+        new com.google.protobuf.Descriptors.FileDescriptor[] {
+          com.footyandsweep.SweepstakeServiceOuterClass.getDescriptor(),
+          com.google.protobuf.EmptyProto.getDescriptor(),
+        },
+        assigner);
+    internal_static_com_footyandsweep_Allocation_descriptor =
+        getDescriptor().getMessageTypes().get(0);
+    internal_static_com_footyandsweep_Allocation_fieldAccessorTable =
+        new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+            internal_static_com_footyandsweep_Allocation_descriptor,
+            new java.lang.String[] {
+              "Id", "Description", "Code", "TicketId", "PlayerId",
+            });
+    com.footyandsweep.SweepstakeServiceOuterClass.getDescriptor();
+    com.google.protobuf.EmptyProto.getDescriptor();
+  }
   private AllocationServiceOuterClass() {}
 
   public static void registerAllExtensions(com.google.protobuf.ExtensionRegistryLite registry) {}
 
   public static void registerAllExtensions(com.google.protobuf.ExtensionRegistry registry) {
     registerAllExtensions((com.google.protobuf.ExtensionRegistryLite) registry);
+  }
+
+  public static com.google.protobuf.Descriptors.FileDescriptor getDescriptor() {
+    return descriptor;
   }
 
   public interface AllocationOrBuilder
@@ -56,17 +103,46 @@ public final class AllocationServiceOuterClass {
     /** <code>string playerId = 5;</code> */
     com.google.protobuf.ByteString getPlayerIdBytes();
   }
+
   /** Protobuf type {@code com.footyandsweep.Allocation} */
   public static final class Allocation extends com.google.protobuf.GeneratedMessageV3
       implements
       // @@protoc_insertion_point(message_implements:com.footyandsweep.Allocation)
       AllocationOrBuilder {
+    public static final int ID_FIELD_NUMBER = 1;
+    public static final int DESCRIPTION_FIELD_NUMBER = 2;
+    public static final int CODE_FIELD_NUMBER = 3;
+    public static final int TICKETID_FIELD_NUMBER = 4;
+    public static final int PLAYERID_FIELD_NUMBER = 5;
     private static final long serialVersionUID = 0L;
+    // @@protoc_insertion_point(class_scope:com.footyandsweep.Allocation)
+    private static final com.footyandsweep.AllocationServiceOuterClass.Allocation DEFAULT_INSTANCE;
+    private static final com.google.protobuf.Parser<Allocation> PARSER =
+        new com.google.protobuf.AbstractParser<Allocation>() {
+          @java.lang.Override
+          public Allocation parsePartialFrom(
+              com.google.protobuf.CodedInputStream input,
+              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+              throws com.google.protobuf.InvalidProtocolBufferException {
+            return new Allocation(input, extensionRegistry);
+          }
+        };
+
+    static {
+      DEFAULT_INSTANCE = new com.footyandsweep.AllocationServiceOuterClass.Allocation();
+    }
+
+    private volatile java.lang.Object id_;
+    private volatile java.lang.Object description_;
+    private int code_;
+    private volatile java.lang.Object ticketId_;
+    private volatile java.lang.Object playerId_;
+    private byte memoizedIsInitialized = -1;
+
     // Use Allocation.newBuilder() to construct.
     private Allocation(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-
     private Allocation() {
       id_ = "";
       description_ = "";
@@ -74,12 +150,6 @@ public final class AllocationServiceOuterClass {
       ticketId_ = "";
       playerId_ = "";
     }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-      return this.unknownFields;
-    }
-
     private Allocation(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -156,6 +226,100 @@ public final class AllocationServiceOuterClass {
           .internal_static_com_footyandsweep_Allocation_descriptor;
     }
 
+    public static com.footyandsweep.AllocationServiceOuterClass.Allocation parseFrom(
+        java.nio.ByteBuffer data) throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+
+    public static com.footyandsweep.AllocationServiceOuterClass.Allocation parseFrom(
+        java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+
+    public static com.footyandsweep.AllocationServiceOuterClass.Allocation parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+
+    public static com.footyandsweep.AllocationServiceOuterClass.Allocation parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+
+    public static com.footyandsweep.AllocationServiceOuterClass.Allocation parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+
+    public static com.footyandsweep.AllocationServiceOuterClass.Allocation parseFrom(
+        byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+
+    public static com.footyandsweep.AllocationServiceOuterClass.Allocation parseFrom(
+        java.io.InputStream input) throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    }
+
+    public static com.footyandsweep.AllocationServiceOuterClass.Allocation parseFrom(
+        java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
+          PARSER, input, extensionRegistry);
+    }
+
+    public static com.footyandsweep.AllocationServiceOuterClass.Allocation parseDelimitedFrom(
+        java.io.InputStream input) throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    }
+
+    public static com.footyandsweep.AllocationServiceOuterClass.Allocation parseDelimitedFrom(
+        java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
+          PARSER, input, extensionRegistry);
+    }
+
+    public static com.footyandsweep.AllocationServiceOuterClass.Allocation parseFrom(
+        com.google.protobuf.CodedInputStream input) throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    }
+
+    public static com.footyandsweep.AllocationServiceOuterClass.Allocation parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
+          PARSER, input, extensionRegistry);
+    }
+
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+
+    public static Builder newBuilder(
+        com.footyandsweep.AllocationServiceOuterClass.Allocation prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+
+    public static com.footyandsweep.AllocationServiceOuterClass.Allocation getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    public static com.google.protobuf.Parser<Allocation> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
+      return this.unknownFields;
+    }
+
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
@@ -166,8 +330,6 @@ public final class AllocationServiceOuterClass {
               com.footyandsweep.AllocationServiceOuterClass.Allocation.Builder.class);
     }
 
-    public static final int ID_FIELD_NUMBER = 1;
-    private volatile java.lang.Object id_;
     /** <code>string id = 1;</code> */
     public java.lang.String getId() {
       java.lang.Object ref = id_;
@@ -180,6 +342,7 @@ public final class AllocationServiceOuterClass {
         return s;
       }
     }
+
     /** <code>string id = 1;</code> */
     public com.google.protobuf.ByteString getIdBytes() {
       java.lang.Object ref = id_;
@@ -193,8 +356,6 @@ public final class AllocationServiceOuterClass {
       }
     }
 
-    public static final int DESCRIPTION_FIELD_NUMBER = 2;
-    private volatile java.lang.Object description_;
     /** <code>string description = 2;</code> */
     public java.lang.String getDescription() {
       java.lang.Object ref = description_;
@@ -207,6 +368,7 @@ public final class AllocationServiceOuterClass {
         return s;
       }
     }
+
     /** <code>string description = 2;</code> */
     public com.google.protobuf.ByteString getDescriptionBytes() {
       java.lang.Object ref = description_;
@@ -220,15 +382,11 @@ public final class AllocationServiceOuterClass {
       }
     }
 
-    public static final int CODE_FIELD_NUMBER = 3;
-    private int code_;
     /** <code>int32 code = 3;</code> */
     public int getCode() {
       return code_;
     }
 
-    public static final int TICKETID_FIELD_NUMBER = 4;
-    private volatile java.lang.Object ticketId_;
     /** <code>string ticketId = 4;</code> */
     public java.lang.String getTicketId() {
       java.lang.Object ref = ticketId_;
@@ -241,6 +399,7 @@ public final class AllocationServiceOuterClass {
         return s;
       }
     }
+
     /** <code>string ticketId = 4;</code> */
     public com.google.protobuf.ByteString getTicketIdBytes() {
       java.lang.Object ref = ticketId_;
@@ -254,8 +413,6 @@ public final class AllocationServiceOuterClass {
       }
     }
 
-    public static final int PLAYERID_FIELD_NUMBER = 5;
-    private volatile java.lang.Object playerId_;
     /** <code>string playerId = 5;</code> */
     public java.lang.String getPlayerId() {
       java.lang.Object ref = playerId_;
@@ -268,6 +425,7 @@ public final class AllocationServiceOuterClass {
         return s;
       }
     }
+
     /** <code>string playerId = 5;</code> */
     public com.google.protobuf.ByteString getPlayerIdBytes() {
       java.lang.Object ref = playerId_;
@@ -280,8 +438,6 @@ public final class AllocationServiceOuterClass {
         return (com.google.protobuf.ByteString) ref;
       }
     }
-
-    private byte memoizedIsInitialized = -1;
 
     @java.lang.Override
     public final boolean isInitialized() {
@@ -382,90 +538,9 @@ public final class AllocationServiceOuterClass {
       return hash;
     }
 
-    public static com.footyandsweep.AllocationServiceOuterClass.Allocation parseFrom(
-        java.nio.ByteBuffer data) throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-
-    public static com.footyandsweep.AllocationServiceOuterClass.Allocation parseFrom(
-        java.nio.ByteBuffer data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-
-    public static com.footyandsweep.AllocationServiceOuterClass.Allocation parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-
-    public static com.footyandsweep.AllocationServiceOuterClass.Allocation parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-
-    public static com.footyandsweep.AllocationServiceOuterClass.Allocation parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-
-    public static com.footyandsweep.AllocationServiceOuterClass.Allocation parseFrom(
-        byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-
-    public static com.footyandsweep.AllocationServiceOuterClass.Allocation parseFrom(
-        java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
-    }
-
-    public static com.footyandsweep.AllocationServiceOuterClass.Allocation parseFrom(
-        java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-          PARSER, input, extensionRegistry);
-    }
-
-    public static com.footyandsweep.AllocationServiceOuterClass.Allocation parseDelimitedFrom(
-        java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
-    }
-
-    public static com.footyandsweep.AllocationServiceOuterClass.Allocation parseDelimitedFrom(
-        java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(
-          PARSER, input, extensionRegistry);
-    }
-
-    public static com.footyandsweep.AllocationServiceOuterClass.Allocation parseFrom(
-        com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
-    }
-
-    public static com.footyandsweep.AllocationServiceOuterClass.Allocation parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(
-          PARSER, input, extensionRegistry);
-    }
-
     @java.lang.Override
     public Builder newBuilderForType() {
       return newBuilder();
-    }
-
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-
-    public static Builder newBuilder(
-        com.footyandsweep.AllocationServiceOuterClass.Allocation prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
 
     @java.lang.Override
@@ -479,12 +554,39 @@ public final class AllocationServiceOuterClass {
       Builder builder = new Builder(parent);
       return builder;
     }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Allocation> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.footyandsweep.AllocationServiceOuterClass.Allocation getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
     /** Protobuf type {@code com.footyandsweep.Allocation} */
     public static final class Builder
         extends com.google.protobuf.GeneratedMessageV3.Builder<Builder>
         implements
         // @@protoc_insertion_point(builder_implements:com.footyandsweep.Allocation)
         com.footyandsweep.AllocationServiceOuterClass.AllocationOrBuilder {
+      private java.lang.Object id_ = "";
+      private java.lang.Object description_ = "";
+      private int code_;
+      private java.lang.Object ticketId_ = "";
+      private java.lang.Object playerId_ = "";
+
+      // Construct using com.footyandsweep.AllocationServiceOuterClass.Allocation.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+
       public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
         return com.footyandsweep.AllocationServiceOuterClass
             .internal_static_com_footyandsweep_Allocation_descriptor;
@@ -498,16 +600,6 @@ public final class AllocationServiceOuterClass {
             .ensureFieldAccessorsInitialized(
                 com.footyandsweep.AllocationServiceOuterClass.Allocation.class,
                 com.footyandsweep.AllocationServiceOuterClass.Allocation.Builder.class);
-      }
-
-      // Construct using com.footyandsweep.AllocationServiceOuterClass.Allocation.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
       }
 
       private void maybeForceBuilderInitialization() {
@@ -660,7 +752,6 @@ public final class AllocationServiceOuterClass {
         return this;
       }
 
-      private java.lang.Object id_ = "";
       /** <code>string id = 1;</code> */
       public java.lang.String getId() {
         java.lang.Object ref = id_;
@@ -673,6 +764,18 @@ public final class AllocationServiceOuterClass {
           return (java.lang.String) ref;
         }
       }
+
+      /** <code>string id = 1;</code> */
+      public Builder setId(java.lang.String value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+
+        id_ = value;
+        onChanged();
+        return this;
+      }
+
       /** <code>string id = 1;</code> */
       public com.google.protobuf.ByteString getIdBytes() {
         java.lang.Object ref = id_;
@@ -685,23 +788,7 @@ public final class AllocationServiceOuterClass {
           return (com.google.protobuf.ByteString) ref;
         }
       }
-      /** <code>string id = 1;</code> */
-      public Builder setId(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
 
-        id_ = value;
-        onChanged();
-        return this;
-      }
-      /** <code>string id = 1;</code> */
-      public Builder clearId() {
-
-        id_ = getDefaultInstance().getId();
-        onChanged();
-        return this;
-      }
       /** <code>string id = 1;</code> */
       public Builder setIdBytes(com.google.protobuf.ByteString value) {
         if (value == null) {
@@ -714,7 +801,14 @@ public final class AllocationServiceOuterClass {
         return this;
       }
 
-      private java.lang.Object description_ = "";
+      /** <code>string id = 1;</code> */
+      public Builder clearId() {
+
+        id_ = getDefaultInstance().getId();
+        onChanged();
+        return this;
+      }
+
       /** <code>string description = 2;</code> */
       public java.lang.String getDescription() {
         java.lang.Object ref = description_;
@@ -727,6 +821,18 @@ public final class AllocationServiceOuterClass {
           return (java.lang.String) ref;
         }
       }
+
+      /** <code>string description = 2;</code> */
+      public Builder setDescription(java.lang.String value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+
+        description_ = value;
+        onChanged();
+        return this;
+      }
+
       /** <code>string description = 2;</code> */
       public com.google.protobuf.ByteString getDescriptionBytes() {
         java.lang.Object ref = description_;
@@ -739,23 +845,7 @@ public final class AllocationServiceOuterClass {
           return (com.google.protobuf.ByteString) ref;
         }
       }
-      /** <code>string description = 2;</code> */
-      public Builder setDescription(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
 
-        description_ = value;
-        onChanged();
-        return this;
-      }
-      /** <code>string description = 2;</code> */
-      public Builder clearDescription() {
-
-        description_ = getDefaultInstance().getDescription();
-        onChanged();
-        return this;
-      }
       /** <code>string description = 2;</code> */
       public Builder setDescriptionBytes(com.google.protobuf.ByteString value) {
         if (value == null) {
@@ -768,11 +858,19 @@ public final class AllocationServiceOuterClass {
         return this;
       }
 
-      private int code_;
+      /** <code>string description = 2;</code> */
+      public Builder clearDescription() {
+
+        description_ = getDefaultInstance().getDescription();
+        onChanged();
+        return this;
+      }
+
       /** <code>int32 code = 3;</code> */
       public int getCode() {
         return code_;
       }
+
       /** <code>int32 code = 3;</code> */
       public Builder setCode(int value) {
 
@@ -780,6 +878,7 @@ public final class AllocationServiceOuterClass {
         onChanged();
         return this;
       }
+
       /** <code>int32 code = 3;</code> */
       public Builder clearCode() {
 
@@ -788,7 +887,6 @@ public final class AllocationServiceOuterClass {
         return this;
       }
 
-      private java.lang.Object ticketId_ = "";
       /** <code>string ticketId = 4;</code> */
       public java.lang.String getTicketId() {
         java.lang.Object ref = ticketId_;
@@ -801,6 +899,18 @@ public final class AllocationServiceOuterClass {
           return (java.lang.String) ref;
         }
       }
+
+      /** <code>string ticketId = 4;</code> */
+      public Builder setTicketId(java.lang.String value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+
+        ticketId_ = value;
+        onChanged();
+        return this;
+      }
+
       /** <code>string ticketId = 4;</code> */
       public com.google.protobuf.ByteString getTicketIdBytes() {
         java.lang.Object ref = ticketId_;
@@ -813,23 +923,7 @@ public final class AllocationServiceOuterClass {
           return (com.google.protobuf.ByteString) ref;
         }
       }
-      /** <code>string ticketId = 4;</code> */
-      public Builder setTicketId(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
 
-        ticketId_ = value;
-        onChanged();
-        return this;
-      }
-      /** <code>string ticketId = 4;</code> */
-      public Builder clearTicketId() {
-
-        ticketId_ = getDefaultInstance().getTicketId();
-        onChanged();
-        return this;
-      }
       /** <code>string ticketId = 4;</code> */
       public Builder setTicketIdBytes(com.google.protobuf.ByteString value) {
         if (value == null) {
@@ -842,7 +936,14 @@ public final class AllocationServiceOuterClass {
         return this;
       }
 
-      private java.lang.Object playerId_ = "";
+      /** <code>string ticketId = 4;</code> */
+      public Builder clearTicketId() {
+
+        ticketId_ = getDefaultInstance().getTicketId();
+        onChanged();
+        return this;
+      }
+
       /** <code>string playerId = 5;</code> */
       public java.lang.String getPlayerId() {
         java.lang.Object ref = playerId_;
@@ -855,6 +956,18 @@ public final class AllocationServiceOuterClass {
           return (java.lang.String) ref;
         }
       }
+
+      /** <code>string playerId = 5;</code> */
+      public Builder setPlayerId(java.lang.String value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+
+        playerId_ = value;
+        onChanged();
+        return this;
+      }
+
       /** <code>string playerId = 5;</code> */
       public com.google.protobuf.ByteString getPlayerIdBytes() {
         java.lang.Object ref = playerId_;
@@ -867,23 +980,7 @@ public final class AllocationServiceOuterClass {
           return (com.google.protobuf.ByteString) ref;
         }
       }
-      /** <code>string playerId = 5;</code> */
-      public Builder setPlayerId(java.lang.String value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
 
-        playerId_ = value;
-        onChanged();
-        return this;
-      }
-      /** <code>string playerId = 5;</code> */
-      public Builder clearPlayerId() {
-
-        playerId_ = getDefaultInstance().getPlayerId();
-        onChanged();
-        return this;
-      }
       /** <code>string playerId = 5;</code> */
       public Builder setPlayerIdBytes(com.google.protobuf.ByteString value) {
         if (value == null) {
@@ -892,6 +989,14 @@ public final class AllocationServiceOuterClass {
         checkByteStringIsUtf8(value);
 
         playerId_ = value;
+        onChanged();
+        return this;
+      }
+
+      /** <code>string playerId = 5;</code> */
+      public Builder clearPlayerId() {
+
+        playerId_ = getDefaultInstance().getPlayerId();
         onChanged();
         return this;
       }
@@ -910,91 +1015,6 @@ public final class AllocationServiceOuterClass {
 
       // @@protoc_insertion_point(builder_scope:com.footyandsweep.Allocation)
     }
-
-    // @@protoc_insertion_point(class_scope:com.footyandsweep.Allocation)
-    private static final com.footyandsweep.AllocationServiceOuterClass.Allocation DEFAULT_INSTANCE;
-
-    static {
-      DEFAULT_INSTANCE = new com.footyandsweep.AllocationServiceOuterClass.Allocation();
-    }
-
-    public static com.footyandsweep.AllocationServiceOuterClass.Allocation getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<Allocation> PARSER =
-        new com.google.protobuf.AbstractParser<Allocation>() {
-          @java.lang.Override
-          public Allocation parsePartialFrom(
-              com.google.protobuf.CodedInputStream input,
-              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-              throws com.google.protobuf.InvalidProtocolBufferException {
-            return new Allocation(input, extensionRegistry);
-          }
-        };
-
-    public static com.google.protobuf.Parser<Allocation> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<Allocation> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.footyandsweep.AllocationServiceOuterClass.Allocation getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-  }
-
-  private static final com.google.protobuf.Descriptors.Descriptor
-      internal_static_com_footyandsweep_Allocation_descriptor;
-  private static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_com_footyandsweep_Allocation_fieldAccessorTable;
-
-  public static com.google.protobuf.Descriptors.FileDescriptor getDescriptor() {
-    return descriptor;
-  }
-
-  private static com.google.protobuf.Descriptors.FileDescriptor descriptor;
-
-  static {
-    java.lang.String[] descriptorData = {
-      "\n\027AllocationService.proto\022\021com.footyands"
-          + "weep\032\027SweepstakeService.proto\032\033google/pr"
-          + "otobuf/empty.proto\"_\n\nAllocation\022\n\n\002id\030\001"
-          + " \001(\t\022\023\n\013description\030\002 \001(\t\022\014\n\004code\030\003 \001(\005\022"
-          + "\020\n\010ticketId\030\004 \001(\t\022\020\n\010playerId\030\005 \001(\t2`\n\021A"
-          + "llocationService\022K\n\022allocateSweepstake\022\035"
-          + ".com.footyandsweep.Sweepstake\032\026.google.p"
-          + "rotobuf.Emptyb\006proto3"
-    };
-    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-        new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
-          public com.google.protobuf.ExtensionRegistry assignDescriptors(
-              com.google.protobuf.Descriptors.FileDescriptor root) {
-            descriptor = root;
-            return null;
-          }
-        };
-    com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(
-        descriptorData,
-        new com.google.protobuf.Descriptors.FileDescriptor[] {
-          com.footyandsweep.SweepstakeServiceOuterClass.getDescriptor(),
-          com.google.protobuf.EmptyProto.getDescriptor(),
-        },
-        assigner);
-    internal_static_com_footyandsweep_Allocation_descriptor =
-        getDescriptor().getMessageTypes().get(0);
-    internal_static_com_footyandsweep_Allocation_fieldAccessorTable =
-        new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-            internal_static_com_footyandsweep_Allocation_descriptor,
-            new java.lang.String[] {
-              "Id", "Description", "Code", "TicketId", "PlayerId",
-            });
-    com.footyandsweep.SweepstakeServiceOuterClass.getDescriptor();
-    com.google.protobuf.EmptyProto.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

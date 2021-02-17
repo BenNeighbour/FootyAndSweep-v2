@@ -27,7 +27,6 @@ import javax.persistence.Table;
 @Getter
 @Entity
 @Table(name = "football_league")
-
 public class FootballLeague extends LeagueCommon {
 
   private static final long serialVersionUID = -5263027643657744679L;

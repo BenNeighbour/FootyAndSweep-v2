@@ -25,16 +25,18 @@ import org.springframework.stereotype.Service;
 @Service
 public class SweepstakeClientGrpc {
 
-    private final AllocationServiceGrpc.AllocationServiceBlockingStub allocationEngineChannel;
+  private final AllocationServiceGrpc.AllocationServiceBlockingStub allocationEngineChannel;
 
-    public SweepstakeClientGrpc(AllocationServiceGrpc.AllocationServiceBlockingStub allocationEngineChannel) {
-        this.allocationEngineChannel = allocationEngineChannel;
-    }
+  public SweepstakeClientGrpc(
+      AllocationServiceGrpc.AllocationServiceBlockingStub allocationEngineChannel) {
+    this.allocationEngineChannel = allocationEngineChannel;
+  }
 
-    public void allocateSweepstake(Sweepstake sweepstake) {
-        SweepstakeServiceOuterClass.Sweepstake.Builder grpcSweepstake = SweepstakeServiceOuterClass.Sweepstake.newBuilder();
-        ProtoConverterUtils.convertToProto(grpcSweepstake, sweepstake);
+  public void allocateSweepstake(Sweepstake sweepstake) {
+    SweepstakeServiceOuterClass.Sweepstake.Builder grpcSweepstake =
+        SweepstakeServiceOuterClass.Sweepstake.newBuilder();
+    ProtoConverterUtils.convertToProto(grpcSweepstake, sweepstake);
 
-        allocationEngineChannel.allocateSweepstake(grpcSweepstake.build());
-    }
+    allocationEngineChannel.allocateSweepstake(grpcSweepstake.build());
+  }
 }

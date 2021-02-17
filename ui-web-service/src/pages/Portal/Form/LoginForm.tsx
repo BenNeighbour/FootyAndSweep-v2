@@ -26,7 +26,6 @@ import styled from "styled-components";
 import {connect} from "react-redux";
 import {RootState} from "../../../redux/rootReducer";
 import DontHaveAccount from "./DontHaveAccount";
-import Footer from "../../../components/Footer/Footer";
 
 interface OwnProps {
     actions: typeof AuthenticateActions;

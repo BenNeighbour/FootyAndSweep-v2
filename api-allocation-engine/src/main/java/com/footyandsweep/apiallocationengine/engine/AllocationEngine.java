@@ -29,5 +29,6 @@ public interface AllocationEngine {
 
   CommandWithDestination allocateTickets(List<TicketCommon> tickets);
 
-  CommandWithDestination updateSweepstakeStatus(String sweepstakeId, SweepstakeCommon.SweepstakeStatus status);
+  CommandWithDestination updateSweepstakeStatus(
+      String sweepstakeId, SweepstakeCommon.SweepstakeStatus status);
 }
