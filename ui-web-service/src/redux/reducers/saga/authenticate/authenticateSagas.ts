@@ -72,14 +72,14 @@ function* loginSaga({payload}: { payload: LoginData }) {
 
 function* signupSaga({payload}: { payload: SignupData }) {
     try {
-        let {response} = yield call(signupRequest, payload);
+        let response = yield call(signupRequest, payload);
 
         if (response.status === 200) {
             yield put({type: ActionType.AUTHENTICATE_SIGNUP_SUCCESS, payload: response.username});
         } else {
             yield put({
                 type: ActionType.AUTHENTICATE_SIGNUP_ERROR,
-                payload: "Hmm, Something's not quite right! Try again later!"
+                payload: response.message
             })
         }
     } catch (error) {

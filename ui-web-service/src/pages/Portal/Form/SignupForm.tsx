@@ -28,12 +28,38 @@ import {connect} from "react-redux";
 import DontHaveAccount from "./DontHaveAccount";
 import {SignupAuthenticationReducerType} from "../../../redux/reducers/saga/authenticate";
 import LoadingPage from "../../Loading/LoadingPage";
+import * as yup from 'yup';
 
 interface OwnProps {
     state: SignupAuthenticationReducerType;
     actions: typeof AuthenticateActions;
     setIsLoggingIn: (value: boolean) => void;
 }
+
+const schema = yup.object().shape({
+    username: yup
+        .string()
+        .required("You must enter a Username.")
+        .label("Username"),
+    email: yup.string()
+        .email()
+        .required("You must enter an Email Address.")
+        .label("Email Address"),
+    password: yup
+        .string()
+        .required("You must enter a Password.")
+        .label("Confirm Password"),
+    confirmPassword: yup
+        .string()
+        .oneOf([yup.ref('password'), null], 'Passwords must match')
+        .oneOf([yup.ref('password'), null], 'Passwords must match')
+        .required("You must enter a Confirm Password.")
+        .matches(
+            /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+            'Not strong enough'
+        )
+        .label("Confirm Password")
+});
 
 type Props = OwnProps;
 
@@ -47,6 +73,7 @@ const SignupForm: FunctionComponent<Props> = (props) => {
                     onSubmit={(formValues) => {
                         props.actions.signupUserAction(formValues);
                     }}
+                    validationSchema={schema}
                     initialValues={{
                         username: "",
                         email: "",
@@ -55,32 +82,40 @@ const SignupForm: FunctionComponent<Props> = (props) => {
                         dateOfBirth: new Date()
                     }}
                 >
-                    {({values, handleChange}) => (
+                    {({values, handleChange, errors, touched}) => (
                         <Form>
-                            <InputField name={"username"} label={"Username"}
+                            <InputField touched={touched.username} errors={errors.username} name={"username"}
+                                        label={"Username"}
                                         type={"text"}
                                         onChange={handleChange}
                                         value={values.username}/>
 
-                            <InputField label={"Email Address"}
+                            <InputField touched={touched.email} errors={errors.email} label={"Email Address"}
                                         name={"email"}
                                         type={"email"}
                                         onChange={handleChange}
                                         value={values.email}/>
 
-                            <InputField includePasswordStrengthChecker
+                            <InputField errors={errors.password} touched={touched.password}
+                                        includePasswordStrengthChecker
                                         name={"password"}
                                         label={"Password"}
                                         type={"password"}
                                         onChange={handleChange}
                                         value={values.password}/>
 
-                            <InputField includePasswordStrengthChecker
+                            <InputField errors={errors.confirmPassword} touched={touched.confirmPassword}
+                                        includePasswordStrengthChecker
                                         name={"confirmPassword"}
                                         label={"Confirm Password"}
                                         type={"password"}
                                         onChange={handleChange}
                                         value={values.confirmPassword}/>
+
+                            <PasswordConditionsText>Your password MUST contain at least: <br/> &#8226; 8
+                                Characters <br/> &#8226; 1
+                                Uppercase Letter <br/> &#8226; 1 Special Character <br/> &#8226; 1 Number
+                            </PasswordConditionsText> <br/>
 
                             <Button title={"Create Account"} type={"submit"} style={{
                                 width: "100%",
@@ -88,6 +123,9 @@ const SignupForm: FunctionComponent<Props> = (props) => {
                                 height: "45px",
                                 marginBottom: "1em"
                             }}/>
+
+
+                            <ErrorTextMessage>{props.state.error}</ErrorTextMessage>
 
                             <DontHaveAccount isLoggingIn={false} setIsLoggingIn={props.setIsLoggingIn}/>
 
@@ -138,4 +176,22 @@ const OrSignInWithText = styled.div`
 text-align: center;
 font-family: 'Open Sans', sans-serif;
 color: #b5b5b5;
+`;
+
+const ErrorTextMessage = styled.div`
+text-align: left;
+font-family: 'Open Sans', sans-serif;
+font-size: 14px;
+color: red;
+`;
+
+const PasswordConditionsText = styled.p`
+text-align: left;
+font-family: 'Open Sans', sans-serif;
+color: #b5b5b5;
+font-size: 14px;
+font-weight: 600;
+line-height: 21px;
+margin: 0;
+padding-left: 10px;
 `;

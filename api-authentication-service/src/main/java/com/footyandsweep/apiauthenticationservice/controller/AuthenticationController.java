@@ -104,16 +104,9 @@ public class AuthenticationController {
 
     user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-    User result = userDao.save(user);
+    userDao.save(user);
 
-    URI location =
-        ServletUriComponentsBuilder.fromCurrentContextPath()
-            .path("/user/me")
-            .buildAndExpand(result.getId())
-            .toUri();
-
-    return ResponseEntity.created(location)
-        .body(new ApiResponse(true, "User registered successfully@"));
+    return ResponseEntity.ok().body("User registered successfully");
   }
 
   @GetMapping("/by/id/{userId}")

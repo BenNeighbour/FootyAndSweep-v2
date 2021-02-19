@@ -39,7 +39,7 @@ const PasswordBar: FunctionComponent<Props> = (props) => {
             case 4:
                 return '#00b500';
             default:
-                return '#EA1111';
+                return 'transparent';
         }
     }
 

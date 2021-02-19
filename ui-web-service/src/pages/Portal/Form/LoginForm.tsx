@@ -28,6 +28,7 @@ import {RootState} from "../../../redux/rootReducer";
 import DontHaveAccount from "./DontHaveAccount";
 import {LoginAuthenticationReducerType} from "../../../redux/reducers/saga/authenticate";
 import LoadingPage from "../../Loading/LoadingPage";
+import * as yup from "yup";
 
 interface OwnProps {
     state: LoginAuthenticationReducerType;
@@ -35,10 +36,21 @@ interface OwnProps {
     setIsLoggingIn: (value: boolean) => void;
 }
 
+const schema = yup.object().shape({
+    username: yup
+        .string()
+        .required("You must enter a username.")
+        .label("Username"),
+    password: yup
+        .string()
+        .required("You must enter a Password.")
+        .label("Password")
+});
+
 type Props = OwnProps;
 
 const LoginForm: FunctionComponent<Props> = (props) => {
-    if (props.state.isLoading) return <LoadingPage />
+    if (props.state.isLoading) return <LoadingPage/>
 
     return (
         <FormContainer>
@@ -47,16 +59,19 @@ const LoginForm: FunctionComponent<Props> = (props) => {
                     onSubmit={(formValues) => {
                         props.actions.loginUserAction(formValues);
                     }}
+                    validationSchema={schema}
                     initialValues={{username: "", password: ""}}
                 >
-                    {({values, handleChange}) => (
+                    {({values, handleChange, errors, touched}) => (
                         <Form>
-                            <InputField label={"Username"} name={"username"}
+                            <InputField label={"Username"} touched={touched.username} errors={errors.username}
+                                        name={"username"}
                                         type={"text"}
                                         onChange={handleChange}
                                         value={values.username}/>
 
-                            <InputField label={"Password"} name={"password"}
+                            <InputField label={"Password"} touched={touched.password} errors={errors.password}
+                                        name={"password"}
                                         type={"password"}
                                         onChange={handleChange}
                                         value={values.password}/>

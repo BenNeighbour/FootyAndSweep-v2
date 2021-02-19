@@ -124,7 +124,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .permitAll()
         .antMatchers(
             "/com.footyandsweep.AuthenticationService/login",
-            "/com.footyandsweep.AuthenticationService/signUp",
+            "/com.footyandsweep.AuthenticationService/signup",
             "/login/**",
             "/auth/**",
             "/oauth2/**")

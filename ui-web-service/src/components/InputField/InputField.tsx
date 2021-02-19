@@ -27,7 +27,9 @@ interface OwnProps {
     label: string;
     onChange: (value: any) => void;
     disabled?: boolean;
-    style?: React.CSSProperties | {}
+    style?: React.CSSProperties | {},
+    errors: any | null;
+    touched: any | null;
 }
 
 type Props = OwnProps;
@@ -43,6 +45,9 @@ const InputField: FunctionComponent<Props> = (props) => {
             </InputContainer>
             {props.type === "password" && props.includePasswordStrengthChecker ?
                 <div><PasswordBar password={props.value}/></div> : undefined}
+            {props.errors && props.touched ? (
+                <ErrorTextMessage>{props.errors}</ErrorTextMessage>
+            ) : null}
             <br/>
         </>
     );
@@ -100,5 +105,11 @@ text-align: left;
 color: #b5b5b5;
 `;
 
+const ErrorTextMessage = styled.div`
+text-align: left;
+font-family: 'Open Sans', sans-serif;
+font-size: 14px;
+color: red;
+`;
 
 
