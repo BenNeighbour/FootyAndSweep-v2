@@ -20,14 +20,12 @@ import Axios from "axios";
 
 const loginRequest = async (payload: LoginData) => {
     try {
-        let response = await Axios({
+        return await Axios({
             method: "post",
             url: "http://api.footyandsweep-dev.com:30389/com.footyandsweep.AuthenticationService/login",
             data: payload,
             withCredentials: true
         });
-
-        return response.data;
     } catch (error) {
         return error.response;
     }
@@ -35,14 +33,12 @@ const loginRequest = async (payload: LoginData) => {
 
 const signupRequest = async (payload: SignupData) => {
     try {
-        let response = await Axios({
+        return await Axios({
             method: "post",
             url: "http://api.footyandsweep-dev.com:30389/com.footyandsweep.AuthenticationService/signup",
             data: payload,
             withCredentials: true
         });
-
-        return response.data;
     } catch (error) {
         return error.response;
     }
