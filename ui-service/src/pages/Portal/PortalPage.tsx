@@ -17,8 +17,9 @@
 import React, {FunctionComponent} from 'react';
 import {Box, Button, Flex, Input, Stack} from "@chakra-ui/react";
 import {SiFacebook, SiGoogle} from "react-icons/all";
+import {RouteComponentProps} from "react-router-dom";
 
-interface OwnProps {
+interface OwnProps extends RouteComponentProps<any> {
 }
 
 type Props = OwnProps;

@@ -15,20 +15,16 @@
  */
 
 
-import React, {FunctionComponent} from 'react';
-import Navbar from "../components/NavBar/Navbar";
+import React, { FunctionComponent } from 'react';
 
-interface OwnProps {
-}
+interface OwnProps {}
 
 type Props = OwnProps;
 
-const HomePage: FunctionComponent<Props> = (props) => {
-    return (
-        <div>
-            <Navbar/>
-        </div>
-    );
+const Sweepstakes: FunctionComponent<Props> = (props) => {
+  return (
+      <h1>Your Sweepstakes</h1>
+  );
 };
 
-export default HomePage;
+export default Sweepstakes;
