@@ -20,13 +20,14 @@ import styled from "styled-components";
 
 interface OwnProps {
     style?: React.CSSProperties | {};
+    href: string;
 }
 
 type Props = OwnProps;
 
 const SocialButton: FunctionComponent<Props> = (props) => {
     return (
-        <ButtonContainer style={props.style}>
+        <ButtonContainer onClick={() => window.location.replace(props.href)} style={props.style}>
             {props.children}
         </ButtonContainer>
     );

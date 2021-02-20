@@ -37,8 +37,9 @@ interface OwnProps {
 }
 
 const schema = yup.object().shape({
-    username: yup
+    email: yup
         .string()
+        .email()
         .required("You must enter a username.")
         .label("Username"),
     password: yup
@@ -60,15 +61,15 @@ const LoginForm: FunctionComponent<Props> = (props) => {
                         props.actions.loginUserAction(formValues);
                     }}
                     validationSchema={schema}
-                    initialValues={{username: "", password: ""}}
+                    initialValues={{email: "", password: ""}}
                 >
                     {({values, handleChange, errors, touched}) => (
                         <Form>
-                            <InputField label={"Username"} touched={touched.username} errors={errors.username}
-                                        name={"username"}
+                            <InputField label={"Email Address"} touched={touched.email} errors={errors.email}
+                                        name={"email"}
                                         type={"text"}
                                         onChange={handleChange}
-                                        value={values.username}/>
+                                        value={values.email}/>
 
                             <InputField label={"Password"} touched={touched.password} errors={errors.password}
                                         name={"password"}

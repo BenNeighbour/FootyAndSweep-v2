@@ -49,7 +49,7 @@ function* loginSaga({payload}: { payload: LoginData }) {
         const response = yield call(loginRequest, payload);
 
         if (response.status === 200) {
-            yield put({type: ActionType.AUTHENTICATE_LOGIN_SUCCESS, payload: response.username});
+            yield put({type: ActionType.AUTHENTICATE_LOGIN_SUCCESS, payload: response.data.username});
         } else if (response.status === 401) {
             yield put({type: ActionType.AUTHENTICATE_LOGIN_ERROR, payload: "Your Username/Password are invalid!"})
         } else {
@@ -71,11 +71,11 @@ function* signupSaga({payload}: { payload: SignupData }) {
         let response = yield call(signupRequest, payload);
 
         if (response.status === 200) {
-            yield put({type: ActionType.AUTHENTICATE_SIGNUP_SUCCESS, payload: response.username});
+            yield put({type: ActionType.AUTHENTICATE_SIGNUP_SUCCESS, payload: response.data.username});
         } else {
             yield put({
                 type: ActionType.AUTHENTICATE_SIGNUP_ERROR,
-                payload: response.message
+                payload: response.data.message
             })
         }
     } catch (error) {

@@ -20,15 +20,15 @@ import com.footyandsweep.apiauthenticationservice.dao.UserDao;
 import com.footyandsweep.apiauthenticationservice.exception.ResourceNotFoundException;
 import com.footyandsweep.apiauthenticationservice.model.AuthProvider;
 import com.footyandsweep.apiauthenticationservice.model.User;
-import com.footyandsweep.apiauthenticationservice.payload.ApiResponse;
-import com.footyandsweep.apiauthenticationservice.payload.AuthResponse;
 import com.footyandsweep.apiauthenticationservice.payload.LoginRequest;
 import com.footyandsweep.apiauthenticationservice.payload.SignUpRequest;
 import com.footyandsweep.apiauthenticationservice.security.CurrentUser;
 import com.footyandsweep.apiauthenticationservice.security.TokenProvider;
 import com.footyandsweep.apiauthenticationservice.security.UserPrincipal;
 import com.footyandsweep.apiauthenticationservice.service.UserService;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -37,10 +37,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.net.URI;
 
 @RestController
 @RequestMapping("/com.footyandsweep.AuthenticationService")
@@ -82,14 +80,22 @@ public class AuthenticationController {
   @PostMapping("/login")
   public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
     Authentication authentication =
-        authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(
-                loginRequest.getEmail(), loginRequest.getPassword()));
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            loginRequest.getEmail(), loginRequest.getPassword()));
 
     SecurityContextHolder.getContext().setAuthentication(authentication);
 
     String token = tokenProvider.createToken(authentication);
-    return ResponseEntity.ok(new AuthResponse(token));
+    HttpHeaders responseHeaders = new HttpHeaders();
+    responseHeaders.add(HttpHeaders.SET_COOKIE, ResponseCookie.from("X-AUTH-TOKEN", token)
+            .httpOnly(true)
+            .path("/")
+            .sameSite("Strict")
+            .domain("footyandsweep-dev.com")
+            .build().toString());
+
+    return ResponseEntity.ok().headers(responseHeaders).build();
   }
 
   @PostMapping("/signup")

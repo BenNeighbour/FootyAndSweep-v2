@@ -29,11 +29,11 @@ type Props = OwnProps;
 const SocialButtonSection: FunctionComponent<Props> = (props) => {
     return (
         <SocialButtons>
-            <SocialButton><FcGoogle style={{
+            <SocialButton href={"http://api.footyandsweep-dev.com:30389/oauth2/authorize/google?redirect_uri=http://www.footyandsweep-dev.com:3000/oauth/login"}><FcGoogle style={{
                 padding: "5px 25px"
             }} size={75}/>
             </SocialButton>
-            <SocialButton>
+            <SocialButton href={"http://api.footyandsweep-dev.com:30389/oauth2/authorize/facebook?redirect_uri=http://www.footyandsweep-dev.com:3000/oauth/login"}>
                 <Facebook style={{
                     padding: "5px 25px"
                 }} width={"75px"} height={"75px"}/>
