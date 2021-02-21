@@ -17,8 +17,6 @@
 
 import React, {FunctionComponent} from 'react';
 import styled from "styled-components";
-import Button from "../Button/Button";
-import DummyLogo from "./dummy-logo.jpg";
 
 interface OwnProps {
 }
@@ -28,78 +26,42 @@ type Props = OwnProps;
 const Navbar: FunctionComponent<Props> = (props) => {
     return (
         <NavbarContainer>
-            <NavbarLogo alt={""} src={DummyLogo}/>
-            <NavbarLinkSectionLeft>
-                <NavbarLink>Home</NavbarLink>
-                <NavbarLink>Contact Us</NavbarLink>
-            </NavbarLinkSectionLeft>
-
-            <NavbarLinkSectionRight>
-                <NavbarLink><Button title={"Login"} style={{
-                    fontSize: "16px",
-                    width: "fit-content",
-                    height: "fit-content",
-                    padding: "3px 16px"
-                }}/></NavbarLink>
-                <NavbarLink>Signup</NavbarLink>
-            </NavbarLinkSectionRight>
+            <NavbarLinkSection>
+                <NavbarLink href={"/home"}>Home</NavbarLink>
+                <NavbarLink href={"/sweepstakes"}>Your Sweepstakes</NavbarLink>
+                <NavbarLink href={"/sweepstakes/create"}>Create a Sweepstake</NavbarLink>
+                <NavbarLink href={"/settings"}>Account Settings</NavbarLink>
+            </NavbarLinkSection>
         </NavbarContainer>
     );
 };
 
 const NavbarContainer = styled.div`
-display: inline-block;
-height: 60px;
+display: flex;
+justify-content: center;
+margin: 20px;
+align-items: flex-start;
+`;
+
+const NavbarLinkSection = styled.div`
+display: flex;
 align-items: center;
-padding 0 3em;
-margin: 7px 0;
-position: fixed;
-width: 100%;
-box-sizing: border-box;
-object-fit: contain;
-overflow: hidden;
+flex-direction: row;
+flex: 0 0 auto;
+margin: 10px 80px 0;
 `;
 
 const NavbarLink = styled.a`
+display: inline-block;
+color: #fff;
+font-size: 16px;
+text-decoration: none;
+font-family: 'Open Sans', sans-serif;
+padding: 0;
+background-color: transparent;
+border: none;
+padding: 0 15px;
 cursor: pointer;
-margin: 0 2em 0 0;
-color: #3e66fb;
-&:hover {
-    border-bottom: 1px solid #3e66fb;
-    transform: scaleX(1);
-}   
-    transition: transform 200ms ease-in-out;
-`;
-
-const NavbarLinkSectionLeft = styled.div`
-display: flex;
-align-items: center;
-font-family: 'Open Sans', sans-serif;
-font-size: 15px;
-font-weight: 600;
-color: #808080;
-height: 100%;
-float: left;
-`;
-
-const NavbarLogo = styled.img`
-display: flex;
-align-items: center;
-color: #808080;
-height: 90%;
-float: left;
-padding-right: 3em;
-`;
-
-const NavbarLinkSectionRight = styled.div`
-display: flex;
-align-items: center;
-font-family: 'Open Sans', sans-serif;
-font-size: 15px;
-font-weight: 600;
-color: #808080;
-height: 100%;
-float: right;
-`;
+`;;
 
 export default Navbar;

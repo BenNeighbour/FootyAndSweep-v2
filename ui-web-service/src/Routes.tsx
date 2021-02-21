@@ -18,9 +18,6 @@ import React, {FunctionComponent} from 'react';
 import {Route, Switch} from "react-router";
 import HomePage from "./pages/Home/HomePage";
 import PortalPage from "./pages/Portal/PortalPage";
-import PrivateRoute from "./other/PrivateRoute";
-import Axios from "axios";
-import axios from "axios";
 import Sweepstakes from "./pages/Sweepstake/Sweepstakes";
 
 interface OwnProps {
@@ -37,8 +34,8 @@ const Routes: FunctionComponent<Props> = (props) => {
                         component={HomePage} exact path="/"/>
                     <Route
                         component={PortalPage} exact path="/portal"/>
-                    <PrivateRoute
-                        component={Sweepstakes} isAuthenticated={true} exact path="/sweepstakes"/>
+                    <Route
+                        component={Sweepstakes} exact path="/sweepstakes"/>
                 </Route>
             </Switch>
         </Route>

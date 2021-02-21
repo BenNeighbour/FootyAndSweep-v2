@@ -26,7 +26,20 @@ type Props = OwnProps;
 const Card: FunctionComponent<Props> = (props) => {
     return (
         <CardContainer>
-            dfd
+            <CardOutline>
+                <EventSection>
+                    <EventText>Aston Villa vs Wolves</EventText>
+                </EventSection>
+
+                <br />
+
+                {/* Metadata section here */}
+                <SweepstakeMetadataSection>
+                    <SweepstakeNameText>Sweepstake Name</SweepstakeNameText>
+                    <SweepstakeTypeText>Number of Corners F/T</SweepstakeTypeText>
+                    <OtherMetadataText>Stake: 1.00 | Prize: 12.00</OtherMetadataText>
+                </SweepstakeMetadataSection>
+            </CardOutline>
         </CardContainer>
     );
 };
@@ -34,17 +47,10 @@ const Card: FunctionComponent<Props> = (props) => {
 export default Card;
 
 const CardContainer = styled.div`
-background-color: #fff;
-position: relative;
-transition: box-shadow .2s;
-border-radius: 5px;
-box-shadow: 0 0 50px -10px rgb(0 0 0 / 10%);
-display: flex;  
-flex-direction: column;
-align-items: center;
-border-radius: 5px;
-font-family: 'Open Sans', sans-serif;
-
+margin: 0;
+padding: 8px;
+box-sizing: border-box;
+    
 @media (min-width: 960px) {
     flex-grow: 0;
     max-width: 33.333333%;
@@ -59,4 +65,53 @@ font-family: 'Open Sans', sans-serif;
 flex-grow: 0;
 max-width: 100%;
 flex-basis: 100%;
+`;
+
+const CardOutline = styled.div`
+display: block;
+background-color: #fff;
+position: relative;
+box-sizing: border-box;
+height: fit-content;
+border-radius: 5px;
+font-family: 'Open Sans', sans-serif;
+box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.25);
+-webkit-box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.25);
+-moz-box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.25);
+padding: 0 1em;
+`;
+
+const SweepstakeMetadataSection = styled.div`
+display: block;
+text-align: center;
+`;
+
+const SweepstakeNameText = styled.div`
+font-weight: 400;
+font-size: 19px;
+height: fit-content;
+padding: 2.5px  0 0 0;
+`;
+
+const SweepstakeTypeText = styled.div`   
+font-weight: 600;
+font-size: 15px;
+padding: 2.5px 0;
+`;
+
+const OtherMetadataText = styled.div`
+font-weight: 400;
+font-size: 13px;
+padding: 2.5px 0;
+`;
+
+const EventSection = styled.div`
+display: flex;
+padding: 16px;
+align-items: center;
+`;
+
+const EventText = styled.div`
+font-size: 14px;
+font-weight: 400;
 `;

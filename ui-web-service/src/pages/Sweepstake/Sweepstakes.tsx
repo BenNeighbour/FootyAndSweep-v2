@@ -18,6 +18,7 @@
 import React, {FunctionComponent} from 'react';
 import Card from "../../components/Card/Card";
 import styled from "styled-components";
+import Navbar from "../../components/NavBar/Navbar";
 
 interface OwnProps {
 }
@@ -27,10 +28,13 @@ type Props = OwnProps;
 const Sweepstakes: FunctionComponent<Props> = (props) => {
     return (
         <SweepstakesContainer>
+            <TopSection>
+                <Navbar/>
+                <TitleSection>
+                    <TitleText>Your Sweepstakes</TitleText>
+                </TitleSection>
+            </TopSection>
             <CardContainer>
-                <Card/>
-                <Card/>
-                <Card/>
                 <Card/>
                 <Card/>
                 <Card/>
@@ -45,22 +49,46 @@ export default Sweepstakes;
 const SweepstakesContainer = styled.div`
 width: auto;
 height: auto;
-display: flex;
 overflow: hidden;
 object-fit: contain;
-padding: 10px;
 `;
 
 const CardContainer = styled.div`
-height: 100%;
 display: flex;
 padding: 8px 16px 16px;
+width: 100%;
+height: 100%;
 flex-wrap: wrap;
+place-items: center;
+justify-content: center;
 box-sizing: border-box;
-width: calc(100% + 16px);
-flex-wrap: wrap;
-gap: 12px;
-&>* {
-    flex: 0 0 33.3333%;
-}
+`;
+
+const TitleText = styled.h1`
+font-family: 'Open Sans', sans-serif;
+color: #fff;
+font-size: 38px;
+font-weight: 400;
+line-height: 1.2;
+`;
+
+const TopSection = styled.div`
+background: linear-gradient(-90deg, #3e66fb, #2d50cf);
+position: relative;
+min-height: 470px;
+padding: 0 0 60px 0;
+color: #02203c;
+display: flex;
+flex-direction: column;
+`;
+
+const TitleSection = styled.div`
+text-align: center;
+place-items: center;
+color: #fff;
+margin: 0 auto;
+padding: 0 20px;
+flex: 1 1 auto;
+display: flex;
+align-items: center;  
 `;
