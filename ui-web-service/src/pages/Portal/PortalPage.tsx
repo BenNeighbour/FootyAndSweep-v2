@@ -55,7 +55,6 @@ box-sizing: border-box;
 
 const LeftSection = styled.div`
 height: 100%;
-width: 100%;
 box-sizing: border-box;
 @media (min-width: 1280px) {
     flex-grow: 0;
@@ -65,8 +64,7 @@ box-sizing: border-box;
 `;
 
 const RightSection = styled.div`
-height: 100vh;
-width: 100%;
+height: 100%;
 margin: 0;
 display: flex;
 flex-direction: column;

@@ -20,6 +20,7 @@ import HomePage from "./pages/Home/HomePage";
 import PortalPage from "./pages/Portal/PortalPage";
 import PrivateRoute from "./other/PrivateRoute";
 import Axios from "axios";
+import axios from "axios";
 import Sweepstakes from "./pages/Sweepstake/Sweepstakes";
 
 interface OwnProps {
@@ -37,24 +38,19 @@ const Routes: FunctionComponent<Props> = (props) => {
                     <Route
                         component={PortalPage} exact path="/portal"/>
                     <PrivateRoute
-                        component={Sweepstakes} isAuthenticated={checkIsAuthenticated()} exact path="/sweepstakes"/>
+                        component={Sweepstakes} isAuthenticated={true} exact path="/sweepstakes"/>
                 </Route>
             </Switch>
         </Route>
     );
 };
 
-const checkIsAuthenticated = (): boolean => {
-    let isAuthenticated: boolean = false;
+    // await Axios({
+    //     method: "get",
+    //     url: "http://api.footyandsweep-dev.com:30389/com.footyandsweep.AuthenticationService/user/me",
+    //     withCredentials: true
+    // })
 
-    Axios({
-        method: "get",
-        url: "http://api.footyandsweep-dev.com:30389/com.footyandsweep.AuthenticationService/user/me",
-        withCredentials: true
-    }).then(_ => isAuthenticated = true).catch(_ => isAuthenticated = false);
-
-    return isAuthenticated;
-}
 
 export default Routes;
 

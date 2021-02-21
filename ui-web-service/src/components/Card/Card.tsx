@@ -16,7 +16,6 @@
 
 
 import React, {FunctionComponent} from 'react';
-import Card from "../../components/Card/Card";
 import styled from "styled-components";
 
 interface OwnProps {
@@ -24,43 +23,40 @@ interface OwnProps {
 
 type Props = OwnProps;
 
-const Sweepstakes: FunctionComponent<Props> = (props) => {
+const Card: FunctionComponent<Props> = (props) => {
     return (
-        <SweepstakesContainer>
-            <CardContainer>
-                <Card/>
-                <Card/>
-                <Card/>
-                <Card/>
-                <Card/>
-                <Card/>
-                <Card/>
-            </CardContainer>
-        </SweepstakesContainer>
+        <CardContainer>
+            dfd
+        </CardContainer>
     );
 };
 
-export default Sweepstakes;
-
-const SweepstakesContainer = styled.div`
-width: auto;
-height: auto;
-display: flex;
-overflow: hidden;
-object-fit: contain;
-padding: 10px;
-`;
+export default Card;
 
 const CardContainer = styled.div`
-height: 100%;
-display: flex;
-padding: 8px 16px 16px;
-flex-wrap: wrap;
-box-sizing: border-box;
-width: calc(100% + 16px);
-flex-wrap: wrap;
-gap: 12px;
-&>* {
-    flex: 0 0 33.3333%;
+background-color: #fff;
+position: relative;
+transition: box-shadow .2s;
+border-radius: 5px;
+box-shadow: 0 0 50px -10px rgb(0 0 0 / 10%);
+display: flex;  
+flex-direction: column;
+align-items: center;
+border-radius: 5px;
+font-family: 'Open Sans', sans-serif;
+
+@media (min-width: 960px) {
+    flex-grow: 0;
+    max-width: 33.333333%;
+    flex-basis: 33.333333%;
 }
+@media (min-width: 1280px) {
+    flex-grow: 0;
+    max-width: 25%;
+    flex-basis: 25%;
+}
+
+flex-grow: 0;
+max-width: 100%;
+flex-basis: 100%;
 `;
