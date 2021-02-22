@@ -19,6 +19,7 @@ import React, {FunctionComponent} from 'react';
 import Card from "../../components/Card/Card";
 import styled from "styled-components";
 import Navbar from "../../components/NavBar/Navbar";
+import Footer from "../../components/Footer/Footer";
 
 interface OwnProps {
 }
@@ -40,6 +41,9 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
                 <Card/>
                 <Card/>
             </CardContainer>
+            <Footer>
+
+            </Footer>
         </SweepstakesContainer>
     );
 };
@@ -49,7 +53,6 @@ export default Sweepstakes;
 const SweepstakesContainer = styled.div`
 width: auto;
 height: auto;
-overflow: hidden;
 object-fit: contain;
 `;
 
@@ -67,7 +70,7 @@ box-sizing: border-box;
 const TitleText = styled.h1`
 font-family: 'Open Sans', sans-serif;
 color: #fff;
-font-size: 38px;
+font-size: 42px;
 font-weight: 400;
 line-height: 1.2;
 `;

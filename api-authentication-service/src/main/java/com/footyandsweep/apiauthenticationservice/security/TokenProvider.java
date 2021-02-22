@@ -17,6 +17,7 @@
 package com.footyandsweep.apiauthenticationservice.security;
 
 import com.footyandsweep.apiauthenticationservice.config.AppProperties;
+import com.google.gson.Gson;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +25,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Service
 public class TokenProvider {
@@ -43,10 +45,12 @@ public class TokenProvider {
     Date expiryDate = new Date(now.getTime() + appProperties.getAuth().getTokenExpirationMsec());
 
     return Jwts.builder()
-        .setSubject(userPrincipal.getName())
-        .setIssuedAt(new Date())
-        .setExpiration(expiryDate)
-        .signWith(SignatureAlgorithm.HS512, appProperties.getAuth().getTokenSecret())
+            .setIssuer("footyandsweep")
+            .claim("metadata", userPrincipal.getAttributes())
+            .setId(UUID.randomUUID().toString().replace("-", ""))
+            .setIssuedAt(new Date())
+            .setExpiration(expiryDate)
+            .signWith(SignatureAlgorithm.HS256, appProperties.getAuth().getTokenSecret())
         .compact();
   }
 
