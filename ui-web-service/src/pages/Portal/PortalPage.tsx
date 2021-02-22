@@ -14,28 +14,44 @@
  *   limitations under the License.
  */
 
-import React, {FunctionComponent, useState} from 'react';
+import React, {FunctionComponent, useEffect, useState} from 'react';
 import styled from "styled-components";
 import LoginForm from "./Form/LoginForm";
 import SignupForm from "./Form/SignupForm";
-import {RouteComponentProps} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
 
-interface OwnProps extends RouteComponentProps<any> {
+interface OwnProps {
 }
 
 type Props = OwnProps;
 
 const PortalPage: FunctionComponent<Props> = (props) => {
+    const history = useHistory<any>();
+
+    const [historyPreviousState] = useState(history.location.state);
     const [isLoggingIn, setIsLoggingIn] = useState(true);
+
+    useEffect(() => {
+        if (history.location.state && history.location.state.errors) {
+            let state = {...history.location.state};
+            delete state.errors;
+
+            history.replace({...history.location, state});
+        }
+    }, [history]);
 
     return (
         <>
             <Container>
                 <LeftSection/>
                 <RightSection>
-                    {isLoggingIn ? <LoginForm setIsLoggingIn={(value: boolean) => setIsLoggingIn(value)}/> :
-                        <SignupForm setIsLoggingIn={(value: boolean) => setIsLoggingIn(value)}/>}
+                    {isLoggingIn ?
+                        <LoginForm error={historyPreviousState !== undefined ? historyPreviousState.errors : null}
+                                   setIsLoggingIn={(value: boolean) => setIsLoggingIn(value)}/> :
+                        <SignupForm
+                            error={historyPreviousState !== undefined ? historyPreviousState.errors : null}
+                            setIsLoggingIn={(value: boolean) => setIsLoggingIn(value)}/>}
                     <footer>
                         <Footer/>
                     </footer>

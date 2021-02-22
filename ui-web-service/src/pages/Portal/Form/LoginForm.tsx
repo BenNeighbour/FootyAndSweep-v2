@@ -34,6 +34,7 @@ interface OwnProps {
     state: LoginAuthenticationReducerType;
     actions: typeof AuthenticateActions;
     setIsLoggingIn: (value: boolean) => void;
+    error?: string | null;
 }
 
 const schema = yup.object().shape({
@@ -84,7 +85,7 @@ const LoginForm: FunctionComponent<Props> = (props) => {
                                 marginBottom: "1em"
                             }}/>
 
-                            <ErrorTextMessage>{props.state.error}</ErrorTextMessage>
+                            <ErrorTextMessage>{props.state.error || props.error || undefined}</ErrorTextMessage>
 
                             <DontHaveAccount isLoggingIn={true} setIsLoggingIn={props.setIsLoggingIn}/>
 

@@ -27,14 +27,12 @@ import {
 export interface RootState {
     loginForm: LoginAuthenticationReducerType
     signupForm: SignupAuthenticationReducerType
-    routerReducer: RouterState,
 }
 
 const combinedReducers = (history: History) =>
     combineReducers({
         loginForm: loginAuthenticationReducer,
-        signupForm: signupAuthenticationReducer,
-        routerReducer,
+        signupForm: signupAuthenticationReducer
     });
 
 export default combinedReducers;
