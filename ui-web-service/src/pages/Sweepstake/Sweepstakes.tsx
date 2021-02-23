@@ -78,7 +78,7 @@ line-height: 1.2;
 const TopSection = styled.div`
 background: linear-gradient(-90deg, #3e66fb, #2d50cf);
 position: relative;
-min-height: 470px;
+min-height: 370px;
 padding: 0 0 60px 0;
 color: #02203c;
 display: flex;

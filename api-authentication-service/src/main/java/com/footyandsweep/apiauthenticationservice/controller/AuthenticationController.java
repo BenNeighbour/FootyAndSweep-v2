@@ -106,7 +106,7 @@ public class AuthenticationController {
     user.setUsername(signUpRequest.getUsername());
     user.setEmail(signUpRequest.getEmail());
     user.setPassword(signUpRequest.getPassword());
-    user.setProvider(AuthProvider.local);
+    user.setProvider(AuthProvider.email_address);
 
     user.setPassword(passwordEncoder.encode(user.getPassword()));
 

@@ -27,10 +27,10 @@ const Navbar: FunctionComponent<Props> = (props) => {
     return (
         <NavbarContainer>
             <NavbarLinkSection>
-                <NavbarLink href={"/home"}>Home</NavbarLink>
-                <NavbarLink href={"/sweepstakes"}>Your Sweepstakes</NavbarLink>
-                <NavbarLink href={"/sweepstakes/create"}>Create a Sweepstake</NavbarLink>
-                <NavbarLink href={"/settings"}>Account Settings</NavbarLink>
+                {/*<NavbarLink href={"/home"}>Home</NavbarLink>*/}
+                {/*<NavbarLink href={"/sweepstakes"}>Your Sweepstakes</NavbarLink>*/}
+                {/*<NavbarLink href={"/sweepstakes/create"}>Create a Sweepstake</NavbarLink>*/}
+                {/*<NavbarLink href={"/settings"}>Account Settings</NavbarLink>*/}
             </NavbarLinkSection>
         </NavbarContainer>
     );

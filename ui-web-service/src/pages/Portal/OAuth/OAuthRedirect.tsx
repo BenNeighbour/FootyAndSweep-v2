@@ -30,12 +30,20 @@ function useQuery() {
 const OAuthRedirect: FunctionComponent<Props> = (props) => {
     let query = useQuery();
 
+    if (query.get("error") !== null) {
+        return (
+            <Redirect to={{
+                pathname: "/portal",
+                state: {errors: query.get("error")}
+            }}/>
+        );
+    }
+
     return (
         <Redirect to={{
-            pathname: "/portal",
-            state: {errors: query.get("error")}
+            pathname: "/sweepstakes",
         }}/>
-    );
+    )
 };
 
 export default OAuthRedirect;

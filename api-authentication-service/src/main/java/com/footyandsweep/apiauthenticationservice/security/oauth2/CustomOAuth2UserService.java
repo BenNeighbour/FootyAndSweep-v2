@@ -77,10 +77,10 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
               AuthProvider.valueOf(
                   oAuth2UserRequest.getClientRegistration().getRegistrationId()))) {
         throw new OAuth2AuthenticationProcessingException(
-            "Looks like you're signed up with "
-                + user.getProvider()
-                + " account. Please use your "
-                + user.getProvider()
+            "Woah! Looks like you're already signed up with your "
+                + user.getProvider().getValue()
+                + ". Please use your "
+                + user.getProvider().getValue()
                 + " account to login.");
       }
       user = updateExistingUser(user, oAuth2UserInfo);
