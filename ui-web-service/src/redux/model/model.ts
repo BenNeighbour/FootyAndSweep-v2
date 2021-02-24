@@ -29,6 +29,11 @@ export enum ActionType {
     AUTHENTICATE_SIGNUP_REQUEST = 'action/AUTHENTICATE_SIGNUP_REQUEST',
     AUTHENTICATE_SIGNUP_SUCCESS = 'action/AUTHENTICATE_SIGNUP_SUCCESS',
     AUTHENTICATE_SIGNUP_ERROR = 'action/AUTHENTICATE_SIGNUP_ERROR',
+
+    /* Save Sweepstake */
+    SAVE_SWEEPSTAKE_REQUEST = 'action/SAVE_SWEEPSTAKE_REQUEST',
+    SAVE_SWEEPSTAKE_SUCCESS = 'action/SAVE_SWEEPSTAKE_SUCCESS',
+    SAVE_SWEEPSTAKE_ERROR = 'action/SAVE_SWEEPSTAKE_ERROR',
 }
 
 export interface UserData {
@@ -48,4 +53,29 @@ export interface SignupData {
     dateOfBirth: Date | null;
     password: string | null;
     confirmPassword: string | null;
+}
+
+
+enum SweepstakeStatus {
+    OPEN,
+    ALLOCATED,
+    CLOSED
+}
+
+enum SweepstakeType {
+    Correct_Score_FT,
+    Correct_Score_HT
+}
+
+export interface SweepstakeData {
+    id: string;
+    name: string;
+    status: SweepstakeStatus;
+    isPrivate: boolean;
+    sweepstakeEventId: string;
+    sweepstakeType: SweepstakeType;
+    minimumPlayers: number;
+    minimumPlayerTickets: number;
+    stake: number;
+    totalNumberOfTickets: number;
 }

@@ -29,7 +29,7 @@ type Props = OwnProps;
 
 const Sweepstakes: FunctionComponent<Props> = (props) => {
     let client = new Client({
-        brokerURL: "ws://api.footyandsweep-dev.com:30010/socket",
+        brokerURL: "ws://api.footyandsweep-dev.com:32529/socket",
         onConnect: () => {
             console.log("Connected!");
 

@@ -16,8 +16,6 @@
 
 package com.footyandsweep.apisweepstakeengine;
 
-import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
-import com.footyandsweep.apicommonlibrary.other.CustomMap;
 import com.footyandsweep.apisweepstakeengine.dao.ParticipantIdDao;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
 import com.footyandsweep.apisweepstakeengine.engine.saga.createSweepstake.CreateSweepstakeSaga;
@@ -27,20 +25,16 @@ import com.footyandsweep.apisweepstakeengine.engine.saga.deleteSweepstake.Delete
 import com.footyandsweep.apisweepstakeengine.engine.saga.joinSweepstake.JoinSweepstakeSaga;
 import com.footyandsweep.apisweepstakeengine.engine.saga.joinSweepstake.JoinSweepstakeSagaData;
 import com.footyandsweep.apisweepstakeengine.helper.ResultHelper;
-import com.footyandsweep.apisweepstakeengine.model.FootballMatchSweepstake;
 import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
-import com.footyandsweep.apisweepstakeengine.relation.ParticipantIds;
 import io.eventuate.tram.sagas.orchestration.SagaInstanceFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-
-@RestController
-@RequestMapping("/sweepstake/test")
-public class SweepstakeControllerTest {
+@Controller
+public class SweepstakeController {
 
   private final ResultHelper resultHelper;
   private final SweepstakeDao sweepstakeDao;
@@ -52,14 +46,7 @@ public class SweepstakeControllerTest {
 
   private final SagaInstanceFactory sagaInstanceFactory;
 
-  public SweepstakeControllerTest(
-      ResultHelper resultHelper,
-      SweepstakeDao sweepstakeDao,
-      ParticipantIdDao participantIdDao,
-      CreateSweepstakeSaga createSweepstakeSaga,
-      DeleteSweepstakeSaga deleteSweepstakeSaga,
-      JoinSweepstakeSaga joinSweepstakeSaga,
-      SagaInstanceFactory sagaInstanceFactory) {
+  public SweepstakeController(ResultHelper resultHelper, SweepstakeDao sweepstakeDao, ParticipantIdDao participantIdDao, CreateSweepstakeSaga createSweepstakeSaga, DeleteSweepstakeSaga deleteSweepstakeSaga, JoinSweepstakeSaga joinSweepstakeSaga, SagaInstanceFactory sagaInstanceFactory) {
     this.resultHelper = resultHelper;
     this.sweepstakeDao = sweepstakeDao;
     this.participantIdDao = participantIdDao;
@@ -69,9 +56,9 @@ public class SweepstakeControllerTest {
     this.sagaInstanceFactory = sagaInstanceFactory;
   }
 
-  @PostMapping("/save")
   @Transactional
-  public Sweepstake save(@RequestBody Sweepstake sweepstake) {
+  @MessageMapping("/save")
+  public Sweepstake createSweepstake(Sweepstake sweepstake) {
     CreateSweepstakeSagaData data = new CreateSweepstakeSagaData(sweepstake);
     sagaInstanceFactory.create(createSweepstakeSaga, data);
 
@@ -95,8 +82,8 @@ public class SweepstakeControllerTest {
   @PostMapping("/join")
   @Transactional
   public ResponseEntity<String> join(
-      @RequestParam("participantId") String participantId,
-      @RequestParam("joinCode") String joinCode) {
+          @RequestParam("participantId") String participantId,
+          @RequestParam("joinCode") String joinCode) {
     JoinSweepstakeSagaData data = new JoinSweepstakeSagaData();
     data.setSweepstakeJoinCode(joinCode);
     data.setParticipantId(participantId);
@@ -104,41 +91,5 @@ public class SweepstakeControllerTest {
     sagaInstanceFactory.create(joinSweepstakeSaga, data);
 
     return ResponseEntity.ok("Joined Successfully");
-  }
-
-  @GetMapping("/by/{sweepstakeId}/participants")
-  public List<String> findAllSweepstakeParticipantRelations(
-      @PathVariable("sweepstakeId") String id) {
-
-    List<ParticipantIds> participantsInSweepstake =
-        participantIdDao.findAllParticipantIdsBySweepstakeId(id);
-
-    List<String> participantIds = new ArrayList<>();
-    participantsInSweepstake.forEach(curr -> participantIds.add(curr.getParticipantId()));
-
-    return participantIds;
-  }
-
-  @PostMapping("/result")
-  public List<CustomMap> resultHelper(@RequestBody SweepstakeCommon sweepstake) {
-    List<CustomMap> customMap = new ArrayList<>();
-
-    FootballMatchSweepstake footballMatchSweepstake =
-        sweepstakeDao.findFootballMatchSweepstakeById(sweepstake.getId());
-
-    resultHelper
-        .buildResultsForSweepstakeType(
-            footballMatchSweepstake.getSweepstakeType(), footballMatchSweepstake)
-        .forEach(
-            (integer, s) -> {
-              customMap.add(new CustomMap(integer, s));
-            });
-
-    return customMap;
-  }
-
-  @GetMapping("/by/id/{sweepstakeId}")
-  public SweepstakeCommon findSweepstakeById(@PathVariable("sweepstakeId") String sweepstakeId) {
-    return sweepstakeDao.findSweepstakeById(sweepstakeId);
   }
 }
