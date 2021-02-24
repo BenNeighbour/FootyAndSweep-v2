@@ -20,24 +20,25 @@ import com.footyandsweep.apicommonlibrary.cqrs.user.LinkParticipantToSweepstakeF
 import com.footyandsweep.apicommonlibrary.cqrs.user.ParticipantNotFound;
 import com.footyandsweep.apisweepstakeengine.dao.ParticipantIdDao;
 import com.footyandsweep.apisweepstakeengine.engine.SweepstakeEngine;
+import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
 import com.footyandsweep.apisweepstakeengine.relation.ParticipantIds;
 import io.eventuate.tram.sagas.orchestration.SagaDefinition;
 import io.eventuate.tram.sagas.simpledsl.SimpleSaga;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CreateSweepstakeSaga implements SimpleSaga<CreateSweepstakeSagaData> {
 
   private final SweepstakeEngine sweepstakeEngine;
-  private final ParticipantIdDao participantIdDao;
+  private final SimpMessagingTemplate messagingTemplate;
 
-  public CreateSweepstakeSaga(
-      SweepstakeEngine sweepstakeEngine, ParticipantIdDao participantIdDao) {
-    this.sweepstakeEngine = sweepstakeEngine;
-    this.participantIdDao = participantIdDao;
-  }
+    public CreateSweepstakeSaga(SweepstakeEngine sweepstakeEngine, SimpMessagingTemplate messagingTemplate) {
+        this.sweepstakeEngine = sweepstakeEngine;
+        this.messagingTemplate = messagingTemplate;
+    }
 
-  @Override
+    @Override
   public SagaDefinition<CreateSweepstakeSagaData> getSagaDefinition() {
 
     return step()
@@ -72,10 +73,22 @@ public class CreateSweepstakeSaga implements SimpleSaga<CreateSweepstakeSagaData
 
   @Override
   public void onSagaCompletedSuccessfully(String sagaId, CreateSweepstakeSagaData sagaData) {
-    System.out.println("Create Sweepstake Saga: " + sagaId + " has been completed successfully");
-
-    /* TODO: Ping the client here */
+    messagingTemplate.convertAndSend(
+        "/sweepstake-topic/save",
+        "Sweepstake created successfully. Transaction Id:" + sagaId);
   }
 
+    @Override
+    public void onStarting(String sagaId, CreateSweepstakeSagaData createSweepstakeSagaData) {
+        messagingTemplate.convertAndSend(
+                "/sweepstake-topic/save",
+                "Sweepstake is creating... Transaction Id:" + sagaId);
+    }
 
+    @Override
+    public void onSagaRolledBack(String sagaId, CreateSweepstakeSagaData createSweepstakeSagaData) {
+        messagingTemplate.convertAndSend(
+                "/sweepstake-topic/save",
+                "Error. Transaction Id:" + sagaId);
+    }
 }

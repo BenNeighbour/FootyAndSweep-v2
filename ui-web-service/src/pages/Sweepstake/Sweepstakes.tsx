@@ -15,11 +15,12 @@
  */
 
 
-import React, {FunctionComponent} from 'react';
+import React, {FunctionComponent, useEffect} from 'react';
 import Card from "../../components/Card/Card";
 import styled from "styled-components";
 import Navbar from "../../components/NavBar/Navbar";
 import Footer from "../../components/Footer/Footer";
+import {Client} from '@stomp/stompjs';
 
 interface OwnProps {
 }
@@ -27,6 +28,39 @@ interface OwnProps {
 type Props = OwnProps;
 
 const Sweepstakes: FunctionComponent<Props> = (props) => {
+    let client = new Client({
+        brokerURL: "ws://api.footyandsweep-dev.com:30010/socket",
+        onConnect: () => {
+            console.log("Connected!");
+
+            client.publish({destination: '/sweepstakes/save', body: `
+                {
+    "name": "Sweepstake",
+    "isPrivate": true,
+    "ownerId": "2c91808d77bf9eca0177bfc094d80001",
+    "numberOfRange": 5,
+    "numberOfMax": 5,  
+    "maxNumberOfRanges": 5,
+    "correctScoreMax": 7,
+    "minuteRange": 5,
+    "includeBench": false,
+    "includeStartingGoalkeeper": false,
+    "includeNoGoalScorer": false,
+    "includeOwnGoals": false,
+    "stake": 10.00
+}
+            `});
+
+            client.subscribe("/sweepstake-topic/save", message => {
+                console.log(message.body);
+            });
+        }
+    });
+
+    useEffect(() => {
+        client.activate();
+    }, []);
+
     return (
         <SweepstakesContainer>
             <TopSection>
@@ -36,7 +70,7 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
                 </TitleSection>
             </TopSection>
             <CardContainer>
-                <Card/>
+                <Card />
                 <Card/>
                 <Card/>
                 <Card/>
