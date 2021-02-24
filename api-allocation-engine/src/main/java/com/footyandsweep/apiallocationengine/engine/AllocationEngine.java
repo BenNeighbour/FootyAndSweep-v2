@@ -22,7 +22,6 @@ import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
 import io.eventuate.tram.commands.consumer.CommandWithDestination;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface AllocationEngine {
 
@@ -30,5 +29,6 @@ public interface AllocationEngine {
 
   CommandWithDestination allocateTickets(List<TicketCommon> tickets);
 
-  CommandWithDestination updateSweepstakeStatus(String sweepstakeId, SweepstakeCommon.SweepstakeStatus status);
+  CommandWithDestination updateSweepstakeStatus(
+      String sweepstakeId, SweepstakeCommon.SweepstakeStatus status);
 }

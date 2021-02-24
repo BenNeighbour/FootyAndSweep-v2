@@ -48,7 +48,8 @@ public class UserCommandHandler {
         .build();
   }
 
-  private Message updateUserBalance(CommandMessage<UpdateUserBalanceCommand> updateUserBalanceCommandCommand) {
+  private Message updateUserBalance(
+      CommandMessage<UpdateUserBalanceCommand> updateUserBalanceCommandCommand) {
     try {
       UpdateUserBalanceCommand command = updateUserBalanceCommandCommand.getCommand();
       userService.updateUserBalance(command.getUserId(), command.getAmountAdded());

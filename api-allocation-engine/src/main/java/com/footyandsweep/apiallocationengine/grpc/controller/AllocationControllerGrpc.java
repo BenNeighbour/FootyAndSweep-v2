@@ -44,14 +44,15 @@ public class AllocationControllerGrpc extends AllocationServiceGrpc.AllocationSe
   @Override
   public void allocateSweepstake(
       SweepstakeServiceOuterClass.Sweepstake request, StreamObserver<Empty> responseObserver) {
-      SweepstakeCommon sweepstake = ProtoConverterUtils.convertToPojo(FootballMatchSweepstakeCommon.class, request);
+    SweepstakeCommon sweepstake =
+        ProtoConverterUtils.convertToPojo(FootballMatchSweepstakeCommon.class, request);
 
-      AllocateSweepstakeSagaData data = new AllocateSweepstakeSagaData();
-      data.setSweepstake(sweepstake);
+    AllocateSweepstakeSagaData data = new AllocateSweepstakeSagaData();
+    data.setSweepstake(sweepstake);
 
-      SagaInstance instance = sagaInstanceFactory.create(allocateSweepstakeSaga, data);
+    SagaInstance instance = sagaInstanceFactory.create(allocateSweepstakeSaga, data);
 
-      responseObserver.onNext(Empty.newBuilder().build());
-      responseObserver.onCompleted();
+    responseObserver.onNext(Empty.newBuilder().build());
+    responseObserver.onCompleted();
   }
 }

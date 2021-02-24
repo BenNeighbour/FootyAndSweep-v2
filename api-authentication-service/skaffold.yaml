@@ -9,4 +9,4 @@ build:
 deploy:
   kubectl:
     manifests:
-      - ../kubernetes/api-gateway-service/api-gateway-service.yaml
+      - ../kubernetes/api-authentication-service/api-authentication-service.yaml

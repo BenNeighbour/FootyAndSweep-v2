@@ -17,7 +17,6 @@
 package com.footyandsweep.apisweepstakeengine.config;
 
 import com.footyandsweep.AllocationServiceGrpc;
-import com.footyandsweep.SweepstakeServiceGrpc;
 import com.footyandsweep.apisweepstakeengine.dao.ParticipantIdDao;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
 import com.footyandsweep.apisweepstakeengine.engine.SweepstakeEngine;
@@ -37,16 +36,19 @@ import org.springframework.context.annotation.Import;
 
 @Configuration
 @EnableAutoConfiguration
-@Import({SagaOrchestratorConfiguration.class, OptimisticLockingDecoratorConfiguration.class, SagaParticipantConfiguration.class})
+@Import({
+  SagaOrchestratorConfiguration.class,
+  OptimisticLockingDecoratorConfiguration.class,
+  SagaParticipantConfiguration.class
+})
 public class SweepstakeEngineConfiguration {
 
   @Bean
   public AllocationServiceGrpc.AllocationServiceBlockingStub allocationEngineChannel() {
-    ManagedChannel channel = ManagedChannelBuilder.forAddress("api-allocation-engine", 9090)
-            .usePlaintext()
-            .build();
+    ManagedChannel channel =
+        ManagedChannelBuilder.forAddress("api-allocation-engine", 9090).usePlaintext().build();
 
-    return  AllocationServiceGrpc.newBlockingStub(channel);
+    return AllocationServiceGrpc.newBlockingStub(channel);
   }
 
   @Bean
@@ -62,8 +64,8 @@ public class SweepstakeEngineConfiguration {
 
   @Bean
   public CommandDispatcher consumerCommandDispatcher(
-          SweepstakeCommandHandler target, SagaCommandDispatcherFactory sagaCommandDispatcherFactory) {
+      SweepstakeCommandHandler target, SagaCommandDispatcherFactory sagaCommandDispatcherFactory) {
     return sagaCommandDispatcherFactory.make(
-            "sweepstake-engine-events-dispatcher", target.commandHandlerDefinitions());
+        "sweepstake-engine-events-dispatcher", target.commandHandlerDefinitions());
   }
 }

@@ -16,5 +16,4 @@
 
 package com.footyandsweep.apicommonlibrary.cqrs.ticket;
 
-public class TicketsAllocated extends AllocateTicketsCommand {
-}
+public class TicketsAllocated extends AllocateTicketsCommand {}

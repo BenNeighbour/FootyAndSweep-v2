@@ -16,5 +16,4 @@
 
 package com.footyandsweep.apicommonlibrary.cqrs.sweepstake.update;
 
-public class UpdateSweepstakeStatusFailure extends UpdateSweepstakeStatusCommand {
-}
+public class UpdateSweepstakeStatusFailure extends UpdateSweepstakeStatusCommand {}

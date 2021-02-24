@@ -19,8 +19,6 @@ package com.footyandsweep.apisweepstakeengine.grpc.controller;
 import com.footyandsweep.Common;
 import com.footyandsweep.SweepstakeServiceGrpc;
 import com.footyandsweep.SweepstakeServiceOuterClass;
-import com.footyandsweep.apicommonlibrary.helper.ProtoConverterUtils;
-import com.footyandsweep.apicommonlibrary.other.CustomMap;
 import com.footyandsweep.apisweepstakeengine.dao.FootballMatchDao;
 import com.footyandsweep.apisweepstakeengine.dao.ParticipantIdDao;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
@@ -37,7 +35,6 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import javax.validation.ValidationException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.List;
 
 @GrpcService
@@ -85,12 +82,10 @@ public class SweepstakeControllerGrpc extends SweepstakeServiceGrpc.SweepstakeSe
 
   @Override
   public void findSweepstakeById(
-          Common.Id request,
-          StreamObserver<SweepstakeServiceOuterClass.Sweepstake> responseObserver) {
+      Common.Id request, StreamObserver<SweepstakeServiceOuterClass.Sweepstake> responseObserver) {
     try {
       SweepstakeServiceOuterClass.Sweepstake sweepstake =
-          this.castHelper(
-              sweepstakeDao.findSweepstakeById(request.getId()));
+          this.castHelper(sweepstakeDao.findSweepstakeById(request.getId()));
 
       responseObserver.onNext(sweepstake);
       responseObserver.onCompleted();
@@ -101,8 +96,7 @@ public class SweepstakeControllerGrpc extends SweepstakeServiceGrpc.SweepstakeSe
 
   @Override
   public void getResultHelperMap(
-          SweepstakeServiceOuterClass.Sweepstake request,
-          StreamObserver<Common.Map> responseObserver) {
+      SweepstakeServiceOuterClass.Sweepstake request, StreamObserver<Common.Map> responseObserver) {
     super.getResultHelperMap(request, responseObserver);
   }
 
@@ -126,62 +120,66 @@ public class SweepstakeControllerGrpc extends SweepstakeServiceGrpc.SweepstakeSe
     } catch (ValidationException e) {
       /* If there are any validation errors (to do with the sweepstake fields), then tell the user */
       Status errorStatus =
-              Status.newBuilder()
-                      .setCode(Code.INVALID_ARGUMENT.getNumber())
-                      .setMessage(e.getMessage())
-                      .build();
+          Status.newBuilder()
+              .setCode(Code.INVALID_ARGUMENT.getNumber())
+              .setMessage(e.getMessage())
+              .build();
 
       responseObserver.onError(StatusProto.toStatusRuntimeException(errorStatus));
     }
   }
 
   @Override
-  public void findSweepstakeByFootballMatchId(Common.Id request, StreamObserver<SweepstakeServiceOuterClass.SweepstakeList> responseObserver) {
+  public void findSweepstakeByFootballMatchId(
+      Common.Id request,
+      StreamObserver<SweepstakeServiceOuterClass.SweepstakeList> responseObserver) {
     try {
-      List<Sweepstake> sweepstakes = sweepstakeDao.findAllSweepstakeBySweepstakeEventId(request.getId());
-      SweepstakeServiceOuterClass.SweepstakeList sweepstakeList = SweepstakeServiceOuterClass.SweepstakeList.newBuilder().build();
+      List<Sweepstake> sweepstakes =
+          sweepstakeDao.findAllSweepstakeBySweepstakeEventId(request.getId());
+      SweepstakeServiceOuterClass.SweepstakeList sweepstakeList =
+          SweepstakeServiceOuterClass.SweepstakeList.newBuilder().build();
 
-      sweepstakes.forEach(sweepstake -> {
-        try {
-          sweepstakeList.getSweepstakesList().add(this.castHelper(sweepstake));
-        } catch (InvocationTargetException | IllegalAccessException e) {
-        }
-      });
+      sweepstakes.forEach(
+          sweepstake -> {
+            try {
+              sweepstakeList.getSweepstakesList().add(this.castHelper(sweepstake));
+            } catch (InvocationTargetException | IllegalAccessException e) {
+            }
+          });
 
       responseObserver.onNext(sweepstakeList);
       responseObserver.onCompleted();
-    }  catch (Exception e) {
+    } catch (Exception e) {
       /* If there are any validation errors (to do with the sweepstake fields), then tell the user */
       Status errorStatus =
-              Status.newBuilder()
-                      .setCode(Code.INTERNAL.getNumber())
-                      .setMessage(e.getMessage())
-                      .build();
+          Status.newBuilder().setCode(Code.INTERNAL.getNumber()).setMessage(e.getMessage()).build();
 
       responseObserver.onError(StatusProto.toStatusRuntimeException(errorStatus));
     }
   }
 
   @Override
-  public void getAllSweepstakeParticipants(Common.Id request, StreamObserver<Common.Ids> responseObserver) {
+  public void getAllSweepstakeParticipants(
+      Common.Id request, StreamObserver<Common.Ids> responseObserver) {
     Common.Ids.Builder participantIdsBuilder = Common.Ids.newBuilder();
 
-    participantIdDao.findAllParticipantIdsBySweepstakeId(request.getId()).forEach(each -> {
-      participantIdsBuilder.addId(each.getParticipantId());
-    });
+    participantIdDao
+        .findAllParticipantIdsBySweepstakeId(request.getId())
+        .forEach(
+            each -> {
+              participantIdsBuilder.addId(each.getParticipantId());
+            });
 
     responseObserver.onNext(participantIdsBuilder.build());
     responseObserver.onCompleted();
   }
 
   private SweepstakeServiceOuterClass.Sweepstake castHelper(Sweepstake sweepstake)
-          throws InvocationTargetException, IllegalAccessException {
+      throws InvocationTargetException, IllegalAccessException {
     if (sweepstake != null) {
       /* Cast the sweepstake fields to the protobuf sweepstake */
       SweepstakeServiceOuterClass.Sweepstake response =
-              SweepstakeServiceOuterClass.Sweepstake.newBuilder()
-                      .setId(sweepstake.getId())
-                      .build();
+          SweepstakeServiceOuterClass.Sweepstake.newBuilder().setId(sweepstake.getId()).build();
       BeanUtils.copyProperties(response, sweepstake);
 
       /* Return the casted version to be sent off to the client */
@@ -192,15 +190,29 @@ public class SweepstakeControllerGrpc extends SweepstakeServiceGrpc.SweepstakeSe
   }
 
   @Override
-  public void resultHelper(SweepstakeServiceOuterClass.Sweepstake request, StreamObserver<SweepstakeServiceOuterClass.PairList> responseObserver) {
-    FootballMatchSweepstake footballMatchSweepstake = sweepstakeDao.findFootballMatchSweepstakeById(request.getId());
-    SweepstakeServiceOuterClass.PairList.Builder pairList = SweepstakeServiceOuterClass.PairList.newBuilder();
+  public void resultHelper(
+      SweepstakeServiceOuterClass.Sweepstake request,
+      StreamObserver<SweepstakeServiceOuterClass.PairList> responseObserver) {
+    FootballMatchSweepstake footballMatchSweepstake =
+        sweepstakeDao.findFootballMatchSweepstakeById(request.getId());
+    SweepstakeServiceOuterClass.PairList.Builder pairList =
+        SweepstakeServiceOuterClass.PairList.newBuilder();
 
-    resultHelper.buildResultsForSweepstakeType(footballMatchSweepstake.getSweepstakeType(), footballMatchSweepstake).forEach((integer, s) -> {
-      pairList.addPairs(SweepstakeServiceOuterClass.Pair.newBuilder().setKey(integer).setValue(s).build());
-    });
+    resultHelper
+        .buildResultsForSweepstakeType(
+            footballMatchSweepstake.getSweepstakeType(), footballMatchSweepstake)
+        .forEach(
+            (integer, s) -> {
+              pairList.addPairs(
+                  SweepstakeServiceOuterClass.Pair.newBuilder()
+                      .setKey(integer)
+                      .setValue(s)
+                      .build());
+            });
 
     responseObserver.onNext(pairList.build());
     responseObserver.onCompleted();
   }
+
+
 }

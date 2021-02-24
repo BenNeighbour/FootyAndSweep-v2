@@ -20,13 +20,13 @@ import com.footyandsweep.apicommonlibrary.model.LeagueCommon;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Setter
 @Getter
 @Entity
 @Table(name = "football_league")
-
 public class FootballLeague extends LeagueCommon {
 
   private static final long serialVersionUID = -5263027643657744679L;

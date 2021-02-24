@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
       throw new SignUpException("Password and Confirm Password do not match up!");
     } else if (userDao.existsByEmail(request.getEmail())) {
       throw new SignUpException(
-              "Another account is using this email address. Please log into your account.");
+          "Another account is using this email address. Please log into your account.");
     }
   }
 
@@ -87,7 +87,7 @@ public class UserServiceImpl implements UserService {
   @Override
   public void deleteAllSweepstakeRelations(String sweepstakeId) {
     Optional<List<SweepstakeIds>> sweepstakeIdsList =
-            sweepstakeIdDao.findAllSweepstakeIdsBySweepstakeId(sweepstakeId);
+        sweepstakeIdDao.findAllSweepstakeIdsBySweepstakeId(sweepstakeId);
 
     assert sweepstakeIdsList.isPresent();
     sweepstakeIdsList.get().forEach(sweepstakeIdDao::delete);

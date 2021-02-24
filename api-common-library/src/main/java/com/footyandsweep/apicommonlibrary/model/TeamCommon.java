@@ -37,9 +37,8 @@ public class TeamCommon implements Serializable {
   private static final long serialVersionUID = 2018604269715991826L;
 
   @Id
-  @GeneratedValue(generator="system-uuid")
-  @GenericGenerator(name="system-uuid",
-          strategy = "uuid")
+  @GeneratedValue(generator = "system-uuid")
+  @GenericGenerator(name = "system-uuid", strategy = "uuid")
   private String id;
 
   private String name;

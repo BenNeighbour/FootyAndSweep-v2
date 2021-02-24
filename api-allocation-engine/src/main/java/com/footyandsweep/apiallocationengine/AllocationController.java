@@ -21,7 +21,6 @@ import com.footyandsweep.apiallocationengine.engine.AllocationEngine;
 import com.footyandsweep.apiallocationengine.model.Allocation;
 import org.springframework.web.bind.annotation.*;
 
-
 @RestController
 @RequestMapping("/internal/allocation")
 public class AllocationController {

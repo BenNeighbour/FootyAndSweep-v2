@@ -24,21 +24,19 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProcessSweepstakeResultSaga implements SimpleSaga<ProcessSweepstakeResultSagaData> {
 
-    private final ResultEngine resultEngine;
+  private final ResultEngine resultEngine;
 
-    public ProcessSweepstakeResultSaga(ResultEngine resultEngine) {
-        this.resultEngine = resultEngine;
-    }
+  public ProcessSweepstakeResultSaga(ResultEngine resultEngine) {
+    this.resultEngine = resultEngine;
+  }
 
-    @Override
-    public SagaDefinition<ProcessSweepstakeResultSagaData> getSagaDefinition() {
-        return step()
-            .invokeLocal(resultEngine::processSweepstakeResult)
-                .withCompensation(sagaData -> {})
-                .step()
-                .invokeParticipant(resultEngine::updateUserBalance)
-                .build();
-
-    }
-
+  @Override
+  public SagaDefinition<ProcessSweepstakeResultSagaData> getSagaDefinition() {
+    return step()
+        .invokeLocal(resultEngine::processSweepstakeResult)
+        .withCompensation(sagaData -> {})
+        .step()
+        .invokeParticipant(resultEngine::updateUserBalance)
+        .build();
+  }
 }

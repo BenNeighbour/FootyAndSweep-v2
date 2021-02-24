@@ -56,10 +56,11 @@ public class TicketEngineImpl implements TicketEngine {
   public void getParentSweepstakeAndParticipant(BuyTicketSagaData sagaData) {
     /* Get the sweepstake object that has the joinCode */
     Optional<SweepstakeCommon> parentSweepstake =
-            Optional.ofNullable(
-                    restTemplate.getForObject(
-                            "http://api-sweepstake-engine:8080/sweepstake/test/by/joinCode/" + sagaData.getParentSweepstake().getJoinCode(),
-                            SweepstakeCommon.class));
+        Optional.ofNullable(
+            restTemplate.getForObject(
+                "http://api-sweepstake-engine:8080/sweepstake/test/by/joinCode/"
+                    + sagaData.getParentSweepstake().getJoinCode(),
+                SweepstakeCommon.class));
 
     assert parentSweepstake.isPresent();
     sagaData.setParentSweepstake(parentSweepstake.get());
@@ -69,8 +70,10 @@ public class TicketEngineImpl implements TicketEngine {
   public void buyTickets(BuyTicketSagaData sagaData) {
     try {
       /* Validate the sweepstake status */
-      if (!sagaData.getParentSweepstake().getStatus().equals(SweepstakeCommon.SweepstakeStatus.OPEN))
-        throw new Exception();
+      if (!sagaData
+          .getParentSweepstake()
+          .getStatus()
+          .equals(SweepstakeCommon.SweepstakeStatus.OPEN)) throw new Exception();
 
       /* Locking condition */
       boolean isSweepstakeLocked = false;
@@ -88,12 +91,12 @@ public class TicketEngineImpl implements TicketEngine {
 
         /* Fetching all of the tickets with this sweepstake id from the database */
         Optional<List<Ticket>> allSweepstakeTickets =
-                ticketDao.findAllTicketsBySweepstakeId(sagaData.getParentSweepstake().getId());
+            ticketDao.findAllTicketsBySweepstakeId(sagaData.getParentSweepstake().getId());
 
         /* Checking if the tickets can be allocated already */
         if (allSweepstakeTickets.isPresent()) {
           if (allSweepstakeTickets.get().size()
-                  >= sagaData.getParentSweepstake().getTotalNumberOfTickets()) {
+              >= sagaData.getParentSweepstake().getTotalNumberOfTickets()) {
             /* TODO: Sold out! */
 
           }
@@ -137,10 +140,15 @@ public class TicketEngineImpl implements TicketEngine {
 
   @Override
   public CommandWithDestination updateUserBalance(BuyTicketSagaData sagaData) {
-    return send(new UpdateUserBalanceCommand(sagaData.getParticipant().getId(),
-            sagaData.getParentSweepstake().getStake().multiply(new BigDecimal(sagaData.getNumberOfTickets())).multiply(new BigDecimal(-1))))
-            .to("user-service-events")
-            .build();
+    return send(new UpdateUserBalanceCommand(
+            sagaData.getParticipant().getId(),
+            sagaData
+                .getParentSweepstake()
+                .getStake()
+                .multiply(new BigDecimal(sagaData.getNumberOfTickets()))
+                .multiply(new BigDecimal(-1))))
+        .to("user-service-events")
+        .build();
   }
 
   @Override

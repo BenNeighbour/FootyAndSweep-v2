@@ -51,15 +51,17 @@ public class TicketControllerGrpc extends TicketServiceGrpc.TicketServiceImplBas
   public void getAllTicketsBySweepstakeId(
       Common.Id request, StreamObserver<TicketServiceOuterClass.TicketList> responseObserver) {
     TicketServiceOuterClass.TicketList.Builder ticketListBuilder =
-            TicketServiceOuterClass.TicketList.newBuilder();
+        TicketServiceOuterClass.TicketList.newBuilder();
 
     List<Ticket> tickets = ticketDao.findAllTicketsBySweepstakeId(request.getId()).get();
-    tickets.forEach(ticket -> {
-      TicketServiceOuterClass.Ticket.Builder current = TicketServiceOuterClass.Ticket.newBuilder();
-      ProtoConverterUtils.convertToProto(current, ticket);
+    tickets.forEach(
+        ticket -> {
+          TicketServiceOuterClass.Ticket.Builder current =
+              TicketServiceOuterClass.Ticket.newBuilder();
+          ProtoConverterUtils.convertToProto(current, ticket);
 
-      ticketListBuilder.addTicket(current.build());
-    });
+          ticketListBuilder.addTicket(current.build());
+        });
 
     responseObserver.onNext(ticketListBuilder.build());
     responseObserver.onCompleted();

@@ -43,9 +43,8 @@ public class UserCommon implements Serializable {
   private static final long serialVersionUID = -8782116311771480122L;
 
   @Id
-  @GeneratedValue(generator="system-uuid")
-  @GenericGenerator(name="system-uuid",
-          strategy = "uuid")
+  @GeneratedValue(generator = "system-uuid")
+  @GenericGenerator(name = "system-uuid", strategy = "uuid")
   private String id;
 
   private String username;

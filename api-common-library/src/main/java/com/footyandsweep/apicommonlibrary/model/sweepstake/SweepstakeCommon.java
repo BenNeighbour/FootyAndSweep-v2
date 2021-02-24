@@ -45,9 +45,8 @@ public class SweepstakeCommon implements Serializable {
   private static final long serialVersionUID = -771315870335755392L;
 
   @Id
-  @GeneratedValue(generator="system-uuid")
-  @GenericGenerator(name="system-uuid",
-          strategy = "uuid")
+  @GeneratedValue(generator = "system-uuid")
+  @GenericGenerator(name = "system-uuid", strategy = "uuid")
   private String id;
 
   @NotNull(message = "There must be a Sweepstake name")
@@ -82,10 +81,12 @@ public class SweepstakeCommon implements Serializable {
   private int totalNumberOfTickets;
 
   @Expose(serialize = false, deserialize = false)
-  @CreationTimestamp private Date created;
+  @CreationTimestamp
+  private Date created;
 
   @Expose(serialize = false, deserialize = false)
-  @UpdateTimestamp private Date updated;
+  @UpdateTimestamp
+  private Date updated;
 
   public Map<Integer, String> getSweepstakeResultMap() {
     return null;

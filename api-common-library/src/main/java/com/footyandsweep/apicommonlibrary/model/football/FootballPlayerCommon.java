@@ -37,9 +37,8 @@ public class FootballPlayerCommon implements Serializable {
   private static final long serialVersionUID = -6399708718496067820L;
 
   @Id
-  @GeneratedValue(generator="system-uuid")
-  @GenericGenerator(name="system-uuid",
-          strategy = "uuid")
+  @GeneratedValue(generator = "system-uuid")
+  @GenericGenerator(name = "system-uuid", strategy = "uuid")
   private String id;
 
   private Boolean isSubstitute;

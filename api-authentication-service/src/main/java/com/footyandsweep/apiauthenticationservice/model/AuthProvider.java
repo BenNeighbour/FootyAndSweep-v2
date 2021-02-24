@@ -17,8 +17,17 @@
 package com.footyandsweep.apiauthenticationservice.model;
 
 public enum AuthProvider {
-  local,
-  facebook,
-  google,
-  microsoft
+  email_address("Email Address"),
+  facebook("Facebook Account"),
+  google("Google Account");
+
+  private String value;
+
+  AuthProvider(String value) {
+    this.value = value;
+  }
+
+  public String getValue() {
+    return value;
+  }
 }

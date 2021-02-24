@@ -52,7 +52,14 @@ public class SweepstakeControllerTest {
 
   private final SagaInstanceFactory sagaInstanceFactory;
 
-  public SweepstakeControllerTest(ResultHelper resultHelper, SweepstakeDao sweepstakeDao, ParticipantIdDao participantIdDao, CreateSweepstakeSaga createSweepstakeSaga, DeleteSweepstakeSaga deleteSweepstakeSaga, JoinSweepstakeSaga joinSweepstakeSaga, SagaInstanceFactory sagaInstanceFactory) {
+  public SweepstakeControllerTest(
+      ResultHelper resultHelper,
+      SweepstakeDao sweepstakeDao,
+      ParticipantIdDao participantIdDao,
+      CreateSweepstakeSaga createSweepstakeSaga,
+      DeleteSweepstakeSaga deleteSweepstakeSaga,
+      JoinSweepstakeSaga joinSweepstakeSaga,
+      SagaInstanceFactory sagaInstanceFactory) {
     this.resultHelper = resultHelper;
     this.sweepstakeDao = sweepstakeDao;
     this.participantIdDao = participantIdDao;
@@ -87,7 +94,9 @@ public class SweepstakeControllerTest {
 
   @PostMapping("/join")
   @Transactional
-  public ResponseEntity<String> join(@RequestParam("participantId") String participantId, @RequestParam("joinCode") String joinCode) {
+  public ResponseEntity<String> join(
+      @RequestParam("participantId") String participantId,
+      @RequestParam("joinCode") String joinCode) {
     JoinSweepstakeSagaData data = new JoinSweepstakeSagaData();
     data.setSweepstakeJoinCode(joinCode);
     data.setParticipantId(participantId);
@@ -99,10 +108,10 @@ public class SweepstakeControllerTest {
 
   @GetMapping("/by/{sweepstakeId}/participants")
   public List<String> findAllSweepstakeParticipantRelations(
-          @PathVariable("sweepstakeId") String id) {
+      @PathVariable("sweepstakeId") String id) {
 
     List<ParticipantIds> participantsInSweepstake =
-            participantIdDao.findAllParticipantIdsBySweepstakeId(id);
+        participantIdDao.findAllParticipantIdsBySweepstakeId(id);
 
     List<String> participantIds = new ArrayList<>();
     participantsInSweepstake.forEach(curr -> participantIds.add(curr.getParticipantId()));
@@ -114,11 +123,16 @@ public class SweepstakeControllerTest {
   public List<CustomMap> resultHelper(@RequestBody SweepstakeCommon sweepstake) {
     List<CustomMap> customMap = new ArrayList<>();
 
-    FootballMatchSweepstake footballMatchSweepstake = sweepstakeDao.findFootballMatchSweepstakeById(sweepstake.getId());
+    FootballMatchSweepstake footballMatchSweepstake =
+        sweepstakeDao.findFootballMatchSweepstakeById(sweepstake.getId());
 
-    resultHelper.buildResultsForSweepstakeType(footballMatchSweepstake.getSweepstakeType(), footballMatchSweepstake).forEach((integer, s) -> {
-      customMap.add(new CustomMap(integer, s));
-    });
+    resultHelper
+        .buildResultsForSweepstakeType(
+            footballMatchSweepstake.getSweepstakeType(), footballMatchSweepstake)
+        .forEach(
+            (integer, s) -> {
+              customMap.add(new CustomMap(integer, s));
+            });
 
     return customMap;
   }

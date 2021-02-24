@@ -29,7 +29,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.Ordered;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.ForwardedHeaderFilter;
 
@@ -60,5 +62,10 @@ public class ApiSweepstakeEngineApplication {
     FilterRegistrationBean bean = new FilterRegistrationBean(new ForwardedHeaderFilter());
     bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
     return bean;
+  }
+
+  @Bean
+  public TaskScheduler taskScheduler() {
+    return new ThreadPoolTaskScheduler();
   }
 }

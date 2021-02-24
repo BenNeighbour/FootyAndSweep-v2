@@ -28,10 +28,10 @@ metadata:
     app: ui-service
 spec:
   ports:
-  - port: 80
-    targetPort: 80
-    protocol: TCP
-    nodePort: 31000
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+      nodePort: 31000
   selector:
     app: ui-service
   type: NodePort

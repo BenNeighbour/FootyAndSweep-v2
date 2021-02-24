@@ -24,26 +24,30 @@ import org.springframework.stereotype.Component;
 @Component
 public class BuyTicketSaga implements SimpleSaga<BuyTicketSagaData> {
 
-    private final TicketEngine ticketEngine;
+  private final TicketEngine ticketEngine;
 
-    public BuyTicketSaga(TicketEngine ticketEngine) {
-        this.ticketEngine = ticketEngine;
-    }
+  public BuyTicketSaga(TicketEngine ticketEngine) {
+    this.ticketEngine = ticketEngine;
+  }
 
-    @Override
-    public SagaDefinition<BuyTicketSagaData> getSagaDefinition() {
-        return step()
-                .invokeLocal(ticketEngine::getParentSweepstakeAndParticipant)
-                .withCompensation(sagaData -> {})
-                .step()
-                .invokeLocal(ticketEngine::buyTickets)
-                .withCompensation(sagaData -> {
-                    sagaData.getSavedTickets().forEach(currentTicket -> {
+  @Override
+  public SagaDefinition<BuyTicketSagaData> getSagaDefinition() {
+    return step()
+        .invokeLocal(ticketEngine::getParentSweepstakeAndParticipant)
+        .withCompensation(sagaData -> {})
+        .step()
+        .invokeLocal(ticketEngine::buyTickets)
+        .withCompensation(
+            sagaData -> {
+              sagaData
+                  .getSavedTickets()
+                  .forEach(
+                      currentTicket -> {
                         ticketEngine.deleteTicket(currentTicket.getId());
-                    });
-                })
-                .step()
-                .invokeParticipant(ticketEngine::updateUserBalance)
-                .build();
-    }
+                      });
+            })
+        .step()
+        .invokeParticipant(ticketEngine::updateUserBalance)
+        .build();
+  }
 }

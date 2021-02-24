@@ -26,29 +26,37 @@ import org.springframework.stereotype.Component;
 @Component
 public class AllocateSweepstakeSaga implements SimpleSaga<AllocateSweepstakeSagaData> {
 
-    private final AllocationEngine allocationEngine;
+  private final AllocationEngine allocationEngine;
 
-    public AllocateSweepstakeSaga(AllocationEngine allocationEngine) {
-        this.allocationEngine = allocationEngine;
-    }
+  public AllocateSweepstakeSaga(AllocationEngine allocationEngine) {
+    this.allocationEngine = allocationEngine;
+  }
 
-    @Override
-    public SagaDefinition<AllocateSweepstakeSagaData> getSagaDefinition() {
-        return step()
-                .invokeLocal(allocationEngine::allocateSweepstakeTickets)
-                .withCompensation(sagaData -> {
-                    /* TODO */
-                })
-                .step()
-                .invokeParticipant(sagaData -> allocationEngine.updateSweepstakeStatus(sagaData.getSweepstake().getId(), SweepstakeCommon.SweepstakeStatus.ALLOCATED))
-                .onReply(UpdateSweepstakeStatusFailure.class, (sagaData, failure) -> allocationEngine.updateSweepstakeStatus(sagaData.getSweepstake().getId(), SweepstakeCommon.SweepstakeStatus.OPEN))
-                .step()
-                .invokeParticipant(sagaData -> allocationEngine.allocateTickets(sagaData.getTickets()))
-                .build();
-    }
+  @Override
+  public SagaDefinition<AllocateSweepstakeSagaData> getSagaDefinition() {
+    return step()
+        .invokeLocal(allocationEngine::allocateSweepstakeTickets)
+        .withCompensation(
+            sagaData -> {
+              /* TODO */
+            })
+        .step()
+        .invokeParticipant(
+            sagaData ->
+                allocationEngine.updateSweepstakeStatus(
+                    sagaData.getSweepstake().getId(), SweepstakeCommon.SweepstakeStatus.ALLOCATED))
+        .onReply(
+            UpdateSweepstakeStatusFailure.class,
+            (sagaData, failure) ->
+                allocationEngine.updateSweepstakeStatus(
+                    sagaData.getSweepstake().getId(), SweepstakeCommon.SweepstakeStatus.OPEN))
+        .step()
+        .invokeParticipant(sagaData -> allocationEngine.allocateTickets(sagaData.getTickets()))
+        .build();
+  }
 
-    @Override
-    public void onSagaCompletedSuccessfully(String sagaId, AllocateSweepstakeSagaData sagaData) {
-        System.out.println("Allocate Sweepstake Saga: " + sagaId + " has been completed successfully");
-    }
+  @Override
+  public void onSagaCompletedSuccessfully(String sagaId, AllocateSweepstakeSagaData sagaData) {
+    System.out.println("Allocate Sweepstake Saga: " + sagaId + " has been completed successfully");
+  }
 }

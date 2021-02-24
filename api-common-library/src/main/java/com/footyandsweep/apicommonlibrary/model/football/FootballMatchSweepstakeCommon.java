@@ -17,7 +17,6 @@
 package com.footyandsweep.apicommonlibrary.model.football;
 
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
-import com.google.gson.annotations.Expose;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

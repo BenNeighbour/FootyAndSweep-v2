@@ -37,9 +37,8 @@ public class LeagueCommon implements Serializable {
   private static final long serialVersionUID = 4620865235440152025L;
 
   @Id
-  @GeneratedValue(generator="system-uuid")
-  @GenericGenerator(name="system-uuid",
-          strategy = "uuid")
+  @GeneratedValue(generator = "system-uuid")
+  @GenericGenerator(name = "system-uuid", strategy = "uuid")
   private String id;
 
   private Integer code;
