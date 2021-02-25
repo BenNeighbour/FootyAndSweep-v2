@@ -16,23 +16,25 @@
 
 import {History} from "history";
 import {combineReducers} from "redux";
-import {routerReducer, RouterState} from 'react-router-redux';
 import {
     loginAuthenticationReducer,
     LoginAuthenticationReducerType,
     signupAuthenticationReducer,
     SignupAuthenticationReducerType
 } from "./reducers/saga/authenticate";
+import {saveSweepstakeReducer, SweepstakeReducerType} from "./reducers/saga/sweepstake";
 
 export interface RootState {
     loginForm: LoginAuthenticationReducerType
     signupForm: SignupAuthenticationReducerType
+    saveSweepstake: SweepstakeReducerType
 }
 
 const combinedReducers = (history: History) =>
     combineReducers({
         loginForm: loginAuthenticationReducer,
-        signupForm: signupAuthenticationReducer
+        signupForm: signupAuthenticationReducer,
+        saveSweepstake: saveSweepstakeReducer
     });
 
 export default combinedReducers;

@@ -20,7 +20,7 @@ import styled from "styled-components";
 
 interface OwnProps {
     includePasswordStrengthChecker?: boolean;
-    value: string;
+    value: any;
     placeholder?: string | null;
     type: 'text' | 'number' | 'email' | 'password';
     name: string;

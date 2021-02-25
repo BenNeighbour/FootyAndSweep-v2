@@ -20,6 +20,7 @@ import HomePage from "./pages/Home/HomePage";
 import PortalPage from "./pages/Portal/PortalPage";
 import Sweepstakes from "./pages/Sweepstake/Sweepstakes";
 import OAuthRedirect from "./pages/Portal/OAuth/OAuthRedirect";
+import CreateSweepstake from "./pages/CreateSweepstake/CreateSweepstake";
 
 interface OwnProps {
 }
@@ -39,18 +40,13 @@ const Routes: FunctionComponent<Props> = (props) => {
                         component={PortalPage} exact path="/portal"/>
                     <Route
                         component={Sweepstakes} exact path="/sweepstakes"/>
+                    <Route
+                        component={CreateSweepstake} exact path="/sweepstakes/create"/>
                 </Route>
             </Switch>
         </Route>
     );
 };
-
-    // await Axios({
-    //     method: "get",
-    //     url: "http://api.footyandsweep-dev.com:30389/com.footyandsweep.AuthenticationService/user/me",
-    //     withCredentials: true
-    // })
-
 
 export default Routes;
 

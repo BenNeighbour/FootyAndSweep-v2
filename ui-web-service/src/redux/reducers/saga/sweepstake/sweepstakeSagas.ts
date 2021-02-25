@@ -14,15 +14,19 @@
  *   limitations under the License.
  */
 
-import {call, fork, put, takeLatest} from 'redux-saga/effects';
-import {ActionType, LoginData, SweepstakeData} from "../../../model";
+import {channel} from 'redux-saga';
+import {fork, put, take, takeLatest} from 'redux-saga/effects';
+import {ActionType, SweepstakeData} from "../../../model";
+import {Client} from "@stomp/stompjs";
+import {saveSweepstake} from "../../../../services/sweepstakeService";
 
+const sweepstakeChannel = channel();
+const client = new Client();
+client.brokerURL = "ws://api.footyandsweep-dev.com:30506/socket";
 
 function* saveSweepstakeSaga({payload}: { payload: SweepstakeData }) {
     try {
-
-        /* TODO: Yield call a method here that does the WebSockets */
-
+        saveSweepstake(client, sweepstakeChannel, payload);
     } catch (error) {
         yield put({
             type: ActionType.SAVE_SWEEPSTAKE_ERROR,
@@ -31,12 +35,18 @@ function* saveSweepstakeSaga({payload}: { payload: SweepstakeData }) {
     }
 }
 
+function* watchSweepstakeChannel() {
+    const action = yield take(sweepstakeChannel);
+    yield put(action)
+}
+
 function* onSaveSweepstakeWatcher() {
     yield takeLatest(ActionType.SAVE_SWEEPSTAKE_REQUEST as any, saveSweepstakeSaga);
 }
 
 let sweepstakeSagas = [
     fork(onSaveSweepstakeWatcher),
+    fork(watchSweepstakeChannel)
 ];
 
 export default sweepstakeSagas;

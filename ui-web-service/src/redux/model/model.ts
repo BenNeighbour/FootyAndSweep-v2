@@ -68,14 +68,15 @@ enum SweepstakeType {
 }
 
 export interface SweepstakeData {
-    id: string;
+    id?: string;
     name: string;
-    status: SweepstakeStatus;
+    ownerId: string;
+    status?: SweepstakeStatus;
     isPrivate: boolean;
-    sweepstakeEventId: string;
-    sweepstakeType: SweepstakeType;
+    sweepstakeEventId?: string;
+    sweepstakeType?: SweepstakeType;
     minimumPlayers: number;
-    minimumPlayerTickets: number;
+    minimumPlayerTickets?: number;
     stake: number;
-    totalNumberOfTickets: number;
+    totalNumberOfTickets?: number;
 }

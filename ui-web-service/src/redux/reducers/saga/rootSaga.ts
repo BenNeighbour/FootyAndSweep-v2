@@ -16,9 +16,11 @@
 
 import {all} from 'redux-saga/effects';
 import authenticateSagas from "./authenticate/authenticateSagas";
+import sweepstakeSagas from "./sweepstake/sweepstakeSagas";
 
 export default function* start() {
     yield all([
         ...authenticateSagas,
+        ...sweepstakeSagas
     ]);
 }

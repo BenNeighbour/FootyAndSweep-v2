@@ -27,10 +27,6 @@ const Navbar: FunctionComponent<Props> = (props) => {
     return (
         <NavbarContainer>
             <NavbarLinkSection>
-                {/*<NavbarLink href={"/home"}>Home</NavbarLink>*/}
-                {/*<NavbarLink href={"/sweepstakes"}>Your Sweepstakes</NavbarLink>*/}
-                {/*<NavbarLink href={"/sweepstakes/create"}>Create a Sweepstake</NavbarLink>*/}
-                {/*<NavbarLink href={"/settings"}>Account Settings</NavbarLink>*/}
             </NavbarLinkSection>
         </NavbarContainer>
     );
@@ -50,18 +46,5 @@ flex-direction: row;
 flex: 0 0 auto;
 margin: 10px 80px 0;
 `;
-
-const NavbarLink = styled.a`
-display: inline-block;
-color: #fff;
-font-size: 16px;
-text-decoration: none;
-font-family: 'Open Sans', sans-serif;
-padding: 0;
-background-color: transparent;
-border: none;
-padding: 0 15px;
-cursor: pointer;
-`;;
 
 export default Navbar;
