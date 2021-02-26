@@ -9,4 +9,4 @@ build:
 deploy:
   kubectl:
     manifests:
-      - ../kubernetes/api-ticket-engine/api-ticket-engine.yaml
+      - ../kubernetes/api-gateway-service/api-gateway-service.yaml

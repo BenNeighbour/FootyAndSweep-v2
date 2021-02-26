@@ -1,0 +1,6 @@
+spring:
+  cloud:
+    kubernetes:
+      reload:
+        period: 1000
+        enabled: true
