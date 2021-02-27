@@ -15,10 +15,11 @@
  */
 
 import {ActionType, SweepstakeData} from "../redux/model";
-import {Client} from "@stomp/stompjs";
+import {Client, Stomp} from "@stomp/stompjs";
 
 export function saveSweepstake(client: Client, sweepstakeChannel: any, payload: SweepstakeData) {
     client.onConnect = () => {
+
         client.publish({
             destination: '/sweepstakes/save', body: JSON.stringify(payload)
         });
@@ -40,4 +41,5 @@ export function saveSweepstake(client: Client, sweepstakeChannel: any, payload: 
     }
 
     client.activate();
+
 }

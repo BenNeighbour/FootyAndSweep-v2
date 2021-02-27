@@ -38,12 +38,53 @@ dependencyManagement {
 	}
 }
 
+def grpcVersion = '1.16.1'
+
 dependencies {
-	implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
+	compile "org.springframework.cloud:spring-cloud-starter-netflix-zuul:2.2.5.RELEASE"
 	implementation ('org.springframework.boot:spring-boot-starter-websocket') {
 		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-web'
 	}
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+	implementation project(':api-common-library')
+
+	compileOnly 'org.projectlombok:lombok:1.18.14'
+	annotationProcessor 'org.projectlombok:lombok:1.18.14'
+
+	testCompileOnly 'org.projectlombok:lombok:1.18.14'
+	testAnnotationProcessor 'org.projectlombok:lombok:1.18.14'
+
+	compileOnly "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
+
+	compile 'commons-beanutils:commons-beanutils:1.9.4'
+	compile group: 'org.hibernate.validator', name: 'hibernate-validator', version: '7.0.0.Final'
+
+	implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
+	implementation "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
+
+	implementation "org.springframework.boot:spring-boot-starter-actuator:$springBootVersion"
+	implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
+	implementation "org.springframework.boot:spring-boot-starter-data-redis:$springBootVersion"
+
+	implementation "org.springframework.boot:spring-boot-starter-security"
+	implementation "org.springframework.security:spring-security-oauth2-client"
+	implementation "org.springframework.security:spring-security-oauth2-jose"
+	implementation "io.jsonwebtoken:jjwt:0.5.1"
+
+	implementation("io.grpc:grpc-stub:${grpcVersion}")
+	implementation("io.grpc:grpc-core:${grpcVersion}")
+	implementation("io.grpc:grpc-protobuf:${grpcVersion}")
+	implementation("io.grpc:grpc-netty:${grpcVersion}")
+
+	compile "io.eventuate.tram.sagas:eventuate-tram-sagas-spring-orchestration-simple-dsl:$eventuateTramSagasVersion"
+	compile "io.eventuate.tram.core:eventuate-tram-spring-producer-jdbc:$eventuateTramVersion"
+	compile "io.eventuate.tram.core:eventuate-tram-spring-consumer-kafka:$eventuateTramVersion"
+	compile "io.eventuate.tram.core:eventuate-tram-spring-consumer-jdbc:$eventuateTramVersion"
+	compile "io.eventuate.tram.core:eventuate-tram-spring-optimistic-locking:$eventuateTramVersion"
+	compile "io.eventuate.tram.sagas:eventuate-tram-sagas-spring-participant:$eventuateTramSagasVersion"
+
+	compile group: 'org.postgresql', name: 'postgresql', version: '42.1.1'
 
 	implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-config:1.1.0.RELEASE'
 	implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes:1.1.0.RELEASE'

@@ -20,6 +20,32 @@ spec:
           imagePullPolicy: Never
           ports:
             - containerPort: 8080
+            - containerPort: 9090
+          env:
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: api-sweepstake-engine-credentials
+                  key: username
+
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: api-sweepstake-engine-credentials
+                  key: password
+
+            - name: SPRING_DATASOURCE_URL
+              value: 'jdbc:postgresql://api-database:5432/api-footyandsweep?stringtype=unspecified'
+
+            - name: KAFKA_CONNECT
+              value: 'api-kafka.default.svc.cluster.local:9092'
+
+            - name: ZOOKEEPER_CONNECT
+              value: 'zookeeper:2181'
+
+            - name: REDIS_CONNECT
+              value: "api-redis-cache"
+
 ---
 apiVersion: v1
 kind: Service
@@ -30,8 +56,13 @@ metadata:
 spec:
   ports:
     - port: 8080
-      name: http1
+      name: tcp
+      targetPort: 8080
+      nodePort: 30389
+    - port: 9090
+      name: http2
       protocol: TCP
+      targetPort: 9090
   selector:
     app: api-gateway-service
   type: NodePort

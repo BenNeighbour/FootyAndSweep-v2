@@ -4,3 +4,12 @@ spring:
       reload:
         period: 1000
         enabled: true
+
+      secrets:
+        name: api-gateway-service
+
+      config:
+        enabled: true
+        sources:
+          - namespace: default
+            name: api-gateway-service-config

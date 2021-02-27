@@ -14,53 +14,41 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apicommonlibrary.model.user;
+package com.footyandsweep.apigatewayservice.relation;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Embeddable;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.Table;
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.Date;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@MappedSuperclass
-@Embeddable
-public class UserCommon implements Serializable {
+@Entity
+@Table(name = "participant_sweepstake_id")
+public class SweepstakeIds implements Serializable {
 
-  private static final long serialVersionUID = -8782116311771480122L;
+  private static final long serialVersionUID = 5778408986459720940L;
 
   @Id
   @GeneratedValue(generator = "system-uuid")
   @GenericGenerator(name = "system-uuid", strategy = "uuid")
   private String id;
 
-  private String username;
+  private String participantId;
 
-  private String password;
+  private String sweepstakeId;
 
-  private String email;
-
-  private BigDecimal balance = new BigDecimal("3.00");
-
-  private boolean isSubscribedToEmails;
-
-  private Date dateOfBirth;
-
-  @CreationTimestamp private Date created;
-
-  @UpdateTimestamp private Date updated;
-
+  public SweepstakeIds(String participantId, String sweepstakeId) {
+    this.participantId = participantId;
+    this.sweepstakeId = sweepstakeId;
+  }
 }

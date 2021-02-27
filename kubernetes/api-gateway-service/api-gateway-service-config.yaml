@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: api-gateway-service-config
+data:
+  application-kubernetes.yml: |-
+    spring:
+      application:
+        name: 'api-gateway-service'
+
+      jpa:
+        generate-ddl: true
+
+        show-sql: false
+
+        properties:
+          hibernate:
+            ddl-auto: update
+            dialect: org.hibernate.dialect.PostgreSQLDialect
+
+        hibernate:
+          default_batch_fetch_size: 16
+
+      datasource:
+        driver-class-name: org.postgresql.Driver
