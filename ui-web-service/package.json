@@ -3,13 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@grpc/grpc-js": "^1.2.6",
-    "@improbable-eng/grpc-web": "^0.14.0",
     "@stomp/stompjs": "^6.0.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
-    "@types/google-protobuf": "^3.7.4",
     "@types/jest": "^26.0.15",
     "@types/node": "^12.0.0",
     "@types/react": "^17.0.0",
@@ -24,8 +21,6 @@
     "axios": "^0.21.1",
     "dotenv": "^8.2.0",
     "formik": "^2.2.6",
-    "google-protobuf": "^3.15.0-rc.1",
-    "grpc": "^1.24.5",
     "localforage": "^1.9.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
@@ -50,7 +45,6 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "protoc": "protoc --proto_path=./../api-common-library/src/main/proto/ --js_out=import_style=commonjs,binary:./src/grpc --ts_out=service=grpc-web:./src/grpc ./../api-common-library/src/main/proto/*.proto",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
