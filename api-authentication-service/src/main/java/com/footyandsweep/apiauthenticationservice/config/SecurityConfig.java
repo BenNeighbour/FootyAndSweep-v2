@@ -123,8 +123,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/**/*.js")
         .permitAll()
         .antMatchers(
-            "/com.footyandsweep.AuthenticationService/login",
-            "/com.footyandsweep.AuthenticationService/signup",
             "/login/**",
             "/auth/**",
             "/oauth2/**")

@@ -41,7 +41,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/com.footyandsweep.AuthenticationService")
+@RequestMapping("/auth")
 public class AuthenticationController {
 
   private final TokenProvider tokenProvider;

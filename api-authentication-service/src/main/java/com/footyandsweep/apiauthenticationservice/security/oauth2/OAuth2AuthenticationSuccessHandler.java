@@ -59,7 +59,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
   @Override
   public void onAuthenticationSuccess(
       HttpServletRequest request, HttpServletResponse response, Authentication authentication)
-      throws IOException, ServletException {
+      throws IOException {
     String targetUrl = determineTargetUrl(request, response, authentication);
 
     if (response.isCommitted()) {

@@ -58,7 +58,6 @@ spec:
     - port: 8080
       name: tcp
       targetPort: 8080
-      nodePort: 30389
     - port: 9090
       name: http2
       protocol: TCP
