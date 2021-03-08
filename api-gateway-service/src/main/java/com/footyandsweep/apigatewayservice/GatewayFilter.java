@@ -20,7 +20,9 @@ import org.springframework.cloud.gateway.filter.factory.GatewayFilterFactory;
 import org.springframework.http.HttpCookie;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import java.util.Optional;
 
@@ -41,16 +43,15 @@ public class GatewayFilter implements GatewayFilterFactory<GatewayFilter.Config>
           throw new Exception();
         }
 
-        webClient
+        Mono<HttpStatus> status = webClient
                 .get()
                 .uri("http://api-authentication-service:8080/auth/amIAuthenticated")
                 .cookie("X-AUTH-TOKEN", token.get().getValue())
                 .exchange()
-                .map(
-                        response -> {
-                          exchange.getResponse().setStatusCode(response.statusCode());
-                          return exchange.getResponse().setComplete();
-                        });
+                .map(ClientResponse::statusCode);
+
+        exchange.getResponse().setStatusCode(status.block());
+        exchange.getResponse().setComplete();
 
         return chain.filter(exchange);
       } catch (Exception e) {
