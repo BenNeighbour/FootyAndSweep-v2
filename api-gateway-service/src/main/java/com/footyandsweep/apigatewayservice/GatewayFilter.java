@@ -55,7 +55,7 @@ public class GatewayFilter implements GatewayFilterFactory<GatewayFilter.Config>
       } catch (Exception e) {
         exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
 
-        return chain.filter(exchange);
+        return exchange.getResponse().setComplete();
       }
     };
   }
