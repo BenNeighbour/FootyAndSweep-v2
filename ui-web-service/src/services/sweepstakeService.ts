@@ -15,7 +15,7 @@
  */
 
 import {ActionType, SweepstakeData} from "../redux/model";
-import {Client, Stomp} from "@stomp/stompjs";
+import {Client} from "@stomp/stompjs";
 
 export function saveSweepstake(client: Client, sweepstakeChannel: any, payload: SweepstakeData) {
     client.onConnect = () => {

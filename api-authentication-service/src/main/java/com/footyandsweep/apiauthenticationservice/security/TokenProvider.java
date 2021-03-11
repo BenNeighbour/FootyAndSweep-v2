@@ -44,13 +44,13 @@ public class TokenProvider {
     Date expiryDate = new Date(now.getTime() + appProperties.getAuth().getTokenExpirationMsec());
 
     return Jwts.builder()
-            .setIssuer("footyandsweep")
-            .claim("metadata", userPrincipal.getAttributes())
-            .claim("sub", userPrincipal.getId())
-            .setId(UUID.randomUUID().toString())
-            .setIssuedAt(new Date())
-            .setExpiration(expiryDate)
-            .signWith(SignatureAlgorithm.HS256, appProperties.getAuth().getTokenSecret())
+        .setIssuer("footyandsweep")
+        .claim("metadata", userPrincipal.getAttributes())
+        .claim("sub", userPrincipal.getId())
+        .setId(UUID.randomUUID().toString())
+        .setIssuedAt(new Date())
+        .setExpiration(expiryDate)
+        .signWith(SignatureAlgorithm.HS256, appProperties.getAuth().getTokenSecret())
         .compact();
   }
 

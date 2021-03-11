@@ -35,20 +35,21 @@ public class GatewayFilter implements GatewayFilterFactory<GatewayFilter.Config>
       try {
         /* Obtain cookies from request */
         Optional<HttpCookie> token =
-                exchange.getRequest().getCookies().get("X-AUTH-TOKEN").stream().findFirst();
+            exchange.getRequest().getCookies().get("X-AUTH-TOKEN").stream().findFirst();
         if (!token.isPresent()) {
           /* Throw error */
           throw new Exception();
         }
 
         webClient
-                .get()
-                .uri("http://api-authentication-service:8080/auth/amIAuthenticated")
-                .cookie("X-AUTH-TOKEN", token.get().getValue())
-                .exchange()
-        .map(clientResponse -> {
-          return exchange.getResponse().setStatusCode(clientResponse.statusCode());
-        });
+            .get()
+            .uri("http://api-authentication-service:8080/auth/amIAuthenticated")
+            .cookie("X-AUTH-TOKEN", token.get().getValue())
+            .exchange()
+            .map(
+                clientResponse -> {
+                  return exchange.getResponse().setStatusCode(clientResponse.statusCode());
+                });
 
         return chain.filter(exchange);
       } catch (Exception e) {
@@ -71,10 +72,11 @@ public class GatewayFilter implements GatewayFilterFactory<GatewayFilter.Config>
 
   public static class Config {
 
-    public Config(String name){
+    private String name;
+
+    public Config(String name) {
       this.name = name;
     }
-    private String name;
 
     public String getName() {
       return name;
@@ -84,5 +86,4 @@ public class GatewayFilter implements GatewayFilterFactory<GatewayFilter.Config>
       this.name = name;
     }
   }
-
 }

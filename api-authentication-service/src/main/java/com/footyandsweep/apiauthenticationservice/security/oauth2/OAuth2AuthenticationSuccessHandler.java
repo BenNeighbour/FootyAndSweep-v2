@@ -83,8 +83,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         CookieUtils.getCookie(request, REDIRECT_URI_PARAM_COOKIE_NAME).map(Cookie::getValue);
 
     if (redirectUri.isPresent() && !isAuthorizedRedirectUri(redirectUri.get())) {
-      throw new BadRequestException(
-          "Sorry! We can't proceed with the authentication, try later!");
+      throw new BadRequestException("Sorry! We can't proceed with the authentication, try later!");
     }
 
     String targetUrl = redirectUri.orElse(getDefaultTargetUrl());
