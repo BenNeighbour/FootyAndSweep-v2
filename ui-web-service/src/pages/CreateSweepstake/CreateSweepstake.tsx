@@ -22,10 +22,11 @@ import * as SweepstakeActions from "../../redux/reducers/saga/sweepstake/sweepst
 import {RootState} from "../../redux/rootReducer";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
-import Button from "../../components/Button/Button";
 import {Form, Formik} from "formik";
 import * as yup from "yup";
 import InputField from "../../components/InputField/InputField";
+import styled from "styled-components";
+import Button from "../../components/Button/Button";
 
 interface OwnProps {
     state: SweepstakeReducerType;
@@ -53,7 +54,7 @@ const CreateSweepstake: FunctionComponent<Props> = (props) => {
     if (props.state.isLoading) return <LoadingPage/>
 
     return (
-        <div>
+        <FormContainer>
             <Formik
                 onSubmit={(formValues) => {
                     props.actions.saveSweepstakeAction(formValues);
@@ -62,47 +63,51 @@ const CreateSweepstake: FunctionComponent<Props> = (props) => {
                 initialValues={{
                     name: "",
                     isPrivate: true,
-                    ownerId: "",
+                    ownerId: "2c918094780c244101780c26a3900000",
                     minimumPlayers: 2,
                     stake: 10.00
                 }}
             >
                 {({values, handleChange, errors, touched}) => (
                     <Form>
-                        <InputField label={"Sweepstake Name"} touched={touched.name} errors={errors.name}
-                                    name={"name"}
-                                    type={"text"}
-                                    onChange={handleChange}
-                                    value={values.name}/>
+                        <FieldSection>
+                            <InputField label={"Sweepstake Name"} touched={touched.name} errors={errors.name}
+                                        name={"name"}
+                                        type={"text"}
+                                        onChange={handleChange}
+                                        value={values.name}/>
 
-                        {/*TODO: isPrivate Switch HERE */}
-                        {/*TODO: sweepstakeType dropdown */}
-                        {/*TODO: sweepstakeEvent dropdown */}
+                            {/*TODO: isPrivate Switch HERE */}
+                            {/*TODO: sweepstakeType dropdown */}
+                            {/*TODO: sweepstakeEvent dropdown */}
 
-                        <InputField label={"Minimum Players"} touched={touched.minimumPlayers}
-                                    errors={errors.minimumPlayers}
-                                    name={"minimumPlayers"}
-                                    type={"number"}
-                                    onChange={handleChange}
-                                    value={values.minimumPlayers}/>
+                            <InputField label={"Minimum Players"} touched={touched.minimumPlayers}
+                                        errors={errors.minimumPlayers}
+                                        name={"minimumPlayers"}
+                                        type={"number"}
+                                        onChange={handleChange}
+                                        value={values.minimumPlayers}/>
 
-                        <InputField label={"Stake"} touched={touched.stake}
-                                    errors={errors.stake}
-                                    name={"stake"}
-                                    type={"number"}
-                                    onChange={handleChange}
-                                    value={values.stake}/>
+                            <InputField label={"Stake"} touched={touched.stake}
+                                        errors={errors.stake}
+                                        name={"stake"}
+                                        type={"number"}
+                                        onChange={handleChange}
+                                        value={values.stake}/>
+                        </FieldSection>
 
-                        <Button title={"Create Sweepstake"} type={"submit"} style={{
-                            width: "100%",
-                            fontSize: "15px",
-                            height: "45px",
-                            marginBottom: "1em"
-                        }}/>
+                        <ButtonSection>
+                            <Button title={"Create Sweepstake"} type={"submit"} style={{
+                                width: "100%",
+                                fontSize: "15px",
+                                height: "100%",
+                                marginBottom: "1em"
+                            }}/>
+                        </ButtonSection>
                     </Form>
                 )}
             </Formik>
-        </div>
+        </FormContainer>
     );
 };
 
@@ -120,3 +125,27 @@ function mapDispatchToProps(dispatch: any) {
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateSweepstake);
+
+const FormContainer = styled.div`
+text-align: center;
+display: block;
+overflow: hidden;
+`;
+
+const FieldSection = styled.div`
+padding: 10px 15px;
+margin: 0px 2px;
+overflow-y: scroll;
+overflow-x: hidden;
+&::-webkit-scrollbar {
+     -webkit-appearance: none;
+     width: 0;
+}
+`;
+
+const ButtonSection = styled.div`
+padding: 5px;
+height: 45px;
+position: fixed;
+overflow: hidden;
+`;

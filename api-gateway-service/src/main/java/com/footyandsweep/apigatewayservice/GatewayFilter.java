@@ -21,6 +21,7 @@ import org.springframework.http.HttpCookie;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Flux;
 
 import java.util.Optional;
 
@@ -55,7 +56,7 @@ public class GatewayFilter implements GatewayFilterFactory<GatewayFilter.Config>
       } catch (Exception e) {
         exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
 
-        return exchange.getResponse().setComplete();
+        return exchange.getResponse().writeWith(Flux.empty());
       }
     };
   }
