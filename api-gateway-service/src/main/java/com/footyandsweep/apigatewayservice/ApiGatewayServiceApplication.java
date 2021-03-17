@@ -23,7 +23,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.buffer.NettyDataBufferFactory;
 import org.springframework.http.HttpCookie;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.reactive.config.EnableWebFlux;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -35,7 +34,6 @@ import org.springframework.web.reactive.socket.server.WebSocketService;
 import org.springframework.web.reactive.socket.server.support.HandshakeWebSocketService;
 import org.springframework.web.reactive.socket.server.upgrade.ReactorNettyRequestUpgradeStrategy;
 import org.springframework.web.server.ServerWebExchange;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.netty.http.server.HttpServerResponse;
 
@@ -61,7 +59,11 @@ public class ApiGatewayServiceApplication {
     private static final WebClient webClient = WebClient.create();
 
     @Override
-    public Mono<Void> upgrade(ServerWebExchange exchange, WebSocketHandler handler, String subProtocol, Supplier<HandshakeInfo> handshakeInfoFactory) {
+    public Mono<Void> upgrade(
+        ServerWebExchange exchange,
+        WebSocketHandler handler,
+        String subProtocol,
+        Supplier<HandshakeInfo> handshakeInfoFactory) {
       ServerHttpResponse response = exchange.getResponse();
       HttpServerResponse reactorResponse = (HttpServerResponse) response;
       HandshakeInfo handshakeInfo = handshakeInfoFactory.get();
@@ -69,38 +71,40 @@ public class ApiGatewayServiceApplication {
 
       boolean authResult = validateAuth(exchange);
 
-      if (!authResult) return Mono.just(reactorResponse.status(HttpResponseStatus.UNAUTHORIZED))
-              .flatMap(HttpServerResponse::send);
-      else return reactorResponse.sendWebsocket(subProtocol,
-//              this.maxFramePayloadLength,
-              (in, out) -> {
-                ReactorNettyWebSocketSession session = new ReactorNettyWebSocketSession(in, out,
-                        handshakeInfo,
-                        bufferFactory);
-//                        this.maxFramePayloadLength);
-                return handler.handle(session);
-              });
+      if (!authResult)
+        return Mono.just(reactorResponse.status(HttpResponseStatus.UNAUTHORIZED))
+            .flatMap(HttpServerResponse::send);
+      else
+        return reactorResponse.sendWebsocket(
+            subProtocol,
+            //              this.maxFramePayloadLength,
+            (in, out) -> {
+              ReactorNettyWebSocketSession session =
+                  new ReactorNettyWebSocketSession(in, out, handshakeInfo, bufferFactory);
+              //                        this.maxFramePayloadLength);
+              return handler.handle(session);
+            });
     }
 
     public boolean validateAuth(ServerWebExchange exchange) {
       try {
         /* Obtain cookies from request */
         Optional<HttpCookie> token =
-                exchange.getRequest().getCookies().get("X-AUTH-TOKEN").stream().findFirst();
+            exchange.getRequest().getCookies().get("X-AUTH-TOKEN").stream().findFirst();
         if (!token.isPresent()) {
           /* Throw error */
           throw new Exception();
         }
 
         webClient
-                .get()
-                .uri("http://api-authentication-service:8080/auth/amIAuthenticated")
-                .cookie("X-AUTH-TOKEN", token.get().getValue())
-                .exchange()
-                .map(
-                        clientResponse -> {
-                          return exchange.getResponse().setStatusCode(clientResponse.statusCode());
-                        });
+            .get()
+            .uri("http://api-authentication-service:8080/auth/amIAuthenticated")
+            .cookie("X-AUTH-TOKEN", token.get().getValue())
+            .exchange()
+            .map(
+                clientResponse -> {
+                  return exchange.getResponse().setStatusCode(clientResponse.statusCode());
+                });
 
         return true;
       } catch (Exception e) {
@@ -108,5 +112,4 @@ public class ApiGatewayServiceApplication {
       }
     }
   }
-
 }
