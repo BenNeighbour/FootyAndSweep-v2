@@ -122,12 +122,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/**/*.css",
             "/**/*.js")
         .permitAll()
-        .antMatchers(
-            "/com.footyandsweep.AuthenticationService/login",
-            "/com.footyandsweep.AuthenticationService/signup",
-            "/login/**",
-            "/auth/**",
-            "/oauth2/**")
+        .antMatchers("/login/**", "/auth/**", "/oauth2/**")
         .permitAll()
         .anyRequest()
         .authenticated()

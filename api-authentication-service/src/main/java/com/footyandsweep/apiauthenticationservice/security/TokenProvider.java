@@ -17,7 +17,6 @@
 package com.footyandsweep.apiauthenticationservice.security;
 
 import com.footyandsweep.apiauthenticationservice.config.AppProperties;
-import com.google.gson.Gson;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,12 +44,13 @@ public class TokenProvider {
     Date expiryDate = new Date(now.getTime() + appProperties.getAuth().getTokenExpirationMsec());
 
     return Jwts.builder()
-            .setIssuer("footyandsweep")
-            .claim("metadata", userPrincipal.getAttributes())
-            .setId(UUID.randomUUID().toString().replace("-", ""))
-            .setIssuedAt(new Date())
-            .setExpiration(expiryDate)
-            .signWith(SignatureAlgorithm.HS256, appProperties.getAuth().getTokenSecret())
+        .setIssuer("footyandsweep")
+        .claim("metadata", userPrincipal.getAttributes())
+        .claim("sub", userPrincipal.getId())
+        .setId(UUID.randomUUID().toString())
+        .setIssuedAt(new Date())
+        .setExpiration(expiryDate)
+        .signWith(SignatureAlgorithm.HS256, appProperties.getAuth().getTokenSecret())
         .compact();
   }
 
@@ -69,6 +69,7 @@ public class TokenProvider {
       Jwts.parser()
           .setSigningKey(appProperties.getAuth().getTokenSecret())
           .parseClaimsJws(authToken);
+
       return true;
     } catch (SignatureException ex) {
       logger.error("Invalid JWT signature");

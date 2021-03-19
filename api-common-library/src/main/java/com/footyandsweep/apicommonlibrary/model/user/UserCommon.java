@@ -62,5 +62,4 @@ public class UserCommon implements Serializable {
   @CreationTimestamp private Date created;
 
   @UpdateTimestamp private Date updated;
-
 }

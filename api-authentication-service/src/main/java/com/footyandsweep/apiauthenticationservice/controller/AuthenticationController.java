@@ -41,7 +41,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/com.footyandsweep.AuthenticationService")
+@RequestMapping("/auth")
 public class AuthenticationController {
 
   private final TokenProvider tokenProvider;
@@ -80,20 +80,23 @@ public class AuthenticationController {
   @PostMapping("/login")
   public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
     Authentication authentication =
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            loginRequest.getEmail(), loginRequest.getPassword()));
+        authenticationManager.authenticate(
+            new UsernamePasswordAuthenticationToken(
+                loginRequest.getEmail(), loginRequest.getPassword()));
 
     SecurityContextHolder.getContext().setAuthentication(authentication);
 
     String token = tokenProvider.createToken(authentication);
     HttpHeaders responseHeaders = new HttpHeaders();
-    responseHeaders.add(HttpHeaders.SET_COOKIE, ResponseCookie.from("X-AUTH-TOKEN", token)
+    responseHeaders.add(
+        HttpHeaders.SET_COOKIE,
+        ResponseCookie.from("X-AUTH-TOKEN", token)
             .httpOnly(true)
             .path("/")
             .sameSite("Strict")
             .domain("footyandsweep-dev.com")
-            .build().toString());
+            .build()
+            .toString());
 
     return ResponseEntity.ok().headers(responseHeaders).build();
   }

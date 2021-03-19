@@ -47,6 +47,7 @@ public final class AllocationGrpcService {
         new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
             internal_static_allocation_Allocation_descriptor, new java.lang.String[] {});
   }
+
   private AllocationGrpcService() {}
 
   public static void registerAllExtensions(com.google.protobuf.ExtensionRegistryLite registry) {}

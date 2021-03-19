@@ -4,9 +4,9 @@ metadata:
   name: footyandsweep-v2
 build:
   artifacts:
-#    - image: api-authentication-service
-    #      context: api-authentication-service
-    #      docker: { }
+    - image: api-authentication-service
+      context: api-authentication-service
+      docker: { }
     - image: api-sweepstake-engine
       context: api-sweepstake-engine
       docker: { }
@@ -30,7 +30,7 @@ deploy:
       - kubernetes/api-event-broker/api-kafka.yaml
       - kubernetes/api-event-broker/api-kafka-monitor.yaml
       - kubernetes/api-event-broker/zookeeper.yaml
-      #      - kubernetes/api-authentication-service/api-authentication-service-config.yaml
+      - kubernetes/api-authentication-service/api-authentication-service-config.yaml
       - kubernetes/api-sweepstake-engine/api-sweepstake-engine-config.yaml
       - kubernetes/api-ticket-engine/api-ticket-engine-config.yaml
       - kubernetes/api-result-engine/api-result-engine-config.yaml
@@ -39,7 +39,7 @@ deploy:
       - kubernetes/api-ticket-engine/api-ticket-engine.yaml
       - kubernetes/api-result-engine/api-result-engine.yaml
       - kubernetes/api-allocation-engine/api-allocation-engine.yaml
-      #      - kubernetes/api-authentication-service/api-authentication-service.yaml
+      - kubernetes/api-authentication-service/api-authentication-service.yaml
       - kubernetes/api-event-broker/api-cdc-service.yaml
       - kubernetes/api-gateway-service/api-gateway-service.yaml
       - kubernetes/api-gateway-service/api-gateway-service-config.yaml

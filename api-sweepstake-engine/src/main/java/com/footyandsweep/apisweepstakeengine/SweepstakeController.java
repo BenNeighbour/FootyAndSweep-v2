@@ -29,11 +29,10 @@ import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
 import io.eventuate.tram.sagas.orchestration.SagaInstanceFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 public class SweepstakeController {
 
   private final ResultHelper resultHelper;
@@ -46,7 +45,14 @@ public class SweepstakeController {
 
   private final SagaInstanceFactory sagaInstanceFactory;
 
-  public SweepstakeController(ResultHelper resultHelper, SweepstakeDao sweepstakeDao, ParticipantIdDao participantIdDao, CreateSweepstakeSaga createSweepstakeSaga, DeleteSweepstakeSaga deleteSweepstakeSaga, JoinSweepstakeSaga joinSweepstakeSaga, SagaInstanceFactory sagaInstanceFactory) {
+  public SweepstakeController(
+      ResultHelper resultHelper,
+      SweepstakeDao sweepstakeDao,
+      ParticipantIdDao participantIdDao,
+      CreateSweepstakeSaga createSweepstakeSaga,
+      DeleteSweepstakeSaga deleteSweepstakeSaga,
+      JoinSweepstakeSaga joinSweepstakeSaga,
+      SagaInstanceFactory sagaInstanceFactory) {
     this.resultHelper = resultHelper;
     this.sweepstakeDao = sweepstakeDao;
     this.participantIdDao = participantIdDao;
@@ -82,8 +88,8 @@ public class SweepstakeController {
   @PostMapping("/join")
   @Transactional
   public ResponseEntity<String> join(
-          @RequestParam("participantId") String participantId,
-          @RequestParam("joinCode") String joinCode) {
+      @RequestParam("participantId") String participantId,
+      @RequestParam("joinCode") String joinCode) {
     JoinSweepstakeSagaData data = new JoinSweepstakeSagaData();
     data.setSweepstakeJoinCode(joinCode);
     data.setParticipantId(participantId);

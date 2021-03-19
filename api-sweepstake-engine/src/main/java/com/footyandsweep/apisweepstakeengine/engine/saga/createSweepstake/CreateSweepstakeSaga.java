@@ -33,12 +33,13 @@ public class CreateSweepstakeSaga implements SimpleSaga<CreateSweepstakeSagaData
   private final SweepstakeEngine sweepstakeEngine;
   private final SimpMessagingTemplate messagingTemplate;
 
-    public CreateSweepstakeSaga(SweepstakeEngine sweepstakeEngine, SimpMessagingTemplate messagingTemplate) {
-        this.sweepstakeEngine = sweepstakeEngine;
-        this.messagingTemplate = messagingTemplate;
-    }
+  public CreateSweepstakeSaga(
+      SweepstakeEngine sweepstakeEngine, SimpMessagingTemplate messagingTemplate) {
+    this.sweepstakeEngine = sweepstakeEngine;
+    this.messagingTemplate = messagingTemplate;
+  }
 
-    @Override
+  @Override
   public SagaDefinition<CreateSweepstakeSagaData> getSagaDefinition() {
 
     return step()
@@ -73,28 +74,34 @@ public class CreateSweepstakeSaga implements SimpleSaga<CreateSweepstakeSagaData
 
   @Override
   public void onSagaCompletedSuccessfully(String sagaId, CreateSweepstakeSagaData sagaData) {
-      SagaResponse<SweepstakeCommon> sweepstakeSagaComplete = new SagaResponse<>(sagaId, SagaResponse.Status.COMPLETED, "Sweepstake created!", sagaData.getSweepstake());
+    SagaResponse<SweepstakeCommon> sweepstakeSagaComplete =
+        new SagaResponse<>(
+            sagaId, SagaResponse.Status.COMPLETED, "Sweepstake created!", sagaData.getSweepstake());
 
-      messagingTemplate.convertAndSend(
-              "/sweepstake-topic/save",
-              sweepstakeSagaComplete);
+    messagingTemplate.convertAndSend("/sweepstake-topic/save", sweepstakeSagaComplete);
   }
 
-    @Override
-    public void onStarting(String sagaId, CreateSweepstakeSagaData sagaData) {
-        SagaResponse<SweepstakeCommon> sweepstakeSagaPending = new SagaResponse<>(sagaId, SagaResponse.Status.PENDING, "Creating Sweepstake...", sagaData.getSweepstake());
+  @Override
+  public void onStarting(String sagaId, CreateSweepstakeSagaData sagaData) {
+    SagaResponse<SweepstakeCommon> sweepstakeSagaPending =
+        new SagaResponse<>(
+            sagaId,
+            SagaResponse.Status.PENDING,
+            "Creating Sweepstake...",
+            sagaData.getSweepstake());
 
-        messagingTemplate.convertAndSend(
-                "/sweepstake-topic/save",
-                sweepstakeSagaPending);
-    }
+    messagingTemplate.convertAndSend("/sweepstake-topic/save", sweepstakeSagaPending);
+  }
 
-    @Override
-    public void onSagaRolledBack(String sagaId, CreateSweepstakeSagaData sagaData) {
-        SagaResponse<SweepstakeCommon> sweepstakeSagaError = new SagaResponse<>(sagaId, SagaResponse.Status.FAILED, "Create Sweepstake Failed!", sagaData.getSweepstake());
+  @Override
+  public void onSagaRolledBack(String sagaId, CreateSweepstakeSagaData sagaData) {
+    SagaResponse<SweepstakeCommon> sweepstakeSagaError =
+        new SagaResponse<>(
+            sagaId,
+            SagaResponse.Status.FAILED,
+            "Create Sweepstake Failed!",
+            sagaData.getSweepstake());
 
-        messagingTemplate.convertAndSend(
-                "/sweepstake-topic/save",
-                sweepstakeSagaError);
-    }
+    messagingTemplate.convertAndSend("/sweepstake-topic/save", sweepstakeSagaError);
+  }
 }

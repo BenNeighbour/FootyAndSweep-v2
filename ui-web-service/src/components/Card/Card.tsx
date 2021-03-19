@@ -31,7 +31,7 @@ const Card: FunctionComponent<Props> = (props) => {
                     <EventText>Aston Villa vs Wolves</EventText>
                 </EventSection>
 
-                <br />
+                <br/>
 
                 {/* Metadata section here */}
                 <SweepstakeMetadataSection>

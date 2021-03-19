@@ -42,7 +42,10 @@ public class UserPrincipal implements OAuth2User, UserDetails {
   private Map<String, Object> attributes;
 
   public UserPrincipal(
-      String id, String email, String password, Collection<? extends GrantedAuthority> authorities) {
+      String id,
+      String email,
+      String password,
+      Collection<? extends GrantedAuthority> authorities) {
     this.id = id;
     this.email = email;
     this.password = password;
