@@ -29,7 +29,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.socket.HandshakeInfo;
 import org.springframework.web.reactive.socket.WebSocketHandler;
 import org.springframework.web.reactive.socket.adapter.ReactorNettyWebSocketSession;
-import org.springframework.web.reactive.socket.server.RequestUpgradeStrategy;
 import org.springframework.web.reactive.socket.server.WebSocketService;
 import org.springframework.web.reactive.socket.server.support.HandshakeWebSocketService;
 import org.springframework.web.reactive.socket.server.upgrade.ReactorNettyRequestUpgradeStrategy;
@@ -50,11 +49,11 @@ public class ApiGatewayServiceApplication {
   }
 
   @Bean
-  public WebSocketService webSocketService(RequestUpgradeStrategy upgradeStrategy) {
+  public WebSocketService webSocketService(UpgradeStrategy upgradeStrategy) {
     return new HandshakeWebSocketService(upgradeStrategy);
   }
 
-  public static class UpgradeStratgey extends ReactorNettyRequestUpgradeStrategy {
+  public static class UpgradeStrategy extends ReactorNettyRequestUpgradeStrategy {
 
     private static final WebClient webClient = WebClient.create();
 

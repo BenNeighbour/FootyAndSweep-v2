@@ -20,6 +20,9 @@ spring:
           filters:
             - StripPrefix=0
 
+  main:
+    allow-bean-definition-overriding: true
+
 footyandsweep:
   auth:
     tokenSecret: 926D96C90030DD58429D2751AC1BDBBC
