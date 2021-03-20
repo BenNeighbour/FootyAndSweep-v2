@@ -16,7 +16,7 @@
 
 import React, {FunctionComponent} from 'react';
 import PasswordBar from "./PasswordBar";
-import styled from "styled-components";
+import "./InputField.scss"
 
 interface OwnProps {
     includePasswordStrengthChecker?: boolean;
@@ -37,16 +37,17 @@ type Props = OwnProps;
 const InputField: FunctionComponent<Props> = (props) => {
     return (
         <>
-            <InputContainer>
-                <FieldName>{props.label}</FieldName>
-                <Input name={props.name} disabled={props.disabled || false} type={props.type} value={props.value}
+            <div className={"inputContainer"}>
+                <span className={"fieldName"}>{props.label}</span>
+                <input className={"input"} name={props.name} disabled={props.disabled || false} type={props.type}
+                       value={props.value}
                        onChange={props.onChange}
                        placeholder={props.placeholder || ""}/>
-            </InputContainer>
+            </div>
             {props.type === "password" && props.includePasswordStrengthChecker ?
                 <div><PasswordBar password={props.value}/></div> : undefined}
             {props.errors && props.touched ? (
-                <ErrorTextMessage>{props.errors}</ErrorTextMessage>
+                <span className={"errorTextMessage"}>{props.errors}</span>
             ) : null}
             <br/>
         </>
@@ -54,62 +55,3 @@ const InputField: FunctionComponent<Props> = (props) => {
 };
 
 export default InputField;
-
-
-const Input = styled.input`
-box-sizing: border-box;
-border: 0;
-outline: 0;
-font-family: 'Open Sans', sans-serif;
-font-size: 15px;
-font-weight: 600;
-font-stretch: normal;
-font-style: normal;
-line-height: 1.5;
-letter-spacing: normal;
-text-align: left;
-width: 100%;
-color: #02203c;
-border: none;
-outline: none;
-padding-left: 13px;
-padding-right: 1em;
-margin-top: 0;
-`;
-
-const InputContainer = styled.div`
-position: relative;
-border-radius: 5px;
-height: 60px;
-object-fit: fill;
-border-radius: 5px;
-font-family: "Open Sans","Helvetica","Arial",sans-serif;
-line-height: 1.42857143;
-background-color: #ffffff;
-box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.25);
--webkit-box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.25);
--moz-box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.25);
-`;
-
-const FieldName = styled.div`
-padding-top: 1em;
-padding-left: 1em;
-font-family: 'Open Sans', sans-serif;
-font-size: 12px;
-font-weight: 600;
-font-stretch: normal;
-font-style: normal;
-line-height: normal;
-letter-spacing: normal;
-text-align: left;
-color: #b5b5b5;
-`;
-
-const ErrorTextMessage = styled.div`
-text-align: left;
-font-family: 'Open Sans', sans-serif;
-font-size: 14px;
-color: red;
-`;
-
-

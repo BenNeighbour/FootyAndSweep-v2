@@ -14,27 +14,11 @@
  *   limitations under the License.
  */
 
-
-import React, {FunctionComponent} from 'react';
-import "./Button.scss";
-
-interface OwnProps {
-    title: string;
-    type?: 'submit' | null;
-    onClick?: (value: any) => void;
-    disabled?: boolean;
-    style?: React.CSSProperties | {}
+body {
+    padding: 0;
+    margin: 0;
+    top: 0;
+    left: 0;
+    background: #0B0E11;
+    font-family: 'Inter', sans-serif;
 }
-
-type Props = OwnProps;
-
-const Button: FunctionComponent<Props> = (props) => {
-    return (
-        <button className={"buttonContainer"} type={props.type || undefined} style={props.style} disabled={props.disabled || false}
-                         onClick={props.onClick}>
-            {props.title}
-        </button>
-    );
-};
-
-export default Button;

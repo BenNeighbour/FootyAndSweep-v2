@@ -16,7 +16,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './index.scss';
 import Routes from './Routes';
 import {BrowserRouter} from "react-router-dom";
 import {PersistGate} from "redux-persist/integration/react";

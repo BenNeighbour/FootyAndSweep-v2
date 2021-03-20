@@ -1,0 +1,22 @@
+$accent: #3D7CDB;
+$white: #ffffff;
+
+.buttonContainer {
+  padding: 9px 50px;
+
+  background: rgba(61, 124, 219, 0.9);
+  border-radius: 8px;
+  cursor: pointer;
+
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 22px;
+
+  text-align: center;
+  color: #FFFFFF;
+  outline: none;
+  border-color: transparent;
+}
+

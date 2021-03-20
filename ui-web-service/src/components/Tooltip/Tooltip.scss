@@ -1,4 +1,4 @@
-/*
+/*!
  *   Copyright 2021 FootyAndSweep
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,27 +14,29 @@
  *   limitations under the License.
  */
 
+.tooltipContainer {
+  display: flex;
+  width: fit-content;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0px 10px;
+  background: #242C37;
+  border-radius: 5px;
 
-import React, {FunctionComponent} from 'react';
-import "./Button.scss";
+  .tooltipText {
+    margin: 0;
+    padding: 0;
 
-interface OwnProps {
-    title: string;
-    type?: 'submit' | null;
-    onClick?: (value: any) => void;
-    disabled?: boolean;
-    style?: React.CSSProperties | {}
+    width: fit-content;
+
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 22px;
+    color: #DEE3EA;
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+  }
 }
-
-type Props = OwnProps;
-
-const Button: FunctionComponent<Props> = (props) => {
-    return (
-        <button className={"buttonContainer"} type={props.type || undefined} style={props.style} disabled={props.disabled || false}
-                         onClick={props.onClick}>
-            {props.title}
-        </button>
-    );
-};
-
-export default Button;

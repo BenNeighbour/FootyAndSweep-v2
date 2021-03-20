@@ -1,0 +1,79 @@
+/*
+ *   Copyright 2021 FootyAndSweep
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
+
+import React, {FunctionComponent} from 'react';
+import "./SweepstakeCard.scss";
+import Tooltip from "../Tooltip/Tooltip";
+
+interface OwnProps {
+    sweepstakeStatus: string;
+    sweepstakeName: string;
+    sweepstakeMetadata: string;
+    sweepstakeHashTags: string[];
+
+
+    totalAmountOfTickets: number;
+    ticketsPurchasedSoFar?: number;
+}
+
+type Props = OwnProps;
+
+const SweepstakeCard: FunctionComponent<Props> = (props) => {
+    return (
+        <div className={"cardContainer"}>
+            <div className={"mainSection"}>
+                <div className={"leftSection"}>
+                    <div className={"topLeftSection"}>
+                        {/*  Sweepstake Name  */}
+                        <span>{props.sweepstakeName}</span>
+
+                        {/*  Other Metadata  */}
+                        <p>{props.sweepstakeMetadata}</p>
+                    </div>
+
+                    <div className={"bottomLeftSection"}>
+                        {/*  Hashtag Tooltips  */}
+                        {props.sweepstakeHashTags.map((value, index) => (
+                            <Tooltip text={value} key={index}/>
+                        ))}
+                    </div>
+                </div>
+                <div className={"rightSection"}>
+                    <div className={"topRightSection"}>
+                        {/*  Status with circle color indicator  */}
+                        <span>{props.sweepstakeStatus}</span>
+                        <br/>
+
+                        {/*  Number of Tickets (with purchased at the end if it's open)  */}
+                        <p>{props.ticketsPurchasedSoFar === 1 ? `${props.ticketsPurchasedSoFar} Ticket` : `${props.ticketsPurchasedSoFar} Tickets` || undefined} Purchased</p>
+                        <br/>
+
+                        {/*  How many tickets can still be purchased (if it's open)  */}
+                        <p className={"smallText"}>7 Tickets Left</p>
+                    </div>
+
+                    <div className={"bottomRightSection"}>
+                        {/*  Buy Tickets call-to-action  */}
+                        <span>Buy Tickets →</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default SweepstakeCard;

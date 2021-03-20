@@ -1,0 +1,131 @@
+/*!
+ *   Copyright 2021 FootyAndSweep
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
+.cardContainer {
+  display: flex;
+  background: #151A21;
+  box-shadow: -3px 4px 14px rgba(0, 0, 0, 0.7);
+  border-radius: 8px;
+  margin: 15px 18px;
+  padding: 11px;
+
+  .mainSection {
+    display: flex;
+    height: fit-content;
+    width: 100%;
+
+    .leftSection {
+      height: 100%;
+      flex: 6;
+      flex-direction: column;
+
+      .topLeftSection {
+        span {
+          font-style: normal;
+          font-weight: bold;
+          font-size: 14px;
+          line-height: 22px;
+          color: #DEE3EA;
+        }
+
+        p {
+          font-style: normal;
+          font-weight: 500;
+          font-size: 13px;
+          line-height: 22px;
+          color: #5D7290;
+        }
+      }
+
+      .bottomLeftSection {
+        float: left;
+        display: flex;
+      }
+    }
+
+    .rightSection {
+      height: 100%;
+
+      display: flex;
+      flex-direction: column;
+
+      flex: 5;
+      padding: 0;
+      margin: 0;
+
+      .topRightSection {
+        flex: 1;
+
+        span {
+          width: fit-content;
+          height: fit-content;
+
+          float: right;
+          font-style: normal;
+          font-weight: bold;
+          font-size: 14px;
+          line-height: 20px;
+          text-align: right;
+          color: #B2BDCD;
+        }
+
+        p {
+          width: fit-content;
+          height: fit-content;
+
+          float: right;
+          margin: 0;
+          font-style: normal;
+          font-weight: 500;
+          font-size: 12px;
+          line-height: 20px;
+          text-align: right;
+          color: #5D7290;
+        }
+
+        .smallText {
+          width: fit-content;
+          height: fit-content;
+
+          float: right;
+          margin: 0;
+          padding: 0;
+          font-style: normal;
+          font-weight: 500;
+          font-size: 9px;
+          line-height: 20px;
+          text-align: right;
+          color: #46566B;
+        }
+      }
+
+      .bottomRightSection {
+        flex: 1;
+        padding-top: 30px;
+
+        span {
+          float: right;
+
+          font-style: normal;
+          font-weight: bold;
+          font-size: 14px;
+          line-height: 22px;
+          color: #B2BDCD;
+        }
+      }
+    }
+  }
+}

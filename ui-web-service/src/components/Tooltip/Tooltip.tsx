@@ -14,21 +14,21 @@
  *   limitations under the License.
  */
 
-body {
-    padding: 0;
-    margin: 0;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: #f6f9fc;
+import React, {FunctionComponent} from 'react';
+import "./Tooltip.scss";
+
+interface OwnProps {
+    text: string;
 }
 
-#app {
-    padding: 0;
-    margin: 0;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-}
+type Props = OwnProps;
+
+const Tooltip: FunctionComponent<Props> = (props) => {
+    return (
+        <div className={"tooltipContainer"}>
+            <span className={"tooltipText"}>{props.text}</span>
+        </div>
+    );
+};
+
+export default Tooltip;

@@ -16,10 +16,8 @@
 
 
 import React, {FunctionComponent} from 'react';
-import Card from "../../components/Card/Card";
+import SweepstakeCard from "../../components/Card/SweepstakeCard";
 import styled from "styled-components";
-import Navbar from "../../components/NavBar/Navbar";
-import Footer from "../../components/Footer/Footer";
 
 interface OwnProps {
 }
@@ -29,21 +27,10 @@ type Props = OwnProps;
 const Sweepstakes: FunctionComponent<Props> = (props) => {
     return (
         <SweepstakesContainer>
-            <TopSection>
-                <Navbar/>
-                <TitleSection>
-                    <TitleText>Your Sweepstakes</TitleText>
-                </TitleSection>
-            </TopSection>
-            <CardContainer>
-                <Card/>
-                <Card/>
-                <Card/>
-                <Card/>
-            </CardContainer>
-            <Footer>
-
-            </Footer>
+            <SweepstakeCard sweepstakeHashTags={["#bhawhu", "#firstscorer"]}
+                            sweepstakeMetadata={"Jon Neighbour, Ben Neighbour, SwaggrMcJaggr..."}
+                            sweepstakeName={"Jon’s Epic Sweepstake"} sweepstakeStatus={"Open"}
+                            totalAmountOfTickets={8} ticketsPurchasedSoFar={2}/>
         </SweepstakesContainer>
     );
 };
@@ -51,47 +38,7 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
 export default Sweepstakes;
 
 const SweepstakesContainer = styled.div`
-width: auto;
-height: auto;
-object-fit: contain;
-`;
-
-const CardContainer = styled.div`
-display: flex;
-padding: 8px 16px 16px;
 width: 100%;
+object-fit: contain;
 height: 100%;
-flex-wrap: wrap;
-place-items: center;
-justify-content: center;
-box-sizing: border-box;
-`;
-
-const TitleText = styled.h1`
-font-family: 'Open Sans', sans-serif;
-color: #fff;
-font-size: 42px;
-font-weight: 400;
-line-height: 1.2;
-`;
-
-const TopSection = styled.div`
-background: linear-gradient(-90deg, #3e66fb, #2d50cf);
-position: relative;
-min-height: 370px;
-padding: 0 0 60px 0;
-color: #02203c;
-display: flex;
-flex-direction: column;
-`;
-
-const TitleSection = styled.div`
-text-align: center;
-place-items: center;
-color: #fff;
-margin: 0 auto;
-padding: 0 20px;
-flex: 1 1 auto;
-display: flex;
-align-items: center;  
 `;
