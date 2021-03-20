@@ -11,6 +11,7 @@ public final class SweepstakeServiceOuterClass {
       sweepstakeStatus =
           com.google.protobuf.GeneratedMessage.newFileScopedGeneratedExtension(
               java.lang.String.class, null);
+
   public static final int SWEEPSTAKETYPE_FIELD_NUMBER = 5001;
   /** <code>extend .google.protobuf.EnumValueOptions { ... }</code> */
   public static final com.google.protobuf.GeneratedMessage.GeneratedExtension<
@@ -18,6 +19,7 @@ public final class SweepstakeServiceOuterClass {
       sweepstakeType =
           com.google.protobuf.GeneratedMessage.newFileScopedGeneratedExtension(
               java.lang.String.class, null);
+
   private static final com.google.protobuf.Descriptors.Descriptor
       internal_static_com_footyandsweep_Sweepstake_descriptor;
   private static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -182,6 +184,7 @@ public final class SweepstakeServiceOuterClass {
     com.footyandsweep.Common.getDescriptor();
     com.footyandsweep.TicketServiceOuterClass.getDescriptor();
   }
+
   private SweepstakeServiceOuterClass() {}
 
   public static void registerAllExtensions(com.google.protobuf.ExtensionRegistryLite registry) {
@@ -213,6 +216,7 @@ public final class SweepstakeServiceOuterClass {
     public static final int ALLOCATED_VALUE = 1;
     /** <code>CLOSED = 2 [(.com.footyandsweep.ticketStatus) = "CLOSED"];</code> */
     public static final int CLOSED_VALUE = 2;
+
     private static final com.google.protobuf.Internal.EnumLiteMap<SweepstakeStatus>
         internalValueMap =
             new com.google.protobuf.Internal.EnumLiteMap<SweepstakeStatus>() {
@@ -308,6 +312,7 @@ public final class SweepstakeServiceOuterClass {
      * </code>
      */
     public static final int Correct_Score_HT_VALUE = 1;
+
     private static final com.google.protobuf.Internal.EnumLiteMap<SweepstakeTypeCommon>
         internalValueMap =
             new com.google.protobuf.Internal.EnumLiteMap<SweepstakeTypeCommon>() {
@@ -377,6 +382,7 @@ public final class SweepstakeServiceOuterClass {
 
     // @@protoc_insertion_point(enum_scope:com.footyandsweep.SweepstakeTypeCommon)
   }
+
   public interface SweepstakeOrBuilder
       extends
       // @@protoc_insertion_point(interface_extends:com.footyandsweep.Sweepstake)
@@ -473,6 +479,7 @@ public final class SweepstakeServiceOuterClass {
     /** <code>string footballMatchId = 26;</code> */
     com.google.protobuf.ByteString getFootballMatchIdBytes();
   }
+
   public interface JoinCodeOrBuilder
       extends
       // @@protoc_insertion_point(interface_extends:com.footyandsweep.JoinCode)
@@ -483,6 +490,7 @@ public final class SweepstakeServiceOuterClass {
     /** <code>string joinCode = 1;</code> */
     com.google.protobuf.ByteString getJoinCodeBytes();
   }
+
   public interface PairOrBuilder
       extends
       // @@protoc_insertion_point(interface_extends:com.footyandsweep.Pair)
@@ -496,6 +504,7 @@ public final class SweepstakeServiceOuterClass {
     /** <code>string value = 2;</code> */
     com.google.protobuf.ByteString getValueBytes();
   }
+
   public interface PairListOrBuilder
       extends
       // @@protoc_insertion_point(interface_extends:com.footyandsweep.PairList)
@@ -513,6 +522,7 @@ public final class SweepstakeServiceOuterClass {
     /** <code>repeated .com.footyandsweep.Pair pairs = 1;</code> */
     com.footyandsweep.SweepstakeServiceOuterClass.PairOrBuilder getPairsOrBuilder(int index);
   }
+
   public interface SweepstakeListOrBuilder
       extends
       // @@protoc_insertion_point(interface_extends:com.footyandsweep.SweepstakeList)
@@ -611,6 +621,7 @@ public final class SweepstakeServiceOuterClass {
     private Sweepstake(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
+
     private Sweepstake() {
       id_ = "";
       name_ = "";
@@ -638,6 +649,7 @@ public final class SweepstakeServiceOuterClass {
       includeOwnGoals_ = false;
       footballMatchId_ = "";
     }
+
     private Sweepstake(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -2677,9 +2689,11 @@ public final class SweepstakeServiceOuterClass {
     private JoinCode(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
+
     private JoinCode() {
       joinCode_ = "";
     }
+
     private JoinCode(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -3216,6 +3230,7 @@ public final class SweepstakeServiceOuterClass {
       key_ = 0;
       value_ = "";
     }
+
     private Pair(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -3792,9 +3807,11 @@ public final class SweepstakeServiceOuterClass {
     private PairList(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
+
     private PairList() {
       pairs_ = java.util.Collections.emptyList();
     }
+
     private PairList(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -4529,9 +4546,11 @@ public final class SweepstakeServiceOuterClass {
     private SweepstakeList(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
+
     private SweepstakeList() {
       sweepstakes_ = java.util.Collections.emptyList();
     }
+
     private SweepstakeList(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)

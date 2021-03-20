@@ -46,6 +46,7 @@ public final class AuthenticationServiceOuterClass {
               "UserId",
             });
   }
+
   private AuthenticationServiceOuterClass() {}
 
   public static void registerAllExtensions(com.google.protobuf.ExtensionRegistryLite registry) {}
@@ -57,6 +58,7 @@ public final class AuthenticationServiceOuterClass {
   public static com.google.protobuf.Descriptors.FileDescriptor getDescriptor() {
     return descriptor;
   }
+
   public interface UserOrBuilder
       extends
       // @@protoc_insertion_point(interface_extends:com.footyandsweep.User)
@@ -528,9 +530,11 @@ public final class AuthenticationServiceOuterClass {
     private findUserByIdRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
+
     private findUserByIdRequest() {
       userId_ = "";
     }
+
     private findUserByIdRequest(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)

@@ -11,6 +11,7 @@ public final class TicketServiceOuterClass {
       ticketStatus =
           com.google.protobuf.GeneratedMessage.newFileScopedGeneratedExtension(
               java.lang.String.class, null);
+
   private static final com.google.protobuf.Descriptors.Descriptor
       internal_static_com_footyandsweep_Ticket_descriptor;
   private static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -119,6 +120,7 @@ public final class TicketServiceOuterClass {
     public static final int WON_VALUE = 3;
     /** <code>LOST = 4 [(.com.footyandsweep.ticketStatus) = "LOST"];</code> */
     public static final int LOST_VALUE = 4;
+
     private static final com.google.protobuf.Internal.EnumLiteMap<TicketStatus> internalValueMap =
         new com.google.protobuf.Internal.EnumLiteMap<TicketStatus>() {
           public TicketStatus findValueByNumber(int number) {
@@ -191,6 +193,7 @@ public final class TicketServiceOuterClass {
 
     // @@protoc_insertion_point(enum_scope:com.footyandsweep.TicketStatus)
   }
+
   public interface TicketOrBuilder
       extends
       // @@protoc_insertion_point(interface_extends:com.footyandsweep.Ticket)
@@ -283,6 +286,7 @@ public final class TicketServiceOuterClass {
     private Ticket(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
+
     private Ticket() {
       id_ = "";
       status_ = 0;
@@ -1268,9 +1272,11 @@ public final class TicketServiceOuterClass {
     private TicketList(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
+
     private TicketList() {
       ticket_ = java.util.Collections.emptyList();
     }
+
     private TicketList(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)

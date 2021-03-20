@@ -47,6 +47,7 @@ public final class AllocationServiceOuterClass {
     com.footyandsweep.SweepstakeServiceOuterClass.getDescriptor();
     com.google.protobuf.EmptyProto.getDescriptor();
   }
+
   private AllocationServiceOuterClass() {}
 
   public static void registerAllExtensions(com.google.protobuf.ExtensionRegistryLite registry) {}
@@ -127,6 +128,7 @@ public final class AllocationServiceOuterClass {
     private Allocation(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
+
     private Allocation() {
       id_ = "";
       description_ = "";
@@ -134,6 +136,7 @@ public final class AllocationServiceOuterClass {
       ticketId_ = "";
       playerId_ = "";
     }
+
     private Allocation(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
