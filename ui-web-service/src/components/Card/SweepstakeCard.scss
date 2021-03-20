@@ -29,15 +29,16 @@
 
     .leftSection {
       height: 100%;
-      flex: 6;
+      flex: 2;
       flex-direction: column;
 
       .topLeftSection {
-        span {
+        .sweepstakeName {
+          width: 100%;
           font-style: normal;
           font-weight: bold;
           font-size: 14px;
-          line-height: 22px;
+          line-height: 20px;
           color: #DEE3EA;
         }
 
@@ -45,7 +46,8 @@
           font-style: normal;
           font-weight: 500;
           font-size: 13px;
-          line-height: 22px;
+          line-height: 20px;
+          margin: 13px 0;
           color: #5D7290;
         }
       }
@@ -53,23 +55,34 @@
       .bottomLeftSection {
         float: left;
         display: flex;
+        width: 100%;
       }
     }
 
     .rightSection {
-      height: 100%;
-
       display: flex;
       flex-direction: column;
 
-      flex: 5;
+      flex: 1;
       padding: 0;
       margin: 0;
 
       .topRightSection {
         flex: 1;
 
+        .circleIndicator {
+          height: 8px;
+          width: 8px;
+          background: #46566B;
+          border-radius: 50%;
+          display: inline-block;
+          margin-right: 7.5px;
+        }
+
         span {
+          align-items: center;
+          display: flex;
+
           width: fit-content;
           height: fit-content;
 
@@ -90,7 +103,7 @@
           margin: 0;
           font-style: normal;
           font-weight: 500;
-          font-size: 12px;
+          font-size: 10.5px;
           line-height: 20px;
           text-align: right;
           color: #5D7290;
@@ -105,8 +118,8 @@
           padding: 0;
           font-style: normal;
           font-weight: 500;
-          font-size: 9px;
-          line-height: 20px;
+          font-size: 10px;
+          line-height: 10px;
           text-align: right;
           color: #46566B;
         }
@@ -114,16 +127,27 @@
 
       .bottomRightSection {
         flex: 1;
-        padding-top: 30px;
+        text-align: center;
+        position: relative;
 
         span {
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          margin-top: auto;
+          margin-bottom: auto;
+
           float: right;
 
           font-style: normal;
           font-weight: bold;
           font-size: 14px;
-          line-height: 22px;
+          line-height: 20px;
           color: #B2BDCD;
+
+          cursor: pointer;
+          outline: none;
+          border: none;
         }
       }
     }

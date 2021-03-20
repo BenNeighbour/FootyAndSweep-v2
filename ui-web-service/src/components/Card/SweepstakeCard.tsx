@@ -39,7 +39,10 @@ const SweepstakeCard: FunctionComponent<Props> = (props) => {
                 <div className={"leftSection"}>
                     <div className={"topLeftSection"}>
                         {/*  Sweepstake Name  */}
-                        <span>{props.sweepstakeName}</span>
+                        <div className={"sweepstakeName"}>
+                            {props.sweepstakeName}
+                                {/*<Tooltip text={"1:18:45"} colorCode={"#46566B"}/>*/}
+                        </div>
 
                         {/*  Other Metadata  */}
                         <p>{props.sweepstakeMetadata}</p>
@@ -55,7 +58,7 @@ const SweepstakeCard: FunctionComponent<Props> = (props) => {
                 <div className={"rightSection"}>
                     <div className={"topRightSection"}>
                         {/*  Status with circle color indicator  */}
-                        <span>{props.sweepstakeStatus}</span>
+                        <span><span className={"circleIndicator"}/>{props.sweepstakeStatus}</span>
                         <br/>
 
                         {/*  Number of Tickets (with purchased at the end if it's open)  */}
@@ -63,12 +66,12 @@ const SweepstakeCard: FunctionComponent<Props> = (props) => {
                         <br/>
 
                         {/*  How many tickets can still be purchased (if it's open)  */}
-                        <p className={"smallText"}>7 Tickets Left</p>
+                        <p className={"smallText"}>{props.ticketsPurchasedSoFar === 1 ? `${props.ticketsPurchasedSoFar} Ticket` : `${props.ticketsPurchasedSoFar} Tickets` || undefined} Left</p>
                     </div>
 
                     <div className={"bottomRightSection"}>
                         {/*  Buy Tickets call-to-action  */}
-                        <span>Buy Tickets →</span>
+                        <span onClick={() => console.log("Pressed")}>Buy Tickets →</span>
                     </div>
                 </div>
             </div>
