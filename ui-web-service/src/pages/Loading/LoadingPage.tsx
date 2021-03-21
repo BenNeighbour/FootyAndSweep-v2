@@ -27,7 +27,7 @@ type Props = OwnProps;
 
 const LoadingPage: FunctionComponent<Props> = (props) => {
     return (
-        <div className={"container"}>
+        <div className={"loadingPageContainer"}>
             <Spinner/>
         </div>
     );
