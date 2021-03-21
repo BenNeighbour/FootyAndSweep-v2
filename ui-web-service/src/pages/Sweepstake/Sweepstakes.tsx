@@ -15,9 +15,10 @@
  */
 
 
-import React, {FunctionComponent} from 'react';
+import React, {FunctionComponent, useState} from 'react';
 import SweepstakeCard from "../../components/Card/SweepstakeCard";
 import "./Sweepstakes.scss";
+import AdvertisementCard from "../../components/AdvertisementCard/AdvertisementCard";
 
 interface OwnProps {
 }
@@ -25,6 +26,8 @@ interface OwnProps {
 type Props = OwnProps;
 
 const Sweepstakes: FunctionComponent<Props> = (props) => {
+    const [sweepstakes, setSweepstakes] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]);
+
     return (
         <div className={"container"}>
             <nav className={"topSection"}>
@@ -37,71 +40,18 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
             </nav>
 
             <div className={"sweepstakesContainer"}>
-
-                <SweepstakeCard sweepstakeHashTags={["#bhawhu", "#firstscorer"]}
-                                sweepstakeMetadata={"Jon Neighbour, Ben Neighbour, SwaggrMcJaggr..."}
-                                sweepstakeName={"Jon’s Epic Sweepstake"} sweepstakeStatus={"Open"}
-                                totalAmountOfTickets={8} ticketsPurchasedSoFar={2}/>
-
-                <SweepstakeCard sweepstakeHashTags={["#bhawhu", "#firstscorer"]}
-                                sweepstakeMetadata={"Jon Neighbour, Ben Neighbour, SwaggrMcJaggr..."}
-                                sweepstakeName={"Jon’s Epic Sweepstake"} sweepstakeStatus={"Open"}
-                                totalAmountOfTickets={8} ticketsPurchasedSoFar={2}/>
-
-                <SweepstakeCard sweepstakeHashTags={["#bhawhu", "#firstscorer"]}
-                                sweepstakeMetadata={"Jon Neighbour, Ben Neighbour, SwaggrMcJaggr..."}
-                                sweepstakeName={"Jon’s Epic Sweepstake"} sweepstakeStatus={"Open"}
-                                totalAmountOfTickets={8} ticketsPurchasedSoFar={2}/>
-
-                <SweepstakeCard sweepstakeHashTags={["#bhawhu", "#firstscorer"]}
-                                sweepstakeMetadata={"Jon Neighbour, Ben Neighbour, SwaggrMcJaggr..."}
-                                sweepstakeName={"Jon’s Epic Sweepstake"} sweepstakeStatus={"Open"}
-                                totalAmountOfTickets={8} ticketsPurchasedSoFar={2}/>
-
-                <SweepstakeCard sweepstakeHashTags={["#bhawhu", "#firstscorer"]}
-                                sweepstakeMetadata={"Jon Neighbour, Ben Neighbour, SwaggrMcJaggr..."}
-                                sweepstakeName={"Jon’s Epic Sweepstake"} sweepstakeStatus={"Open"}
-                                totalAmountOfTickets={8} ticketsPurchasedSoFar={2}/>
-
-                <SweepstakeCard sweepstakeHashTags={["#bhawhu", "#firstscorer"]}
-                                sweepstakeMetadata={"Jon Neighbour, Ben Neighbour, SwaggrMcJaggr..."}
-                                sweepstakeName={"Jon’s Epic Sweepstake"} sweepstakeStatus={"Open"}
-                                totalAmountOfTickets={8} ticketsPurchasedSoFar={2}/>
-
-                <SweepstakeCard sweepstakeHashTags={["#bhawhu", "#firstscorer"]}
-                                sweepstakeMetadata={"Jon Neighbour, Ben Neighbour, SwaggrMcJaggr..."}
-                                sweepstakeName={"Jon’s Epic Sweepstake"} sweepstakeStatus={"Open"}
-                                totalAmountOfTickets={8} ticketsPurchasedSoFar={2}/>
-
-                <SweepstakeCard sweepstakeHashTags={["#bhawhu", "#firstscorer"]}
-                                sweepstakeMetadata={"Jon Neighbour, Ben Neighbour, SwaggrMcJaggr..."}
-                                sweepstakeName={"Jon’s Epic Sweepstake"} sweepstakeStatus={"Open"}
-                                totalAmountOfTickets={8} ticketsPurchasedSoFar={2}/>
-
-                <SweepstakeCard sweepstakeHashTags={["#bhawhu", "#firstscorer"]}
-                                sweepstakeMetadata={"Jon Neighbour, Ben Neighbour, SwaggrMcJaggr..."}
-                                sweepstakeName={"Jon’s Epic Sweepstake"} sweepstakeStatus={"Open"}
-                                totalAmountOfTickets={8} ticketsPurchasedSoFar={2}/>
-
-                <SweepstakeCard sweepstakeHashTags={["#bhawhu", "#firstscorer"]}
-                                sweepstakeMetadata={"Jon Neighbour, Ben Neighbour, SwaggrMcJaggr..."}
-                                sweepstakeName={"Jon’s Epic Sweepstake"} sweepstakeStatus={"Open"}
-                                totalAmountOfTickets={8} ticketsPurchasedSoFar={2}/>
-
-                <SweepstakeCard sweepstakeHashTags={["#bhawhu", "#firstscorer"]}
-                                sweepstakeMetadata={"Jon Neighbour, Ben Neighbour, SwaggrMcJaggr..."}
-                                sweepstakeName={"Jon’s Epic Sweepstake"} sweepstakeStatus={"Open"}
-                                totalAmountOfTickets={8} ticketsPurchasedSoFar={2}/>
-
-                <SweepstakeCard sweepstakeHashTags={["#bhawhu", "#firstscorer"]}
-                                sweepstakeMetadata={"Jon Neighbour, Ben Neighbour, SwaggrMcJaggr..."}
-                                sweepstakeName={"Jon’s Epic Sweepstake"} sweepstakeStatus={"Open"}
-                                totalAmountOfTickets={8} ticketsPurchasedSoFar={2}/>
-
-                <SweepstakeCard sweepstakeHashTags={["#bhawhu", "#firstscorer"]}
-                                sweepstakeMetadata={"Jon Neighbour, Ben Neighbour, SwaggrMcJaggr..."}
-                                sweepstakeName={"Jon’s Epic Sweepstake"} sweepstakeStatus={"Open"}
-                                totalAmountOfTickets={8} ticketsPurchasedSoFar={2}/>
+                {/*For each sweepstake*/}
+                {sweepstakes.map((value, index) => {
+                    return (
+                        <>
+                            <SweepstakeCard key={`sweepstake-${index}`} sweepstakeHashTags={["#bhawhu", "#firstscorer"]}
+                                            sweepstakeMetadata={"Jon Neighbour, Ben Neighbour, SwaggrMcJaggr..."}
+                                            sweepstakeName={"Jon’s Epic Sweepstake"} sweepstakeStatus={"Open"}
+                                            totalAmountOfTickets={8} ticketsPurchasedSoFar={2}/>
+                            {(index % 3) === 0 ? <AdvertisementCard key={`ad-${index}`}/> : undefined}
+                        </>
+                    );
+                })}
             </div>
         </div>
     );
