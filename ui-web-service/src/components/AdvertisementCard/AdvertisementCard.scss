@@ -14,66 +14,70 @@
  *   limitations under the License.
  */
 
-.border-line {
-  text-align: center;
-  width: 92%;
-  border: 1px solid #323D4D;
-  padding: 0;
-  margin: 0 auto;
-}
+.adArea {
+  animation: fadeInDown 0.5s;
 
-.adContainer {
-  display: flex;
-  background: #151A21;
-  box-shadow: -3px 4px 14px rgba(0, 0, 0, 0.7);
-  border-radius: 8px;
-  margin: 11px 18px;
-  object-fit: contain;
-  overflow: hidden;
+  .border-line {
+    text-align: center;
+    width: 92%;
+    border: 1px solid #323D4D;
+    padding: 0;
+    margin: 0 auto;
+  }
 
-  .mainSection {
+  .adContainer {
     display: flex;
-    height: 100%;
-    width: 100%;
+    background: #151A21;
+    box-shadow: -3px 4px 14px rgba(0, 0, 0, 0.7);
+    border-radius: 8px;
+    margin: 11px 18px;
+    object-fit: contain;
+    overflow: hidden;
 
-    .pictureSection {
-      flex: 2;
-      flex-direction: column;
-
-      img {
-        width: 100%;
-        height: 100%;
-      }
-    }
-
-    .detailsSection {
+    .mainSection {
       display: flex;
-      flex-direction: column;
+      height: 100%;
+      width: 100%;
 
-      flex: 6;
-      margin: 0;
-      padding: 10px;
+      .pictureSection {
+        flex: 2;
+        flex-direction: column;
 
-      .titleSection {
-        display: flex;
-        justify-content: space-between;
-
-        .advertisementTitle {
-          font-style: normal;
-          font-weight: bold;
-          font-size: 14px;
-          line-height: 22px;
-          color: #DEE3EA;
+        img {
+          width: 100%;
+          height: 100%;
         }
       }
 
-      .advertisementSubtitle {
-        float: left;
-        font-style: normal;
-        font-weight: 500;
-        font-size: 11px;
-        color: #5D7290;
-        padding: 6px 0 0 0;
+      .detailsSection {
+        display: flex;
+        flex-direction: column;
+
+        flex: 6;
+        margin: 0;
+        padding: 10px;
+
+        .titleSection {
+          display: flex;
+          justify-content: space-between;
+
+          .advertisementTitle {
+            font-style: normal;
+            font-weight: bold;
+            font-size: 14px;
+            line-height: 22px;
+            color: #DEE3EA;
+          }
+        }
+
+        .advertisementSubtitle {
+          float: left;
+          font-style: normal;
+          font-weight: 500;
+          font-size: 11px;
+          color: #5D7290;
+          padding: 6px 0 0 0;
+        }
       }
     }
   }

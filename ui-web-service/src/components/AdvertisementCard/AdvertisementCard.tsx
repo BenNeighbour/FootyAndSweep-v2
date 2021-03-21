@@ -27,8 +27,8 @@ type Props = OwnProps;
 
 const AdvertisementCard: FunctionComponent<Props> = (props) => {
     return (
-        <React.Fragment>
-            <div className={"border-line"} />
+        <div className={"adArea"}>
+            <div className={"border-line"}/>
             <div className={"adContainer"}>
                 <div className={"mainSection"}>
                     <div className={"pictureSection"}>
@@ -43,8 +43,8 @@ const AdvertisementCard: FunctionComponent<Props> = (props) => {
                     </div>
                 </div>
             </div>
-            <hr className={"border-line"} />
-        </React.Fragment>
+            <hr className={"border-line"}/>
+        </div>
     );
 };
 

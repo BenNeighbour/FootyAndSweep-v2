@@ -26,7 +26,6 @@ interface OwnProps {
     sweepstakeMetadata: string;
     sweepstakeHashTags: string[];
 
-
     totalAmountOfTickets: number;
     ticketsPurchasedSoFar?: number;
 }
@@ -42,7 +41,8 @@ const SweepstakeCard: FunctionComponent<Props> = (props) => {
                         {/*  Sweepstake Name  */}
                         <div className={"sweepstakeName"}>
                             <span className={"text"}>{props.sweepstakeName}</span>
-                            <CountdownTooltip startingDate={new Date(2021, 3, 23)} text={"1:18:45"} colorCode={"#46566B"}/>
+                            <CountdownTooltip startingDate={new Date(2021, 3, 23)} text={"1:18:45"}
+                                              colorCode={"#46566B"}/>
                         </div>
 
                         {/*  Other Metadata  */}

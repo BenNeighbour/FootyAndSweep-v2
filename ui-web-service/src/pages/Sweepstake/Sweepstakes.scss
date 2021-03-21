@@ -40,7 +40,6 @@
 
     .searchSection {
       flex: 1;
-      //padding: 30px;
       width: 100%;
       background: #0F1318;
     }
@@ -59,4 +58,22 @@
 
 .sweepstakesContainer {
   margin-top: 22vh;
+}
+
+@for $i from 1 through 20 {
+  .sweepstakes :nth-child(#{$i}n) {
+    animation-delay: #{$i / 10}s;
+  }
+}
+
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

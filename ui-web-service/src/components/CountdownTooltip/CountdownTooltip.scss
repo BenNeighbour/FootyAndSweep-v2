@@ -14,15 +14,16 @@
  *   limitations under the License.
  */
 
-.tooltipContainer {
+.countdownTooltipContainer {
   display: flex;
   width: fit-content;
   flex-direction: row;
   align-items: flex-start;
-  padding: 0px 10px;
-  margin-right: 5px;
+  padding: 0 10px;
   background: #242C37;
   border-radius: 5px;
+  justify-content: space-between;
+  float: right;
 
   .tooltipText {
     margin: 0;
@@ -31,7 +32,7 @@
     width: fit-content;
 
     font-style: normal;
-    font-weight: bold;
+    font-weight: 500;
     font-size: 12px;
     line-height: 22px;
     color: #DEE3EA;

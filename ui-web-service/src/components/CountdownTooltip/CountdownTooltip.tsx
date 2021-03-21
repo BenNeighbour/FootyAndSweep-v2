@@ -32,7 +32,7 @@ const CountdownTooltip: FunctionComponent<Props> = (props) => {
     useEffect(() => {
         let countdown = setTimeout(() => {
             if (timeLeft !== new Date()) {
-                // setTimeLeft()
+                setTimeLeft(new Date());
             }
         }, 1000);
 
@@ -42,7 +42,7 @@ const CountdownTooltip: FunctionComponent<Props> = (props) => {
     }, [timeLeft])
 
     return (
-        <div className={"tooltipContainer"} style={{backgroundColor: props.colorCode}}>
+        <div className={"countdownTooltipContainer"} style={{backgroundColor: props.colorCode}}>
             <span className={"tooltipText"}>{timeLeft.getHours()}:{timeLeft.getMinutes()}:{timeLeft.getSeconds()}</span>
         </div>
     );

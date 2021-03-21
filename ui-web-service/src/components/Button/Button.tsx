@@ -30,8 +30,9 @@ type Props = OwnProps;
 
 const Button: FunctionComponent<Props> = (props) => {
     return (
-        <button className={"buttonContainer"} type={props.type || undefined} style={props.style} disabled={props.disabled || false}
-                         onClick={props.onClick}>
+        <button className={"buttonContainer"} type={props.type || undefined} style={props.style}
+                disabled={props.disabled || false}
+                onClick={props.onClick}>
             {props.title}
         </button>
     );
