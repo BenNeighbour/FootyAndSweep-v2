@@ -54,12 +54,17 @@
       margin: 0;
       padding: 10px;
 
-      .advertisementTitle {
-        font-style: normal;
-        font-weight: bold;
-        font-size: 14px;
-        line-height: 22px;
-        color: #DEE3EA;
+      .titleSection {
+        display: flex;
+        justify-content: space-between;
+
+        .advertisementTitle {
+          font-style: normal;
+          font-weight: bold;
+          font-size: 14px;
+          line-height: 22px;
+          color: #DEE3EA;
+        }
       }
 
       .advertisementSubtitle {
@@ -68,7 +73,7 @@
         font-weight: 500;
         font-size: 11px;
         color: #5D7290;
-        padding: 0;
+        padding: 6px 0 0 0;
       }
     }
   }

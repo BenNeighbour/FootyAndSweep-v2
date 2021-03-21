@@ -48,7 +48,7 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
                                             sweepstakeMetadata={"Jon Neighbour, Ben Neighbour, SwaggrMcJaggr..."}
                                             sweepstakeName={"Jon’s Epic Sweepstake"} sweepstakeStatus={"Open"}
                                             totalAmountOfTickets={8} ticketsPurchasedSoFar={2}/>
-                            {(index % 3) === 0 ? <AdvertisementCard key={`ad-${index}`}/> : undefined}
+                            {(index % 2) === 0 ? <AdvertisementCard key={`ad-${index}`}/> : undefined}
                         </>
                     );
                 })}

@@ -17,17 +17,21 @@
 .container {
   width: 100%;
   object-fit: contain;
-  height: 100%;
 
   .topSection {
+    display: flex;
+    flex-direction: column;
     position: fixed;
     top: 0;
     width: 100%;
     overflow: hidden;
+    height: 20vh;
 
     .opacitySection {
+      display: flex;
+      flex: 1;
+      place-items: center;
       width: 100%;
-      height: fit-content;
       background: rgba(16, 20, 25, 0.85);
       backdrop-filter: blur(2px);
       -webkit-backdrop-filter: blur(2px);
@@ -35,7 +39,8 @@
     }
 
     .searchSection {
-      padding: 30px;
+      flex: 1;
+      //padding: 30px;
       width: 100%;
       background: #0F1318;
     }
@@ -53,5 +58,5 @@
 }
 
 .sweepstakesContainer {
-  margin-top: 20vh;
+  margin-top: 22vh;
 }

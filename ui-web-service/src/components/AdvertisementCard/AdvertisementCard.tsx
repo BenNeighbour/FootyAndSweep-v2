@@ -18,6 +18,7 @@
 import React, {FunctionComponent} from 'react';
 import "./AdvertisementCard.scss";
 import AdImage from "./dummy-ad.png";
+import Tooltip from "../Tooltip/Tooltip";
 
 interface OwnProps {
 }
@@ -34,7 +35,10 @@ const AdvertisementCard: FunctionComponent<Props> = (props) => {
                         <img alt={""} src={AdImage}/>
                     </div>
                     <div className={"detailsSection"}>
-                        <span className={"advertisementTitle"}>The Ultimate SWE Interview Prep</span>
+                        <div className={"titleSection"}>
+                            <span className={"advertisementTitle"}>AlgoExpert</span>
+                            <Tooltip text={"AD"} colorCode={"#242C37"}/>
+                        </div>
                         <span className={"advertisementSubtitle"}>AlgoExpert | Ace the Coding Interviews with absolute flying colors</span>
                     </div>
                 </div>
