@@ -17,7 +17,7 @@
 
 import React, {FunctionComponent} from 'react';
 import SweepstakeCard from "../../components/Card/SweepstakeCard";
-import styled from "styled-components";
+import "./Sweepstakes.scss";
 
 interface OwnProps {
 }
@@ -26,29 +26,85 @@ type Props = OwnProps;
 
 const Sweepstakes: FunctionComponent<Props> = (props) => {
     return (
-        <SweepstakesContainer>
-            <SweepstakeCard sweepstakeHashTags={["#bhawhu", "#firstscorer"]}
-                            sweepstakeMetadata={"Jon Neighbour, Ben Neighbour, SwaggrMcJaggr..."}
-                            sweepstakeName={"Jon’s Epic Sweepstake"} sweepstakeStatus={"Open"}
-                            totalAmountOfTickets={8} ticketsPurchasedSoFar={2}/>
+        <div className={"container"}>
+            <nav className={"topSection"}>
+                <div className={"searchSection"}>
 
-            <SweepstakeCard sweepstakeHashTags={["#bhawhu", "#firstscorer"]}
-                            sweepstakeMetadata={"Jon Neighbour, Ben Neighbour, SwaggrMcJaggr..."}
-                            sweepstakeName={"Jon’s Epic Sweepstake"} sweepstakeStatus={"Open"}
-                            totalAmountOfTickets={8} ticketsPurchasedSoFar={2}/>
+                </div>
+                <div className={"opacitySection"}>
+                    <h1 className={"title"}>Your Sweepstakes</h1>
+                </div>
+            </nav>
 
-            <SweepstakeCard sweepstakeHashTags={["#bhawhu", "#firstscorer"]}
-                            sweepstakeMetadata={"Jon Neighbour, Ben Neighbour, SwaggrMcJaggr..."}
-                            sweepstakeName={"Jon’s Epic Sweepstake"} sweepstakeStatus={"Open"}
-                            totalAmountOfTickets={8} ticketsPurchasedSoFar={2}/>
-        </SweepstakesContainer>
+            <div className={"sweepstakesContainer"}>
+
+                <SweepstakeCard sweepstakeHashTags={["#bhawhu", "#firstscorer"]}
+                                sweepstakeMetadata={"Jon Neighbour, Ben Neighbour, SwaggrMcJaggr..."}
+                                sweepstakeName={"Jon’s Epic Sweepstake"} sweepstakeStatus={"Open"}
+                                totalAmountOfTickets={8} ticketsPurchasedSoFar={2}/>
+
+                <SweepstakeCard sweepstakeHashTags={["#bhawhu", "#firstscorer"]}
+                                sweepstakeMetadata={"Jon Neighbour, Ben Neighbour, SwaggrMcJaggr..."}
+                                sweepstakeName={"Jon’s Epic Sweepstake"} sweepstakeStatus={"Open"}
+                                totalAmountOfTickets={8} ticketsPurchasedSoFar={2}/>
+
+                <SweepstakeCard sweepstakeHashTags={["#bhawhu", "#firstscorer"]}
+                                sweepstakeMetadata={"Jon Neighbour, Ben Neighbour, SwaggrMcJaggr..."}
+                                sweepstakeName={"Jon’s Epic Sweepstake"} sweepstakeStatus={"Open"}
+                                totalAmountOfTickets={8} ticketsPurchasedSoFar={2}/>
+
+                <SweepstakeCard sweepstakeHashTags={["#bhawhu", "#firstscorer"]}
+                                sweepstakeMetadata={"Jon Neighbour, Ben Neighbour, SwaggrMcJaggr..."}
+                                sweepstakeName={"Jon’s Epic Sweepstake"} sweepstakeStatus={"Open"}
+                                totalAmountOfTickets={8} ticketsPurchasedSoFar={2}/>
+
+                <SweepstakeCard sweepstakeHashTags={["#bhawhu", "#firstscorer"]}
+                                sweepstakeMetadata={"Jon Neighbour, Ben Neighbour, SwaggrMcJaggr..."}
+                                sweepstakeName={"Jon’s Epic Sweepstake"} sweepstakeStatus={"Open"}
+                                totalAmountOfTickets={8} ticketsPurchasedSoFar={2}/>
+
+                <SweepstakeCard sweepstakeHashTags={["#bhawhu", "#firstscorer"]}
+                                sweepstakeMetadata={"Jon Neighbour, Ben Neighbour, SwaggrMcJaggr..."}
+                                sweepstakeName={"Jon’s Epic Sweepstake"} sweepstakeStatus={"Open"}
+                                totalAmountOfTickets={8} ticketsPurchasedSoFar={2}/>
+
+                <SweepstakeCard sweepstakeHashTags={["#bhawhu", "#firstscorer"]}
+                                sweepstakeMetadata={"Jon Neighbour, Ben Neighbour, SwaggrMcJaggr..."}
+                                sweepstakeName={"Jon’s Epic Sweepstake"} sweepstakeStatus={"Open"}
+                                totalAmountOfTickets={8} ticketsPurchasedSoFar={2}/>
+
+                <SweepstakeCard sweepstakeHashTags={["#bhawhu", "#firstscorer"]}
+                                sweepstakeMetadata={"Jon Neighbour, Ben Neighbour, SwaggrMcJaggr..."}
+                                sweepstakeName={"Jon’s Epic Sweepstake"} sweepstakeStatus={"Open"}
+                                totalAmountOfTickets={8} ticketsPurchasedSoFar={2}/>
+
+                <SweepstakeCard sweepstakeHashTags={["#bhawhu", "#firstscorer"]}
+                                sweepstakeMetadata={"Jon Neighbour, Ben Neighbour, SwaggrMcJaggr..."}
+                                sweepstakeName={"Jon’s Epic Sweepstake"} sweepstakeStatus={"Open"}
+                                totalAmountOfTickets={8} ticketsPurchasedSoFar={2}/>
+
+                <SweepstakeCard sweepstakeHashTags={["#bhawhu", "#firstscorer"]}
+                                sweepstakeMetadata={"Jon Neighbour, Ben Neighbour, SwaggrMcJaggr..."}
+                                sweepstakeName={"Jon’s Epic Sweepstake"} sweepstakeStatus={"Open"}
+                                totalAmountOfTickets={8} ticketsPurchasedSoFar={2}/>
+
+                <SweepstakeCard sweepstakeHashTags={["#bhawhu", "#firstscorer"]}
+                                sweepstakeMetadata={"Jon Neighbour, Ben Neighbour, SwaggrMcJaggr..."}
+                                sweepstakeName={"Jon’s Epic Sweepstake"} sweepstakeStatus={"Open"}
+                                totalAmountOfTickets={8} ticketsPurchasedSoFar={2}/>
+
+                <SweepstakeCard sweepstakeHashTags={["#bhawhu", "#firstscorer"]}
+                                sweepstakeMetadata={"Jon Neighbour, Ben Neighbour, SwaggrMcJaggr..."}
+                                sweepstakeName={"Jon’s Epic Sweepstake"} sweepstakeStatus={"Open"}
+                                totalAmountOfTickets={8} ticketsPurchasedSoFar={2}/>
+
+                <SweepstakeCard sweepstakeHashTags={["#bhawhu", "#firstscorer"]}
+                                sweepstakeMetadata={"Jon Neighbour, Ben Neighbour, SwaggrMcJaggr..."}
+                                sweepstakeName={"Jon’s Epic Sweepstake"} sweepstakeStatus={"Open"}
+                                totalAmountOfTickets={8} ticketsPurchasedSoFar={2}/>
+            </div>
+        </div>
     );
 };
 
 export default Sweepstakes;
-
-const SweepstakesContainer = styled.div`
-width: 100%;
-object-fit: contain;
-height: 100%;
-`;

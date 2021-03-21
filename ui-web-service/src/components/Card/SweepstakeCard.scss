@@ -34,12 +34,17 @@
 
       .topLeftSection {
         .sweepstakeName {
+          display: flex;
           width: 100%;
           font-style: normal;
           font-weight: bold;
           font-size: 14px;
           line-height: 20px;
           color: #DEE3EA;
+
+          .text {
+            padding-right: 10px;
+          }
         }
 
         p {
@@ -127,18 +132,15 @@
 
       .bottomRightSection {
         flex: 1;
-        text-align: center;
-        position: relative;
+        text-align: right;
+        position: inherit;
+        display: flex;
+        justify-content: flex-end;
+        flex-direction: column;
 
         span {
-          position: absolute;
-          bottom: 0;
-          right: 0;
-          margin-top: auto;
-          margin-bottom: auto;
-
+          position: inherit;
           float: right;
-
           font-style: normal;
           font-weight: bold;
           font-size: 14px;

@@ -18,6 +18,7 @@
 import React, {FunctionComponent} from 'react';
 import "./SweepstakeCard.scss";
 import Tooltip from "../Tooltip/Tooltip";
+import CountdownTooltip from "../CountdownTooltip/CountdownTooltip";
 
 interface OwnProps {
     sweepstakeStatus: string;
@@ -40,8 +41,9 @@ const SweepstakeCard: FunctionComponent<Props> = (props) => {
                     <div className={"topLeftSection"}>
                         {/*  Sweepstake Name  */}
                         <div className={"sweepstakeName"}>
-                            {props.sweepstakeName}
-                                {/*<Tooltip text={"1:18:45"} colorCode={"#46566B"}/>*/}
+                            <span className={"text"}>{props.sweepstakeName}</span>
+                            {/*<Tooltip text={"1:18:45"} colorCode={"#46566B"}/>*/}
+                            <CountdownTooltip startingDate={new Date(2021, 3, 23)} text={"1:18:45"} colorCode={"#46566B"}/>
                         </div>
 
                         {/*  Other Metadata  */}
