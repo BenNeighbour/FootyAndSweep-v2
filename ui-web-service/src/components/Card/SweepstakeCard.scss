@@ -16,6 +16,7 @@
 
 .cardContainer {
   animation: fadeInDown 0.5s;
+  animation-fill-mode: backwards;
 
   display: flex;
   background: #151A21;

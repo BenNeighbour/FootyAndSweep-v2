@@ -16,6 +16,7 @@
 
 .adArea {
   animation: fadeInDown 0.5s;
+  animation-fill-mode: backwards;
 
   .border-line {
     text-align: center;
