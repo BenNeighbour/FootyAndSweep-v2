@@ -28,7 +28,9 @@ type Props = OwnProps;
 const AdvertisementCard: FunctionComponent<Props> = (props) => {
     return (
         <div className={"adArea"}>
-            <div className={"border-line"}/>
+            <div className={"borderContainer"}>
+                <div className={"borderLine"}/>
+            </div>
             <div className={"adContainer"}>
                 <div className={"mainSection"}>
                     <div className={"pictureSection"}>
@@ -43,7 +45,9 @@ const AdvertisementCard: FunctionComponent<Props> = (props) => {
                     </div>
                 </div>
             </div>
-            <hr className={"border-line"}/>
+            <div className={"borderContainer"}>
+                <div className={"borderLine"}/>
+            </div>
         </div>
     );
 };

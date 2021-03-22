@@ -37,11 +37,11 @@
 
       .topLeftSection {
         .sweepstakeName {
-          display: flex;
-          width: 100%;
+          width:fit-content;
+          height:fit-content;
+          display: inline-flex;
           font-style: normal;
           font-weight: bold;
-          font-size: 14px;
           line-height: 20px;
           color: #DEE3EA;
           justify-content: space-between;

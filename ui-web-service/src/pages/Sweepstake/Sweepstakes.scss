@@ -63,7 +63,7 @@
   margin-top: 22vh;
 }
 
-@for $i from 1 through 6 {
+@for $i from 1 through 10 {
   .sweepstakes :nth-child(#{$i}n) {
     animation-delay: #{$i / 10}s;
   }
