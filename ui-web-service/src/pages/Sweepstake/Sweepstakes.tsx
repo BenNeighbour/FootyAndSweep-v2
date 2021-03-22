@@ -27,7 +27,7 @@ type Props = OwnProps;
 
 const Sweepstakes: FunctionComponent<Props> = (props) => {
     /* TODO: Change this! */
-    const [sweepstakes, ] = useState([1, 2, 3, 4, 5]);
+    const [sweepstakes,] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9]);
 
     return (
         <div className={"container"}>
@@ -45,14 +45,14 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
                     {/*For each sweepstake*/}
                     {sweepstakes.map((value, index) => {
                         return (
-                            <>
-                                <SweepstakeCard key={`sweepstake-${index}`}
-                                                sweepstakeHashTags={["#bhawhu", "#firstscorer"]}
-                                                sweepstakeMetadata={"Jon Neighbour, Ben Neighbour, SwaggrMcJaggr..."}
-                                                sweepstakeName={"Jon’s Epic Sweepstake"} sweepstakeStatus={"Open"}
-                                                totalAmountOfTickets={8} ticketsPurchasedSoFar={2}/>
-                                {(index % 2) === 0 ? <AdvertisementCard key={`ad-${index}`}/> : undefined}
-                            </>
+                            <React.Fragment key={`sweepstake-${index}`}>
+                                <SweepstakeCard
+                                    sweepstakeHashTags={["#bhawhu", "#firstscorer"]}
+                                    sweepstakeMetadata={"Jon Neighbour, Ben Neighbour, SwaggrMcJaggr..."}
+                                    sweepstakeName={"Jon’s Epic Sweepstake"} sweepstakeStatus={"Open"}
+                                    totalAmountOfTickets={8} ticketsPurchasedSoFar={2}/>
+                                {(index % 2) === 0 ? <AdvertisementCard/> : undefined}
+                            </React.Fragment>
                         );
                     })}
                 </div>
