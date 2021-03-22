@@ -38,13 +38,14 @@
       background: rgba(16, 20, 25, 0.85);
       backdrop-filter: blur(2px);
       -webkit-backdrop-filter: blur(2px);
-      padding: 20px 0;
     }
 
     .searchSection {
+      position: relative;
+      display: flex;
       flex: 1;
-      width: 100%;
       background: #0F1318;
+      object-fit: contain;
     }
 
     .title {
@@ -61,6 +62,20 @@
 
 .sweepstakesContainer {
   margin-top: 22vh;
+
+  .leftSweepstakeSection {
+    visibility: hidden;
+    clear: both;
+    display: none;
+    flex: 0;
+  }
+
+  .rightSweepstakeSection {
+    visibility: hidden;
+    clear: both;
+    display: none;
+    flex: 0;
+  }
 }
 
 @for $i from 1 through 10 {
@@ -78,5 +93,41 @@
   100% {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+
+@media (min-width: 1500px) {
+  .container {
+    display: flex;
+
+    .topSection {
+      visibility: hidden;
+      clear: both;
+      display: none;
+      flex: 0;
+    }
+
+    .sweepstakesContainer {
+      margin-top: 0;
+      width: 100%;
+      display: flex;
+
+      .leftSweepstakeSection {
+        visibility: visible;
+        display: flex;
+        flex: 0.4;
+      }
+
+      .rightSweepstakeSection {
+        visibility: visible;
+        display: flex;
+        flex: 0.4;
+      }
+
+      .sweepstakes {
+        flex: 1;
+      }
+    }
   }
 }

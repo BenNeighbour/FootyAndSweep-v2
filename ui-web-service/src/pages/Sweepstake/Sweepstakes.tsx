@@ -19,6 +19,7 @@ import React, {FunctionComponent, useState} from 'react';
 import SweepstakeCard from "../../components/Card/SweepstakeCard";
 import "./Sweepstakes.scss";
 import AdvertisementCard from "../../components/AdvertisementCard/AdvertisementCard";
+import SearchBar from "../../components/SearchBar/SearchBar";
 
 interface OwnProps {
 }
@@ -32,15 +33,22 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
     return (
         <div className={"container"}>
             <nav className={"topSection"}>
-                <div className={"searchSection"}>
+                <div className={"navigationSection"}>
 
+                </div>
+                <div className={"searchSection"}>
+                    <SearchBar onChange={() => {}} value={""} />
                 </div>
                 <div className={"opacitySection"}>
                     <h1 className={"title"}>Your Sweepstakes</h1>
                 </div>
             </nav>
 
+
             <div className={"sweepstakesContainer"}>
+                <div className={"leftSweepstakeSection"}>
+                    profile sectiomn
+                </div>
                 <div className={"sweepstakes"}>
                     {sweepstakes.map((value, index) => {
                         return (
@@ -55,7 +63,11 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
                         );
                     })}
                 </div>
+                <div className={"rightSweepstakeSection"}>
+                    df
+                </div>
             </div>
+
         </div>
     );
 };
