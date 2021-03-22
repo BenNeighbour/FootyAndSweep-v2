@@ -42,7 +42,6 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
 
             <div className={"sweepstakesContainer"}>
                 <div className={"sweepstakes"}>
-                    {/*For each sweepstake*/}
                     {sweepstakes.map((value, index) => {
                         return (
                             <React.Fragment key={`sweepstake-${index}`}>

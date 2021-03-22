@@ -17,6 +17,9 @@
 .container {
   width: 100%;
   object-fit: contain;
+  display: flex;
+  position: relative;
+  flex-direction: column;
 
   .topSection {
     display: flex;
