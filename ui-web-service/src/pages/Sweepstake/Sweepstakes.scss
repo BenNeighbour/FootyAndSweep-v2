@@ -99,13 +99,28 @@
 
 @media (min-width: 1500px) {
   .container {
+    position: relative;
     display: flex;
+    flex-direction: column;
+    width: 100%;
 
     .topSection {
-      visibility: hidden;
-      clear: both;
-      display: none;
-      flex: 0;
+      height: 10vh;
+      background-color: transparent;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+
+      .opacitySection {
+        visibility: hidden;
+        clear: both;
+        display: none;
+        flex: 0;
+      }
+      
+      .searchSection {
+        background-color: transparent;
+      }
     }
 
     .sweepstakesContainer {

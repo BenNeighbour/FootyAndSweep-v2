@@ -15,7 +15,7 @@
  */
 
 
-import React, {FunctionComponent, useState} from 'react';
+import React, {FunctionComponent, useState, useEffect} from 'react';
 import SweepstakeCard from "../../components/Card/SweepstakeCard";
 import "./Sweepstakes.scss";
 import AdvertisementCard from "../../components/AdvertisementCard/AdvertisementCard";
@@ -28,21 +28,36 @@ type Props = OwnProps;
 
 const Sweepstakes: FunctionComponent<Props> = (props) => {
     /* TODO: Change this! */
-    const [sweepstakes,] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+    const [sweepstakes,] = useState<number[]>([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+    const [width, setWidth] = useState<number>(window.innerWidth);
+
+    function handleWindowSizeChange() {
+        setWidth(window.innerWidth);
+    }
+
+    useEffect(() => {
+        window.addEventListener('resize', handleWindowSizeChange);
+        return () => {
+            window.removeEventListener('resize', handleWindowSizeChange);
+        }
+    }, []);
+
+    const [isMobile, ] = useState<boolean>(width <= 768);
+    console.log(isMobile);
 
     return (
         <div className={"container"}>
-            <nav className={"topSection"}>
-                <div className={"navigationSection"}>
+            <div className={"topSection"}>
+                <nav className={"navigationSection"}>
 
-                </div>
+                </nav>
                 <div className={"searchSection"}>
                     <SearchBar onChange={() => {}} value={""} />
                 </div>
                 <div className={"opacitySection"}>
                     <h1 className={"title"}>Your Sweepstakes</h1>
                 </div>
-            </nav>
+            </div>
 
 
             <div className={"sweepstakesContainer"}>
@@ -58,7 +73,7 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
                                     sweepstakeMetadata={"Jon Neighbour, Ben Neighbour, SwaggrMcJaggr..."}
                                     sweepstakeName={"Jon’s Epic Sweepstake"} sweepstakeStatus={"Open"}
                                     totalAmountOfTickets={8} ticketsPurchasedSoFar={2}/>
-                                {(index % 2) === 0 ? <AdvertisementCard/> : undefined}
+                                {(index % 2) === 0 && isMobile ? <AdvertisementCard/> : undefined}
                             </React.Fragment>
                         );
                     })}
