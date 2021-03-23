@@ -32,16 +32,22 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
     const [sweepstakes,] = useState<number[]>([1, 2, 3, 4, 5, 6, 7, 8, 9]);
     const isMobile = useMediaQuery({query: `(max-width: 768px)`});
 
-    console.log(isMobile)
-
     return (
         <div className={"container"}>
             <div className={"topSection"}>
                 <nav className={"navigationSection"}>
 
                 </nav>
+                <div className={"logoSection"}>
+                    <span>Logo Here</span>
+                </div>
                 <div className={"searchSection"}>
-                    <SearchBar onChange={() => {}} value={""} />
+                    <SearchBar onChange={() => {
+                    }} value={""}/>
+                </div>
+                <div className={"buttonSection"}>
+                    <span>Join Sweepstakes</span>
+                    <span>Earn FootyCoins</span>
                 </div>
                 <div className={"opacitySection"}>
                     <h1 className={"title"}>Your Sweepstakes</h1>

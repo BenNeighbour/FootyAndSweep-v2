@@ -41,11 +41,26 @@
     }
 
     .searchSection {
+      font-family: 'Inter', sans-serif;
       position: relative;
       display: flex;
       flex: 1;
       background: #0F1318;
       object-fit: contain;
+    }
+
+    .logoSection {
+      visibility: hidden;
+      clear: both;
+      display: none;
+      flex: 0;
+    }
+
+    .buttonSection {
+      visibility: hidden;
+      clear: both;
+      display: none;
+      flex: 0;
     }
 
     .title {
@@ -109,8 +124,10 @@
       position: relative;
       background-color: transparent;
       display: flex;
+      flex-direction: row;
       justify-content: center;
       align-items: flex-start;
+      padding-top: 30px;
 
       .opacitySection {
         visibility: hidden;
@@ -118,8 +135,23 @@
         display: none;
         flex: 0;
       }
-      
+
+      .logoSection {
+        display: flex;
+        visibility: visible;
+        flex: 0.45;
+      }
+
+      .buttonSection {
+        display: flex;
+        visibility: visible;
+        flex: 0.45;
+      }
+
       .searchSection {
+        flex: 1;
+        width: 100%;
+        height: 100%;
         background-color: transparent;
       }
     }
@@ -132,13 +164,13 @@
       .leftSweepstakeSection {
         visibility: visible;
         display: flex;
-        flex: 0.4;
+        flex: 0.45;
       }
 
       .rightSweepstakeSection {
         visibility: visible;
         display: flex;
-        flex: 0.4;
+        flex: 0.45;
       }
 
       .sweepstakes {
