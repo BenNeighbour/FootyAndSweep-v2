@@ -156,8 +156,18 @@
   }
 }
 
-@media screen and (min-width: 600px)  {
+@media screen and (min-width: 1000px) {
   .cardContainer {
-    min-height: 17.5vh;
+    padding: 30px;
+    margin: 16px;
+
+    .mainSection {
+      height: fit-content;
+
+      .leftSection {
+        display: flex;
+        flex-direction: column;
+      }
+    }
   }
 }

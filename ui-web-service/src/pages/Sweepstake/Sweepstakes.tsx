@@ -15,11 +15,12 @@
  */
 
 
-import React, {FunctionComponent, useState, useEffect} from 'react';
+import React, {FunctionComponent, useState} from 'react';
 import SweepstakeCard from "../../components/Card/SweepstakeCard";
 import "./Sweepstakes.scss";
 import AdvertisementCard from "../../components/AdvertisementCard/AdvertisementCard";
 import SearchBar from "../../components/SearchBar/SearchBar";
+import {useMediaQuery} from 'react-responsive';
 
 interface OwnProps {
 }
@@ -29,21 +30,9 @@ type Props = OwnProps;
 const Sweepstakes: FunctionComponent<Props> = (props) => {
     /* TODO: Change this! */
     const [sweepstakes,] = useState<number[]>([1, 2, 3, 4, 5, 6, 7, 8, 9]);
-    const [width, setWidth] = useState<number>(window.innerWidth);
+    const isMobile = useMediaQuery({query: `(max-width: 768px)`});
 
-    function handleWindowSizeChange() {
-        setWidth(window.innerWidth);
-    }
-
-    useEffect(() => {
-        window.addEventListener('resize', handleWindowSizeChange);
-        return () => {
-            window.removeEventListener('resize', handleWindowSizeChange);
-        }
-    }, []);
-
-    const [isMobile, ] = useState<boolean>(width <= 768);
-    console.log(isMobile);
+    console.log(isMobile)
 
     return (
         <div className={"container"}>
@@ -69,6 +58,7 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
                         return (
                             <React.Fragment key={`sweepstake-${index}`}>
                                 <SweepstakeCard
+                                    isMobile={isMobile}
                                     sweepstakeHashTags={["#bhawhu", "#firstscorer"]}
                                     sweepstakeMetadata={"Jon Neighbour, Ben Neighbour, SwaggrMcJaggr..."}
                                     sweepstakeName={"Jon’s Epic Sweepstake"} sweepstakeStatus={"Open"}

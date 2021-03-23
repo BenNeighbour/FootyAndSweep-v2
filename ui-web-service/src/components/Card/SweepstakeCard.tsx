@@ -21,6 +21,8 @@ import Tooltip from "../Tooltip/Tooltip";
 import CountdownTooltip from "../CountdownTooltip/CountdownTooltip";
 
 interface OwnProps {
+    isMobile: boolean;
+
     sweepstakeStatus: string;
     sweepstakeName: string;
     sweepstakeMetadata: string;
@@ -41,8 +43,8 @@ const SweepstakeCard: FunctionComponent<Props> = (props) => {
                         {/*  Sweepstake Name  */}
                         <div className={"sweepstakeName"}>
                             <span className={"text"}>{props.sweepstakeName}</span>
-                            <CountdownTooltip startingDate={new Date(2021, 3, 23)} text={"1:18:45"}
-                                              colorCode={"#46566B"}/>
+                            {props.isMobile ? <CountdownTooltip startingDate={new Date(2021, 3, 23)} text={"1:18:45"}
+                                                                colorCode={"#46566B"}/> : undefined}
                         </div>
 
                         {/*  Other Metadata  */}
@@ -54,6 +56,8 @@ const SweepstakeCard: FunctionComponent<Props> = (props) => {
                         {props.sweepstakeHashTags.map((value, index) => (
                             <Tooltip text={value} key={index}/>
                         ))}
+                        {!props.isMobile ? <CountdownTooltip startingDate={new Date(2021, 3, 23)} text={"1:18:45"}
+                                                            colorCode={"#46566B"}/> : undefined}
                     </div>
                 </div>
                 <div className={"rightSection"}>
