@@ -21,6 +21,7 @@ import "./Sweepstakes.scss";
 import AdvertisementCard from "../../components/AdvertisementCard/AdvertisementCard";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import {useMediaQuery} from 'react-responsive';
+import Button from "../../components/Button/Button";
 
 interface OwnProps {
 }
@@ -60,9 +61,12 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
                 </div>
                 <div className={"sweepstakes"}>
                     <div className={"titleDesktopSection"}>
-                        <div className={"titleBound"}><h1 className={"title"}>Your Sweepstakes</h1></div>
+                        <div className={"titleBound"}>
+                            <h1 className={"title"}>Your Sweepstakes</h1>
+                        </div>
+                        <Button title={"Create Sweepstake"} className={"createSweepstakeButton"} />
                     </div>
-                    
+
                     {sweepstakes.map((value, index) => {
                         return (
                             <React.Fragment key={`sweepstake-${index}`}>

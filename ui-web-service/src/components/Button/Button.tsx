@@ -23,18 +23,21 @@ interface OwnProps {
     type?: 'submit' | null;
     onClick?: (value: any) => void;
     disabled?: boolean;
-    style?: React.CSSProperties | {}
+    style?: React.CSSProperties | {};
+    className?: string | "";
 }
 
 type Props = OwnProps;
 
 const Button: FunctionComponent<Props> = (props) => {
     return (
-        <button className={"buttonContainer"} type={props.type || undefined} style={props.style}
-                disabled={props.disabled || false}
-                onClick={props.onClick}>
-            {props.title}
-        </button>
+        <div className={props.className}>
+            <button className={"buttonContainer"} type={props.type || undefined} style={props.style}
+                    disabled={props.disabled || false}
+                    onClick={props.onClick}>
+                {props.title}
+            </button>
+        </div>
     );
 };
 

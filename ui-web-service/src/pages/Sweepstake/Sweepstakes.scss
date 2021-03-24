@@ -193,8 +193,22 @@
         //overflow-y: scroll;
 
         .titleDesktopSection {
+          padding: 0 20px;
           visibility: visible;
           display: flex;
+          justify-content: space-between;
+
+          .createSweepstakeButton {
+            float: right;
+          }
+
+          .titleBound {
+            float: left;
+
+            .title {
+              padding: 0;
+            }
+          }
         }
       }
     }
