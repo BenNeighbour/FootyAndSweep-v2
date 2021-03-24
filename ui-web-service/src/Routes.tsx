@@ -21,6 +21,7 @@ import PortalPage from "./pages/Portal/PortalPage";
 import Sweepstakes from "./pages/Sweepstake/Sweepstakes";
 import OAuthRedirect from "./pages/Portal/OAuth/OAuthRedirect";
 import CreateSweepstake from "./pages/CreateSweepstake/CreateSweepstake";
+import LoadingPage from "./pages/Loading/LoadingPage";
 
 interface OwnProps {
 }
@@ -33,7 +34,7 @@ const Routes: FunctionComponent<Props> = (props) => {
             <Switch>
                 <Route>
                     <Route
-                        component={HomePage} exact path="/"/>
+                        component={LoadingPage} exact path="/"/>
                     <Route
                         component={OAuthRedirect} exact path="/oauth/login"/>
                     <Route

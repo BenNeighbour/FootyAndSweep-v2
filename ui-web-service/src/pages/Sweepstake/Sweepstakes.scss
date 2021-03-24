@@ -20,6 +20,7 @@
   display: flex;
   position: relative;
   flex-direction: column;
+  overflow: hidden;
 
   .title {
     margin: 0;
@@ -120,17 +121,14 @@
   }
 }
 
-
 @media (min-width: 1500px) {
-  body {
-    //overflow: hidden;
-  }
-
   .container {
     position: relative;
     display: flex;
     flex-direction: column;
     width: 100%;
+    overflow: hidden;
+    height: 100vh;
 
     .topSection {
       height: 10vh;
@@ -178,19 +176,29 @@
       .leftSweepstakeSection {
         visibility: visible;
         display: flex;
+        flex-direction: column;
         flex: 0.45;
+        padding-left: 25px;
+        padding-right: 25px;
+
+        .profileCard {
+          width: 100%;
+          flex: 0.5;
+          display: flex;
+        }
       }
 
       .rightSweepstakeSection {
         visibility: visible;
         display: flex;
         flex: 0.45;
+        padding-right: 25px;
+        padding-bottom: 25px;
       }
 
       .sweepstakes {
         flex: 1;
         height: 100%;
-        //overflow-y: scroll;
 
         .titleDesktopSection {
           padding: 0 20px;

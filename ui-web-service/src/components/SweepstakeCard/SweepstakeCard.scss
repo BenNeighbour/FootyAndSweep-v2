@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-.cardContainer {
+.sweepstakeCardContainer {
   animation: fadeInDown 0.5s;
   animation-fill-mode: backwards;
 
@@ -157,7 +157,7 @@
 }
 
 @media screen and (min-width: 1000px) {
-  .cardContainer {
+  .sweepstakeCardContainer {
     padding: 30px;
     margin: 25px;
 

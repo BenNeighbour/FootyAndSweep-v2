@@ -36,7 +36,7 @@ type Props = OwnProps;
 
 const SweepstakeCard: FunctionComponent<Props> = (props) => {
     return (
-        <div className={"cardContainer"}>
+        <div className={"sweepstakeCardContainer"}>
             <div className={"mainSection"}>
                 <div className={"leftSection"}>
                     <div className={"topLeftSection"}>
