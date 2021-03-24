@@ -20,14 +20,17 @@ import "./Tooltip.scss";
 interface OwnProps {
     text: string;
     colorCode?: string;
+    className?: string | "";
 }
 
 type Props = OwnProps;
 
 const Tooltip: FunctionComponent<Props> = (props) => {
     return (
-        <div className={"tooltipContainer"} style={{backgroundColor: props.colorCode}}>
-            <span className={"tooltipText"}>{props.text}</span>
+        <div className={props.className}>
+            <div className={"tooltipContainer"} style={{backgroundColor: props.colorCode}}>
+                <span className={"tooltipText"}>{props.text}</span>
+            </div>
         </div>
     );
 };

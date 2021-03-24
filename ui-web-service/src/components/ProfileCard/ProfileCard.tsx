@@ -17,6 +17,7 @@
 
 import React, {FunctionComponent} from 'react';
 import "./ProfileCard.scss";
+import Tooltip from "../Tooltip/Tooltip";
 
 interface OwnProps {
     className?: string | "";
@@ -36,6 +37,16 @@ const ProfileCard: FunctionComponent<Props> = (props) => {
                         <div className={"usernameSection"}>
                             <span className={"username"}>Ben Neighbour</span>
                             <span className={"tag"}>@BenTheDev</span>
+                            <div className={"medals"}>
+                                <Tooltip className={"bronzeMedal"} text={"FS"} />
+                                <Tooltip className={"silverMedal"} text={"FS"} />
+                                <Tooltip className={"goldMedal"} text={"FS"} />
+                            </div>
+                        </div>
+                        <div className={"balanceSection"}>
+                                <span className={"balance"}>910</span>
+                                <br />
+                                <span className={"currency"}>FootyCoins</span>
                         </div>
                     </div>
                 </div>

@@ -46,6 +46,7 @@
       place-items: center;
 
       .usernameSection {
+        float: left;
         display: flex;
         flex-direction: column;
 
@@ -53,7 +54,7 @@
           font-style: normal;
           font-weight: bold;
           font-size: 12px;
-          line-height: 22px;
+          line-height: 20px;
           color: #DEE3EA;
         }
 
@@ -61,7 +62,55 @@
           font-style: normal;
           font-weight: 500;
           font-size: 12px;
-          line-height: 22px;
+          line-height: 20px;
+          color: #5D7290;
+        }
+
+        .medals {
+          display: flex;
+          margin-top: 5px;
+
+          .bronzeMedal {
+            .tooltipContainer {
+              background-color: rgba(205, 127, 50, 0.4);
+            }
+          }
+
+          .silverMedal {
+            .tooltipContainer {
+              background-color: #323D4D;
+            }
+          }
+
+          .goldMedal {
+            .tooltipContainer {
+              background-color: rgba(255, 215, 0, 0.6);
+            }
+          }
+        }
+      }
+
+      .balanceSection {
+        flex: 1;
+        display: flow-root;
+        text-align: center;
+
+        .balance {
+          width: fit-content;
+          font-style: normal;
+          font-weight: bold;
+          font-size: 40px;
+          line-height: 40px;
+          color: #DEE3EA;
+        }
+
+        .currency {
+          width: fit-content;
+          font-style: normal;
+          font-weight: 500;
+          font-size: 12px;
+          line-height: 12px;
+          text-align: center;
           color: #5D7290;
         }
       }
