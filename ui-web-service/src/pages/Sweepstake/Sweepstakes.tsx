@@ -54,12 +54,15 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
                 </div>
             </div>
 
-
             <div className={"sweepstakesContainer"}>
                 <div className={"leftSweepstakeSection"}>
                     profile sectiomn
                 </div>
                 <div className={"sweepstakes"}>
+                    <div className={"titleDesktopSection"}>
+                        <div className={"titleBound"}><h1 className={"title"}>Your Sweepstakes</h1></div>
+                    </div>
+                    
                     {sweepstakes.map((value, index) => {
                         return (
                             <React.Fragment key={`sweepstake-${index}`}>

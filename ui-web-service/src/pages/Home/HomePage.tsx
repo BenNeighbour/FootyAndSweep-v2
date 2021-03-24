@@ -16,7 +16,6 @@
 
 
 import React, {FunctionComponent} from 'react';
-import Navbar from "../../components/NavBar/Navbar";
 
 interface OwnProps {
 }
@@ -26,7 +25,6 @@ type Props = OwnProps;
 const HomePage: FunctionComponent<Props> = (props) => {
     return (
         <div>
-            <Navbar/>
         </div>
     );
 };

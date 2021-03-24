@@ -21,13 +21,22 @@
   position: relative;
   flex-direction: column;
 
+  .title {
+    margin: 0;
+    padding-left: 20px;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 28px;
+    line-height: 45px;
+    color: #DEE3EA;
+  }
+
   .topSection {
     display: flex;
     flex-direction: column;
     position: fixed;
     top: 0;
     width: 100%;
-    overflow: hidden;
     height: 20vh;
 
     .opacitySection {
@@ -63,15 +72,6 @@
       flex: 0;
     }
 
-    .title {
-      margin: 0;
-      padding-left: 20px;
-      font-style: normal;
-      font-weight: bold;
-      font-size: 28px;
-      line-height: 45px;
-      color: #DEE3EA;
-    }
   }
 }
 
@@ -90,6 +90,15 @@
     clear: both;
     display: none;
     flex: 0;
+  }
+
+  .sweepstakes {
+    .titleDesktopSection {
+      visibility: hidden;
+      clear: both;
+      display: none;
+      flex: 0;
+    }
   }
 }
 
@@ -113,6 +122,10 @@
 
 
 @media (min-width: 1500px) {
+  body {
+    //overflow: hidden;
+  }
+
   .container {
     position: relative;
     display: flex;
@@ -159,6 +172,7 @@
     .sweepstakesContainer {
       margin-top: 0;
       width: 100%;
+      height: 100%;
       display: flex;
 
       .leftSweepstakeSection {
@@ -175,6 +189,13 @@
 
       .sweepstakes {
         flex: 1;
+        height: 100%;
+        //overflow-y: scroll;
+
+        .titleDesktopSection {
+          visibility: visible;
+          display: flex;
+        }
       }
     }
   }
