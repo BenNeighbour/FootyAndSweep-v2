@@ -31,7 +31,7 @@
     display: flex;
     max-height: 70%;
     padding-bottom: 20px;
-    justify-content: space-between;
+    justify-content: left;
 
     .profilePictureSection {
       flex: 1;
@@ -50,7 +50,6 @@
     }
 
     .metadataSection {
-      flex: 2;
       place-items: center;
       justify-content: space-between;
       width: fit-content;
@@ -61,11 +60,13 @@
         float: left;
         display: flex;
         flex-direction: column;
+        padding-left: 15px;
+        padding-right: 15px;
 
         .username {
           font-style: normal;
           font-weight: bold;
-          font-size: 12px;
+          font-size: 15px;
           line-height: 20px;
           color: #DEE3EA;
         }
@@ -73,7 +74,7 @@
         .tag {
           font-style: normal;
           font-weight: 500;
-          font-size: 12px;
+          font-size: 14px;
           line-height: 20px;
           color: #5D7290;
         }
@@ -103,15 +104,17 @@
       }
 
       .balanceSection {
-        display: flow-root;
         text-align: center;
+        float: left;
+        padding-left: 15px;
+        padding-right: 15px;
 
         .balance {
           width: fit-content;
           font-style: normal;
           font-weight: bold;
-          font-size: 40px;
-          line-height: 40px;
+          font-size: 45px;
+          line-height: 45px;
           color: #DEE3EA;
         }
 
@@ -119,8 +122,8 @@
           width: fit-content;
           font-style: normal;
           font-weight: 500;
-          font-size: 12px;
-          line-height: 12px;
+          font-size: 14px;
+          line-height: 14px;
           text-align: center;
           color: #5D7290;
         }
