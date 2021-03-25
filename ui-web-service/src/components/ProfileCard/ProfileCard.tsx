@@ -31,27 +31,29 @@ const ProfileCard: FunctionComponent<Props> = (props) => {
             <div className={"profileCardContainer"}>
                 <div className={"mainSection"}>
                     <div className={"profilePictureSection"}>
-                        df
                     </div>
                     <div className={"metadataSection"}>
                         <div className={"usernameSection"}>
                             <span className={"username"}>Ben Neighbour</span>
                             <span className={"tag"}>@BenTheDev</span>
                             <div className={"medals"}>
-                                <Tooltip className={"bronzeMedal"} text={"FS"} />
-                                <Tooltip className={"silverMedal"} text={"FS"} />
-                                <Tooltip className={"goldMedal"} text={"FS"} />
+                                <Tooltip className={"bronzeMedal"} text={"FS"}/>
+                                <Tooltip className={"silverMedal"} text={"FS"}/>
+                                <Tooltip className={"goldMedal"} text={"FS"}/>
                             </div>
                         </div>
                         <div className={"balanceSection"}>
-                                <span className={"balance"}>910</span>
-                                <br />
-                                <span className={"currency"}>FootyCoins</span>
+                            <span className={"balance"}>910</span>
+                            <br/>
+                            <span className={"currency"}>FootyCoins</span>
                         </div>
                     </div>
                 </div>
                 <div className={"followerSection"}>
-
+                    <div className={"innerSection"}>
+                        <span className={"followers"}><b className={"number"}>9.4k</b> followers</span>
+                        <span className={"following"}><b className={"number"}>10</b> following</span>
+                    </div>
                 </div>
             </div>
         </div>

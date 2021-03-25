@@ -16,7 +16,6 @@
 
 import React, {FunctionComponent} from 'react';
 import {Route, Switch} from "react-router";
-import HomePage from "./pages/Home/HomePage";
 import PortalPage from "./pages/Portal/PortalPage";
 import Sweepstakes from "./pages/Sweepstake/Sweepstakes";
 import OAuthRedirect from "./pages/Portal/OAuth/OAuthRedirect";
