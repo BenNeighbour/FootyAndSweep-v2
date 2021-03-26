@@ -190,6 +190,7 @@
       .rightSweepstakeSection {
         visibility: visible;
         display: flex;
+        flex-direction: column;
         flex: 0.45;
         padding-right: 25px;
         padding-bottom: 25px;

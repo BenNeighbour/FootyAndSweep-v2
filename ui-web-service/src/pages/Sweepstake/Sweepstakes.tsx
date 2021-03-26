@@ -84,6 +84,7 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
                 </div>
                 <div className={"rightSweepstakeSection"}>
                     <AdvertisementCard isMobile={false}/>
+                    <AdvertisementCard isMobile={false}/>
                 </div>
             </div>
 

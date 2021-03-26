@@ -102,8 +102,6 @@
 
 @media screen and (min-width: 600px) {
   .adArea-desktop {
-    //max-height: 17.5vh;
-
     .borderContainer {
       flex: 0;
       display: none;
@@ -164,6 +162,7 @@
           object-fit: contain;
           display: inline-flex;
           position: relative;
+          height: 200px;
 
           .advertisementDesktop {
             float: left;
