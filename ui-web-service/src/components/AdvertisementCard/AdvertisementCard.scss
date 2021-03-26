@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-.adArea {
+.adArea, .adArea-desktop {
   animation: fadeInDown 0.5s;
   animation-fill-mode: backwards;
   overflow: hidden;
@@ -79,6 +79,12 @@
           }
         }
 
+        .advertisementDetailsDesktop {
+          visibility: hidden;
+          flex: 0;
+          display: none;
+        }
+
         .advertisementSubtitle {
           width: 85%;
           float: left;
@@ -94,8 +100,87 @@
   }
 }
 
-@media screen and (min-width: 600px)  {
-  .adArea {
-    max-height: 17.5vh;
+@media screen and (min-width: 600px) {
+  .adArea-desktop {
+    //max-height: 17.5vh;
+
+    .borderContainer {
+      flex: 0;
+      display: none;
+      visibility: hidden;
+
+      .borderLine {
+        flex: 0;
+        display: none;
+        visibility: hidden;
+      }
+    }
+
+    .adContainer {
+      .mainSection {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+
+        .detailsSection {
+          padding: 20px;
+
+          .advertisementDetailsDesktop {
+            visibility: visible;
+            display: flex;
+
+            font-style: normal;
+            font-weight: 500;
+            font-size: 12px;
+            line-height: 18px;
+            color: #B2BDCD;
+            padding-top: 14px;
+            padding-bottom: 14px;
+          }
+
+          .advertisementSubtitle {
+            font-style: normal;
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 22px;
+            color: #5D7290;
+            padding: 0;
+            margin: 0;
+          }
+
+          .advertisementTitle {
+            font-style: normal;
+            font-weight: bold;
+            font-size: 14px;
+            line-height: 22px;
+            color: #DEE3EA;
+            padding: 0;
+            margin: 0;
+          }
+        }
+
+        .pictureSection {
+          flex: 1.5;
+          object-fit: contain;
+          display: inline-flex;
+          position: relative;
+
+          .advertisementDesktop {
+            float: left;
+            position: absolute;
+            right: 0;
+            top: 0;
+            z-index: 1000;
+            padding: 15px;
+          }
+
+          img {
+            object-fit: cover;
+            height: 100%;
+            width: 100%;
+          }
+        }
+      }
+    }
   }
 }

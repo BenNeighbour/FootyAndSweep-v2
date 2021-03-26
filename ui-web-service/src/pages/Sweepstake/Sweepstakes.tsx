@@ -77,13 +77,13 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
                                     sweepstakeMetadata={"Jon Neighbour, Ben Neighbour, SwaggrMcJaggr..."}
                                     sweepstakeName={"Jon’s Epic Sweepstake"} sweepstakeStatus={"Open"}
                                     totalAmountOfTickets={8} ticketsPurchasedSoFar={2}/>
-                                {(index % 2) === 0 && isMobile ? <AdvertisementCard/> : undefined}
+                                {(index % 2) === 0 && isMobile ? <AdvertisementCard isMobile={true}/> : undefined}
                             </React.Fragment>
                         );
                     })}
                 </div>
                 <div className={"rightSweepstakeSection"}>
-                    df
+                    <AdvertisementCard isMobile={false}/>
                 </div>
             </div>
 

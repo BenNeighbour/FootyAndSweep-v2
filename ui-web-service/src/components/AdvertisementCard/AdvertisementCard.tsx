@@ -21,27 +21,30 @@ import AdImage from "./dummy-ad.png";
 import Tooltip from "../Tooltip/Tooltip";
 
 interface OwnProps {
+    isMobile?: boolean | true;
 }
 
 type Props = OwnProps;
 
 const AdvertisementCard: FunctionComponent<Props> = (props) => {
     return (
-        <div className={"adArea"}>
+        <div className={`adArea${!props.isMobile ? "-desktop" : ""}`}>
             <div className={"borderContainer"}>
                 <div className={"borderLine"}/>
             </div>
             <div className={"adContainer"}>
                 <div className={"mainSection"}>
                     <div className={"pictureSection"}>
+                        {!props.isMobile ? <Tooltip className={"advertisementDesktop"} text={"ADVERTISEMENT"} colorCode={"#242C37"}/> : undefined}
                         <img alt={""} src={AdImage}/>
                     </div>
                     <div className={"detailsSection"}>
                         <div className={"titleSection"}>
-                            <span className={"advertisementTitle"}>AlgoExpert</span>
-                            <Tooltip text={"AD"} colorCode={"#242C37"}/>
+                            <span className={"advertisementTitle"}>{props.isMobile ? "AlgoExpert" : "The Ultimate SWE Interview Preparation Kit"}</span>
+                            {props.isMobile ? <Tooltip text={"AD"} colorCode={"#242C37"}/> : undefined}
                         </div>
-                        <span className={"advertisementSubtitle"}>AlgoExpert | Ace the Coding Interviews with absolute flying colors</span>
+                        <span className={"advertisementSubtitle"}>{props.isMobile ? "AlgoExpert | Ace the Coding Interviews with absolute flying colors" : "AlgoExpert | Ace the Coding Interviews"}</span>
+                        <span className={"advertisementDetailsDesktop"}>The sponsor/advertiser can put whatever bullshit they would like here as long as it satifies the sponsor/advertiser’s needs which is to get traffic which is why a good description is here and a link to their homepage is below</span>
                     </div>
                 </div>
             </div>
