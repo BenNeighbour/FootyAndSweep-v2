@@ -65,6 +65,11 @@
         margin: 0;
         padding: 10px;
 
+        .desktopCallToAction {
+          display: none;
+          visibility: hidden;
+          flex: 0;
+        }
 
         .titleSection {
           display: flex;
@@ -115,6 +120,8 @@
     }
 
     .adContainer {
+      margin: 10px 0;
+
       .mainSection {
         display: flex;
         width: 100%;
@@ -122,6 +129,23 @@
 
         .detailsSection {
           padding: 20px;
+
+          .desktopCallToAction {
+            visibility: visible;
+            display: flex;
+
+            .advertisementLink {
+              float: right;
+              text-align: right;
+              width: 100%;
+              font-style: normal;
+              font-weight: bold;
+              font-size: 14px;
+              line-height: 22px;
+              color: #B2BDCD;
+              cursor: pointer;
+            }
+          }
 
           .advertisementDetailsDesktop {
             visibility: visible;
