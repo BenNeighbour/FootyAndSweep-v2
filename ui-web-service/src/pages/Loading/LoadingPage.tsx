@@ -28,7 +28,7 @@ type Props = OwnProps;
 const LoadingPage: FunctionComponent<Props> = (props) => {
     return (
         <div className={"loadingPageContainer"}>
-            <Spinner size={"small"}/>
+            <Spinner />
         </div>
     );
 };

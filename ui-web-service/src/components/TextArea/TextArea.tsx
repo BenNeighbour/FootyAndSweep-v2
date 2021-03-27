@@ -21,7 +21,6 @@ import "./TextArea.scss";
 interface OwnProps {
     includePasswordStrengthChecker?: boolean;
     value: any;
-    placeholder?: string | null;
     name: string;
     label: string;
     onChange: (value: any) => void;
@@ -53,7 +52,7 @@ const TextArea: FunctionComponent<Props> = (props) => {
                         disabled={props.disabled || false}
                         value={props.value}
                         onChange={props.onChange}
-                        placeholder={props.placeholder || ""}/>
+                        placeholder={props.label || ""}/>
             </div>
             {props.errors && props.touched ? (
                 <span className={"errorTextMessage"}>{props.errors}</span>
