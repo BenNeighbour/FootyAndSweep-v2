@@ -27,6 +27,7 @@ import * as yup from "yup";
 import InputField from "../../components/InputField/InputField";
 import styled from "styled-components";
 import Button from "../../components/Button/Button";
+import TextArea from "../../components/TextArea/TextArea";
 
 interface OwnProps {
     state: SweepstakeReducerType;
@@ -76,6 +77,11 @@ const CreateSweepstake: FunctionComponent<Props> = (props) => {
                                         type={"text"}
                                         onChange={handleChange}
                                         value={values.name}/>
+
+                            <TextArea label={"Sweepstake Name"} touched={touched.name} errors={errors.name}
+                                      name={"name"}
+                                      onChange={handleChange}
+                                      value={values.name}/>
 
                             {/*TODO: isPrivate Switch HERE */}
                             {/*TODO: sweepstakeType dropdown */}
