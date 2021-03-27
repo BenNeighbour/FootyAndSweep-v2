@@ -33,7 +33,7 @@ const Routes: FunctionComponent<Props> = (props) => {
             <Switch>
                 <Route>
                     <Route
-                        component={LoadingPage} exact path="/"/>
+                        component={LoadingPage} exact path="/loading"/>
                     <Route
                         component={OAuthRedirect} exact path="/oauth/login"/>
                     <Route

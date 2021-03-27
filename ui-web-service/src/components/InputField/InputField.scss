@@ -14,54 +14,46 @@
  *   limitations under the License.
  */
 
-.input {
+.inputArea {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  text-align: left;
+}
+
+input {
   box-sizing: border-box;
-  border: 0;
-  outline: 0;
-  font-size: 15px;
-  font-weight: 600;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.5;
-  letter-spacing: normal;
-  text-align: left;
   width: 100%;
-  color: #02203c;
-  border: none;
   outline: none;
-  padding-left: 13px;
-  padding-right: 1em;
-  margin-top: 0;
-}
-
-.inputContainer {
-  position: relative;
-  border-radius: 5px;
-  height: 60px;
-  object-fit: fill;
-  border-radius: 5px;
-  line-height: 1.42857143;
-  background-color: #ffffff;
-  box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.25);
-  -webkit-box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.25);
-  -moz-box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.25);
-}
-
-.fieldName {
-  padding-top: 1em;
-  padding-left: 1em;
-  font-size: 12px;
-  font-weight: 600;
-  font-stretch: normal;
+  margin: 0;
+  background: #242C37;
+  border: 1px solid #242C37;
+  border-radius: 8px;
+  padding: 10px 10px 10px 15px;
+  box-shadow: -3px 4px 14px rgba(0, 0, 0, 0.7);
+  font-family: 'Inter', sans-serif;
   font-style: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  text-align: left;
-  color: #b5b5b5;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 22px;
+  color: #DEE3EA;
+}
+
+.input-invalid {
+  border: 2px solid #FD4D4D;
+}
+
+input::placeholder {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 22px;
+  color: #5D7290;
 }
 
 .errorTextMessage {
-  text-align: left;
-  font-size: 14px;
-  color: red;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 22px;
+  color: #FD4D4D;
 }

@@ -36,10 +36,10 @@ type Props = OwnProps;
 
 const InputField: FunctionComponent<Props> = (props) => {
     return (
-        <>
+        <div className={"inputArea"}>
             <div className={"inputContainer"}>
-                <span className={"fieldName"}>{props.label}</span>
-                <input className={"input"} name={props.name} disabled={props.disabled || false} type={props.type}
+                <input className={`input${props.errors ? "-invalid" : ""}`} name={props.name}
+                       disabled={props.disabled || false} type={props.type}
                        value={props.value}
                        onChange={props.onChange}
                        placeholder={props.placeholder || ""}/>
@@ -48,9 +48,9 @@ const InputField: FunctionComponent<Props> = (props) => {
                 <div><PasswordBar password={props.value}/></div> : undefined}
             {props.errors && props.touched ? (
                 <span className={"errorTextMessage"}>{props.errors}</span>
-            ) : null}
+            ) : undefined}
             <br/>
-        </>
+        </div>
     );
 };
 
