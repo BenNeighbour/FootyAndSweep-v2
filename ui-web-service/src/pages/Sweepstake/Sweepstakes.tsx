@@ -77,14 +77,14 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
                                     sweepstakeMetadata={"Jon Neighbour, Ben Neighbour, SwaggrMcJaggr..."}
                                     sweepstakeName={"Jon’s Epic Sweepstake"} sweepstakeStatus={"Open"}
                                     totalAmountOfTickets={8} ticketsPurchasedSoFar={2}/>
-                                {(index % 2) === 0 && isMobile ? <AdvertisementCard isMobile={true}/> : undefined}
+                                {(index % 2) === 0 && isMobile ? <AdvertisementCard advertiserLink={"https://www.algoexpert.io"} isMobile={true} /> : undefined}
                             </React.Fragment>
                         );
                     })}
                 </div>
                 <div className={"rightSweepstakeSection"}>
-                    <AdvertisementCard isMobile={false}/>
-                    <AdvertisementCard isMobile={false}/>
+                    <AdvertisementCard advertiserLink={"https://www.algoexpert.io"} isMobile={false}/>
+                    <AdvertisementCard advertiserLink={"https://www.algoexpert.io"} isMobile={false}/>
                 </div>
             </div>
 

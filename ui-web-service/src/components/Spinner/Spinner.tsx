@@ -18,13 +18,14 @@ import React, {FunctionComponent} from 'react';
 import "./Spinner.scss";
 
 interface OwnProps {
+    size?: "small" | "normal";
 }
 
 type Props = OwnProps;
 
 const Spinner: FunctionComponent<Props> = (props) => {
     return (
-        <div className={"spinnerWrapper"}>
+        <div className={`spinnerWrapper-${props.size || "normal"}`}>
             <div className={"ringSpinner"}/>
         </div>
     );

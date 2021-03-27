@@ -21,7 +21,6 @@ import "./InputField.scss"
 interface OwnProps {
     includePasswordStrengthChecker?: boolean;
     value: any;
-    placeholder?: string | null;
     type: 'text' | 'number' | 'email' | 'password';
     name: string;
     label: string;
@@ -42,7 +41,7 @@ const InputField: FunctionComponent<Props> = (props) => {
                        disabled={props.disabled || false} type={props.type}
                        value={props.value}
                        onChange={props.onChange}
-                       placeholder={props.placeholder || ""}/>
+                       placeholder={props.label || ""}/>
             </div>
             {props.type === "password" && props.includePasswordStrengthChecker ?
                 <div><PasswordBar password={props.value}/></div> : undefined}

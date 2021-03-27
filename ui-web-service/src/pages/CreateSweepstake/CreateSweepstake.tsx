@@ -78,7 +78,7 @@ const CreateSweepstake: FunctionComponent<Props> = (props) => {
                                         onChange={handleChange}
                                         value={values.name}/>
 
-                            <TextArea label={"Sweepstake Name"} touched={touched.name} errors={errors.name}
+                            <TextArea label={"Sweepstake Description"} touched={touched.name} errors={errors.name}
                                       name={"name"}
                                       onChange={handleChange}
                                       value={values.name}/>

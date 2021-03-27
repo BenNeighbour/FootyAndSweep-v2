@@ -16,8 +16,8 @@
 
 import React, {FunctionComponent, useEffect, useState} from 'react';
 import styled from "styled-components";
-import LoginForm from "./Form/LoginForm";
-import SignupForm from "./Form/SignupForm";
+import LoginForm from "./Login/LoginForm";
+import SignupForm from "./Signup/SignupForm";
 import {useHistory} from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
 
