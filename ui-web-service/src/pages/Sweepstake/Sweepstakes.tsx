@@ -23,8 +23,9 @@ import SearchBar from "../../components/SearchBar/SearchBar";
 import {useMediaQuery} from 'react-responsive';
 import Button from "../../components/Button/Button";
 import ProfileCard from "../../components/ProfileCard/ProfileCard";
+import {RouteComponentProps} from "react-router-dom";
 
-interface OwnProps {
+interface OwnProps extends RouteComponentProps {
 }
 
 type Props = OwnProps;
@@ -48,8 +49,14 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
                     }} value={""}/>
                 </div>
                 <div className={"buttonSection"}>
-                    <span>Join Sweepstakes</span>
-                    <span>Earn FootyCoins</span>
+                    <Button style={{
+                        padding: "5px 20px"
+                    }} title={"Join Sweepstake"} />
+                    <Button style={{
+                        padding: "5px 20px"
+                    }} title={"Earn FootyCoins"} />
+                    <div className={"settingsLink"}>
+                    </div>
                 </div>
                 <div className={"opacitySection"}>
                     <h1 className={"title"}>Your Sweepstakes</h1>
@@ -65,7 +72,9 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
                         <div className={"titleBound"}>
                             <h1 className={"title"}>Your Sweepstakes</h1>
                         </div>
-                        <Button title={"Create Sweepstake"} className={"createSweepstakeButton"}/>
+                        <Button onClick={() => {
+                            props.history.push("/sweepstakes/create")
+                        }} title={"Create Sweepstake"} className={"createSweepstakeButton"}/>
                     </div>
 
                     {sweepstakes.map((value, index) => {

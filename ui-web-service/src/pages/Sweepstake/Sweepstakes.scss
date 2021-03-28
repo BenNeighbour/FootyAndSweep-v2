@@ -157,6 +157,24 @@
         display: flex;
         visibility: visible;
         flex: 0.45;
+        justify-content: space-evenly;
+
+        .settingsLink {
+          flex: 1;
+          max-width: 40px;
+          content: '';
+          height: 40px;
+          cursor: pointer;
+          box-sizing: border-box;
+          display: inline-block;
+          justify-content: center;
+          place-items: center;
+          clip-path: circle(20px at center);
+          background-repeat: no-repeat;
+          background-position: center center;
+          background-size: cover;
+          background-image: url("http://www.footyandsweep-dev.com:3000/profile.jpg");
+        }
       }
 
       .searchSection {
