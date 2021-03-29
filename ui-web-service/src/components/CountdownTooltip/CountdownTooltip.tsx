@@ -19,7 +19,6 @@ import React, {FunctionComponent, useEffect, useState} from 'react';
 import "./CountdownTooltip.scss";
 
 interface OwnProps {
-    text: string;
     colorCode?: string;
     startingDate: Date;
 }
@@ -27,25 +26,36 @@ interface OwnProps {
 type Props = OwnProps;
 
 const CountdownTooltip: FunctionComponent<Props> = (props) => {
-    const [timeLeft, setTimeLeft] = useState(props.startingDate);
+    const [timeLeft, setTimeLeft] = useState<any>(getTimeRemaining(props.startingDate));
 
     useEffect(() => {
-        let countdown = setTimeout(() => {
-            if (timeLeft !== new Date()) {
-                setTimeLeft(new Date());
-            }
-        }, 1000);
+            let countdown = setTimeout(() => {
+                /* Decrement the time */
+                setTimeLeft(getTimeRemaining(props.startingDate))
+            }, 1000);
 
-        return function cleanup() {
-            clearTimeout(countdown);
-        };
-    }, [timeLeft])
+            return function cleanup() {
+                clearTimeout(countdown);
+            };
+    }, [timeLeft, props.startingDate]);
 
     return (
         <div className={"countdownTooltipContainer"} style={{backgroundColor: props.colorCode}}>
-            <span className={"tooltipText"}>{timeLeft.getHours()}:{timeLeft.getMinutes()}:{timeLeft.getSeconds()}</span>
+            <span className={"tooltipText"}>{timeLeft.days}:{timeLeft.hours}:{timeLeft.minutes}:{timeLeft.seconds}</span>
         </div>
     );
 };
+
+function getTimeRemaining(endDate: Date): any {
+    let total: number = endDate.getTime() - new Date().getTime();
+
+    return {
+        total,
+        days: Math.floor(total / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((total / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((total / 1000 / 60) % 60),
+        seconds: Math.floor((total / 1000) % 60)
+    };
+}
 
 export default CountdownTooltip;

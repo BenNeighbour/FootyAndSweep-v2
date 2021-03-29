@@ -29,8 +29,8 @@ type Props = OwnProps;
 const PortalPage: FunctionComponent<Props> = (props) => {
     const history = useHistory<any>();
 
-    const [historyPreviousState] = useState(history.location.state);
-    const [isLoggingIn, setIsLoggingIn] = useState(true);
+    const [historyPreviousState] = useState<any>(history.location.state);
+    const [isLoggingIn, setIsLoggingIn] = useState<boolean>(true);
 
     useEffect(() => {
         if (history.location.state && history.location.state.errors) {

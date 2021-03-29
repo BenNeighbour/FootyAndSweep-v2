@@ -35,6 +35,10 @@ interface OwnProps {
 type Props = OwnProps;
 
 const SweepstakeCard: FunctionComponent<Props> = (props) => {
+    /* TODO: REMOVE THIS!! */
+    let startingDate: Date = new Date();
+    startingDate.setDate(new Date().getDate() + 6)
+
     return (
         <div className={"sweepstakeCardContainer"}>
             <div className={"mainSection"}>
@@ -43,7 +47,7 @@ const SweepstakeCard: FunctionComponent<Props> = (props) => {
                         {/*  Sweepstake Name  */}
                         <div className={"sweepstakeName"}>
                             <span className={"text"}>{props.sweepstakeName}</span>
-                            {props.isMobile ? <CountdownTooltip startingDate={new Date(2021, 3, 23)} text={"1:18:45"}
+                            {props.isMobile ? <CountdownTooltip startingDate={startingDate}
                                                                 colorCode={"#46566B"}/> : undefined}
                         </div>
 
@@ -56,7 +60,7 @@ const SweepstakeCard: FunctionComponent<Props> = (props) => {
                         {props.sweepstakeHashTags.map((value, index) => (
                             <Tooltip text={value} key={index}/>
                         ))}
-                        {!props.isMobile ? <CountdownTooltip startingDate={new Date(2021, 3, 23)} text={"1:18:45"}
+                        {!props.isMobile ? <CountdownTooltip startingDate={startingDate}
                                                             colorCode={"#46566B"}/> : undefined}
                     </div>
                 </div>
