@@ -39,7 +39,6 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
         <div className={"container"}>
             <div className={"topSection"}>
                 <nav className={"navigationSection"}>
-
                 </nav>
                 <div className={"logoSection"}>
                     <span>Logo Here</span>
