@@ -64,7 +64,7 @@ const CreateSweepstake: FunctionComponent<Props> = (props) => {
                 initialValues={{
                     name: "",
                     isPrivate: true,
-                    ownerId: "2c918094780c244101780c26a3900000",
+                    ownerId: "2c91808c788455b60178845be9a80000",
                     minimumPlayers: 2,
                     stake: 10.00
                 }}

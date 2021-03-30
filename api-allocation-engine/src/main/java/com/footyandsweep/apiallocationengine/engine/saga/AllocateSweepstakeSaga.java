@@ -34,25 +34,19 @@ public class AllocateSweepstakeSaga implements SimpleSaga<AllocateSweepstakeSaga
 
   @Override
   public SagaDefinition<AllocateSweepstakeSagaData> getSagaDefinition() {
-    return step()
-        .invokeLocal(allocationEngine::allocateSweepstakeTickets)
-        .withCompensation(
-            sagaData -> {
-              /* TODO */
-            })
-        .step()
-        .invokeParticipant(
-            sagaData ->
-                allocationEngine.updateSweepstakeStatus(
-                    sagaData.getSweepstake().getId(), SweepstakeCommon.SweepstakeStatus.ALLOCATED))
-        .onReply(
-            UpdateSweepstakeStatusFailure.class,
-            (sagaData, failure) ->
-                allocationEngine.updateSweepstakeStatus(
-                    sagaData.getSweepstake().getId(), SweepstakeCommon.SweepstakeStatus.OPEN))
-        .step()
-        .invokeParticipant(sagaData -> allocationEngine.allocateTickets(sagaData.getTickets()))
-        .build();
+    // @formatter:off
+    return
+            step()
+            .invokeLocal(allocationEngine::allocateSweepstakeTickets)
+            .step()
+            .invokeParticipant(sagaData -> allocationEngine.updateSweepstakeStatus(sagaData.getSweepstake().getId(), SweepstakeCommon.SweepstakeStatus.ALLOCATED))
+            .onReply(
+              UpdateSweepstakeStatusFailure.class,
+              (sagaData, failure) -> allocationEngine.updateSweepstakeStatus(sagaData.getSweepstake().getId(), SweepstakeCommon.SweepstakeStatus.OPEN))
+            .step()
+            .invokeParticipant(sagaData -> allocationEngine.allocateTickets(sagaData.getTickets()))
+            .build();
+    // @formatter:on
   }
 
   @Override

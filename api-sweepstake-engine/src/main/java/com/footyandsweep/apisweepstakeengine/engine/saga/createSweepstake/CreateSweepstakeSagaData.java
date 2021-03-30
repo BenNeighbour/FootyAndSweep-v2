@@ -29,7 +29,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class CreateSweepstakeSagaData {
   private SweepstakeCommon sweepstake;
-  private ParticipantIds ownerIdObject;
+  private ParticipantIds owner;
 
   public CreateSweepstakeSagaData(SweepstakeCommon sweepstake) {
     this.sweepstake = sweepstake;

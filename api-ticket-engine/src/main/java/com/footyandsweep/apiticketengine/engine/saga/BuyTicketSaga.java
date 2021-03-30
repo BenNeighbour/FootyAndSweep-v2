@@ -32,22 +32,17 @@ public class BuyTicketSaga implements SimpleSaga<BuyTicketSagaData> {
 
   @Override
   public SagaDefinition<BuyTicketSagaData> getSagaDefinition() {
-    return step()
-        .invokeLocal(ticketEngine::getParentSweepstakeAndParticipant)
-        .withCompensation(sagaData -> {})
-        .step()
-        .invokeLocal(ticketEngine::buyTickets)
-        .withCompensation(
-            sagaData -> {
-              sagaData
-                  .getSavedTickets()
-                  .forEach(
-                      currentTicket -> {
-                        ticketEngine.deleteTicket(currentTicket.getId());
-                      });
-            })
-        .step()
-        .invokeParticipant(ticketEngine::updateUserBalance)
-        .build();
+    // @formatter:off
+    return
+            step()
+            .invokeLocal(ticketEngine::getParentSweepstakeAndParticipant)
+            .withCompensation(sagaData -> {})
+            .step()
+            .invokeLocal(ticketEngine::buyTickets)
+            .withCompensation(sagaData -> sagaData.getSavedTickets().forEach(currentTicket -> ticketEngine.deleteTicket(currentTicket.getId())))
+            .step()
+            .invokeParticipant(ticketEngine::updateUserBalance)
+            .build();
+    // @formatter:on
   }
 }

@@ -37,7 +37,7 @@ type Props = OwnProps;
 const SweepstakeCard: FunctionComponent<Props> = (props) => {
     /* TODO: REMOVE THIS!! */
     let startingDate: Date = new Date();
-    startingDate.setDate(new Date().getDate() + 6)
+    startingDate.setDate(new Date().getDate() + 6);
 
     return (
         <div className={"sweepstakeCardContainer"}>
@@ -80,7 +80,9 @@ const SweepstakeCard: FunctionComponent<Props> = (props) => {
 
                     <div className={"bottomRightSection"}>
                         {/*  Buy Tickets call-to-action  */}
-                        <span onClick={() => console.log("Pressed")}>Buy Tickets →</span>
+                        <span onClick={() => {
+                            /* TODO: BRING UP MODAL */
+                        }}>Buy Tickets →</span>
                     </div>
                 </div>
             </div>

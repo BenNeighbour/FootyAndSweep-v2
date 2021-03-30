@@ -20,43 +20,45 @@
 package com.footyandsweep;
 
 public final class ResultServiceOuterClass {
-  private static com.google.protobuf.Descriptors.FileDescriptor descriptor;
+  private ResultServiceOuterClass() {}
+  public static void registerAllExtensions(
+      com.google.protobuf.ExtensionRegistryLite registry) {
+  }
 
+  public static void registerAllExtensions(
+      com.google.protobuf.ExtensionRegistry registry) {
+    registerAllExtensions(
+        (com.google.protobuf.ExtensionRegistryLite) registry);
+  }
+
+  public static com.google.protobuf.Descriptors.FileDescriptor
+      getDescriptor() {
+    return descriptor;
+  }
+  private static  com.google.protobuf.Descriptors.FileDescriptor
+      descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\023ResultService.proto\022\021com.footyandsweep"
-          + "\032\033google/protobuf/empty.proto2\\\n\rResultS"
-          + "ervice\022K\n\031checkForSweepstakeResults\022\026.go"
-          + "ogle.protobuf.Empty\032\026.google.protobuf.Em"
-          + "ptyb\006proto3"
+      "\n\023ResultService.proto\022\021com.footyandsweep" +
+      "\032\033google/protobuf/empty.proto2\\\n\rResultS" +
+      "ervice\022K\n\031checkForSweepstakeResults\022\026.go" +
+      "ogle.protobuf.Empty\032\026.google.protobuf.Em" +
+      "ptyb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-        new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
+        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
           public com.google.protobuf.ExtensionRegistry assignDescriptors(
               com.google.protobuf.Descriptors.FileDescriptor root) {
             descriptor = root;
             return null;
           }
         };
-    com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(
-        descriptorData,
+    com.google.protobuf.Descriptors.FileDescriptor
+      .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
           com.google.protobuf.EmptyProto.getDescriptor(),
-        },
-        assigner);
+        }, assigner);
     com.google.protobuf.EmptyProto.getDescriptor();
-  }
-
-  private ResultServiceOuterClass() {}
-
-  public static void registerAllExtensions(com.google.protobuf.ExtensionRegistryLite registry) {}
-
-  public static void registerAllExtensions(com.google.protobuf.ExtensionRegistry registry) {
-    registerAllExtensions((com.google.protobuf.ExtensionRegistryLite) registry);
-  }
-
-  public static com.google.protobuf.Descriptors.FileDescriptor getDescriptor() {
-    return descriptor;
   }
 
   // @@protoc_insertion_point(outer_class_scope)

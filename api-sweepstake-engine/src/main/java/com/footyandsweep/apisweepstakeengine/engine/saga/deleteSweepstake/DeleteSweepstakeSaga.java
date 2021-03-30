@@ -32,18 +32,17 @@ public class DeleteSweepstakeSaga implements SimpleSaga<DeleteSweepstakeSagaData
 
   @Override
   public SagaDefinition<DeleteSweepstakeSagaData> getSagaDefinition() {
-    return step()
-        .invokeLocal(
-            sagaData -> sweepstakeEngine.deleteSweepstakeById(sagaData.getSweepstake().getId()))
-        .withCompensation(sagaData -> {})
-        .step()
-        .invokeParticipant(sweepstakeEngine::deleteRemoteSweepstakeRelation)
-        .step()
-        .invokeLocal(
-            sagaData ->
-                sweepstakeEngine.deleteAllSweepstakeRelationsBySweepstakeId(
-                    sagaData.getSweepstake().getId()))
-        .withCompensation(sagaData -> {})
-        .build();
+    // @formatter:off
+    return
+            step()
+            .invokeLocal(sagaData -> sweepstakeEngine.deleteSweepstakeById(sagaData.getSweepstake().getId()))
+            .withCompensation(sagaData -> {})
+            .step()
+            .invokeParticipant(sweepstakeEngine::deleteRemoteSweepstakeRelation)
+            .step()
+            .invokeLocal(sagaData -> sweepstakeEngine.deleteAllSweepstakeRelationsBySweepstakeId(sagaData.getSweepstake().getId()))
+            .withCompensation(sagaData -> {})
+            .build();
+    // @formatter:on
   }
 }

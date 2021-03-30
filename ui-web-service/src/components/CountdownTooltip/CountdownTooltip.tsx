@@ -26,6 +26,7 @@ interface OwnProps {
 type Props = OwnProps;
 
 const CountdownTooltip: FunctionComponent<Props> = (props) => {
+    /* Updating state for the sweepstake countdown */
     const [timeLeft, setTimeLeft] = useState<any>(getTimeRemaining(props.startingDate));
 
     useEffect(() => {
@@ -34,6 +35,7 @@ const CountdownTooltip: FunctionComponent<Props> = (props) => {
                 setTimeLeft(getTimeRemaining(props.startingDate))
             }, 1000);
 
+            /* Cleanup function to prevent JavaScript Memory Leaks - this clears the previous timeout to prevent an overflow */
             return function cleanup() {
                 clearTimeout(countdown);
             };
