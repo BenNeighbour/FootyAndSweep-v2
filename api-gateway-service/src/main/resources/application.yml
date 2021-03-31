@@ -5,13 +5,21 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: 'api-sweepstake-engine'
-          uri: 'ws://api-sweepstake-engine:8080'
+        - id: 'api-sweepstake-engine-http'
+          uri: 'http://api-sweepstake-engine:8080'
           predicates:
             - Path=/sweepstake/**
           filters:
             - StripPrefix=1
-            - GatewayFilter
+#            - GatewayFilter
+
+        - id: 'api-sweepstake-engine-websocket'
+          uri: 'ws://api-sweepstake-engine:8080'
+          predicates:
+            - Path=/sweepstake/socket/**
+          filters:
+            - StripPrefix=1
+#            - GatewayFilter
 
         - id: 'api-authentication-service'
           uri: 'http://api-authentication-service:8080'
