@@ -22,7 +22,7 @@ import {saveSweepstake} from "../../../../services/sweepstakeService";
 
 const sweepstakeChannel = channel();
 const client = new Client();
-client.brokerURL = "ws://api.footyandsweep-dev.com:30681/sweepstake/socket/joinSocket";
+client.brokerURL = "ws://api.footyandsweep-dev.com:30389/sweepstake/socket/joinSocket";
 
 function* saveSweepstakeSaga({payload}: { payload: SweepstakeData }) {
     try {
