@@ -24,6 +24,7 @@ import {useMediaQuery} from 'react-responsive';
 import Button from "../../components/Button/Button";
 import ProfileCard from "../../components/ProfileCard/ProfileCard";
 import {RouteComponentProps} from "react-router-dom";
+import Modal from "../../components/Modal/Modal";
 
 interface OwnProps extends RouteComponentProps {
 }
@@ -35,8 +36,11 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
     const [sweepstakes,] = useState<number[]>([1, 2, 3, 4, 5, 6, 7, 8, 9]);
     const isMobile = useMediaQuery({query: `(max-width: 768px)`});
 
+    const [isJoiningSweepstake, setIsJoiningSweepstake] = useState<boolean>(false);
+
     return (
         <div className={"container"}>
+            <Modal setShowing={setIsJoiningSweepstake} showing={isJoiningSweepstake}/>
             <div className={"topSection"}>
                 <nav className={"navigationSection"}>
                 </nav>
@@ -48,12 +52,12 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
                     }} value={""}/>
                 </div>
                 <div className={"buttonSection"}>
+                    <Button onClick={() => setIsJoiningSweepstake(true)} style={{
+                        padding: "5px 20px"
+                    }} title={"Join Sweepstake"}/>
                     <Button style={{
                         padding: "5px 20px"
-                    }} title={"Join Sweepstake"} />
-                    <Button style={{
-                        padding: "5px 20px"
-                    }} title={"Earn FootyCoins"} />
+                    }} title={"Earn FootyCoins"}/>
                     <div className={"settingsLink"}>
                     </div>
                 </div>

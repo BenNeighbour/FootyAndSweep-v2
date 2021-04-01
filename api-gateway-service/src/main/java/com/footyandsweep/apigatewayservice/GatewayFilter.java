@@ -22,12 +22,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ServerWebExchange;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import java.net.URI;
 import java.util.Optional;
-
-import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.GATEWAY_REQUEST_URL_ATTR;
 
 @Component
 public class GatewayFilter implements GatewayFilterFactory<com.footyandsweep.apigatewayservice.GatewayFilter.Config> {
@@ -37,14 +33,14 @@ public class GatewayFilter implements GatewayFilterFactory<com.footyandsweep.api
     @Override
     public org.springframework.cloud.gateway.filter.GatewayFilter apply(Config config) {
         return (exchange, chain) -> {
-            URI requestUrl = exchange.getRequiredAttribute(GATEWAY_REQUEST_URL_ATTR);
-            String scheme = requestUrl.getScheme();
+//            URI requestUrl = exchange.getRequiredAttribute(GATEWAY_ORIGINAL_REQUEST_URL_ATTR);
+            String scheme = exchange.getRequest().getURI().getScheme();
 
             if (!"ws".equals(scheme) && !"wss".equals(scheme)) return chain.filter(exchange);
 
             else {
-                String wsScheme = "ws".equals(scheme) ? "http" : "https";
-                URI wsRequestUrl = UriComponentsBuilder.fromUri(requestUrl).scheme(wsScheme).build().toUri();
+//                String wsScheme = "ws".equals(scheme) ? "http" : "https";
+//                URI wsRequestUrl = UriComponentsBuilder.fromUri(requestUrl).scheme(wsScheme).build().toUri();
 
                 /* Validate authentication here */
                 boolean authResult = validateAuth(exchange);
@@ -52,7 +48,7 @@ public class GatewayFilter implements GatewayFilterFactory<com.footyandsweep.api
                 /* Set the response status to Unauthorized */
                 if (!authResult) exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
 
-                exchange.getAttributes().put(GATEWAY_REQUEST_URL_ATTR, wsRequestUrl);
+//                exchange.getAttributes().put(GATEWAY_ORIGINAL_REQUEST_URL_ATTR, wsRequestUrl);
 
                 return chain.filter(exchange);
             }

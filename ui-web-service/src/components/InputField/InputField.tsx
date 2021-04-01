@@ -37,7 +37,8 @@ const InputField: FunctionComponent<Props> = (props) => {
     return (
         <div className={"inputArea"}>
             <div className={"inputContainer"}>
-                <input className={`input${props.errors ? "-invalid" : ""}`} name={props.name}
+                <input autoComplete={"off"} aria-autocomplete={"none"} className={`input${props.errors ? "-invalid" : ""}`}
+                       name={props.name}
                        disabled={props.disabled || false} type={props.type}
                        value={props.value}
                        onChange={props.onChange}

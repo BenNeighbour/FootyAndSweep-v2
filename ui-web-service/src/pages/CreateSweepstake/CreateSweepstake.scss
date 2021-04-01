@@ -14,3 +14,25 @@
  *   limitations under the License.
  */
 
+.form {
+  width: 100%;
+  height: fit-content;
+
+  form {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    grid-gap: 30px;
+    gap: 30px;
+
+    .leftFieldSection {
+      flex: 6;
+    }
+
+    .rightFieldSection {
+      flex: 4;
+    }
+  }
+}
