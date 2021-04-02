@@ -23,6 +23,8 @@ import Button from "../Button/Button";
 interface OwnProps {
     showing: boolean;
     setShowing: (value: boolean) => void;
+    title: string;
+    description: string;
 }
 
 type Props = OwnProps;
@@ -46,19 +48,16 @@ const Modal: FunctionComponent<Props> = (props) => {
                     <div className={"modalWrapper"}>
                         <div className={"modal"} onClick={e => e.stopPropagation()}>
                             <div className={"titleSection"}>
-                                <span className={"modalTitle"}>Create a Sweepstake</span>
-                                <span
-                                    className={"modalSubtitle"}>Fill the following fields to create a new sweepstake</span>
+                                <span className={"modalTitle"}>{props.title}</span>
+                                <span className={"modalSubtitle"}>{props.description}</span>
                             </div>
 
                             <div className={"fieldSection"}>
-                                <CreateSweepstake/>
+                                {props.children}
                             </div>
 
                             <div className={"bottomSection"}>
                                 <Button onClick={() => {
-                                }} style={{
-                                    // padding: "5px 20px"
                                 }} title={"Create Sweepstake"}/>
                             </div>
                         </div>

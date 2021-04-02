@@ -15,23 +15,35 @@
  */
 
 
-import React, {FunctionComponent} from 'react';
+import React, {Fragment, FunctionComponent, useState} from 'react';
 import "./Switch.scss";
 
 interface OwnProps {
     value: boolean;
     label: string;
     showCurrentStatus?: boolean | false;
+    statusText: string;
+    falseText: string;
+    trueText: string;
 }
 
 type Props = OwnProps;
 
 const Switch: FunctionComponent<Props> = (props) => {
+    const [isSwitchedOn, setIsSwitchedOn] = useState<boolean>(props.value);
+
     return (
-        <label className="switch">
-            <input type="checkbox"/>
-            <span className="slider"></span>
-        </label>
+        <Fragment>
+            <span className={"switchLabel"}>{props.label}</span>
+            <div className={"switchArea"}>
+                <label className={"switch"}>
+                    <input onChange={() => setIsSwitchedOn(!isSwitchedOn)} checked={isSwitchedOn} type={"checkbox"}/>
+                    <span className={"slider"}/>
+                </label>
+
+                <span className={"statusText"}>{props.statusText}&#32;<b>{isSwitchedOn ? props.trueText : props.falseText}</b></span>
+            </div>
+        </Fragment>
     );
 };
 

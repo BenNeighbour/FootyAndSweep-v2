@@ -14,6 +14,31 @@
  *   limitations under the License.
  */
 
+.switchLabel {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 22px;
+  color: #5D7290;
+}
+
+.switchArea {
+  display: flex;
+  justify-content: space-between;
+  place-items: center;
+  gap: 15px;
+  width: fit-content;
+  padding-bottom: 20px;
+  padding-top: 7px;
+
+  .statusText {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 22px;
+    color: #5D7290;
+  }
+}
 
 .switch {
   position: relative;

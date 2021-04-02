@@ -52,6 +52,10 @@ const schema = yup.object().shape({
         .string()
         .required("You must enter a valid Football Match.")
         .label("Football Match"),
+    isPrivate: yup
+        .boolean()
+        .required("Your sweepstake must be Public or Private.")
+        .label("Sweepstake Privacy"),
     minimumPlayers: yup
         .number()
         .required("You must enter the number of Minimum Players.")
@@ -88,7 +92,8 @@ const CreateSweepstake: FunctionComponent<Props> = (props) => {
                 {({values, handleChange, errors, touched}) => (
                     <Form>
                         <div className={"leftFieldSection"}>
-                            <Switch value={true} label={"sdfd"} />
+                            <Switch statusText={"Your Sweepstake is"} falseText={"Public"} trueText={"Private"} value={values.isPrivate}
+                                    label={"Sweepstake Privacy"}/>
 
                             <InputField name={"name"} touched={touched.name} label={"Sweepstake Name"}
                                         errors={errors.name} type={"text"} onChange={handleChange} value={values.name}/>

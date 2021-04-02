@@ -25,6 +25,7 @@ import Button from "../../components/Button/Button";
 import ProfileCard from "../../components/ProfileCard/ProfileCard";
 import {RouteComponentProps} from "react-router-dom";
 import Modal from "../../components/Modal/Modal";
+import CreateSweepstake from "../CreateSweepstake/CreateSweepstake";
 
 interface OwnProps extends RouteComponentProps {
 }
@@ -40,7 +41,10 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
 
     return (
         <div className={"container"}>
-            <Modal setShowing={setIsJoiningSweepstake} showing={isJoiningSweepstake}/>
+            <Modal setShowing={setIsJoiningSweepstake} title={"Create a Sweepstake"}
+                   description={"Fill the following fields to create a new sweepstake"} showing={isJoiningSweepstake}>
+                <CreateSweepstake/>
+            </Modal>
             <div className={"topSection"}>
                 <nav className={"navigationSection"}>
                 </nav>
