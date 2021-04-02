@@ -28,6 +28,7 @@ import InputField from "../../components/InputField/InputField";
 import "./CreateSweepstake.scss";
 import TextArea from "../../components/TextArea/TextArea";
 import Select from "../../components/Select/Select";
+import Switch from "../../components/Switch/Switch";
 
 interface OwnProps {
     state: SweepstakeReducerType;
@@ -87,6 +88,8 @@ const CreateSweepstake: FunctionComponent<Props> = (props) => {
                 {({values, handleChange, errors, touched}) => (
                     <Form>
                         <div className={"leftFieldSection"}>
+                            <Switch value={true} label={"sdfd"} />
+
                             <InputField name={"name"} touched={touched.name} label={"Sweepstake Name"}
                                         errors={errors.name} type={"text"} onChange={handleChange} value={values.name}/>
 
