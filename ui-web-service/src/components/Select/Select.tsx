@@ -15,7 +15,7 @@
  */
 
 
-import React, {FunctionComponent, useState, useEffect, useRef} from 'react';
+import React, {FunctionComponent} from 'react';
 import "./Select.scss"
 
 interface OwnProps {
@@ -34,38 +34,20 @@ interface OwnProps {
 type Props = OwnProps;
 
 const Select: FunctionComponent<Props> = (props) => {
-    const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
-
-    const selectRef = useRef(null);
-    useOutsideOfComponentClick(selectRef, setIsCollapsed);
-
     return (
-        <div ref={selectRef} role={"button"} aria-haspopup={"listbox"} className={"selectArea"}>
+        <div role={"button"} aria-haspopup={"listbox"} className={"selectArea"}>
             <div className={"selectContainer"}>
-                <select className={`select${props.errors ? "-invalid" : ""}${isCollapsed ? " collapsed" : ""}`}>
-                    <option value={"Sweepstake Type"} disabled={true} hidden={true}>Sweepstake Type</option>
-                    <option value={"Correct Score H/T"}>Correct Score H/T</option>
-                    <option value={"Correct Score F/T"}>Correct Score F/T</option>
-                    <option value={"Score at H/T"}>Score at H/T</option>
-                    <option value={"Score at F/T"}>Score at F/T</option>
+                <select className={`select${props.errors ? "-invalid" : ""}`} defaultValue={""}>
+                    <option value={""} disabled>{props.label}</option>
+                    {props.children}
                 </select>
             </div>
+            {props.errors && props.touched ? (
+                <span className={"errorTextMessage"}>{props.errors}</span>
+            ) : undefined}
+            <br/>
         </div>
     );
 };
-
-function useOutsideOfComponentClick(ref: any, setState: (value: any) => void) {
-    useEffect(() => {
-        function handleClickOutside(event: any) {
-            /* Reset the state */
-            if (ref.current && !ref.current.contains(event.target)) setState(false);
-        }
-
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, [ref]);
-}
 
 export default Select;

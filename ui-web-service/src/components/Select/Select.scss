@@ -20,10 +20,6 @@
   text-align: left;
 }
 
-.collapsed {
-  border-radius: 8px 8px 0 0;
-}
-
 .select, .select-invalid {
   box-sizing: border-box;
   cursor: pointer;
@@ -44,49 +40,15 @@
   border-radius: 8px;
   box-shadow: -3px 4px 14px rgba(0, 0, 0, 0.7);
   padding: 10px 10px 10px 15px;
-
-  .selectHeader, .selectHeaderCollapsed {
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 22px;
-    color: #5D7290;
-  }
-
-  .items {
-    box-sizing: border-box;
-    margin: 0;
-    border-radius: 0 0 8px 8px;
-    background: #242C37;
-    position: absolute;
-    width: 100%;
-    left: 0;
-    top: -1;
-    padding: 5px 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-
-    li {
-      list-style: none;
-      border-radius: 8px;
-      padding: 6px 10px;
-      font-style: normal;
-      font-weight: 500;
-      font-size: 14px;
-      line-height: 22px;
-      color: #5D7290;
-    }
-
-    li:hover {
-      background-color: #1D242D;
-    }
-  }
 }
 
 .select-invalid {
   transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
   border: 2px solid #FD4D4D;
+}
+
+select:required:invalid {
+  color: #5D7290;
 }
 
 select::placeholder {

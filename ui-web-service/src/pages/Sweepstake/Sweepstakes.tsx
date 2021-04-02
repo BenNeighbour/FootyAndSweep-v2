@@ -52,7 +52,7 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
                     }} value={""}/>
                 </div>
                 <div className={"buttonSection"}>
-                    <Button onClick={() => setIsJoiningSweepstake(true)} style={{
+                    <Button style={{
                         padding: "5px 20px"
                     }} title={"Join Sweepstake"}/>
                     <Button style={{
@@ -75,9 +75,8 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
                         <div className={"titleBound"}>
                             <h1 className={"title"}>Your Sweepstakes</h1>
                         </div>
-                        <Button onClick={() => {
-                            props.history.push("/sweepstakes/create")
-                        }} title={"Create Sweepstake"} className={"createSweepstakeButton"}/>
+                        <Button onClick={() => setIsJoiningSweepstake(true)} title={"Create Sweepstake"}
+                            className={"createSweepstakeButton"}/>
                     </div>
 
                     {sweepstakes.map((value, index) => {

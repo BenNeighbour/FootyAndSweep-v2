@@ -19,7 +19,6 @@ import {Route, Switch} from "react-router";
 import PortalPage from "./pages/Portal/PortalPage";
 import Sweepstakes from "./pages/Sweepstake/Sweepstakes";
 import OAuthRedirect from "./pages/Portal/OAuth/OAuthRedirect";
-import CreateSweepstake from "./pages/CreateSweepstake/CreateSweepstake";
 import LoadingPage from "./pages/Loading/LoadingPage";
 
 interface OwnProps {
@@ -40,8 +39,6 @@ const Routes: FunctionComponent<Props> = (props) => {
                         component={PortalPage} exact path="/portal"/>
                     <Route
                         component={Sweepstakes} exact path="/sweepstakes"/>
-                    <Route
-                        component={CreateSweepstake} exact path="/sweepstakes/create"/>
                 </Route>
             </Switch>
         </Route>

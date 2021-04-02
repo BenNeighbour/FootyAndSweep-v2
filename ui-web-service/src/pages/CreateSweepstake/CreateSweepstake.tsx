@@ -47,6 +47,10 @@ const schema = yup.object().shape({
         .string()
         .required("You must enter a valid Sweepstake Type.")
         .label("Sweepstake Type"),
+    event: yup
+        .string()
+        .required("You must enter a valid Football Match.")
+        .label("Football Match"),
     minimumPlayers: yup
         .number()
         .required("You must enter the number of Minimum Players.")
@@ -76,7 +80,8 @@ const CreateSweepstake: FunctionComponent<Props> = (props) => {
                     minimumPlayers: 2,
                     stake: 10.00,
                     description: "",
-                    type: ""
+                    type: "",
+                    event: ""
                 }}
             >
                 {({values, handleChange, errors, touched}) => (
@@ -90,9 +95,18 @@ const CreateSweepstake: FunctionComponent<Props> = (props) => {
 
                             {/*Select Field*/}
                             <Select name={"type"} touched={touched.type} label={"Sweepstake Type"}
-                                        errors={errors.type} type={"text"} onChange={handleChange} value={values.type} />
+                                        errors={errors.type} type={"text"} onChange={handleChange} value={values.type}>
+                                <option value={"Correct Score H/T"}>Correct Score H/T</option>
+                                <option value={"Correct Score F/T"}>Correct Score F/T</option>
+                                <option value={"Score at H/T"}>Score at H/T</option>
+                                <option value={"Score at F/T"}>Score at F/T</option>
+                            </Select>
 
                             {/*Select Field*/}
+                            <Select name={"event"} touched={touched.event} label={"Football Match"}
+                                    errors={errors.event} type={"text"} onChange={handleChange} value={values.event}>
+                                <option value={"BHA vs WOL"}>Brighton & Hove Albion vs Wolves</option>
+                            </Select>
                         </div>
                         <div className={"rightFieldSection"}>
                             <InputField name={"sweepstakeName"} touched={true} label={"Sweepstake Name"}

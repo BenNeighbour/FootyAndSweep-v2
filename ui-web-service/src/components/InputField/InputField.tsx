@@ -15,8 +15,7 @@
  */
 
 import React, {FunctionComponent} from 'react';
-import PasswordBar from "./PasswordBar";
-import "./InputField.scss"
+import "./InputField.scss"  
 
 interface OwnProps {
     includePasswordStrengthChecker?: boolean;
@@ -44,8 +43,6 @@ const InputField: FunctionComponent<Props> = (props) => {
                        onChange={props.onChange}
                        placeholder={props.label || ""}/>
             </div>
-            {props.type === "password" && props.includePasswordStrengthChecker ?
-                <div><PasswordBar password={props.value}/></div> : undefined}
             {props.errors && props.touched ? (
                 <span className={"errorTextMessage"}>{props.errors}</span>
             ) : undefined}

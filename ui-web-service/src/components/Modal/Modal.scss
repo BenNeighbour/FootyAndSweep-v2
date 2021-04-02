@@ -16,6 +16,13 @@
 
 
 .modalContainer {
+  //animation: fadeIn ease-in-out 0.5s;
+  //-webkit-animation: fadeIn ease-in-out 0.5s;
+  //-moz-animation: fadeIn ease-in-out 0.5s;
+  //-o-animation: fadeIn ease-in-out 0.5s;
+  //-ms-animation: fadeIn ease-in-out 0.5s;
+
+
   width: 100vw;
   height: 100vh;
   overflow: hidden;
@@ -46,7 +53,7 @@
       background: #0B0E11;
       box-shadow: -3px 4px 14px rgba(0, 0, 0, 0.7);
       border-radius: 8px;
-      min-width: 50vw;
+      min-width: 60vw;
       display: flex;
       flex-direction: column;
       padding: 40px;
@@ -81,4 +88,55 @@
       }
     }
   }
+}
+
+@keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+@-moz-keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+@-webkit-keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+@-o-keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+@-ms-keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+
+@keyframes fadeOut {
+  0% {opacity:1;}
+  100% {opacity:0;}
+}
+
+@-moz-keyframes fadeOut {
+  0% {opacity:1;}
+  100% {opacity:0;}
+}
+
+@-webkit-keyframes fadeOut {
+  0% {opacity:1;}
+  100% {opacity:0;}
+}
+
+@-o-keyframes fadeOut {
+  0% {opacity:1;}
+  100% {opacity:0;}
+}
+
+@-ms-keyframes fadeOut {
+  0% {opacity:1;}
+  100% {opacity:0;}
 }
