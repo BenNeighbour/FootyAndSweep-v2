@@ -36,18 +36,22 @@ const AdvertisementCard: FunctionComponent<Props> = (props) => {
             <div className={"adContainer"}>
                 <div className={"mainSection"}>
                     <div className={"pictureSection"}>
-                        {!props.isMobile ? <Tooltip className={"advertisementDesktop"} text={"ADVERTISEMENT"} colorCode={"#242C37"}/> : undefined}
+                        {!props.isMobile ? <Tooltip className={"advertisementDesktop"} text={"ADVERTISEMENT"}
+                                                    colorCode={"#242C37"}/> : undefined}
                         <img alt={""} src={AdImage}/>
                     </div>
                     <div className={"detailsSection"}>
                         <div className={"titleSection"}>
-                            <span className={"advertisementTitle"}>{props.isMobile ? "AlgoExpert" : "The Ultimate SWE Interview Preparation Kit"}</span>
+                            <span
+                                className={"advertisementTitle"}>{props.isMobile ? "AlgoExpert" : "The Ultimate SWE Interview Preparation Kit"}</span>
                             {props.isMobile ? <Tooltip text={"AD"} colorCode={"#242C37"}/> : undefined}
                         </div>
-                        <span className={"advertisementSubtitle"}>{props.isMobile ? "AlgoExpert | Ace the Coding Interviews with absolute flying colors" : "AlgoExpert | Ace the Coding Interviews"}</span>
+                        <span
+                            className={"advertisementSubtitle"}>{props.isMobile ? "AlgoExpert | Ace the Coding Interviews with absolute flying colors" : "AlgoExpert | Ace the Coding Interviews"}</span>
                         <span className={"advertisementDetailsDesktop"}>The sponsor/advertiser can put whatever bullshit they would like here as long as it satifies the sponsor/advertiser’s needs which is to get traffic which is why a good description is here and a link to their homepage is below</span>
                         <div className={"desktopCallToAction"}>
-                            <span onClick={() => document.location.href = props.advertiserLink} className={"advertisementLink"}>Go to AlgoExpert →</span>
+                            <span onClick={() => document.location.href = props.advertiserLink}
+                                  className={"advertisementLink"}>Go to AlgoExpert →</span>
                         </div>
                     </div>
                 </div>

@@ -27,32 +27,38 @@ import org.springframework.stereotype.Component;
 @Component
 public class JoinSweepstakeSaga implements SimpleSaga<JoinSweepstakeSagaData> {
 
-    private final SweepstakeEngine sweepstakeEngine;
+  private final SweepstakeEngine sweepstakeEngine;
 
-    public JoinSweepstakeSaga(SweepstakeEngine sweepstakeEngine) {
-        this.sweepstakeEngine = sweepstakeEngine;
-    }
+  public JoinSweepstakeSaga(SweepstakeEngine sweepstakeEngine) {
+    this.sweepstakeEngine = sweepstakeEngine;
+  }
 
-    @Override
-    public SagaDefinition<JoinSweepstakeSagaData> getSagaDefinition() {
-        // @formatter:off
-        return
-                step()
-                .invokeLocal(sagaData -> {
-                    ParticipantIds participantId =
-                        sweepstakeEngine.createSweepstakeParticipantRelation(
-                            sagaData.getSweepstakeJoinCode(), sagaData.getParticipantId());
+  @Override
+  public SagaDefinition<JoinSweepstakeSagaData> getSagaDefinition() {
+    // @formatter:off
+    return step()
+        .invokeLocal(
+            sagaData -> {
+              ParticipantIds participantId =
+                  sweepstakeEngine.createSweepstakeParticipantRelation(
+                      sagaData.getSweepstakeJoinCode(), sagaData.getParticipantId());
 
-                    sagaData.setSweepstakeParticipantId(participantId.getId());
-                    sagaData.setSweepstakeId(participantId.getSweepstakeId());
-                })
-                /* Delete the sweepstake and the relation */
-                .withCompensation(sagaData -> sweepstakeEngine.deleteSweepstakeRelationById(sagaData.getSweepstakeParticipantId()))
-                .step()
-                .invokeParticipant(sagaData -> sweepstakeEngine.linkParticipantToSweepstake(sagaData.getSweepstakeId(), sagaData.getParticipantId()))
-                .onReply(ParticipantNotFound.class, (sagaData, e) -> {})
-                .onReply(LinkParticipantToSweepstakeFailure.class, (sagaData, e) -> {})
-                .build();
-        // @formatter:on
-    }
+              sagaData.setSweepstakeParticipantId(participantId.getId());
+              sagaData.setSweepstakeId(participantId.getSweepstakeId());
+            })
+        /* Delete the sweepstake and the relation */
+        .withCompensation(
+            sagaData ->
+                sweepstakeEngine.deleteSweepstakeRelationById(
+                    sagaData.getSweepstakeParticipantId()))
+        .step()
+        .invokeParticipant(
+            sagaData ->
+                sweepstakeEngine.linkParticipantToSweepstake(
+                    sagaData.getSweepstakeId(), sagaData.getParticipantId()))
+        .onReply(ParticipantNotFound.class, (sagaData, e) -> {})
+        .onReply(LinkParticipantToSweepstakeFailure.class, (sagaData, e) -> {})
+        .build();
+    // @formatter:on
+  }
 }

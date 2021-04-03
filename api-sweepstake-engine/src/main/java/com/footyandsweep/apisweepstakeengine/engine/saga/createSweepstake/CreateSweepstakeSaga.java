@@ -41,20 +41,27 @@ public class CreateSweepstakeSaga implements SimpleSaga<CreateSweepstakeSagaData
   @Override
   public SagaDefinition<CreateSweepstakeSagaData> getSagaDefinition() {
     // @formatter:off
-    return
-            step()
-            .invokeLocal(sweepstakeEngine::saveSweepstake)
-            .withCompensation(sagaData -> sweepstakeEngine.deleteSweepstakeById(sagaData.getSweepstake().getId()))
-            .step()
-            .invokeLocal(sagaData -> sagaData.setOwner(sweepstakeEngine.createSweepstakeParticipantRelation(
-                            sagaData.getSweepstake().getJoinCode(),
-                            sagaData.getSweepstake().getOwnerId())))
-            .withCompensation(sagaData -> sweepstakeEngine.deleteSweepstakeRelationById(sagaData.getOwner().getId()))
-            .step()
-            .invokeParticipant(sagaData -> sweepstakeEngine.linkParticipantToSweepstake(sagaData.getSweepstake().getId(), sagaData.getOwner().getParticipantId()))
-            .onReply(ParticipantNotFound.class, (sagaData, participantNotFound) -> {})
-            .onReply(LinkParticipantToSweepstakeFailure.class, (sagaData, linkFailure) -> {})
-            .build();
+    return step()
+        .invokeLocal(sweepstakeEngine::saveSweepstake)
+        .withCompensation(
+            sagaData -> sweepstakeEngine.deleteSweepstakeById(sagaData.getSweepstake().getId()))
+        .step()
+        .invokeLocal(
+            sagaData ->
+                sagaData.setOwner(
+                    sweepstakeEngine.createSweepstakeParticipantRelation(
+                        sagaData.getSweepstake().getJoinCode(),
+                        sagaData.getSweepstake().getOwnerId())))
+        .withCompensation(
+            sagaData -> sweepstakeEngine.deleteSweepstakeRelationById(sagaData.getOwner().getId()))
+        .step()
+        .invokeParticipant(
+            sagaData ->
+                sweepstakeEngine.linkParticipantToSweepstake(
+                    sagaData.getSweepstake().getId(), sagaData.getOwner().getParticipantId()))
+        .onReply(ParticipantNotFound.class, (sagaData, participantNotFound) -> {})
+        .onReply(LinkParticipantToSweepstakeFailure.class, (sagaData, linkFailure) -> {})
+        .build();
     // @formatter:on
   }
 

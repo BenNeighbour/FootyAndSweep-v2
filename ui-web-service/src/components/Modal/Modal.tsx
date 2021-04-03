@@ -17,7 +17,6 @@
 
 import React, {Fragment, FunctionComponent, useEffect, useState} from 'react';
 import "./Modal.scss";
-import CreateSweepstake from "../../pages/CreateSweepstake/CreateSweepstake";
 import Button from "../Button/Button";
 
 interface OwnProps {
@@ -43,8 +42,9 @@ const Modal: FunctionComponent<Props> = (props) => {
     return (
         <Fragment>
             {
-                shouldRender ? <div className={"modalContainer"} style={{ animation: `${props.showing ? "fadeIn" : "fadeOut"} 0.35s` }}
-                                     onAnimationEnd={onAnimationEnd} onClick={() => props.setShowing(false)}>
+                shouldRender ? <div className={"modalContainer"}
+                                    style={{animation: `${props.showing ? "fadeIn" : "fadeOut"} 0.35s`}}
+                                    onAnimationEnd={onAnimationEnd} onClick={() => props.setShowing(false)}>
                     <div className={"modalWrapper"}>
                         <div className={"modal"} onClick={e => e.stopPropagation()}>
                             <div className={"titleSection"}>
@@ -58,7 +58,7 @@ const Modal: FunctionComponent<Props> = (props) => {
 
                             <div className={"bottomSection"}>
                                 <Button onClick={() => {
-                                }} title={"Create Sweepstake"}/>
+                                }} title={props.title}/>
                             </div>
                         </div>
                     </div>

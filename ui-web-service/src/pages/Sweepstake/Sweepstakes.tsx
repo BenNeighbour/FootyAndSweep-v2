@@ -15,7 +15,7 @@
  */
 
 
-import React, {FunctionComponent, useState} from 'react';
+import React, {Fragment, FunctionComponent, useState} from 'react';
 import SweepstakeCard from "../../components/SweepstakeCard/SweepstakeCard";
 import "./Sweepstakes.scss";
 import AdvertisementCard from "../../components/AdvertisementCard/AdvertisementCard";
@@ -37,71 +37,90 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
     const [sweepstakes,] = useState<number[]>([1, 2, 3, 4, 5, 6, 7, 8, 9]);
     const isMobile = useMediaQuery({query: `(max-width: 768px)`});
 
+    const [isCreatingSweepstake, setIsCreatingSweepstake] = useState<boolean>(false);
     const [isJoiningSweepstake, setIsJoiningSweepstake] = useState<boolean>(false);
+    const [isBuyingTickets, setIsBuyingTickets] = useState<boolean>(false);
+
+    console.log(!isMobile && !isBuyingTickets || !isJoiningSweepstake || !isCreatingSweepstake);
 
     return (
         <div className={"container"}>
-            <Modal setShowing={setIsJoiningSweepstake} title={"Create a Sweepstake"}
-                   description={"Fill the following fields to create a new sweepstake"} showing={isJoiningSweepstake}>
+            <Modal setShowing={setIsCreatingSweepstake} title={"Create a Sweepstake"}
+                   description={"Fill the following fields to create a new sweepstake"} showing={isCreatingSweepstake}>
                 <CreateSweepstake/>
             </Modal>
-            <div className={"topSection"}>
-                <nav className={"navigationSection"}>
-                </nav>
-                <div className={"logoSection"}>
-                    <span>Logo Here</span>
-                </div>
-                <div className={"searchSection"}>
-                    <SearchBar onChange={() => {
-                    }} value={""}/>
-                </div>
-                <div className={"buttonSection"}>
-                    <Button style={{
-                        padding: "5px 20px"
-                    }} title={"Join Sweepstake"}/>
-                    <Button style={{
-                        padding: "5px 20px"
-                    }} title={"Earn FootyCoins"}/>
-                    <div className={"settingsLink"}>
-                    </div>
-                </div>
-                <div className={"opacitySection"}>
-                    <h1 className={"title"}>Your Sweepstakes</h1>
-                </div>
-            </div>
+            <Modal setShowing={setIsJoiningSweepstake} title={"Join a Sweepstake"}
+                   description={"Enter a sweepstake code to join!"} showing={isJoiningSweepstake}>
+                {/*<CreateSweepstake/>*/}
+            </Modal>
+            <Modal setShowing={setIsBuyingTickets} title={"Buy Tickets from Jon’s Epic Sweepstake"}
+                   description={"Enter the number of tickets you would like to buy"} showing={isBuyingTickets}>
+                {/*<CreateSweepstake/>*/}
+            </Modal>
 
-            <div className={"sweepstakesContainer"}>
-                <div className={"leftSweepstakeSection"}>
-                    <ProfileCard className={"profileCard"}/>
-                </div>
-                <div className={"sweepstakes"}>
-                    <div className={"titleDesktopSection"}>
-                        <div className={"titleBound"}>
-                            <h1 className={"title"}>Your Sweepstakes</h1>
+            <Fragment>
+                <div className={"topSection"}>
+                    <nav className={"navigationSection"}>
+                    </nav>
+                    <div className={"logoSection"}>
+                        <span>Logo Here</span>
+                    </div>
+                    <div className={"searchSection"}>
+                        <SearchBar onChange={() => {
+                        }} value={""}/>
+                    </div>
+                    <div className={"buttonSection"}>
+                        {isMobile ?
+                            <Button onClick={() => setIsCreatingSweepstake(true)} title={"Create Sweepstake"}
+                                    className={"createSweepstakeButton"}/> : undefined}
+
+                        <Button onClick={() => setIsJoiningSweepstake(true)} title={"Join Sweepstake"}/>
+                        <Button title={"Earn FootyCoins"}/>
+
+                        <div className={"settingsLink"}>
                         </div>
-                        <Button onClick={() => setIsJoiningSweepstake(true)} title={"Create Sweepstake"}
-                            className={"createSweepstakeButton"}/>
                     </div>
+                    <div className={"opacitySection"}>
+                        <h1 className={"title"}>Your Sweepstakes</h1>
+                    </div>
+                </div>
 
-                    {sweepstakes.map((value, index) => {
-                        return (
-                            <React.Fragment key={`sweepstake-${index}`}>
-                                <SweepstakeCard
-                                    isMobile={isMobile}
-                                    sweepstakeHashTags={["#bhawhu", "#firstscorer"]}
-                                    sweepstakeMetadata={"Jon Neighbour, Ben Neighbour, SwaggrMcJaggr..."}
-                                    sweepstakeName={"Jon’s Epic Sweepstake"} sweepstakeStatus={"Open"}
-                                    totalAmountOfTickets={8} ticketsPurchasedSoFar={2}/>
-                                {(index % 2) === 0 && isMobile ? <AdvertisementCard advertiserLink={"https://www.algoexpert.io"} isMobile={true} /> : undefined}
-                            </React.Fragment>
-                        );
-                    })}
+                <div className={"sweepstakesContainer"}>
+                    <div className={"leftSweepstakeSection"}>
+                        <ProfileCard className={"profileCard"}/>
+                    </div>
+                    <div className={"sweepstakes"}>
+                        <div className={"titleDesktopSection"}>
+                            <div className={"titleBound"}>
+                                <h1 className={"title"}>Your Sweepstakes</h1>
+                            </div>
+                            <Button onClick={() => setIsCreatingSweepstake(true)} title={"Create Sweepstake"}
+                                    className={"createSweepstakeButton"}/>
+                        </div>
+
+                        {sweepstakes.map((value, index) => {
+                            return (
+                                <React.Fragment key={`sweepstake-${index}`}>
+                                    <SweepstakeCard
+                                        setIsBuyingTickets={setIsBuyingTickets}
+                                        isMobile={isMobile}
+                                        sweepstakeHashTags={["#bhawhu", "#firstscorer"]}
+                                        sweepstakeMetadata={"Jon Neighbour, Ben Neighbour, SwaggrMcJaggr..."}
+                                        sweepstakeName={"Jon’s Epic Sweepstake"} sweepstakeStatus={"Open"}
+                                        totalAmountOfTickets={8} ticketsPurchasedSoFar={2}/>
+                                    {(index % 2) === 0 && isMobile ?
+                                        <AdvertisementCard advertiserLink={"https://www.algoexpert.io"}
+                                                           isMobile={true}/> : undefined}
+                                </React.Fragment>
+                            );
+                        })}
+                    </div>
+                    <div className={"rightSweepstakeSection"}>
+                        <AdvertisementCard advertiserLink={"https://www.algoexpert.io"} isMobile={false}/>
+                        <AdvertisementCard advertiserLink={"https://www.algoexpert.io"} isMobile={false}/>
+                    </div>
                 </div>
-                <div className={"rightSweepstakeSection"}>
-                    <AdvertisementCard advertiserLink={"https://www.algoexpert.io"} isMobile={false}/>
-                    <AdvertisementCard advertiserLink={"https://www.algoexpert.io"} isMobile={false}/>
-                </div>
-            </div>
+            </Fragment>
 
         </div>
     );

@@ -30,6 +30,8 @@ interface OwnProps {
 
     totalAmountOfTickets: number;
     ticketsPurchasedSoFar?: number;
+
+    setIsBuyingTickets: (value: boolean) => void;
 }
 
 type Props = OwnProps;
@@ -61,7 +63,7 @@ const SweepstakeCard: FunctionComponent<Props> = (props) => {
                             <Tooltip text={value} key={index}/>
                         ))}
                         {!props.isMobile ? <CountdownTooltip startingDate={startingDate}
-                                                            colorCode={"#46566B"}/> : undefined}
+                                                             colorCode={"#46566B"}/> : undefined}
                     </div>
                 </div>
                 <div className={"rightSection"}>
@@ -80,9 +82,7 @@ const SweepstakeCard: FunctionComponent<Props> = (props) => {
 
                     <div className={"bottomRightSection"}>
                         {/*  Buy Tickets call-to-action  */}
-                        <span onClick={() => {
-                            /* TODO: BRING UP MODAL */
-                        }}>Buy Tickets →</span>
+                        <span onClick={() => props.setIsBuyingTickets(true)}>Buy Tickets →</span>
                     </div>
                 </div>
             </div>

@@ -15,7 +15,7 @@
  */
 
 
-import React, { FunctionComponent } from 'react';
+import React, {FunctionComponent} from 'react';
 import "./SearchBar.scss";
 
 interface OwnProps {
@@ -26,14 +26,14 @@ interface OwnProps {
 type Props = OwnProps;
 
 const SearchBar: FunctionComponent<Props> = (props) => {
-  return (
-      <div className={"searchBarContainer"}>
-          <input className={"searchInput"} name={"searchBar"} type={""}
-                 value={props.value}
-                 onChange={props.onChange}
-                 placeholder={"Search for public sweepstakes, friends or categories"}/>
-      </div>
-  );
+    return (
+        <div className={"searchBarContainer"}>
+            <input className={"searchInput"} name={"searchBar"} type={""}
+                   value={props.value}
+                   onChange={props.onChange}
+                   placeholder={"Search for public sweepstakes, friends or categories"}/>
+        </div>
+    );
 };
 
 export default SearchBar;

@@ -92,18 +92,20 @@ const CreateSweepstake: FunctionComponent<Props> = (props) => {
                 {({values, handleChange, errors, touched}) => (
                     <Form>
                         <div className={"leftFieldSection"}>
-                            <Switch statusText={"Your Sweepstake is"} falseText={"Public"} trueText={"Private"} value={values.isPrivate}
+                            <Switch statusText={"Your Sweepstake is"} falseText={"Public"} trueText={"Private"}
+                                    value={values.isPrivate}
                                     label={"Sweepstake Privacy"}/>
 
                             <InputField name={"name"} touched={touched.name} label={"Sweepstake Name"}
                                         errors={errors.name} type={"text"} onChange={handleChange} value={values.name}/>
 
-                            <TextArea name={"description"} touched={touched.description} label={"Sweepstake Description"}
-                                        errors={errors.description} onChange={handleChange} value={values.description}/>
+                            <TextArea name={"description"} touched={touched.description}
+                                      label={"Sweepstake Description"}
+                                      errors={errors.description} onChange={handleChange} value={values.description}/>
 
                             {/*Select Field*/}
                             <Select name={"type"} touched={touched.type} label={"Sweepstake Type"}
-                                        errors={errors.type} type={"text"} onChange={handleChange} value={values.type}>
+                                    errors={errors.type} type={"text"} onChange={handleChange} value={values.type}>
                                 <option value={"Correct Score H/T"}>Correct Score H/T</option>
                                 <option value={"Correct Score F/T"}>Correct Score F/T</option>
                                 <option value={"Score at H/T"}>Score at H/T</option>
@@ -117,9 +119,9 @@ const CreateSweepstake: FunctionComponent<Props> = (props) => {
                             </Select>
                         </div>
                         <div className={"rightFieldSection"}>
-                            <InputField name={"sweepstakeName"} touched={true} label={"Sweepstake Name"}
-                                        errors={null} type={"text"} onChange={() => {
-                            }} value={""}/>
+                            <InputField name={"stake"} touched={touched.stake} label={"Stake (eg. £1.00, £1.75)"}
+                                        errors={errors.stake} type={"number"} onChange={handleChange}
+                                        value={values.stake}/>
                         </div>
                     </Form>
                 )}

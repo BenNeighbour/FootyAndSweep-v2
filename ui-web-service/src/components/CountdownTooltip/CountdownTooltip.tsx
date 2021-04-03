@@ -30,20 +30,21 @@ const CountdownTooltip: FunctionComponent<Props> = (props) => {
     const [timeLeft, setTimeLeft] = useState<any>(getTimeRemaining(props.startingDate));
 
     useEffect(() => {
-            let countdown = setTimeout(() => {
-                /* Decrement the time */
-                setTimeLeft(getTimeRemaining(props.startingDate))
-            }, 1000);
+        let countdown = setTimeout(() => {
+            /* Decrement the time */
+            setTimeLeft(getTimeRemaining(props.startingDate))
+        }, 1000);
 
-            /* Cleanup function to prevent JavaScript Memory Leaks - this clears the previous timeout to prevent an overflow */
-            return function cleanup() {
-                clearTimeout(countdown);
-            };
+        /* Cleanup function to prevent JavaScript Memory Leaks - this clears the previous timeout to prevent an overflow */
+        return function cleanup() {
+            clearTimeout(countdown);
+        };
     }, [timeLeft, props.startingDate]);
 
     return (
         <div className={"countdownTooltipContainer"} style={{backgroundColor: props.colorCode}}>
-            <span className={"tooltipText"}>{timeLeft.days}:{timeLeft.hours}:{timeLeft.minutes}:{timeLeft.seconds}</span>
+            <span
+                className={"tooltipText"}>{timeLeft.days}:{timeLeft.hours}:{timeLeft.minutes}:{timeLeft.seconds}</span>
         </div>
     );
 };
