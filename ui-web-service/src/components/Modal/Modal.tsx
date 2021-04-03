@@ -48,7 +48,9 @@ const Modal: FunctionComponent<Props> = (props) => {
                     <div className={"modalWrapper"}>
                         <div className={"modal"} onClick={e => e.stopPropagation()}>
                             <div className={"titleSection"}>
-                                <span className={"modalTitle"}>{props.title}</span>
+                                <div className={"titleOpacity"}>
+                                    <span className={"modalTitle"}>{props.title}</span>
+                                </div>
                                 <span className={"modalSubtitle"}>{props.description}</span>
                             </div>
 

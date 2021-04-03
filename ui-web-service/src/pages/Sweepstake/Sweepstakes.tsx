@@ -41,8 +41,6 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
     const [isJoiningSweepstake, setIsJoiningSweepstake] = useState<boolean>(false);
     const [isBuyingTickets, setIsBuyingTickets] = useState<boolean>(false);
 
-    console.log(!isMobile && !isBuyingTickets || !isJoiningSweepstake || !isCreatingSweepstake);
-
     return (
         <div className={"container"}>
             <Modal setShowing={setIsCreatingSweepstake} title={"Create a Sweepstake"}
@@ -74,11 +72,11 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
                             <Button onClick={() => setIsCreatingSweepstake(true)} title={"Create Sweepstake"}
                                     className={"createSweepstakeButton"}/> : undefined}
 
-                        <Button onClick={() => setIsJoiningSweepstake(true)} title={"Join Sweepstake"}/>
-                        <Button title={"Earn FootyCoins"}/>
+                        <Button className={"joinSweepstakeButton"} onClick={() => setIsJoiningSweepstake(true)}
+                                title={"Join Sweepstake"}/>
+                        <Button className={"earnCoinsButton"} title={"Earn FootyCoins"}/>
 
-                        <div className={"settingsLink"}>
-                        </div>
+                        <div className={"settingsLink"}/>
                     </div>
                     <div className={"opacitySection"}>
                         <h1 className={"title"}>Your Sweepstakes</h1>

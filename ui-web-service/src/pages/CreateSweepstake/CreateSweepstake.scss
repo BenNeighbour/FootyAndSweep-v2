@@ -36,3 +36,29 @@
     }
   }
 }
+
+@media (max-width: 1200px) {
+  .form {
+    width: 100%;
+    height: fit-content;
+    padding: 0 20px;
+
+    form {
+      gap: 0;
+      width: 100%;
+      height: fit-content;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex-wrap: wrap;
+
+      .leftFieldSection {
+        flex: 1;
+      }
+
+      .rightFieldSection {
+        flex: 1;
+      }
+    }
+  }
+}

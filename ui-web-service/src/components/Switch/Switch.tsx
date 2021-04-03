@@ -41,8 +41,8 @@ const Switch: FunctionComponent<Props> = (props) => {
                     <span className={"slider"}/>
                 </label>
 
-                <span className={"statusText"}>{props.statusText}&#32;
-                    <b>{isSwitchedOn ? props.trueText : props.falseText}</b></span>
+                <span
+                    className={"statusText"}>{props.statusText}<b>&#32;{isSwitchedOn ? props.trueText : props.falseText}</b></span>
             </div>
         </Fragment>
     );

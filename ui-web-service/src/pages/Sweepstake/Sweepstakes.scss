@@ -38,7 +38,11 @@
     position: fixed;
     top: 0;
     width: 100%;
+    justify-content: center;
+    box-sizing: border-box;
     height: 20vh;
+    overflow: hidden;
+    object-fit: contain;
 
     .opacitySection {
       display: flex;
@@ -67,16 +71,32 @@
     }
 
     .buttonSection {
+      box-sizing: border-box;
+      position: relative;
       display: flex;
+      flex: 1 1;
+      flex-flow: row;
+      background: #0F1318;
+      object-fit: contain;
       width: 100%;
-      justify-content: space-evenly;
+
       background: rgba(16, 20, 25, 0.85);
       backdrop-filter: blur(2px);
       -webkit-backdrop-filter: blur(2px);
 
-      .buttonContainer {
-        padding: 5px 20px;
+      .createSweepstakeButton, .joinSweepstakeButton, .earnCoinsButton {
+        .buttonContainer {
+          padding-left: 10px;
+          padding-right: 10px;
+        }
       }
+
+      .settingsLink {
+        display: none;
+        flex: 0;
+        visibility: hidden;
+      }
+
     }
   }
 }
@@ -119,6 +139,8 @@
   }
 
   .sweepstakes {
+    width: 100%;
+
     .titleDesktopSection {
       visibility: hidden;
       clear: both;
@@ -188,6 +210,7 @@
         -webkit-backdrop-filter: none;
 
         .settingsLink {
+          visibility: visible;
           flex: 1;
           max-width: 40px;
           content: '';
@@ -256,7 +279,7 @@
         height: 100%;
 
         .titleDesktopSection {
-          padding: 0 20px;
+          padding: 0 30px;
           visibility: visible;
           display: flex;
           justify-content: space-between;
