@@ -2,6 +2,16 @@ spring:
   application:
     name: 'api-gateway-service'
 
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
   cloud:
     gateway:
       routes:
@@ -11,7 +21,6 @@ spring:
             - Path=/sweepstake/socket/**
           filters:
             - StripPrefix=1
-            - PreOauth2SSOGatewayFilter
 
   security:
     oauth2:
@@ -20,15 +29,15 @@ spring:
           google:
             clientId: 741479066693-5r73putvt12rf6flqphppn6181hu9ldg.apps.googleusercontent.com
             clientSecret: HzucWNSw6jgqcwp1EiJL6Omn
-            redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
+            authorization-grant-type: authorization_code
             scope:
               - email
               - profile
+              - openid
 
           facebook:
             clientId: 695015954517496
             clientSecret: 8a20fbf69495879823be75828d0f2ab4
-            redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
             scope:
               - email
               - public_profile
