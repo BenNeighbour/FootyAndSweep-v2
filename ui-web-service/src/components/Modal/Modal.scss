@@ -132,19 +132,24 @@
             overflow: hidden;
             object-fit: contain;
             top: 0;
+            white-space: nowrap;
             flex-direction: column;
+            padding-left: 20px;
+            padding-top: 20px;
+            padding-bottom: 20px;
 
             .modalTitle {
-              padding-left: 20px;
+              padding: 0;
               font-style: normal;
               font-weight: bold;
               font-size: 28px;
-              line-height: 45px;
+              line-height: 35px;
               color: #DEE3EA;
             }
           }
 
           .modalSubtitle {
+            padding-top: 20px;
             font-style: normal;
             font-weight: 500;
             font-size: 14px;
@@ -159,6 +164,20 @@
           height: 100%;
           display: flex;
           overflow-y: scroll;
+        }
+
+        .bottomSection {
+          background: #0B0E11;
+          box-shadow: 0px -3px 14px rgba(0, 0, 0, 0.7);
+          width: 100%;
+
+          .submitButton {
+            padding: 18px;
+
+            .buttonContainer {
+              width: 100%;
+            }
+          }
         }
       }
     }

@@ -59,7 +59,7 @@ const Modal: FunctionComponent<Props> = (props) => {
                             </div>
 
                             <div className={"bottomSection"}>
-                                <Button onClick={() => {
+                                <Button className={"submitButton"} onClick={() => {
                                 }} title={props.title}/>
                             </div>
                         </div>
