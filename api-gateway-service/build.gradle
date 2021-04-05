@@ -55,15 +55,35 @@ dependencyManagement {
 }
 
 dependencies {
-    compile "org.springframework.cloud:spring-cloud-starter-gateway"
     implementation('org.springframework.boot:spring-boot-starter-websocket') {
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-web'
     }
-    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+    implementation('org.springframework.boot:spring-boot-starter-security')
+    implementation('org.springframework.cloud:spring-cloud-starter-gateway')
+
+    implementation('org.springframework.cloud:spring-cloud-starter-oauth2') {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+    }
+
+    implementation('org.springframework.cloud:spring-cloud-starter-security') {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+    }
+
+    compile group: 'org.springframework.security', name: 'spring-security-oauth2-jose', version: '5.1.1.RELEASE'
+    compile group: 'org.springframework.security', name: 'spring-security-oauth2-client', version: '5.1.1.RELEASE'
+    compile 'org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.0.6.RELEASE'
+    compile group: 'org.springframework.security', name: 'spring-security-config', version: '5.1.1.RELEASE'
+    compile group: 'org.springframework.security', name: 'spring-security-oauth2-resource-server', version: '5.1.1.RELEASE'
+
+    implementation('org.springframework.session:spring-session-core')
+    runtimeOnly('org.springframework.boot:spring-boot-devtools')
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+    testImplementation('org.springframework.security:spring-security-test')
 
     implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-config:1.1.0.RELEASE'
     implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes:1.1.0.RELEASE'
-    implementation "org.springframework.boot:spring-boot-starter-websocket"
 }
 
 test {

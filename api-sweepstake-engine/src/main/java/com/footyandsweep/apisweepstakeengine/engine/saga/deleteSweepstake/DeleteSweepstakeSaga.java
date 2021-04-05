@@ -32,6 +32,7 @@ public class DeleteSweepstakeSaga implements SimpleSaga<DeleteSweepstakeSagaData
 
   @Override
   public SagaDefinition<DeleteSweepstakeSagaData> getSagaDefinition() {
+    // @formatter:off
     return step()
         .invokeLocal(
             sagaData -> sweepstakeEngine.deleteSweepstakeById(sagaData.getSweepstake().getId()))
@@ -45,5 +46,6 @@ public class DeleteSweepstakeSaga implements SimpleSaga<DeleteSweepstakeSagaData
                     sagaData.getSweepstake().getId()))
         .withCompensation(sagaData -> {})
         .build();
+    // @formatter:on
   }
 }

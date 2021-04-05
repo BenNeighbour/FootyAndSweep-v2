@@ -34,12 +34,9 @@ public class AllocateSweepstakeSaga implements SimpleSaga<AllocateSweepstakeSaga
 
   @Override
   public SagaDefinition<AllocateSweepstakeSagaData> getSagaDefinition() {
+    // @formatter:off
     return step()
         .invokeLocal(allocationEngine::allocateSweepstakeTickets)
-        .withCompensation(
-            sagaData -> {
-              /* TODO */
-            })
         .step()
         .invokeParticipant(
             sagaData ->
@@ -53,6 +50,7 @@ public class AllocateSweepstakeSaga implements SimpleSaga<AllocateSweepstakeSaga
         .step()
         .invokeParticipant(sagaData -> allocationEngine.allocateTickets(sagaData.getTickets()))
         .build();
+    // @formatter:on
   }
 
   @Override

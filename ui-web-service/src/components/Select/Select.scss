@@ -1,0 +1,68 @@
+/*!
+ *   Copyright 2021 FootyAndSweep
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
+.selectArea {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  text-align: left;
+}
+
+.select, .select-invalid {
+  box-sizing: border-box;
+  cursor: pointer;
+  position: relative;
+  width: 100%;
+  outline: none;
+  margin: 0;
+  background: #242C37;
+  border: 1px solid #242C37;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 22px;
+  color: #DEE3EA;
+  opacity: 1;
+  transform: none;
+  border-radius: 8px;
+  box-shadow: -3px 4px 14px rgba(0, 0, 0, 0.7);
+  padding: 10px 10px 10px 15px;
+}
+
+.select-invalid {
+  transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  border: 2px solid #FD4D4D;
+}
+
+select:required:invalid {
+  color: #5D7290;
+}
+
+select::placeholder {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 22px;
+  color: #5D7290;
+}
+
+.errorTextMessage {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 22px;
+  color: #FD4D4D;
+}

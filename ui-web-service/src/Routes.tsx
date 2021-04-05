@@ -16,11 +16,10 @@
 
 import React, {FunctionComponent} from 'react';
 import {Route, Switch} from "react-router";
-import HomePage from "./pages/Home/HomePage";
 import PortalPage from "./pages/Portal/PortalPage";
 import Sweepstakes from "./pages/Sweepstake/Sweepstakes";
 import OAuthRedirect from "./pages/Portal/OAuth/OAuthRedirect";
-import CreateSweepstake from "./pages/CreateSweepstake/CreateSweepstake";
+import LoadingPage from "./pages/Loading/LoadingPage";
 
 interface OwnProps {
 }
@@ -33,15 +32,13 @@ const Routes: FunctionComponent<Props> = (props) => {
             <Switch>
                 <Route>
                     <Route
-                        component={HomePage} exact path="/"/>
+                        component={LoadingPage} exact path="/loading"/>
                     <Route
                         component={OAuthRedirect} exact path="/oauth/login"/>
                     <Route
                         component={PortalPage} exact path="/portal"/>
                     <Route
                         component={Sweepstakes} exact path="/sweepstakes"/>
-                    <Route
-                        component={CreateSweepstake} exact path="/sweepstakes/create"/>
                 </Route>
             </Switch>
         </Route>

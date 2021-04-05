@@ -32,11 +32,13 @@ public class ProcessSweepstakeResultSaga implements SimpleSaga<ProcessSweepstake
 
   @Override
   public SagaDefinition<ProcessSweepstakeResultSagaData> getSagaDefinition() {
+    // @formatter:off
     return step()
         .invokeLocal(resultEngine::processSweepstakeResult)
         .withCompensation(sagaData -> {})
         .step()
         .invokeParticipant(resultEngine::updateUserBalance)
         .build();
+    // @formatter:on
   }
 }

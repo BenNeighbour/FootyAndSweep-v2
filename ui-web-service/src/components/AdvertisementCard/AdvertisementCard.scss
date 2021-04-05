@@ -1,0 +1,210 @@
+/*!
+ *   Copyright 2021 FootyAndSweep
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
+.adArea, .adArea-desktop {
+  animation: fadeInDown 0.5s;
+  animation-fill-mode: backwards;
+  overflow: hidden;
+
+  .borderContainer {
+    margin-left: 15px;
+    margin-right: 15px;
+
+    .borderLine {
+      text-align: center;
+      width: 100%;
+      border: 1px solid #323D4D;
+      margin: auto;
+    }
+  }
+
+  .adContainer {
+    display: flex;
+    background: #151A21;
+    box-shadow: -3px 4px 14px rgba(0, 0, 0, 0.7);
+    border-radius: 8px;
+    margin: 11px 18px;
+    object-fit: contain;
+    overflow: hidden;
+    max-height: fit-content;
+
+    .mainSection {
+      display: flex;
+      width: 100%;
+
+      .pictureSection {
+        flex: 1.5;
+        flex-direction: column;
+        object-fit: contain;
+
+        img {
+          object-fit: cover;
+          height: 100%;
+          width: 100%;
+        }
+      }
+
+      .detailsSection {
+        display: flex;
+        flex-direction: column;
+
+        flex: 6;
+        margin: 0;
+        padding: 10px;
+
+        .desktopCallToAction {
+          display: none;
+          visibility: hidden;
+          flex: 0;
+        }
+
+        .titleSection {
+          display: flex;
+          justify-content: space-between;
+
+          .advertisementTitle {
+            font-style: normal;
+            font-weight: bold;
+            font-size: 14px;
+            line-height: 22px;
+            color: #DEE3EA;
+          }
+        }
+
+        .advertisementDetailsDesktop {
+          visibility: hidden;
+          flex: 0;
+          display: none;
+        }
+
+        .advertisementSubtitle {
+          width: 85%;
+          float: left;
+          font-style: normal;
+          color: #5D7290;
+          padding: 6px 0 0 0;
+          font-weight: 500;
+          font-size: 12px;
+          line-height: 18px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .adArea-desktop {
+    .borderContainer {
+      flex: 0;
+      display: none;
+      visibility: hidden;
+
+      .borderLine {
+        flex: 0;
+        display: none;
+        visibility: hidden;
+      }
+    }
+
+    .adContainer {
+      margin: 10px 0;
+      max-height: 400px;
+
+      .mainSection {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+
+        .detailsSection {
+          padding: 20px;
+
+          .desktopCallToAction {
+            visibility: visible;
+            display: flex;
+
+            .advertisementLink {
+              float: right;
+              text-align: right;
+              width: 100%;
+              font-style: normal;
+              font-weight: bold;
+              font-size: 14px;
+              line-height: 22px;
+              color: #B2BDCD;
+              cursor: pointer;
+            }
+          }
+
+          .advertisementDetailsDesktop {
+            visibility: visible;
+            display: flex;
+
+            font-style: normal;
+            font-weight: 500;
+            font-size: 12px;
+            line-height: 18px;
+            color: #B2BDCD;
+            padding-top: 14px;
+            padding-bottom: 14px;
+          }
+
+          .advertisementSubtitle {
+            font-style: normal;
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 22px;
+            color: #5D7290;
+            padding: 0;
+            margin: 0;
+          }
+
+          .advertisementTitle {
+            font-style: normal;
+            font-weight: bold;
+            font-size: 14px;
+            line-height: 22px;
+            color: #DEE3EA;
+            padding: 0;
+            margin: 0;
+          }
+        }
+
+        .pictureSection {
+          flex: 1.5;
+          object-fit: contain;
+          display: inline-flex;
+          position: relative;
+          height: 200px;
+
+          .advertisementDesktop {
+            float: left;
+            position: absolute;
+            right: 0;
+            top: 0;
+            z-index: 1000;
+            padding: 15px;
+          }
+
+          img {
+            object-fit: cover;
+            height: 100%;
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}

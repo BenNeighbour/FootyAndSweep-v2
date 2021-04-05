@@ -17,7 +17,7 @@
 
 import React, {FunctionComponent} from 'react';
 import Spinner from "../../components/Spinner/Spinner";
-import styled from "styled-components";
+import "./LoadingPage.scss";
 
 interface OwnProps {
     message?: string;
@@ -27,17 +27,10 @@ type Props = OwnProps;
 
 const LoadingPage: FunctionComponent<Props> = (props) => {
     return (
-        <Container>
-            <Spinner color={"#2d50cf"}/>
-        </Container>
+        <div className={"loadingPageContainer"}>
+            <Spinner/>
+        </div>
     );
 };
 
 export default LoadingPage;
-
-const Container = styled.div`
-display: flex;  
-height: 80vh;
-justify-content: center;
-place-items: center;
-`;

@@ -1,0 +1,303 @@
+/*!
+ *   Copyright 2021 FootyAndSweep
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+.container {
+  width: 100%;
+  object-fit: contain;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  overflow: hidden;
+  height: 100vh;
+
+  .title {
+    margin: 0;
+    padding-left: 20px;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 28px;
+    line-height: 45px;
+    color: #DEE3EA;
+  }
+
+  .topSection {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    justify-content: center;
+    box-sizing: border-box;
+    height: 28vh;
+    overflow: hidden;
+    object-fit: contain;
+
+    .opacitySection {
+      display: flex;
+      flex: 1;
+      place-items: center;
+      width: 100%;
+      background: rgba(16, 20, 25, 0.85);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+    }
+
+    .searchSection {
+      font-family: 'Inter', sans-serif;
+      position: relative;
+      display: flex;
+      flex: 1;
+      background: #0F1318;
+      object-fit: contain;
+    }
+
+    .logoSection {
+      visibility: hidden;
+      clear: both;
+      display: none;
+      flex: 0;
+    }
+
+    .buttonSection {
+      box-sizing: border-box;
+      position: relative;
+      display: flex;
+      flex: 1 1;
+      flex-flow: row;
+      background: #0F1318;
+      object-fit: contain;
+      width: 100%;
+
+      background: rgba(16, 20, 25, 0.85);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+
+      .createSweepstakeButton, .joinSweepstakeButton, .earnCoinsButton {
+        .buttonContainer {
+          padding-left: 10px;
+          padding-right: 10px;
+        }
+      }
+
+      .settingsLink {
+        display: none;
+        flex: 0;
+        visibility: hidden;
+      }
+
+    }
+  }
+}
+
+.sweepstakesContainer::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sweepstakesContainer::-webkit-scrollbar {
+  width: 8px;
+}
+
+.sweepstakesContainer::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+  background-color: #151A21;
+  box-shadow: -3px 4px 14px rgba(0, 0, 0, 0.7);
+}
+
+.sweepstakesContainer {
+  scrollbar-color: #151A21 transparent;
+
+  width: 100%;
+  height: 100%;
+  display: flex;
+  overflow-y: scroll;
+
+  .leftSweepstakeSection {
+    visibility: hidden;
+    clear: both;
+    display: none;
+    flex: 0;
+  }
+
+  .rightSweepstakeSection {
+    visibility: hidden;
+    clear: both;
+    display: none;
+    flex: 0;
+  }
+
+  .sweepstakes {
+    width: 100%;
+    margin-top: 30vh;
+
+    .titleDesktopSection {
+      visibility: hidden;
+      clear: both;
+      display: none;
+      flex: 0;
+    }
+  }
+}
+
+@for $i from 1 through 10 {
+  .sweepstakes :nth-child(#{$i}n) {
+    animation-delay: #{$i / 10}s;
+  }
+}
+
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (min-width: 1500px) {
+  .container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow: hidden;
+    height: 100vh;
+
+    .topSection {
+      height: 10vh;
+      position: relative;
+      background-color: transparent;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 30px;
+
+      .opacitySection {
+        visibility: hidden;
+        clear: both;
+        display: none;
+        flex: 0;
+      }
+
+      .logoSection {
+        display: flex;
+        visibility: visible;
+        flex: 0.45;
+      }
+
+      .buttonSection {
+        display: flex;
+        visibility: visible;
+        flex: 0.45;
+        justify-content: space-evenly;
+        background: transparent;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+
+        .settingsLink {
+          visibility: visible;
+          flex: 1;
+          max-width: 40px;
+          content: '';
+          height: 40px;
+          cursor: pointer;
+          box-sizing: border-box;
+          display: inline-block;
+          justify-content: center;
+          place-items: center;
+          clip-path: circle(20px at center);
+          background-repeat: no-repeat;
+          background-position: center center;
+          background-size: cover;
+          background-image: url("http://www.footyandsweep-dev.com:3000/profile.jpg");
+        }
+      }
+
+      .searchSection {
+        flex: 1;
+        width: 100%;
+        height: 100%;
+        background-color: transparent;
+      }
+    }
+
+    .sweepstakesContainer {
+      margin-top: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      overflow-y: scroll;
+
+      .leftSweepstakeSection {
+        visibility: visible;
+        display: flex;
+        flex-direction: column;
+        flex: 0.45;
+        padding-left: 25px;
+        padding-right: 25px;
+        position: sticky;
+        position: -webkit-sticky;
+        top: 0;
+        align-self: flex-start;
+
+        .profileCard {
+          width: 100%;
+          display: flex;
+        }
+      }
+
+      .rightSweepstakeSection {
+        visibility: visible;
+        display: flex;
+        flex-direction: column;
+        flex: 0.45 1;
+        padding-left: 25px;
+        padding-right: 25px;
+        position: sticky;
+        position: -webkit-sticky;
+        top: 0;
+        align-self: flex-start;
+      }
+
+      .sweepstakes {
+        flex: 1;
+        height: 100%;
+        margin-top: 0;
+
+        .titleDesktopSection {
+          padding: 0 30px;
+          visibility: visible;
+          display: flex;
+          justify-content: space-between;
+
+          .createSweepstakeButton {
+            float: right;
+          }
+
+          .titleBound {
+            float: left;
+
+            .title {
+              padding: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}

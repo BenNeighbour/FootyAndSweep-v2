@@ -35,6 +35,7 @@ public class JoinSweepstakeSaga implements SimpleSaga<JoinSweepstakeSagaData> {
 
   @Override
   public SagaDefinition<JoinSweepstakeSagaData> getSagaDefinition() {
+    // @formatter:off
     return step()
         .invokeLocal(
             sagaData -> {
@@ -45,19 +46,19 @@ public class JoinSweepstakeSaga implements SimpleSaga<JoinSweepstakeSagaData> {
               sagaData.setSweepstakeParticipantId(participantId.getId());
               sagaData.setSweepstakeId(participantId.getSweepstakeId());
             })
+        /* Delete the sweepstake and the relation */
         .withCompensation(
-            sagaData -> {
-              /* Delete the sweepstake and the relation */
-              sweepstakeEngine.deleteSweepstakeRelationById(sagaData.getSweepstakeParticipantId());
-            })
+            sagaData ->
+                sweepstakeEngine.deleteSweepstakeRelationById(
+                    sagaData.getSweepstakeParticipantId()))
         .step()
         .invokeParticipant(
             sagaData ->
                 sweepstakeEngine.linkParticipantToSweepstake(
                     sagaData.getSweepstakeId(), sagaData.getParticipantId()))
-        .onReply(ParticipantNotFound.class, (sagaData, e) -> sagaData.getSweepstakeId())
-        .onReply(
-            LinkParticipantToSweepstakeFailure.class, (sagaData, e) -> sagaData.getSweepstakeId())
+        .onReply(ParticipantNotFound.class, (sagaData, e) -> {})
+        .onReply(LinkParticipantToSweepstakeFailure.class, (sagaData, e) -> {})
         .build();
+    // @formatter:on
   }
 }

@@ -16,99 +16,33 @@
 
 package com.footyandsweep.apigatewayservice;
 
-import io.netty.handler.codec.http.HttpResponseStatus;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
-import org.springframework.core.io.buffer.NettyDataBufferFactory;
-import org.springframework.http.HttpCookie;
-import org.springframework.http.server.reactive.ServerHttpResponse;
-import org.springframework.web.reactive.config.EnableWebFlux;
-import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.socket.HandshakeInfo;
-import org.springframework.web.reactive.socket.WebSocketHandler;
-import org.springframework.web.reactive.socket.adapter.ReactorNettyWebSocketSession;
-import org.springframework.web.reactive.socket.server.WebSocketService;
-import org.springframework.web.reactive.socket.server.support.HandshakeWebSocketService;
-import org.springframework.web.reactive.socket.server.upgrade.ReactorNettyRequestUpgradeStrategy;
-import org.springframework.web.server.ServerWebExchange;
-import reactor.core.publisher.Mono;
-import reactor.netty.http.server.HttpServerResponse;
+import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.web.server.SecurityWebFilterChain;
 
-import java.util.Optional;
-import java.util.function.Supplier;
-
-@EnableWebFlux
 @SpringBootApplication
 @EnableDiscoveryClient
 public class ApiGatewayServiceApplication {
 
+  @Bean
+  public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
+    http
+            .authorizeExchange()
+            .anyExchange()
+            .authenticated()
+            .and()
+            .oauth2Login()
+            .and()
+            .oauth2ResourceServer()
+            .jwt();
+
+    return http.build();
+  }
+
   public static void main(String[] args) {
     SpringApplication.run(ApiGatewayServiceApplication.class, args);
-  }
-
-  @Bean
-  public WebSocketService webSocketService(UpgradeStrategy upgradeStrategy) {
-    return new HandshakeWebSocketService(upgradeStrategy);
-  }
-
-  public static class UpgradeStrategy extends ReactorNettyRequestUpgradeStrategy {
-
-    private static final WebClient webClient = WebClient.create();
-
-    @Override
-    public Mono<Void> upgrade(
-        ServerWebExchange exchange,
-        WebSocketHandler handler,
-        String subProtocol,
-        Supplier<HandshakeInfo> handshakeInfoFactory) {
-      ServerHttpResponse response = exchange.getResponse();
-      HttpServerResponse reactorResponse = (HttpServerResponse) response;
-      HandshakeInfo handshakeInfo = handshakeInfoFactory.get();
-      NettyDataBufferFactory bufferFactory = (NettyDataBufferFactory) response.bufferFactory();
-
-      boolean authResult = validateAuth(exchange);
-
-      if (!authResult)
-        return Mono.just(reactorResponse.status(HttpResponseStatus.UNAUTHORIZED))
-            .flatMap(HttpServerResponse::send);
-      else
-        return reactorResponse.sendWebsocket(
-            subProtocol,
-            //              this.maxFramePayloadLength,
-            (in, out) -> {
-              ReactorNettyWebSocketSession session =
-                  new ReactorNettyWebSocketSession(in, out, handshakeInfo, bufferFactory);
-              //                        this.maxFramePayloadLength);
-              return handler.handle(session);
-            });
-    }
-
-    public boolean validateAuth(ServerWebExchange exchange) {
-      try {
-        /* Obtain cookies from request */
-        Optional<HttpCookie> token =
-            exchange.getRequest().getCookies().get("X-AUTH-TOKEN").stream().findFirst();
-        if (!token.isPresent()) {
-          /* Throw error */
-          throw new Exception();
-        }
-
-        webClient
-            .get()
-            .uri("http://api-authentication-service:8080/auth/amIAuthenticated")
-            .cookie("X-AUTH-TOKEN", token.get().getValue())
-            .exchange()
-            .map(
-                clientResponse -> {
-                  return exchange.getResponse().setStatusCode(clientResponse.statusCode());
-                });
-
-        return true;
-      } catch (Exception e) {
-        return false;
-      }
-    }
   }
 }

@@ -21,7 +21,6 @@ import com.footyandsweep.apicommonlibrary.cqrs.user.LinkParticipantToSweepstakeF
 import com.footyandsweep.apicommonlibrary.cqrs.user.ParticipantNotFound;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apisweepstakeengine.engine.SweepstakeEngine;
-import com.footyandsweep.apisweepstakeengine.relation.ParticipantIds;
 import io.eventuate.tram.sagas.orchestration.SagaDefinition;
 import io.eventuate.tram.sagas.simpledsl.SimpleSaga;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -41,35 +40,29 @@ public class CreateSweepstakeSaga implements SimpleSaga<CreateSweepstakeSagaData
 
   @Override
   public SagaDefinition<CreateSweepstakeSagaData> getSagaDefinition() {
-
+    // @formatter:off
     return step()
         .invokeLocal(sweepstakeEngine::saveSweepstake)
         .withCompensation(
             sagaData -> sweepstakeEngine.deleteSweepstakeById(sagaData.getSweepstake().getId()))
         .step()
         .invokeLocal(
-            sagaData -> {
-              ParticipantIds participantIds =
-                  sweepstakeEngine.createSweepstakeParticipantRelation(
-                      sagaData.getSweepstake().getJoinCode(),
-                      sagaData.getSweepstake().getOwnerId());
-              sagaData.setOwnerIdObject(participantIds);
-            })
-        .withCompensation(
             sagaData ->
-                sweepstakeEngine.deleteSweepstakeRelationById(sagaData.getOwnerIdObject().getId()))
+                sagaData.setOwner(
+                    sweepstakeEngine.createSweepstakeParticipantRelation(
+                        sagaData.getSweepstake().getJoinCode(),
+                        sagaData.getSweepstake().getOwnerId())))
+        .withCompensation(
+            sagaData -> sweepstakeEngine.deleteSweepstakeRelationById(sagaData.getOwner().getId()))
         .step()
         .invokeParticipant(
             sagaData ->
                 sweepstakeEngine.linkParticipantToSweepstake(
-                    sagaData.getSweepstake().getId(),
-                    sagaData.getOwnerIdObject().getParticipantId()))
-        .onReply(
-            ParticipantNotFound.class, (sagaData, participantNotFound) -> sagaData.getSweepstake())
-        .onReply(
-            LinkParticipantToSweepstakeFailure.class,
-            (sagaData, linkFailure) -> sagaData.getSweepstake())
+                    sagaData.getSweepstake().getId(), sagaData.getOwner().getParticipantId()))
+        .onReply(ParticipantNotFound.class, (sagaData, participantNotFound) -> {})
+        .onReply(LinkParticipantToSweepstakeFailure.class, (sagaData, linkFailure) -> {})
         .build();
+    // @formatter:on
   }
 
   @Override

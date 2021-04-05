@@ -1,0 +1,173 @@
+/*!
+ *   Copyright 2021 FootyAndSweep
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
+.sweepstakeCardContainer {
+  animation: fadeInDown 0.5s;
+  animation-fill-mode: backwards;
+
+  display: flex;
+  background: #151A21;
+  box-shadow: -3px 4px 14px rgba(0, 0, 0, 0.7);
+  border-radius: 8px;
+  margin: 11px 18px;
+  padding: 11px;
+
+  .mainSection {
+    display: flex;
+    height: fit-content;
+    width: 100%;
+
+    .leftSection {
+      height: 100%;
+      flex: 2;
+      flex-direction: column;
+
+      .topLeftSection {
+        .sweepstakeName {
+          width: fit-content;
+          height: fit-content;
+          display: inline-flex;
+          font-style: normal;
+          font-weight: bold;
+          line-height: 20px;
+          color: #DEE3EA;
+          justify-content: space-between;
+        }
+
+        p {
+          font-style: normal;
+          font-weight: 500;
+          font-size: 13px;
+          line-height: 20px;
+          margin: 13px 0;
+          color: #5D7290;
+        }
+      }
+
+      .bottomLeftSection {
+        float: left;
+        display: flex;
+        width: 100%;
+      }
+    }
+
+    .rightSection {
+      display: flex;
+      flex-direction: column;
+
+      flex: 1;
+      padding: 0;
+      margin: 0;
+
+      .topRightSection {
+        flex: 1;
+
+        .circleIndicator {
+          height: 8px;
+          width: 8px;
+          background: #46566B;
+          border-radius: 50%;
+          display: inline-block;
+          margin-right: 7.5px;
+        }
+
+        span {
+          align-items: center;
+          display: flex;
+
+          width: fit-content;
+          height: fit-content;
+
+          float: right;
+          font-style: normal;
+          font-weight: bold;
+          font-size: 14px;
+          line-height: 20px;
+          text-align: right;
+          color: #B2BDCD;
+        }
+
+        p {
+          width: fit-content;
+          height: fit-content;
+
+          float: right;
+          margin: 0;
+          font-style: normal;
+          font-weight: 500;
+          font-size: 10.5px;
+          line-height: 20px;
+          text-align: right;
+          color: #5D7290;
+        }
+
+        .smallText {
+          width: fit-content;
+          height: fit-content;
+
+          float: right;
+          margin: 0;
+          padding: 0;
+          font-style: normal;
+          font-weight: 500;
+          font-size: 10px;
+          line-height: 10px;
+          text-align: right;
+          color: #46566B;
+        }
+      }
+
+      .bottomRightSection {
+        flex: 1;
+        text-align: right;
+        position: inherit;
+        display: flex;
+        justify-content: flex-end;
+        flex-direction: column;
+
+        span {
+          position: inherit;
+          float: right;
+          font-style: normal;
+          font-weight: bold;
+          font-size: 14px;
+          line-height: 20px;
+          color: #B2BDCD;
+
+          cursor: pointer;
+          outline: none;
+          border: none;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .sweepstakeCardContainer {
+    padding: 30px;
+    margin: 25px;
+
+    .mainSection {
+      height: fit-content;
+
+      .leftSection {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+  }
+}
