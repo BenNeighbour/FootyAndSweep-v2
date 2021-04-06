@@ -19,6 +19,7 @@ package com.footyandsweep.apigatewayservice.security;
 import com.footyandsweep.apigatewayservice.config.AppProperties;
 import com.footyandsweep.apigatewayservice.model.UserPrincipal;
 import io.jsonwebtoken.*;
+import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -28,6 +29,7 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.Date;
 import java.util.UUID;
@@ -39,21 +41,32 @@ public class JwtTokenProvider {
 
   private AppProperties appProperties;
 
+  public JwtTokenProvider(AppProperties appProperties) {
+    this.appProperties = appProperties;
+  }
+
   public String createToken(Authentication authentication) {
-    UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+    try {
+      UserPrincipal userPrincipal = new UserPrincipal();
+      BeanUtils.copyProperties(userPrincipal, authentication.getPrincipal());
 
-    Date now = new Date();
-    Date expiryDate = new Date(now.getTime() + appProperties.getAuth().getTokenExpirationMsec());
+      Date now = new Date();
+      Date expiryDate = new Date(now.getTime() + appProperties.getAuth().getTokenExpirationMsec());
 
-    return Jwts.builder()
-        .setIssuer("footyandsweep")
-        .claim("metadata", userPrincipal.getAttributes())
-        .claim("sub", userPrincipal.getId())
-        .setId(UUID.randomUUID().toString())
-        .setIssuedAt(new Date())
-        .setExpiration(expiryDate)
-        .signWith(SignatureAlgorithm.HS256, appProperties.getAuth().getTokenSecret())
-        .compact();
+      return Jwts.builder()
+              .setIssuer("footyandsweep")
+              .claim("metadata", userPrincipal.getAttributes())
+              .claim("sub", userPrincipal.getAttributes().get("sub"))
+              .setId(UUID.randomUUID().toString())
+              .setIssuedAt(new Date())
+              .setExpiration(expiryDate)
+              .signWith(SignatureAlgorithm.HS256, appProperties.getAuth().getTokenSecret())
+              .compact();
+    } catch (IllegalAccessException | InvocationTargetException e) {
+        e.printStackTrace();
+    }
+
+    return "";
   }
 
   public Authentication getAuthentication(String token) {
@@ -64,7 +77,7 @@ public class JwtTokenProvider {
             .getBody();
 
     Collection<? extends GrantedAuthority> authorities =
-        AuthorityUtils.commaSeparatedStringToAuthorityList(claims.get("roles").toString());
+        AuthorityUtils.commaSeparatedStringToAuthorityList(claims.get("ROLE_USER").toString());
 
     User principal = new User(claims.getSubject(), "", authorities);
     return new UsernamePasswordAuthenticationToken(principal, token, authorities);

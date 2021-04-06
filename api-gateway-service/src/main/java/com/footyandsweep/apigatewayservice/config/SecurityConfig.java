@@ -16,6 +16,7 @@
 
 package com.footyandsweep.apigatewayservice.config;
 
+import com.footyandsweep.apigatewayservice.oauth2.OAuth2SuccessHandler;
 import com.footyandsweep.apigatewayservice.security.AuthenticationEntryPoint;
 import com.footyandsweep.apigatewayservice.security.JwtTokenAuthenticationFilter;
 import com.footyandsweep.apigatewayservice.security.JwtTokenProvider;
@@ -36,6 +37,12 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 @EnableWebFluxSecurity
 @EnableReactiveMethodSecurity
 public class SecurityConfig {
+
+  private final OAuth2SuccessHandler oAuth2SuccessHandler;
+
+  public SecurityConfig(OAuth2SuccessHandler oAuth2SuccessHandler) {
+    this.oAuth2SuccessHandler = oAuth2SuccessHandler;
+  }
 
   @Bean
   public PasswordEncoder passwordEncoder() {
@@ -74,14 +81,15 @@ public class SecurityConfig {
         .authenticated()
         .and()
         .oauth2Login()
+        .authenticationSuccessHandler(oAuth2SuccessHandler)
         .and()
         .formLogin()
         .disable()
         .exceptionHandling()
-        .authenticationEntryPoint(new AuthenticationEntryPoint())
-        .and()
-        .addFilterAt(
-            new JwtTokenAuthenticationFilter(tokenProvider), SecurityWebFiltersOrder.HTTP_BASIC);
+        .authenticationEntryPoint(new AuthenticationEntryPoint());
+//        .and()
+//        .addFilterAt(
+//            new JwtTokenAuthenticationFilter(tokenProvider), SecurityWebFiltersOrder.HTTP_BASIC);
 
     return http.build();
   }

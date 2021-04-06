@@ -35,12 +35,11 @@ public class UserDetailsService implements ReactiveUserDetailsService {
   }
 
   @Override
-  public Mono<UserDetails> findByUsername(String email) {
+  public Mono<UserDetails> findByUsername(String email) throws UsernameNotFoundException {
     User user =
         userDao
             .findUserByEmail(email)
-            .orElseThrow(
-                () -> new UsernameNotFoundException("User not found with email : " + email));
+            .orElseThrow(() -> new UsernameNotFoundException("User not found with email : " + email));
 
     return Mono.just(UserPrincipal.create(user));
   }

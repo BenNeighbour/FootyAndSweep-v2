@@ -33,7 +33,6 @@ spring:
             scope:
               - email
               - profile
-              - openid
 
           facebook:
             clientId: 695015954517496
