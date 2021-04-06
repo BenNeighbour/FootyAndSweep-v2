@@ -29,7 +29,7 @@ spring:
           google:
             clientId: 741479066693-5r73putvt12rf6flqphppn6181hu9ldg.apps.googleusercontent.com
             clientSecret: HzucWNSw6jgqcwp1EiJL6Omn
-            authorization-grant-type: authorization_code
+#            authorization-grant-type: authorization_code
             scope:
               - email
               - profile
@@ -47,6 +47,10 @@ spring:
             tokenUri: https://graph.facebook.com/v3.0/oauth/access_token
             userInfoUri: https://graph.facebook.com/v3.0/me?fields=id,first_name,middle_name,last_name,name,email,verified,is_verified,picture.width(250).height(250)
 
+
+  main:
+    allow-bean-definition-overriding: true
+
 footyandsweep:
   auth:
     tokenSecret: 926D96C90030DD58429D2751AC1BDBBC
@@ -55,6 +59,7 @@ footyandsweep:
   oauth2:
     authorizedRedirectUris:
       - https://www.footyandsweep-dev.com:3000/oauth2/redirect
+
 
 server:
   port: 8080

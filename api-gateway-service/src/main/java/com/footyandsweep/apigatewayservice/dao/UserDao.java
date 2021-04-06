@@ -35,7 +35,7 @@ public interface UserDao extends JpaRepository<User, String> {
 
   @Transactional
   @CacheEvict(value = "userCache", key = "#email")
-  Optional<User> findUserByEmail(String email);
+  User findUserByEmail(String email);
 
   Boolean existsByEmail(String email);
 }

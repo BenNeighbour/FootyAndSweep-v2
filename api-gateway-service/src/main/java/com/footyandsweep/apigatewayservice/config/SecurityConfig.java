@@ -16,10 +16,11 @@
 
 package com.footyandsweep.apigatewayservice.config;
 
+import com.footyandsweep.apigatewayservice.oauth2.OAuth2FailureHandler;
 import com.footyandsweep.apigatewayservice.oauth2.OAuth2SuccessHandler;
+import com.footyandsweep.apigatewayservice.oauth2.OAuth2UserService;
 import com.footyandsweep.apigatewayservice.security.AuthenticationEntryPoint;
-import com.footyandsweep.apigatewayservice.security.JwtTokenAuthenticationFilter;
-import com.footyandsweep.apigatewayservice.security.JwtTokenProvider;
+import com.footyandsweep.apigatewayservice.security.TokenAuthenticationFilter;
 import com.footyandsweep.apigatewayservice.service.UserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,6 +33,8 @@ import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.security.web.server.context.NoOpServerSecurityContextRepository;
+import org.springframework.security.web.server.savedrequest.NoOpServerRequestCache;
 
 @Configuration
 @EnableWebFluxSecurity
@@ -39,9 +42,18 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 public class SecurityConfig {
 
   private final OAuth2SuccessHandler oAuth2SuccessHandler;
+  private final OAuth2FailureHandler oAuth2FailureHandler;
+  private final OAuth2UserService customOAuth2UserService;
 
-  public SecurityConfig(OAuth2SuccessHandler oAuth2SuccessHandler) {
+  public SecurityConfig(OAuth2SuccessHandler oAuth2SuccessHandler, OAuth2FailureHandler oAuth2FailureHandler, OAuth2UserService customOAuth2UserService) {
     this.oAuth2SuccessHandler = oAuth2SuccessHandler;
+    this.oAuth2FailureHandler = oAuth2FailureHandler;
+    this.customOAuth2UserService = customOAuth2UserService;
+  }
+
+  @Bean
+  public TokenAuthenticationFilter tokenAuthenticationFilter() {
+    return new TokenAuthenticationFilter();
   }
 
   @Bean
@@ -51,7 +63,7 @@ public class SecurityConfig {
 
   @Bean
   public ReactiveAuthenticationManager reactiveAuthenticationManager(
-      UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
+          UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
     UserDetailsRepositoryReactiveAuthenticationManager authenticationManager =
         new UserDetailsRepositoryReactiveAuthenticationManager(userDetailsService);
     authenticationManager.setPasswordEncoder(passwordEncoder);
@@ -61,35 +73,42 @@ public class SecurityConfig {
 
   @Bean
   public SecurityWebFilterChain springWebFilterChain(
-      ServerHttpSecurity http, JwtTokenProvider tokenProvider) {
-    http.authorizeExchange()
-        .pathMatchers(
-            "/",
-            "/error",
-            "/favicon.ico",
-            "/*/*.png",
-            "/*/*.gif",
-            "/*/*.svg",
-            "/*/*.jpg",
-            "/*/*.html",
-            "/*/*.css",
-            "/*/*.js")
-        .permitAll()
-        .pathMatchers("/login/*", "/auth/*", "/oauth2/*")
-        .permitAll()
-        .anyExchange()
-        .authenticated()
-        .and()
-        .oauth2Login()
-        .authenticationSuccessHandler(oAuth2SuccessHandler)
-        .and()
-        .formLogin()
-        .disable()
-        .exceptionHandling()
-        .authenticationEntryPoint(new AuthenticationEntryPoint());
-//        .and()
-//        .addFilterAt(
-//            new JwtTokenAuthenticationFilter(tokenProvider), SecurityWebFiltersOrder.HTTP_BASIC);
+      ServerHttpSecurity http) {
+    http
+            .requestCache()
+            .requestCache(NoOpServerRequestCache.getInstance())
+            .and()
+            .securityContextRepository(NoOpServerSecurityContextRepository.getInstance())
+            .authorizeExchange()
+            .pathMatchers(
+                    "/",
+                    "/error",
+                    "/favicon.ico",
+                    "/*/*.png",
+                    "/*/*.gif",
+                    "/*/*.svg",
+                    "/*/*.jpg",
+                    "/*/*.html",
+                    "/*/*.css",
+                    "/*/*.js")
+            .permitAll()
+            .pathMatchers("/login/*", "/auth/*", "/oauth2/*")
+            .permitAll()
+            .anyExchange()
+            .authenticated()
+            .and()
+            .oauth2Login()
+            .authenticationSuccessHandler(oAuth2SuccessHandler)
+            .authenticationFailureHandler(oAuth2FailureHandler)
+            .and()
+            .formLogin()
+            .disable()
+            .exceptionHandling()
+            .authenticationEntryPoint(new AuthenticationEntryPoint())
+            .and()
+            .oauth2Client();
+
+    http.addFilterBefore(tokenAuthenticationFilter(), SecurityWebFiltersOrder.AUTHENTICATION);
 
     return http.build();
   }

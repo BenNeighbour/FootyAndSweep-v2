@@ -69,18 +69,14 @@ public class JwtTokenProvider {
     return "";
   }
 
-  public Authentication getAuthentication(String token) {
+  public String getUserIdFromToken(String token) {
     Claims claims =
         Jwts.parser()
             .setSigningKey(appProperties.getAuth().getTokenSecret())
             .parseClaimsJws(token)
             .getBody();
 
-    Collection<? extends GrantedAuthority> authorities =
-        AuthorityUtils.commaSeparatedStringToAuthorityList(claims.get("ROLE_USER").toString());
-
-    User principal = new User(claims.getSubject(), "", authorities);
-    return new UsernamePasswordAuthenticationToken(principal, token, authorities);
+    return claims.getSubject();
   }
 
   public boolean validateToken(String authToken) {

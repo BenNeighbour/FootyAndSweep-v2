@@ -43,7 +43,7 @@ public class OAuth2SuccessHandler implements ServerAuthenticationSuccessHandler 
   @Override
   public Mono<Void> onAuthenticationSuccess(
       WebFilterExchange webFilterExchange, Authentication authentication) {
-    String targetUrl = "http://www.footyandsweep-dev.com/oauth/login";
+    String targetUrl = "http://www.footyandsweep-dev.com:3000/oauth/login";
 
     if (webFilterExchange.getExchange().getResponse().isCommitted()) return Mono.empty();
 

@@ -17,12 +17,14 @@
 package com.footyandsweep.apigatewayservice.service;
 
 import com.footyandsweep.apigatewayservice.dao.UserDao;
+import com.footyandsweep.apigatewayservice.exception.ResourceNotFoundException;
 import com.footyandsweep.apigatewayservice.model.User;
 import com.footyandsweep.apigatewayservice.model.UserPrincipal;
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -36,11 +38,18 @@ public class UserDetailsService implements ReactiveUserDetailsService {
 
   @Override
   public Mono<UserDetails> findByUsername(String email) throws UsernameNotFoundException {
-    User user =
-        userDao
-            .findUserByEmail(email)
-            .orElseThrow(() -> new UsernameNotFoundException("User not found with email : " + email));
+    User user = userDao.findUserByEmail(email);
+
+    if (user == null) throw new UsernameNotFoundException("User not found with email : " + email);
 
     return Mono.just(UserPrincipal.create(user));
+  }
+
+  @Transactional
+  public UserDetails loadUserById(String id) {
+    User user =
+            userDao.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
+
+    return UserPrincipal.create(user);
   }
 }
