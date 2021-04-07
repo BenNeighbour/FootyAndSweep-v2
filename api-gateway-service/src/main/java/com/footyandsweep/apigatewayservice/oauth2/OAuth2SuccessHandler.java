@@ -33,11 +33,9 @@ import java.net.URI;
 public class OAuth2SuccessHandler implements ServerAuthenticationSuccessHandler {
 
   private final JwtTokenProvider tokenProvider;
-  private final UserDao userDao;
 
-  public OAuth2SuccessHandler(JwtTokenProvider tokenProvider, UserDao userDao) {
+  public OAuth2SuccessHandler(JwtTokenProvider tokenProvider) {
     this.tokenProvider = tokenProvider;
-    this.userDao = userDao;
   }
 
   @Override

@@ -16,6 +16,7 @@
 
 package com.footyandsweep.apigatewayservice.config;
 
+import com.footyandsweep.apigatewayservice.oauth2.CustomAuthorizationRequestRepository;
 import com.footyandsweep.apigatewayservice.oauth2.OAuth2FailureHandler;
 import com.footyandsweep.apigatewayservice.oauth2.OAuth2SuccessHandler;
 import com.footyandsweep.apigatewayservice.oauth2.OAuth2UserService;
@@ -44,11 +45,13 @@ public class SecurityConfig {
   private final OAuth2SuccessHandler oAuth2SuccessHandler;
   private final OAuth2FailureHandler oAuth2FailureHandler;
   private final OAuth2UserService customOAuth2UserService;
+  private final CustomAuthorizationRequestRepository authorizationRequestRepository;
 
-  public SecurityConfig(OAuth2SuccessHandler oAuth2SuccessHandler, OAuth2FailureHandler oAuth2FailureHandler, OAuth2UserService customOAuth2UserService) {
+  public SecurityConfig(OAuth2SuccessHandler oAuth2SuccessHandler, OAuth2FailureHandler oAuth2FailureHandler, OAuth2UserService customOAuth2UserService, CustomAuthorizationRequestRepository authorizationRequestRepository) {
     this.oAuth2SuccessHandler = oAuth2SuccessHandler;
     this.oAuth2FailureHandler = oAuth2FailureHandler;
     this.customOAuth2UserService = customOAuth2UserService;
+    this.authorizationRequestRepository = authorizationRequestRepository;
   }
 
   @Bean
@@ -98,6 +101,7 @@ public class SecurityConfig {
             .authenticated()
             .and()
             .oauth2Login()
+            .authorizationRequestRepository(authorizationRequestRepository)
             .authenticationSuccessHandler(oAuth2SuccessHandler)
             .authenticationFailureHandler(oAuth2FailureHandler)
             .and()
