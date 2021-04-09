@@ -16,7 +16,6 @@
 
 package com.footyandsweep.apigatewayservice.oauth2;
 
-import org.apache.commons.lang.SerializationUtils;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.oauth2.client.web.server.ServerAuthorizationRequestRepository;
 import org.springframework.security.oauth2.client.web.server.WebSessionOAuth2ServerAuthorizationRequestRepository;
@@ -27,7 +26,6 @@ import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebSession;
 import reactor.core.publisher.Mono;
 
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 

@@ -45,10 +45,10 @@ import java.util.Arrays;
 public class OAuth2SuccessHandler implements ServerAuthenticationSuccessHandler {
 
   private static final Gson gson =
-          new GsonBuilder().serializeNulls().generateNonExecutableJson().create();
+      new GsonBuilder().serializeNulls().generateNonExecutableJson().create();
   private static final JsonFormat.Parser jsonParser = JsonFormat.parser().ignoringUnknownFields();
   private static final JsonFormat.Printer jsonPrinter =
-          JsonFormat.printer().includingDefaultValueFields();
+      JsonFormat.printer().includingDefaultValueFields();
 
   private final JwtTokenProvider tokenProvider;
   private final UserDao userDao;
@@ -68,7 +68,8 @@ public class OAuth2SuccessHandler implements ServerAuthenticationSuccessHandler 
     boolean isSigningUp = false;
 
     /* Access the params cookie here */
-    String paramsString = webFilterExchange.getExchange().getRequest().getCookies().get("params").get(0).getValue();
+    String paramsString =
+        webFilterExchange.getExchange().getRequest().getCookies().get("params").get(0).getValue();
 
     /* Split the params string */
     for (String s : paramsString.split("\\?")) {
@@ -84,40 +85,36 @@ public class OAuth2SuccessHandler implements ServerAuthenticationSuccessHandler 
       BeanUtils.copyProperties(userPrincipal, authentication.getPrincipal());
 
       /* Check that the user exists */
-      User user = userDao.findUserByEmail(userPrincipal.getEmail());
+      User user = userDao.findUserByEmail(userPrincipal.getAttributes().get("email").toString());
+
+      /* Get the registration id */
+      String registrationId = webFilterExchange.getExchange().getRequest().getPath().toString().split("/")[4];
 
       /* Check the signup query param  */
       if (!isSigningUp) {
         /* If the user does not exist, they need to sign up first */
         if (user == null) throw new OAuth2AuthenticationProcessingException("You must sign up!");
 
-//        updateExistingUser();
+        updateExistingUser(user, OAuth2UserInfoFactory.getOAuth2UserInfo(registrationId, userPrincipal.getAttributes()));
       } else {
-        if (userDao.existsByEmail(userPrincipal.getEmail())) {
-
-        }
-
-        OAuth2UserInfo userInfo = OAuth2UserInfoFactory.getOAuth2UserInfo("google", userPrincipal.getAttributes());
-
         /* The user is signing up */
-        registerNewUser(userPrincipal, userInfo);
+        registerNewUser(OAuth2UserInfoFactory.getOAuth2UserInfo(registrationId, userPrincipal.getAttributes()));
       }
-
 
       /* Set the cookie */
       String token = tokenProvider.createToken(authentication);
 
       webFilterExchange
-              .getExchange()
-              .getResponse()
-              .addCookie(
-                      ResponseCookie.from("token", token)
-                              .domain("footyandsweep-dev.com")
-                              .maxAge(36000)
-                              .secure(false)
-                              .httpOnly(true)
-                              .path("/")
-                              .build());
+          .getExchange()
+          .getResponse()
+          .addCookie(
+              ResponseCookie.from("token", token)
+                  .domain("footyandsweep-dev.com")
+                  .maxAge(36000)
+                  .secure(false)
+                  .httpOnly(true)
+                  .path("/")
+                  .build());
 
     } catch (IllegalAccessException | InvocationTargetException e) {
       e.printStackTrace();
@@ -133,7 +130,9 @@ public class OAuth2SuccessHandler implements ServerAuthenticationSuccessHandler 
     User user = new User();
 
     user.setProvider(
-            AuthProvider.valueOf("google"));
+        userInfo instanceof GoogleOAuth2UserInfo
+            ? AuthProvider.valueOf("google")
+            : AuthProvider.valueOf("facebook"));
     user.setProviderId(userInfo.getId());
     user.setUsername(userInfo.getName());
     user.setEmail(userInfo.getEmail());
