@@ -29,7 +29,7 @@ spring:
           google:
             clientId: 741479066693-5r73putvt12rf6flqphppn6181hu9ldg.apps.googleusercontent.com
             clientSecret: HzucWNSw6jgqcwp1EiJL6Omn
-#            authorization-grant-type: authorization_code
+            authorization-grant-type: authorization_code
             scope:
               - email
               - profile
@@ -63,3 +63,7 @@ footyandsweep:
 
 server:
   port: 8080
+
+  error:
+    whitelabel:
+      enabled: false

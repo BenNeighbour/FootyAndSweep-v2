@@ -16,6 +16,8 @@
 
 package com.footyandsweep.apigatewayservice.oauth2;
 
+import org.apache.commons.lang.SerializationUtils;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.oauth2.client.web.server.ServerAuthorizationRequestRepository;
 import org.springframework.security.oauth2.client.web.server.WebSessionOAuth2ServerAuthorizationRequestRepository;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
@@ -25,6 +27,7 @@ import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebSession;
 import reactor.core.publisher.Mono;
 
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,12 +55,19 @@ public class CustomAuthorizationRequestRepository
   @Override
   public Mono<Void> saveAuthorizationRequest(
       OAuth2AuthorizationRequest authorizationRequest, ServerWebExchange exchange) {
-    return saveStateToAuthorizationRequest(exchange)
-        .doOnNext(
-            (stateToAuthorizationRequest) ->
-                stateToAuthorizationRequest.put(
-                    authorizationRequest.getState(), authorizationRequest))
-        .then();
+      /* Put query params in cookie */
+      exchange.getResponse().addCookie(ResponseCookie.from("params", exchange.getRequest().getURI().getQuery())
+              .domain("footyandsweep-dev.com")
+              .secure(false)
+              .path("/")
+              .build());
+
+      return saveStateToAuthorizationRequest(exchange)
+              .doOnNext(
+                      (stateToAuthorizationRequest) ->
+                              stateToAuthorizationRequest.put(
+                                      authorizationRequest.getState(), authorizationRequest))
+              .then();
   }
 
   @Override
@@ -73,22 +83,23 @@ public class CustomAuthorizationRequestRepository
         .map(WebSession::getAttributes)
         .handle(
             (sessionAttrs, sink) -> {
-              Map<String, OAuth2AuthorizationRequest> stateToAuthzRequest =
-                  (Map<String, OAuth2AuthorizationRequest>)
-                      sessionAttrs.get(OAuth2ParameterNames.STATE);
+                Map<String, OAuth2AuthorizationRequest> stateToAuthRequest =
+                        (Map<String, OAuth2AuthorizationRequest>)
+                                sessionAttrs.get(OAuth2ParameterNames.STATE);
 
-              if (stateToAuthzRequest == null) {
-                sink.complete();
-                return;
-              }
+                if (stateToAuthRequest == null) {
+                    sink.complete();
+                    return;
+                }
 
-              OAuth2AuthorizationRequest removedValue = stateToAuthzRequest.remove(state);
-              if (stateToAuthzRequest.isEmpty()) sessionAttrs.remove(OAuth2ParameterNames.STATE);
-              /* Overwrite the existing request */
-              else if (removedValue != null)
-                sessionAttrs.put(OAuth2ParameterNames.STATE, stateToAuthzRequest);
-              if (removedValue == null) sink.complete();
-              else sink.next(removedValue);
+                OAuth2AuthorizationRequest removedValue = stateToAuthRequest.remove(state);
+                if (stateToAuthRequest.isEmpty()) sessionAttrs.remove(OAuth2ParameterNames.STATE);
+
+                    /* Overwrite the existing request */
+                else if (removedValue != null)
+                    sessionAttrs.put(OAuth2ParameterNames.STATE, stateToAuthRequest);
+                if (removedValue == null) sink.complete();
+                else sink.next(removedValue);
             });
   }
 

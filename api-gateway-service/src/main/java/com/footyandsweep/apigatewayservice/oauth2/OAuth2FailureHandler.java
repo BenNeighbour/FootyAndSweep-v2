@@ -25,6 +25,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Mono;
 
 import java.net.URI;
+import java.net.URLEncoder;
 
 @Component
 public class OAuth2FailureHandler implements ServerAuthenticationFailureHandler {
@@ -32,14 +33,20 @@ public class OAuth2FailureHandler implements ServerAuthenticationFailureHandler 
   @Override
   public Mono<Void> onAuthenticationFailure(
       WebFilterExchange webFilterExchange, AuthenticationException exception) {
-    /* TODO: Attempt to refresh the token here */
-
     /* Make the target url have the error parameter on it */
     String targetUrl =
-        UriComponentsBuilder.fromUriString("http://www.footyandsweep-dev.com:3000/oauth/login")
-            .queryParam("error", exception.getLocalizedMessage())
-            .build()
-            .toUriString();
+            null;
+    try {
+      targetUrl = UriComponentsBuilder.fromUriString("http://www.footyandsweep-dev.com:3000/oauth/login")
+          .queryParam("error", URLEncoder.encode(exception.getLocalizedMessage(), "UTF-8").replace("+", "%20"))
+          .build()
+          .toUriString();
+    } catch (Exception e) {
+      targetUrl = UriComponentsBuilder.fromUriString("http://www.footyandsweep-dev.com:3000/oauth/login")
+              .queryParam("error", "Hmmm...%20Somethings%20not%20right...")
+              .build()
+              .toUriString();
+    }
 
     /* Redirect to the redirect uri */
     webFilterExchange.getExchange().getResponse().setStatusCode(HttpStatus.TEMPORARY_REDIRECT);

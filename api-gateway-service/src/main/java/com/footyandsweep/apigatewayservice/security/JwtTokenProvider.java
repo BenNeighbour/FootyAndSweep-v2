@@ -22,15 +22,10 @@ import io.jsonwebtoken.*;
 import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Collection;
 import java.util.Date;
 import java.util.UUID;
 
@@ -54,16 +49,16 @@ public class JwtTokenProvider {
       Date expiryDate = new Date(now.getTime() + appProperties.getAuth().getTokenExpirationMsec());
 
       return Jwts.builder()
-              .setIssuer("footyandsweep")
-              .claim("metadata", userPrincipal.getAttributes())
-              .claim("sub", userPrincipal.getAttributes().get("sub"))
-              .setId(UUID.randomUUID().toString())
-              .setIssuedAt(new Date())
-              .setExpiration(expiryDate)
-              .signWith(SignatureAlgorithm.HS256, appProperties.getAuth().getTokenSecret())
-              .compact();
+          .setIssuer("footyandsweep")
+          .claim("metadata", userPrincipal.getAttributes())
+          .claim("sub", userPrincipal.getId())
+          .setId(UUID.randomUUID().toString())
+          .setIssuedAt(new Date())
+          .setExpiration(expiryDate)
+          .signWith(SignatureAlgorithm.HS256, appProperties.getAuth().getTokenSecret())
+          .compact();
     } catch (IllegalAccessException | InvocationTargetException e) {
-        e.printStackTrace();
+      e.printStackTrace();
     }
 
     return "";
