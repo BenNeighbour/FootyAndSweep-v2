@@ -22,10 +22,14 @@ import io.jsonwebtoken.*;
 import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Collection;
 import java.util.Date;
 import java.util.UUID;
 
@@ -72,6 +76,21 @@ public class JwtTokenProvider {
             .getBody();
 
     return claims.getSubject();
+  }
+
+
+  public Authentication getAuthentication(String token) {
+    Claims claims = Jwts.parser()
+            .setSigningKey(appProperties.getAuth().getTokenSecret())
+            .parseClaimsJws(token)
+            .getBody();
+
+    Collection<? extends GrantedAuthority> authorities = claims == null ? AuthorityUtils.NO_AUTHORITIES
+            : AuthorityUtils.commaSeparatedStringToAuthorityList(claims.toString());
+
+    UserPrincipal principal = new UserPrincipal(claims.getSubject(), "", "", authorities);
+
+    return new UsernamePasswordAuthenticationToken(principal, token, authorities);
   }
 
   public boolean validateToken(String authToken) {

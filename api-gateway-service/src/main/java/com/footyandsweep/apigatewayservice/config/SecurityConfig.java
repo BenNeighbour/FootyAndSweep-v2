@@ -19,13 +19,11 @@ package com.footyandsweep.apigatewayservice.config;
 import com.footyandsweep.apigatewayservice.oauth2.CustomAuthorizationRequestRepository;
 import com.footyandsweep.apigatewayservice.oauth2.OAuth2FailureHandler;
 import com.footyandsweep.apigatewayservice.oauth2.OAuth2SuccessHandler;
-import com.footyandsweep.apigatewayservice.security.AuthenticationEntryPoint;
-import com.footyandsweep.apigatewayservice.security.TokenAuthenticationFilter;
-import com.footyandsweep.apigatewayservice.service.UserDetailsService;
+import com.footyandsweep.apigatewayservice.security.JwtAuthenticationRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.ReactiveAuthenticationManager;
-import org.springframework.security.authentication.UserDetailsRepositoryReactiveAuthenticationManager;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
@@ -35,6 +33,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.context.NoOpServerSecurityContextRepository;
 import org.springframework.security.web.server.savedrequest.NoOpServerRequestCache;
+import reactor.core.publisher.Mono;
 
 @Configuration
 @EnableWebFluxSecurity
@@ -44,16 +43,22 @@ public class SecurityConfig {
   private final OAuth2SuccessHandler oAuth2SuccessHandler;
   private final OAuth2FailureHandler oAuth2FailureHandler;
   private final CustomAuthorizationRequestRepository authorizationRequestRepository;
+  private final JwtAuthenticationRepository jwtAuthenticationRepository;
 
-  public SecurityConfig(OAuth2SuccessHandler oAuth2SuccessHandler, OAuth2FailureHandler oAuth2FailureHandler, CustomAuthorizationRequestRepository authorizationRequestRepository) {
+  public SecurityConfig(
+      OAuth2SuccessHandler oAuth2SuccessHandler,
+      OAuth2FailureHandler oAuth2FailureHandler,
+      CustomAuthorizationRequestRepository authorizationRequestRepository,
+      JwtAuthenticationRepository jwtAuthenticationRepository) {
     this.oAuth2SuccessHandler = oAuth2SuccessHandler;
     this.oAuth2FailureHandler = oAuth2FailureHandler;
     this.authorizationRequestRepository = authorizationRequestRepository;
+    this.jwtAuthenticationRepository = jwtAuthenticationRepository;
   }
 
   @Bean
-  public TokenAuthenticationFilter tokenAuthenticationFilter() {
-    return new TokenAuthenticationFilter();
+  public JwtAuthenticationRepository tokenAuthenticationFilter() {
+    return new JwtAuthenticationRepository();
   }
 
   @Bean
@@ -62,54 +67,55 @@ public class SecurityConfig {
   }
 
   @Bean
-  public ReactiveAuthenticationManager reactiveAuthenticationManager(
-          UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
-    UserDetailsRepositoryReactiveAuthenticationManager authenticationManager =
-        new UserDetailsRepositoryReactiveAuthenticationManager(userDetailsService);
-    authenticationManager.setPasswordEncoder(passwordEncoder);
+  public SecurityWebFilterChain springWebFilterChain(ServerHttpSecurity http) {
+    http.requestCache()
+        .requestCache(NoOpServerRequestCache.getInstance())
+        .and()
+        .securityContextRepository(NoOpServerSecurityContextRepository.getInstance())
+        .authorizeExchange()
+        .pathMatchers(HttpMethod.OPTIONS)
+        .permitAll()
+        .pathMatchers(
+            "/",
+            "/error",
+            "/favicon.ico",
+            "/*/*.png",
+            "/*/*.gif",
+            "/*/*.svg",
+            "/*/*.jpg",
+            "/*/*.html",
+            "/*/*.css",
+            "/*/*.js")
+        .permitAll()
+        .pathMatchers("/login/*", "/auth/*", "/oauth2/*")
+        .permitAll()
+        .anyExchange()
+        .authenticated()
+        .and()
+        .oauth2Login()
+        .authorizationRequestRepository(authorizationRequestRepository)
+        .authenticationSuccessHandler(oAuth2SuccessHandler)
+        .authenticationFailureHandler(oAuth2FailureHandler)
+        .and()
+        .formLogin()
+        .disable()
+        .httpBasic()
+        .disable()
+        .exceptionHandling()
+        .authenticationEntryPoint(
+            (exchange, e) -> {
+              return Mono.fromRunnable(
+                  () -> exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED));
+            })
+        .accessDeniedHandler(
+            (exchange, e) -> {
+              return Mono.fromRunnable(
+                  () -> exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED));
+            })
+        .and()
+        .oauth2Client();
 
-    return authenticationManager;
-  }
-
-  @Bean
-  public SecurityWebFilterChain springWebFilterChain(
-      ServerHttpSecurity http) {
-    http
-            .requestCache()
-            .requestCache(NoOpServerRequestCache.getInstance())
-            .and()
-            .securityContextRepository(NoOpServerSecurityContextRepository.getInstance())
-            .authorizeExchange()
-            .pathMatchers(
-                    "/",
-                    "/error",
-                    "/favicon.ico",
-                    "/*/*.png",
-                    "/*/*.gif",
-                    "/*/*.svg",
-                    "/*/*.jpg",
-                    "/*/*.html",
-                    "/*/*.css",
-                    "/*/*.js")
-            .permitAll()
-            .pathMatchers("/login/*", "/auth/*", "/oauth2/*")
-            .permitAll()
-            .anyExchange()
-            .authenticated()
-            .and()
-            .oauth2Login()
-            .authorizationRequestRepository(authorizationRequestRepository)
-            .authenticationSuccessHandler(oAuth2SuccessHandler)
-            .authenticationFailureHandler(oAuth2FailureHandler)
-            .and()
-            .formLogin()
-            .disable()
-            .exceptionHandling()
-            .authenticationEntryPoint(new AuthenticationEntryPoint())
-            .and()
-            .oauth2Client();
-
-    http.addFilterBefore(tokenAuthenticationFilter(), SecurityWebFiltersOrder.AUTHENTICATION);
+    http.addFilterAfter(tokenAuthenticationFilter(), SecurityWebFiltersOrder.AUTHENTICATION);
 
     return http.build();
   }
