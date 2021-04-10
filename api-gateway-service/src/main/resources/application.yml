@@ -67,3 +67,8 @@ server:
   error:
     whitelabel:
       enabled: false
+
+  servlet:
+    session:
+      persistent: false
+      timeout: 0

@@ -4,21 +4,18 @@ metadata:
   name: footyandsweep-v2
 build:
   artifacts:
-#    - image: api-authentication-service
-#      context: api-authentication-service
-#      docker: { }
-#    - image: api-sweepstake-engine
-#      context: api-sweepstake-engine
-#      docker: { }
-#    - image: api-ticket-engine
-#      context: api-ticket-engine
-#      docker: { }
-#    - image: api-result-engine
-#      context: api-result-engine
-#      docker: { }
-#    - image: api-allocation-engine
-#      context: api-allocation-engine
-#      docker: { }
+    - image: api-sweepstake-engine
+      context: api-sweepstake-engine
+      docker: { }
+    - image: api-ticket-engine
+      context: api-ticket-engine
+      docker: { }
+    - image: api-result-engine
+      context: api-result-engine
+      docker: { }
+    - image: api-allocation-engine
+      context: api-allocation-engine
+      docker: { }
     - image: api-gateway-service
       context: api-gateway-service
       docker: { }
@@ -30,16 +27,14 @@ deploy:
       - kubernetes/api-event-broker/api-kafka.yaml
       - kubernetes/api-event-broker/api-kafka-monitor.yaml
       - kubernetes/api-event-broker/zookeeper.yaml
-#      - kubernetes/api-authentication-service/api-authentication-service-config.yaml
-#      - kubernetes/api-sweepstake-engine/api-sweepstake-engine-config.yaml
-#      - kubernetes/api-ticket-engine/api-ticket-engine-config.yaml
-#      - kubernetes/api-result-engine/api-result-engine-config.yaml
-#      - kubernetes/api-allocation-engine/api-allocation-engine-config.yaml
-#      - kubernetes/api-sweepstake-engine/api-sweepstake-engine.yaml
-#      - kubernetes/api-ticket-engine/api-ticket-engine.yaml
-#      - kubernetes/api-result-engine/api-result-engine.yaml
-#      - kubernetes/api-allocation-engine/api-allocation-engine.yaml
-#      - kubernetes/api-authentication-service/api-authentication-service.yaml
-#      - kubernetes/api-event-broker/api-cdc-service.yaml
+      - kubernetes/api-sweepstake-engine/api-sweepstake-engine-config.yaml
+      - kubernetes/api-ticket-engine/api-ticket-engine-config.yaml
+      - kubernetes/api-result-engine/api-result-engine-config.yaml
+      - kubernetes/api-allocation-engine/api-allocation-engine-config.yaml
+      - kubernetes/api-sweepstake-engine/api-sweepstake-engine.yaml
+      - kubernetes/api-ticket-engine/api-ticket-engine.yaml
+      - kubernetes/api-result-engine/api-result-engine.yaml
+      - kubernetes/api-allocation-engine/api-allocation-engine.yaml
+      - kubernetes/api-event-broker/api-cdc-service.yaml
       - kubernetes/api-gateway-service/api-gateway-service.yaml
       - kubernetes/api-gateway-service/api-gateway-service-config.yaml

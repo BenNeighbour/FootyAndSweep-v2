@@ -61,6 +61,8 @@ dependencies {
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-web'
     }
 
+    implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
+
     compileOnly 'org.projectlombok:lombok:1.18.14'
     annotationProcessor 'org.projectlombok:lombok:1.18.14'
 
@@ -79,7 +81,7 @@ dependencies {
 
     compile group: 'org.postgresql', name: 'postgresql', version: '42.1.1'
     compile 'commons-beanutils:commons-beanutils:1.9.4'
-    compile group: 'org.hibernate.validator', name: 'hibernate-validator', version: '7.0.0.Final'
+    implementation 'org.hibernate.validator:hibernate-validator'
 
     implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-config:1.1.0.RELEASE'
     implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes:1.1.0.RELEASE'
