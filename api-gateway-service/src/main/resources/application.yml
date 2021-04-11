@@ -2,6 +2,15 @@ spring:
   application:
     name: 'api-gateway-service'
 
+  sleuth:
+    enabled: true
+    sampler:
+      probability: 1
+
+  zipkin:
+    base:
+      url: http://${ZIPKIN_CONNECT}
+
   jpa:
     hibernate:
       ddl-auto: update
@@ -14,11 +23,13 @@ spring:
 
   cloud:
     gateway:
+      enabled: true
+
       routes:
-        - id: 'api-sweepstake-engine-websocket'
+        - id: 'api-sweepstake-engine'
           uri: 'ws://api-sweepstake-engine:8080'
           predicates:
-            - Path=/sweepstake/socket/**
+            - Path=/sweepstake/**
           filters:
             - StripPrefix=1
 
@@ -60,6 +71,18 @@ footyandsweep:
     authorizedRedirectUris:
       - https://www.footyandsweep-dev.com:3000/oauth2/redirect
 
+grpc:
+  server:
+    port: 9090
+
+eventuatelocal:
+  kafka:
+    bootstrap:
+      servers: ${KAFKA_CONNECT}
+
+  zookeeper:
+    connection:
+      string: ${ZOOKEEPER_CONNECT}
 
 server:
   port: 8080
