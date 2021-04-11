@@ -14,18 +14,18 @@
  *   limitations under the License.
  */
 
-pluginManagement {
-    plugins {
-        id 'org.springframework.boot' version "2.3.3.RELEASE"
-        id 'io.spring.dependency-management' version '1.0.10.RELEASE'
-    }
+package com.footyandsweep.apigatewayservice.exception;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+@ResponseStatus(HttpStatus.BAD_REQUEST)
+public class BadRequestException extends RuntimeException {
+  public BadRequestException(String message) {
+    super(message);
+  }
+
+  public BadRequestException(String message, Throwable cause) {
+    super(message, cause);
+  }
 }
-
-rootProject.name = 'FootyAndSweep v2'
-
-include ':api-common-library'
-include ':api-sweepstake-engine'
-include ':api-ticket-engine'
-include ':api-result-engine'
-include ':api-allocation-engine'
-include ':api-gateway-service'

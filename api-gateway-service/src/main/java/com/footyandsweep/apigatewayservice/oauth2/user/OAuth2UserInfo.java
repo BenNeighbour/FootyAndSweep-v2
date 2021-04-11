@@ -14,18 +14,26 @@
  *   limitations under the License.
  */
 
-pluginManagement {
-    plugins {
-        id 'org.springframework.boot' version "2.3.3.RELEASE"
-        id 'io.spring.dependency-management' version '1.0.10.RELEASE'
-    }
+package com.footyandsweep.apigatewayservice.oauth2.user;
+
+import java.util.Map;
+
+public abstract class OAuth2UserInfo {
+  protected Map<String, Object> attributes;
+
+  public OAuth2UserInfo(Map<String, Object> attributes) {
+    this.attributes = attributes;
+  }
+
+  public Map<String, Object> getAttributes() {
+    return attributes;
+  }
+
+  public abstract String getId();
+
+  public abstract String getName();
+
+  public abstract String getEmail();
+
+  public abstract String getImageUrl();
 }
-
-rootProject.name = 'FootyAndSweep v2'
-
-include ':api-common-library'
-include ':api-sweepstake-engine'
-include ':api-ticket-engine'
-include ':api-result-engine'
-include ':api-allocation-engine'
-include ':api-gateway-service'

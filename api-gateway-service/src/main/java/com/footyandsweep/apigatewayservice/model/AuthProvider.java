@@ -14,18 +14,20 @@
  *   limitations under the License.
  */
 
-pluginManagement {
-    plugins {
-        id 'org.springframework.boot' version "2.3.3.RELEASE"
-        id 'io.spring.dependency-management' version '1.0.10.RELEASE'
-    }
+package com.footyandsweep.apigatewayservice.model;
+
+public enum AuthProvider {
+  email_address("Email Address"),
+  facebook("Facebook Account"),
+  google("Google Account");
+
+  private String value;
+
+  AuthProvider(String value) {
+    this.value = value;
+  }
+
+  public String getValue() {
+    return value;
+  }
 }
-
-rootProject.name = 'FootyAndSweep v2'
-
-include ':api-common-library'
-include ':api-sweepstake-engine'
-include ':api-ticket-engine'
-include ':api-result-engine'
-include ':api-allocation-engine'
-include ':api-gateway-service'

@@ -29,6 +29,7 @@ import "./CreateSweepstake.scss";
 import TextArea from "../../components/TextArea/TextArea";
 import Select from "../../components/Select/Select";
 import Switch from "../../components/Switch/Switch";
+import Button from "../../components/Button/Button";
 
 interface OwnProps {
     state: SweepstakeReducerType;
@@ -79,15 +80,17 @@ const CreateSweepstake: FunctionComponent<Props> = (props) => {
                 }}
                 validationSchema={schema}
                 initialValues={{
-                    name: "",
+                    name: "dsfsdfsdfsdfsd",
                     isPrivate: true,
-                    ownerId: "2c91808c788455b60178845be9a80000",
+                    ownerId: "2c91808878b827550178b82b37840000",
                     minimumPlayers: 2,
                     stake: 10.00,
                     description: "",
-                    type: "",
-                    event: ""
+                    type: "Correct Score H/T",
+                    event: "sdf"
                 }}
+
+
             >
                 {({values, handleChange, errors, touched}) => (
                     <Form>
@@ -104,25 +107,32 @@ const CreateSweepstake: FunctionComponent<Props> = (props) => {
                                       errors={errors.description} onChange={handleChange} value={values.description}/>
 
                             {/*Select Field*/}
-                            <Select name={"type"} touched={touched.type} label={"Sweepstake Type"}
-                                    errors={errors.type} type={"text"} onChange={handleChange} value={values.type}>
-                                <option value={"Correct Score H/T"}>Correct Score H/T</option>
-                                <option value={"Correct Score F/T"}>Correct Score F/T</option>
-                                <option value={"Score at H/T"}>Score at H/T</option>
-                                <option value={"Score at F/T"}>Score at F/T</option>
-                            </Select>
+                            {/*<Select name={"type"} touched={touched.type} label={"Sweepstake Type"}*/}
+                            {/*        errors={errors.type} type={"text"} onChange={handleChange} value={values.type}>*/}
+                            {/*    <option value={"Correct Score H/T"}>Correct Score H/T</option>*/}
+                            {/*    <option value={"Correct Score F/T"}>Correct Score F/T</option>*/}
+                            {/*    <option value={"Score at H/T"}>Score at H/T</option>*/}
+                            {/*    <option value={"Score at F/T"}>Score at F/T</option>*/}
+                            {/*</Select>*/}
 
-                            {/*Select Field*/}
-                            <Select name={"event"} touched={touched.event} label={"Football Match"}
-                                    errors={errors.event} type={"text"} onChange={handleChange} value={values.event}>
-                                <option value={"BHA vs WOL"}>Brighton & Hove Albion vs Wolves</option>
-                            </Select>
+                            {/*/!*Select Field*!/*/}
+                            {/*<Select name={"event"} touched={touched.event} label={"Football Match"}*/}
+                            {/*        errors={errors.event} type={"text"} onChange={handleChange} value={values.event}>*/}
+                            {/*    <option value={"BHA vs WOL"}>Brighton & Hove Albion vs Wolves</option>*/}
+                            {/*</Select>*/}
                         </div>
                         <div className={"rightFieldSection"}>
                             <InputField name={"stake"} touched={touched.stake} label={"Stake (eg. £1.00, £1.75)"}
                                         errors={errors.stake} type={"number"} onChange={handleChange}
                                         value={values.stake}/>
                         </div>
+
+                        <Button title={"Create Sweepstake"} type={"submit"} style={{
+                            width: "100%",
+                            fontSize: "15px",
+                            height: "45px",
+                            marginBottom: "1em"
+                        }}/>
                     </Form>
                 )}
             </Formik>

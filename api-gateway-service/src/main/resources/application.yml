@@ -2,16 +2,36 @@ spring:
   application:
     name: 'api-gateway-service'
 
+  sleuth:
+    enabled: true
+    sampler:
+      probability: 1
+
+  zipkin:
+    base:
+      url: http://${ZIPKIN_CONNECT}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
   cloud:
     gateway:
+      enabled: true
+
       routes:
-        - id: 'api-sweepstake-engine-websocket'
+        - id: 'api-sweepstake-engine'
           uri: 'ws://api-sweepstake-engine:8080'
           predicates:
-            - Path=/sweepstake/socket/**
+            - Path=/sweepstake/**
           filters:
             - StripPrefix=1
-            - PreOauth2SSOGatewayFilter
 
   security:
     oauth2:
@@ -20,7 +40,7 @@ spring:
           google:
             clientId: 741479066693-5r73putvt12rf6flqphppn6181hu9ldg.apps.googleusercontent.com
             clientSecret: HzucWNSw6jgqcwp1EiJL6Omn
-            redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
+            authorization-grant-type: authorization_code
             scope:
               - email
               - profile
@@ -28,7 +48,6 @@ spring:
           facebook:
             clientId: 695015954517496
             clientSecret: 8a20fbf69495879823be75828d0f2ab4
-            redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
             scope:
               - email
               - public_profile
@@ -39,6 +58,10 @@ spring:
             tokenUri: https://graph.facebook.com/v3.0/oauth/access_token
             userInfoUri: https://graph.facebook.com/v3.0/me?fields=id,first_name,middle_name,last_name,name,email,verified,is_verified,picture.width(250).height(250)
 
+
+  main:
+    allow-bean-definition-overriding: true
+
 footyandsweep:
   auth:
     tokenSecret: 926D96C90030DD58429D2751AC1BDBBC
@@ -48,5 +71,27 @@ footyandsweep:
     authorizedRedirectUris:
       - https://www.footyandsweep-dev.com:3000/oauth2/redirect
 
+grpc:
+  server:
+    port: 9090
+
+eventuatelocal:
+  kafka:
+    bootstrap:
+      servers: ${KAFKA_CONNECT}
+
+  zookeeper:
+    connection:
+      string: ${ZOOKEEPER_CONNECT}
+
 server:
   port: 8080
+
+  error:
+    whitelabel:
+      enabled: false
+
+  servlet:
+    session:
+      persistent: false
+      timeout: 0

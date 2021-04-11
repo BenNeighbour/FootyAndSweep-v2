@@ -14,18 +14,27 @@
  *   limitations under the License.
  */
 
-pluginManagement {
-    plugins {
-        id 'org.springframework.boot' version "2.3.3.RELEASE"
-        id 'io.spring.dependency-management' version '1.0.10.RELEASE'
-    }
+package com.footyandsweep.apigatewayservice.payload;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+public class SignUpRequest {
+
+  @NotBlank private String username;
+
+  @NotBlank @Email private String email;
+
+  @NotBlank private String password;
+
+  @NotBlank private String confirmPassword;
 }
-
-rootProject.name = 'FootyAndSweep v2'
-
-include ':api-common-library'
-include ':api-sweepstake-engine'
-include ':api-ticket-engine'
-include ':api-result-engine'
-include ':api-allocation-engine'
-include ':api-gateway-service'

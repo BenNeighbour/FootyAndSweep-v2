@@ -45,7 +45,7 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
         <div className={"container"}>
             <Modal setShowing={setIsCreatingSweepstake} title={"Create a Sweepstake"}
                    description={"Fill the following fields to create a new sweepstake"} showing={isCreatingSweepstake}>
-                <CreateSweepstake/>
+                <CreateSweepstake />
             </Modal>
             <Modal setShowing={setIsJoiningSweepstake} title={"Join a Sweepstake"}
                    description={"Enter a sweepstake code to join!"} showing={isJoiningSweepstake}>

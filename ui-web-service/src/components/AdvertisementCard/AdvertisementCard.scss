@@ -40,8 +40,10 @@
     object-fit: contain;
     overflow: hidden;
     max-height: fit-content;
+    transition: all .2s ease-in-out;
 
     .mainSection {
+      cursor: pointer;
       display: flex;
       width: 100%;
 
@@ -103,6 +105,11 @@
       }
     }
   }
+
+  .adContainer:hover {
+    transform: scale(1.03);
+    box-shadow: -3px 4px 40px rgba(0, 0, 0, 1);
+  }
 }
 
 @media screen and (min-width: 600px) {
@@ -117,6 +124,10 @@
         display: none;
         visibility: hidden;
       }
+    }
+
+    .adContainer:hover {
+      transform: none;
     }
 
     .adContainer {
