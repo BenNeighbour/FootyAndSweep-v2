@@ -26,8 +26,15 @@ import ProfileCard from "../../components/ProfileCard/ProfileCard";
 import {RouteComponentProps} from "react-router-dom";
 import Modal from "../../components/Modal/Modal";
 import CreateSweepstake from "../CreateSweepstake/CreateSweepstake";
+import {RootState} from "../../redux/rootReducer";
+import {bindActionCreators} from "redux";
+import * as SweepstakePageActions from "../../redux/reducers/saga/sweepstakePage/sweepstakePageActions";
+import {SweepstakesPageReducerType} from "../../redux/reducers/saga/sweepstakePage";
+import {connect} from "react-redux";
 
 interface OwnProps extends RouteComponentProps {
+    state: SweepstakesPageReducerType;
+    actions: typeof SweepstakePageActions;
 }
 
 type Props = OwnProps;
@@ -37,22 +44,22 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
     const [sweepstakes,] = useState<number[]>([1, 2, 3, 4, 5, 6, 7, 8, 9]);
     const isMobile = useMediaQuery({query: `(max-width: 768px)`});
 
-    const [isCreatingSweepstake, setIsCreatingSweepstake] = useState<boolean>(false);
-    const [isJoiningSweepstake, setIsJoiningSweepstake] = useState<boolean>(false);
-    const [isBuyingTickets, setIsBuyingTickets] = useState<boolean>(false);
-
     return (
         <div className={"container"}>
-            <Modal setShowing={setIsCreatingSweepstake} title={"Create a Sweepstake"}
-                   description={"Fill the following fields to create a new sweepstake"} showing={isCreatingSweepstake}>
-                <CreateSweepstake />
+            <Modal setShowing={props.actions.setIsCreatingSweepstake} title={"Create a Sweepstake"}
+                   description={"Fill the following fields to create a new sweepstake"}
+                   showing={props.state.creatingSweepstake.isCreatingSweepstake}>
+                <CreateSweepstake/>
             </Modal>
-            <Modal setShowing={setIsJoiningSweepstake} title={"Join a Sweepstake"}
-                   description={"Enter a sweepstake code to join!"} showing={isJoiningSweepstake}>
+            <Modal setShowing={props.actions.setIsJoiningSweepstake} title={"Join a Sweepstake"}
+                   description={"Enter a sweepstake code to join!"}
+                   showing={props.state.joiningSweepstake}>
                 {/*<CreateSweepstake/>*/}
             </Modal>
-            <Modal setShowing={setIsBuyingTickets} title={"Buy Tickets from Jon’s Epic Sweepstake"}
-                   description={"Enter the number of tickets you would like to buy"} showing={isBuyingTickets}>
+            <Modal setShowing={() => {
+            }} title={"Buy Tickets from Jon’s Epic Sweepstake"}
+                   description={"Enter the number of tickets you would like to buy"}
+                   showing={props.state.buyingTickets.isBuyingTickets}>
                 {/*<CreateSweepstake/>*/}
             </Modal>
 
@@ -69,10 +76,12 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
                     </div>
                     <div className={"buttonSection"}>
                         {isMobile ?
-                            <Button onClick={() => setIsCreatingSweepstake(true)} title={"Create Sweepstake"}
+                            <Button onClick={() => props.actions.setIsCreatingSweepstake(true)}
+                                    title={"Create Sweepstake"}
                                     className={"createSweepstakeButton"}/> : undefined}
 
-                        <Button className={"joinSweepstakeButton"} onClick={() => setIsJoiningSweepstake(true)}
+                        <Button className={"joinSweepstakeButton"}
+                                onClick={() => props.actions.setIsJoiningSweepstake(true)}
                                 title={"Join Sweepstake"}/>
                         <Button className={"earnCoinsButton"} title={"Earn FootyCoins"}/>
 
@@ -92,7 +101,8 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
                             <div className={"titleBound"}>
                                 <h1 className={"title"}>Your Sweepstakes</h1>
                             </div>
-                            <Button onClick={() => setIsCreatingSweepstake(true)} title={"Create Sweepstake"}
+                            <Button onClick={() => props.actions.setIsCreatingSweepstake(true)}
+                                    title={"Create Sweepstake"}
                                     className={"createSweepstakeButton"}/>
                         </div>
 
@@ -100,7 +110,10 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
                             return (
                                 <React.Fragment key={`sweepstake-${index}`}>
                                     <SweepstakeCard
-                                        setIsBuyingTickets={setIsBuyingTickets}
+                                        setIsBuyingTickets={(value: boolean) => props.actions.setIsBuyingTickets({
+                                            isBuyingTickets: value,
+                                            sweepstake: null
+                                        })}
                                         isMobile={isMobile}
                                         sweepstakeHashTags={["#bhawhu", "#firstscorer"]}
                                         sweepstakeMetadata={"Jon Neighbour, Ben Neighbour, SwaggrMcJaggr..."}
@@ -124,4 +137,16 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
     );
 };
 
-export default Sweepstakes;
+const mapStateToProps = (state: RootState) => {
+    return {
+        state: state.sweepstakesPage
+    }
+};
+
+function mapDispatchToProps(dispatch: any) {
+    return {
+        actions: bindActionCreators(SweepstakePageActions as any, dispatch),
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Sweepstakes);

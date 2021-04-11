@@ -30,7 +30,7 @@ const persistConfig: PersistConfig<any> = {
     key: "root",
     version: 1,
     storage: localforage,
-    blacklist: ['loginForm', 'signupForm', 'saveSweepstake'],
+    blacklist: ['loginForm', 'signupForm', 'saveSweepstake', 'sweepstakesPage'],
 };
 
 const logger = (createLogger as any)();

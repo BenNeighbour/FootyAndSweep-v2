@@ -34,6 +34,11 @@ export enum ActionType {
     SAVE_SWEEPSTAKE_REQUEST = 'action/SAVE_SWEEPSTAKE_REQUEST',
     SAVE_SWEEPSTAKE_SUCCESS = 'action/SAVE_SWEEPSTAKE_SUCCESS',
     SAVE_SWEEPSTAKE_ERROR = 'action/SAVE_SWEEPSTAKE_ERROR',
+
+    /* Sweepstake Page states */
+    SET_IS_SAVING_SWEEPSTAKE = 'action/SET_IS_SAVING_SWEEPSTAKE',
+    SET_IS_JOINING_SWEEPSTAKE = 'action/SET_IS_JOINING_SWEEPSTAKE',
+    SET_IS_BUYING_SWEEPSTAKE_TICKET = 'action/SET_IS_BUYING_SWEEPSTAKE_TICKET',
 }
 
 export interface UserData {
@@ -79,4 +84,17 @@ export interface SweepstakeData {
     minimumPlayerTickets?: number;
     stake: number;
     totalNumberOfTickets?: number;
+}
+
+export interface BuyingTickets {
+    isBuyingTickets: boolean;
+    sweepstake: SweepstakeData | null;
+}
+
+export interface CreatingSweepstake {
+    isCreatingSweepstake: boolean;
+}
+
+export interface JoingSweepstake {
+    isJoiningSweepstake: boolean;
 }

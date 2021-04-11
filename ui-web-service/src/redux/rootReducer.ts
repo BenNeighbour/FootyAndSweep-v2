@@ -23,18 +23,21 @@ import {
     SignupAuthenticationReducerType
 } from "./reducers/saga/authenticate";
 import {saveSweepstakeReducer, SweepstakeReducerType} from "./reducers/saga/sweepstake";
+import {SweepstakesPageReducerType, yourSweepstakesReducer} from "./reducers/saga/sweepstakePage";
 
 export interface RootState {
     loginForm: LoginAuthenticationReducerType
     signupForm: SignupAuthenticationReducerType
     saveSweepstake: SweepstakeReducerType
+    sweepstakesPage: SweepstakesPageReducerType
 }
 
 const combinedReducers = (history: History) =>
     combineReducers({
         loginForm: loginAuthenticationReducer,
         signupForm: signupAuthenticationReducer,
-        saveSweepstake: saveSweepstakeReducer
+        saveSweepstake: saveSweepstakeReducer,
+        sweepstakesPage: yourSweepstakesReducer
     });
 
 export default combinedReducers;
