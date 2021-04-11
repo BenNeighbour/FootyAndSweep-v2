@@ -24,10 +24,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.ReactiveAuthenticationManager;
+import org.springframework.security.authentication.UserDetailsRepositoryReactiveAuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
@@ -43,21 +46,31 @@ public class SecurityConfig {
   private final OAuth2SuccessHandler oAuth2SuccessHandler;
   private final OAuth2FailureHandler oAuth2FailureHandler;
   private final CustomAuthorizationRequestRepository authorizationRequestRepository;
-  private final JwtAuthenticationRepository jwtAuthenticationRepository;
+  private final ReactiveUserDetailsService userDetailsService;
 
   public SecurityConfig(
       OAuth2SuccessHandler oAuth2SuccessHandler,
       OAuth2FailureHandler oAuth2FailureHandler,
       CustomAuthorizationRequestRepository authorizationRequestRepository,
-      JwtAuthenticationRepository jwtAuthenticationRepository) {
+      ReactiveUserDetailsService userDetailsService) {
     this.oAuth2SuccessHandler = oAuth2SuccessHandler;
     this.oAuth2FailureHandler = oAuth2FailureHandler;
     this.authorizationRequestRepository = authorizationRequestRepository;
-    this.jwtAuthenticationRepository = jwtAuthenticationRepository;
+    this.userDetailsService = userDetailsService;
   }
 
   @Bean
-  public JwtAuthenticationRepository tokenAuthenticationFilter() {
+  public ReactiveAuthenticationManager authenticationManager() {
+    UserDetailsRepositoryReactiveAuthenticationManager authenticationManager =
+        new UserDetailsRepositoryReactiveAuthenticationManager(userDetailsService);
+
+    authenticationManager.setPasswordEncoder(passwordEncoder());
+
+    return authenticationManager;
+  }
+
+  @Bean
+  public JwtAuthenticationRepository jwtAuthenticationRepository() {
     return new JwtAuthenticationRepository();
   }
 
@@ -115,7 +128,7 @@ public class SecurityConfig {
         .and()
         .oauth2Client();
 
-    http.addFilterAfter(tokenAuthenticationFilter(), SecurityWebFiltersOrder.AUTHENTICATION);
+    http.addFilterAfter(jwtAuthenticationRepository(), SecurityWebFiltersOrder.AUTHENTICATION);
 
     return http.build();
   }
