@@ -21,10 +21,7 @@ import {SweepstakeReducerType} from "../sweepstake";
 
 export interface SweepstakesPageReducerType {
     joiningSweepstake: boolean;
-
-    creatingSweepstake: {
-        isCreatingSweepstake: boolean;
-    };
+    creatingSweepstake: boolean;
 
     buyingTickets: {
         isBuyingTickets: boolean;
@@ -36,12 +33,9 @@ export interface SweepstakesPageReducerType {
     isLoading: boolean;
 }
 
-const defaultSweepstakeState: SweepstakesPageReducerType = {
+const defaultSweepstakePageState: SweepstakesPageReducerType = {
     joiningSweepstake: false,
-
-    creatingSweepstake: {
-        isCreatingSweepstake: false,
-    },
+    creatingSweepstake: false,
     buyingTickets: {
         isBuyingTickets: false,
         sweepstake: null
@@ -52,36 +46,34 @@ const defaultSweepstakeState: SweepstakesPageReducerType = {
     isLoading: true,
 }
 
-export const yourSweepstakesReducer = createReducer<SweepstakesPageReducerType>(defaultSweepstakeState, {
-    [ActionType.SET_IS_SAVING_SWEEPSTAKE](state: SweepstakesPageReducerType) {
-        console.log(state);
-
+export const yourSweepstakesReducer = createReducer<SweepstakesPageReducerType>(defaultSweepstakePageState, {
+    [ActionType.SET_IS_SAVING_SWEEPSTAKE](state: SweepstakesPageReducerType, action: Action<any>) {
         return {
             ...state,
             isLoading: false,
-            creatingSweepstake: {
-                isCreatingSweepstake: state.creatingSweepstake.isCreatingSweepstake
-            }
+            creatingSweepstake: action.payload.creatingSweepstake
         };
     },
 
-    [ActionType.SET_IS_JOINING_SWEEPSTAKE](state: SweepstakesPageReducerType) {
+    [ActionType.SET_IS_JOINING_SWEEPSTAKE](state: SweepstakesPageReducerType, action: Action<any>) {
         return {
             ...state,
-            joiningSweepstake: state.joiningSweepstake
+            isLoading: false,
+            joiningSweepstake: action.payload.joiningSweepstake
         };
     },
 
-    [ActionType.SET_IS_BUYING_SWEEPSTAKE_TICKET](state: SweepstakesPageReducerType) {
+    [ActionType.SET_IS_BUYING_SWEEPSTAKE_TICKET](state: SweepstakesPageReducerType, action: Action<any>) {
         return {
             ...state,
+            isLoading: false,
             buyingTickets: {
-                isBuyingTickets: state.buyingTickets.isBuyingTickets
+
             }
         };
     },
 
-    [ActionType.SAVE_SWEEPSTAKE_SUCCESS](state: SweepstakeReducerType) {
+    [ActionType.SAVE_SWEEPSTAKE_SUCCESS](state: SweepstakeReducerType, action: Action<any>) {
         return {
             ...state,
             isCreatingSweepstake: false,

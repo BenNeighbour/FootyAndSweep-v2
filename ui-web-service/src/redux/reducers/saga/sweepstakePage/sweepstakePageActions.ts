@@ -17,19 +17,21 @@
 
 import {ActionType, BuyingTickets} from "../../../model";
 
-export const setIsCreatingSweepstake = (payload: boolean) => {
+export const setIsCreatingSweepstake = (state: boolean) => {
     return {
         type: ActionType.SET_IS_SAVING_SWEEPSTAKE,
-        creatingSweepstake: {
-            isCreatingSweepstake: payload
+        payload: {
+            creatingSweepstake: state
         }
     }
 };
 
-export const setIsJoiningSweepstake = (payload: boolean) => {
+export const setIsJoiningSweepstake = (state: boolean) => {
     return {
         type: ActionType.SET_IS_JOINING_SWEEPSTAKE,
-        payload
+        payload: {
+            joiningSweepstake: state
+        }
     }
 };
 

@@ -38,6 +38,7 @@ export const saveSweepstakeReducer = createReducer<SweepstakeReducerType>(defaul
     },
 
     [ActionType.SAVE_SWEEPSTAKE_SUCCESS](state: SweepstakeReducerType) {
+        console.log(state);
         return {
             ...state,
             sweepstake: state.sweepstake,

@@ -92,9 +92,9 @@ export interface BuyingTickets {
 }
 
 export interface CreatingSweepstake {
-    isCreatingSweepstake: boolean;
+    creatingSweepstake: boolean;
 }
 
-export interface JoingSweepstake {
-    isJoiningSweepstake: boolean;
+export interface JoiningSweepstake {
+    joiningSweepstake: boolean;
 }
