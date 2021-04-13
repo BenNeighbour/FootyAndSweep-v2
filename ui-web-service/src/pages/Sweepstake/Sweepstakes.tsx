@@ -26,16 +26,49 @@ import ProfileCard from "../../components/ProfileCard/ProfileCard";
 import {RouteComponentProps} from "react-router-dom";
 import Modal from "../../components/Modal/Modal";
 import CreateSweepstake from "../CreateSweepstake/CreateSweepstake";
-import {RootState} from "../../redux/rootReducer";
 import {bindActionCreators} from "redux";
 import * as SweepstakePageActions from "../../redux/reducers/saga/sweepstakePage/sweepstakePageActions";
 import {SweepstakesPageReducerType} from "../../redux/reducers/saga/sweepstakePage";
+import {Form, Formik} from "formik";
+import * as yup from "yup";
+import {RootState} from "../../redux/rootReducer";
 import {connect} from "react-redux";
 
 interface OwnProps extends RouteComponentProps {
     state: SweepstakesPageReducerType;
     actions: typeof SweepstakePageActions;
 }
+
+const schema = yup.object().shape({
+    name: yup
+        .string()
+        .required("You must enter a Sweepstake Name.")
+        .label("Sweepstake Name"),
+    description: yup
+        .string()
+        .required("You must enter a Sweepstake Description.")
+        .label("Sweepstake Description"),
+    type: yup
+        .string()
+        .required("You must enter a valid Sweepstake Type.")
+        .label("Sweepstake Type"),
+    event: yup
+        .string()
+        .required("You must enter a valid Football Match.")
+        .label("Football Match"),
+    isPrivate: yup
+        .boolean()
+        .required("Your sweepstake must be Public or Private.")
+        .label("Sweepstake Privacy"),
+    minimumPlayers: yup
+        .number()
+        .required("You must enter the number of Minimum Players.")
+        .label("Minimum Players"),
+    stake: yup
+        .number()
+        .required("You must enter a valid Stake.")
+        .label("Stake")
+});
 
 type Props = OwnProps;
 
@@ -46,11 +79,34 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
 
     return (
         <div className={"container"}>
-            <Modal setShowing={props.actions.setIsCreatingSweepstake} title={"Create a Sweepstake"}
-                   description={"Fill the following fields to create a new sweepstake"}
-                   showing={props.state.creatingSweepstake}>
-                <CreateSweepstake/>
-            </Modal>
+                <Formik
+                    onSubmit={(formValues) => {
+                        // props.actions.saveSweepstakeAction(formValues);
+                        console.log(formValues)
+                    }}
+                    validationSchema={schema}
+                    initialValues={{
+                        name: "",
+                        isPrivate: true,
+                        ownerId: "2c91808878b827550178b82b37840000",
+                        minimumPlayers: 2,
+                        stake: 0,
+                        description: "",
+                        type: "Correct Score H/T",
+                        event: "sdf"
+                    }}
+                >
+                    {({values, handleChange, errors, touched}) => (
+                        <Form>
+                            <Modal isForm setShowing={props.actions.setIsCreatingSweepstake} title={"Create a Sweepstake"}
+                                   description={"Fill the following fields to create a new sweepstake"}
+                                   showing={props.state.creatingSweepstake}>
+                            <CreateSweepstake values={values} handleChange={handleChange} errors={errors}
+                                              touched={touched}/>
+                            </Modal>
+                        </Form>
+                    )}
+                </Formik>
             <Modal setShowing={props.actions.setIsJoiningSweepstake} title={"Join a Sweepstake"}
                    description={"Enter a sweepstake code to join!"}
                    showing={props.state.joiningSweepstake}>
@@ -138,10 +194,11 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
 };
 
 const mapStateToProps = (state: RootState) => {
-    return {
-        state: state.sweepstakesPage
+        return {
+            state: state.sweepstakesPage
+        }
     }
-};
+;
 
 function mapDispatchToProps(dispatch: any) {
     return {

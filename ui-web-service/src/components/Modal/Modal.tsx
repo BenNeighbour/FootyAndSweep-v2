@@ -24,6 +24,7 @@ interface OwnProps {
     setShowing: (value: boolean) => void;
     title: string;
     description: string;
+    isForm?: boolean | false;
 }
 
 type Props = OwnProps;
@@ -59,8 +60,8 @@ const Modal: FunctionComponent<Props> = (props) => {
                             </div>
 
                             <div className={"bottomSection"}>
-                                <Button className={"submitButton"} onClick={() => {
-                                }} title={props.title}/>
+                                <Button className={"submitButton"} type={props.isForm ? "submit" : null}
+                                        title={props.title}/>
                             </div>
                         </div>
                     </div>

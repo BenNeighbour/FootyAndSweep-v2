@@ -72,13 +72,15 @@
 
     .buttonSection {
       box-sizing: border-box;
-      position: relative;
       display: flex;
       flex: 1 1;
       flex-flow: row;
       background: #0F1318;
       object-fit: contain;
       width: 100%;
+      text-align: center;
+      place-items: center;
+      justify-content: space-evenly;
 
       background: rgba(16, 20, 25, 0.85);
       backdrop-filter: blur(2px);
@@ -86,6 +88,8 @@
 
       .createSweepstakeButton, .joinSweepstakeButton, .earnCoinsButton {
         .buttonContainer {
+          font-size: 12px;
+          line-height: 13px;
           padding-left: 10px;
           padding-right: 10px;
         }
