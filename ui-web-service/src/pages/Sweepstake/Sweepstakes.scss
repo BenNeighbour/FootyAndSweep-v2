@@ -316,7 +316,23 @@
 }
 
 @media (min-width: 768px) and (max-width: 1750px) {
+  .createSweepstakeButton, .joinSweepstakeButton, .earnCoinsButton {
+    .buttonContainer {
+      padding: 9px 50px !important;
+      line-height: 22px !important;
+      font-size: 14px !important;
+    }
+  }
+
   .container {
+    .topSection {
+      .searchSection {
+        display: none;
+        flex: 0;
+        visibility: hidden;
+      }
+    }
+
     .sweepstakesContainer {
       .leftSweepstakeSection {
         visibility: hidden;
