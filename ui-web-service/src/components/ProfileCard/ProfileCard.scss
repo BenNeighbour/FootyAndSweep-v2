@@ -14,7 +14,6 @@
  *   limitations under the License.
  */
 
-
 .profileCardContainer {
   animation: fadeInDown 0.5s;
   animation-fill-mode: backwards;
@@ -24,25 +23,25 @@
   box-shadow: -3px 4px 14px rgba(0, 0, 0, 0.7);
   border-radius: 8px;
   width: 100%;
-  padding: 20px;
+  padding: 35px;
   overflow: hidden;
 
   .mainSection {
     display: flex;
     max-height: 70%;
-    padding-bottom: 20px;
+    padding-bottom: 15px;
     justify-content: left;
 
     .profilePictureSection {
       flex: 1;
       max-width: 80px;
       content: '';
-      height: 80px;
+      height: 70px;
       box-sizing: border-box;
       display: inline-block;
       justify-content: center;
       place-items: center;
-      clip-path: circle(40px at center);
+      clip-path: circle(35px at center);
       background-repeat: no-repeat;
       background-position: center center;
       background-size: cover;
@@ -54,13 +53,11 @@
       justify-content: space-between;
       width: fit-content;
       height: fit-content;
-      padding: 16px;
 
       .usernameSection {
         float: left;
         display: flex;
         flex-direction: column;
-        padding-left: 15px;
         padding-right: 15px;
 
         .username {
@@ -160,3 +157,150 @@
     }
   }
 }
+
+//
+//.profileCardContainer {
+//  animation: fadeInDown 0.5s;
+//  animation-fill-mode: backwards;
+//  display: flex;
+//  flex-direction: column;
+//  background: #151A21;
+//  box-shadow: -3px 4px 14px rgba(0, 0, 0, 0.7);
+//  border-radius: 8px;
+//  width: 100%;
+//  padding: 20px;
+//  overflow: hidden;
+//
+//  .mainSection {
+//    display: flex;
+//    max-height: 70%;
+//    padding-bottom: 20px;
+//    justify-content: left;
+//
+//    .profilePictureSection {
+//      flex: 1;
+//      max-width: 80px;
+//      content: '';
+//      height: 80px;
+//      box-sizing: border-box;
+//      display: inline-block;
+//      justify-content: center;
+//      place-items: center;
+//      clip-path: circle(40px at center);
+//      background-repeat: no-repeat;
+//      background-position: center center;
+//      background-size: cover;
+//      background-image: url("http://www.footyandsweep-dev.com:3000/profile.jpg");
+//    }
+//
+//    .metadataSection {
+//      place-items: center;
+//      justify-content: space-between;
+//      width: fit-content;
+//      height: fit-content;
+//      padding: 16px;
+//
+//      .usernameSection {
+//        float: left;
+//        display: flex;
+//        flex-direction: column;
+//        padding-left: 15px;
+//        padding-right: 15px;
+//
+//        .username {
+//          font-style: normal;
+//          font-weight: bold;
+//          font-size: 15px;
+//          line-height: 20px;
+//          color: #DEE3EA;
+//        }
+//
+//        .tag {
+//          font-style: normal;
+//          font-weight: 500;
+//          font-size: 14px;
+//          line-height: 20px;
+//          color: #5D7290;
+//        }
+//
+//        .medals {
+//          display: flex;
+//          margin-top: 5px;
+//
+//          .bronzeMedal {
+//            .tooltipContainer {
+//              background-color: rgba(205, 127, 50, 0.4);
+//            }
+//          }
+//
+//          .silverMedal {
+//            .tooltipContainer {
+//              background-color: #323D4D;
+//            }
+//          }
+//
+//          .goldMedal {
+//            .tooltipContainer {
+//              background-color: rgba(255, 215, 0, 0.6);
+//            }
+//          }
+//        }
+//      }
+//
+//      .balanceSection {
+//        text-align: center;
+//        float: left;
+//        padding-left: 15px;
+//        padding-right: 15px;
+//
+//        .balance {
+//          width: fit-content;
+//          font-style: normal;
+//          font-weight: bold;
+//          font-size: 45px;
+//          line-height: 45px;
+//          color: #DEE3EA;
+//        }
+//
+//        .currency {
+//          width: fit-content;
+//          font-style: normal;
+//          font-weight: 500;
+//          font-size: 14px;
+//          line-height: 14px;
+//          text-align: center;
+//          color: #5D7290;
+//        }
+//      }
+//    }
+//  }
+//
+//  .followerSection {
+//    flex: 1;
+//    display: flex;
+//    justify-content: left;
+//
+//    .innerSection {
+//      display: flex;
+//      justify-content: space-between;
+//      width: 50%;
+//      height: fit-content;
+//
+//      .following, .followers {
+//        font-style: normal;
+//        font-weight: 500;
+//        font-size: 14px;
+//        line-height: 15px;
+//        color: #5D7290;
+//
+//        .number {
+//          font-style: normal;
+//          font-weight: bold;
+//          font-size: 14px;
+//          line-height: 15px;
+//          color: #DEE3EA;
+//        }
+//      }
+//    }
+//  }
+//}

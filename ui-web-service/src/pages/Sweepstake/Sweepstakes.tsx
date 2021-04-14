@@ -76,6 +76,7 @@ type Props = OwnProps;
 const Sweepstakes: FunctionComponent<Props> = (props) => {
     /* TODO: Change this! */
     const [sweepstakes,] = useState<number[]>([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+
     const isMobile = useMediaQuery({query: `(max-width: 768px)`});
 
     return (
@@ -123,10 +124,11 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
                                       setCreatingSweepstake={props.sweepstakePageActions.setIsCreatingSweepstake}
                                       isMobile={isMobile}/>
 
-                <div className={"sweepstakesContainer"}>
+                <div className={`sweepstakesContainer`}>
                     <div className={"leftSweepstakeSection"}>
                         <ProfileCard className={"profileCard"}/>
                     </div>
+                    <div className={"mainSweepstakeSection"}>
                     <div className={"sweepstakes"}>
                         <div className={"titleDesktopSection"}>
                             <div className={"titleBound"}>
@@ -160,6 +162,7 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
                     <div className={"rightSweepstakeSection"}>
                         <AdvertisementCard advertiserLink={"https://www.algoexpert.io"} isMobile={false}/>
                         <AdvertisementCard advertiserLink={"https://www.algoexpert.io"} isMobile={false}/>
+                    </div>
                     </div>
                 </div>
             </Fragment>
