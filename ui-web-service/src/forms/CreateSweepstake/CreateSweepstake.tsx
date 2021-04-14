@@ -16,11 +16,9 @@
 
 
 import React, {FunctionComponent} from 'react';
-import LoadingPage from "../Loading/LoadingPage";
+import LoadingPage from "../../pages/Loading/LoadingPage";
 import {SweepstakeReducerType} from "../../redux/reducers/saga/sweepstake";
-import * as SweepstakeActions from "../../redux/reducers/saga/sweepstake/sweepstakeActions";
 import {RootState} from "../../redux/rootReducer";
-import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import InputField from "../../components/InputField/InputField";
 import "./CreateSweepstake.scss";
@@ -29,7 +27,6 @@ import Switch from "../../components/Switch/Switch";
 
 interface OwnProps {
     state: SweepstakeReducerType;
-    actions: typeof SweepstakeActions;
     errors: any;
     touched: any;
     values: any;
@@ -88,11 +85,8 @@ const mapStateToProps = (state: RootState) => {
     }
 };
 
-function mapDispatchToProps(dispatch: any) {
-    return {
-        actions: bindActionCreators(SweepstakeActions as any, dispatch),
-    };
-}
-
+const mapDispatchToProps = (state: RootState) => {
+    return {}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateSweepstake);

@@ -19,24 +19,25 @@ import React, {Fragment, FunctionComponent, useState} from 'react';
 import SweepstakeCard from "../../components/SweepstakeCard/SweepstakeCard";
 import "./Sweepstakes.scss";
 import AdvertisementCard from "../../components/AdvertisementCard/AdvertisementCard";
-import SearchBar from "../../components/SearchBar/SearchBar";
 import {useMediaQuery} from 'react-responsive';
 import Button from "../../components/Button/Button";
 import ProfileCard from "../../components/ProfileCard/ProfileCard";
 import {RouteComponentProps} from "react-router-dom";
 import Modal from "../../components/Modal/Modal";
-import CreateSweepstake from "../CreateSweepstake/CreateSweepstake";
+import CreateSweepstake from "../../forms/CreateSweepstake/CreateSweepstake";
 import {bindActionCreators} from "redux";
 import * as SweepstakePageActions from "../../redux/reducers/saga/sweepstakePage/sweepstakePageActions";
-import {SweepstakesPageReducerType} from "../../redux/reducers/saga/sweepstakePage";
 import {Form, Formik} from "formik";
 import * as yup from "yup";
 import {RootState} from "../../redux/rootReducer";
 import {connect} from "react-redux";
+import * as SweepstakeActions from "../../redux/reducers/saga/sweepstake/sweepstakeActions";
+import SweepstakeTopSection from "./SweepstakeTopSection/SweepstakeTopSection";
 
 interface OwnProps extends RouteComponentProps {
-    state: SweepstakesPageReducerType;
-    actions: typeof SweepstakePageActions;
+    state: RootState;
+    sweepstakePageActions: typeof SweepstakePageActions;
+    saveSweepstakeActions: typeof SweepstakeActions;
 }
 
 const schema = yup.object().shape({
@@ -79,74 +80,48 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
 
     return (
         <div className={"container"}>
-                <Formik
-                    onSubmit={(formValues) => {
-                        // props.actions.saveSweepstakeAction(formValues);
-                        console.log(formValues)
-                    }}
-                    validationSchema={schema}
-                    initialValues={{
-                        name: "",
-                        isPrivate: true,
-                        ownerId: "2c91808878b827550178b82b37840000",
-                        minimumPlayers: 2,
-                        stake: 0,
-                        description: "",
-                        type: "Correct Score H/T",
-                        event: "sdf"
-                    }}
-                >
-                    {({values, handleChange, errors, touched}) => (
-                        <Form>
-                            <Modal isForm setShowing={props.actions.setIsCreatingSweepstake} title={"Create a Sweepstake"}
-                                   description={"Fill the following fields to create a new sweepstake"}
-                                   showing={props.state.creatingSweepstake}>
+            <Formik
+                onSubmit={(formValues) => {
+                    props.saveSweepstakeActions.saveSweepstakeAction(formValues);
+                }}
+                validationSchema={schema}
+                initialValues={{
+                    name: "",
+                    isPrivate: true,
+                    ownerId: "2c91808878b827550178b82b37840000",
+                    minimumPlayers: 2,
+                    stake: 0,
+                    description: "",
+                    type: "Correct Score H/T",
+                    event: "sdf"
+                }}
+            >
+                {({values, handleChange, errors, touched}) => (
+                    <Form>
+                        <Modal isForm setShowing={props.sweepstakePageActions.setIsCreatingSweepstake}
+                               title={"Create a Sweepstake"}
+                               description={"Fill the following fields to create a new sweepstake"}
+                               showing={props.state.sweepstakesPage.creatingSweepstake}>
                             <CreateSweepstake values={values} handleChange={handleChange} errors={errors}
                                               touched={touched}/>
-                            </Modal>
-                        </Form>
-                    )}
-                </Formik>
-            <Modal setShowing={props.actions.setIsJoiningSweepstake} title={"Join a Sweepstake"}
+                        </Modal>
+                    </Form>
+                )}
+            </Formik>
+            <Modal setShowing={props.sweepstakePageActions.setIsJoiningSweepstake} title={"Join a Sweepstake"}
                    description={"Enter a sweepstake code to join!"}
-                   showing={props.state.joiningSweepstake}>
-                {/*<CreateSweepstake/>*/}
+                   showing={props.state.sweepstakesPage.joiningSweepstake}>
             </Modal>
             <Modal setShowing={() => {
             }} title={"Buy Tickets from Jon’s Epic Sweepstake"}
                    description={"Enter the number of tickets you would like to buy"}
-                   showing={props.state.buyingTickets.isBuyingTickets}>
-                {/*<CreateSweepstake/>*/}
+                   showing={props.state.sweepstakesPage.buyingTickets.isBuyingTickets}>
             </Modal>
 
             <Fragment>
-                <div className={"topSection"}>
-                    <nav className={"navigationSection"}>
-                    </nav>
-                    <div className={"logoSection"}>
-                        <span>Logo Here</span>
-                    </div>
-                    <div className={"searchSection"}>
-                        <SearchBar onChange={() => {
-                        }} value={""}/>
-                    </div>
-                    <div className={"buttonSection"}>
-                        {isMobile ?
-                            <Button onClick={() => props.actions.setIsCreatingSweepstake(true)}
-                                    title={"Create Sweepstake"}
-                                    className={"createSweepstakeButton"}/> : undefined}
-
-                        <Button className={"joinSweepstakeButton"}
-                                onClick={() => props.actions.setIsJoiningSweepstake(true)}
-                                title={"Join Sweepstake"}/>
-                        <Button className={"earnCoinsButton"} title={"Earn FootyCoins"}/>
-
-                        <div className={"settingsLink"}/>
-                    </div>
-                    <div className={"opacitySection"}>
-                        <h1 className={"title"}>Your Sweepstakes</h1>
-                    </div>
-                </div>
+                <SweepstakeTopSection setJoiningSweepstake={props.sweepstakePageActions.setIsJoiningSweepstake}
+                                      setCreatingSweepstake={props.sweepstakePageActions.setIsCreatingSweepstake}
+                                      isMobile={isMobile}/>
 
                 <div className={"sweepstakesContainer"}>
                     <div className={"leftSweepstakeSection"}>
@@ -157,7 +132,7 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
                             <div className={"titleBound"}>
                                 <h1 className={"title"}>Your Sweepstakes</h1>
                             </div>
-                            <Button onClick={() => props.actions.setIsCreatingSweepstake(true)}
+                            <Button onClick={() => props.sweepstakePageActions.setIsCreatingSweepstake(true)}
                                     title={"Create Sweepstake"}
                                     className={"createSweepstakeButton"}/>
                         </div>
@@ -166,7 +141,7 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
                             return (
                                 <React.Fragment key={`sweepstake-${index}`}>
                                     <SweepstakeCard
-                                        setIsBuyingTickets={(value: boolean) => props.actions.setIsBuyingTickets({
+                                        setIsBuyingTickets={(value: boolean) => props.sweepstakePageActions.setIsBuyingTickets({
                                             isBuyingTickets: value,
                                             sweepstake: null
                                         })}
@@ -195,14 +170,15 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
 
 const mapStateToProps = (state: RootState) => {
         return {
-            state: state.sweepstakesPage
+            state
         }
     }
 ;
 
 function mapDispatchToProps(dispatch: any) {
     return {
-        actions: bindActionCreators(SweepstakePageActions as any, dispatch),
+        sweepstakePageActions: bindActionCreators(SweepstakePageActions as any, dispatch),
+        saveSweepstakeActions: bindActionCreators(SweepstakeActions as any, dispatch),
     };
 }
 
