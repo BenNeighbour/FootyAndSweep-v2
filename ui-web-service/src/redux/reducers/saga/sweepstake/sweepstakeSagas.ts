@@ -18,11 +18,11 @@ import {channel} from 'redux-saga';
 import {fork, put, take, takeLatest} from 'redux-saga/effects';
 import {ActionType, SweepstakeData} from "../../../model";
 import {Client} from "@stomp/stompjs";
-import {saveSweepstake} from "../../../../services/sweepstakeService";
+import {getMySweepstakes, saveSweepstake} from "../../../../services/sweepstakeService";
 
 const sweepstakeChannel = channel();
 const client = new Client();
-client.brokerURL = "ws://api.footyandsweep-dev.com:30389/sweepstake/socket";
+client.brokerURL = "ws://api.footyandsweep-dev.com:30389/sweepstake-socket/socket";
 
 function* saveSweepstakeSaga({payload}: { payload: SweepstakeData }) {
     try {
@@ -35,6 +35,10 @@ function* saveSweepstakeSaga({payload}: { payload: SweepstakeData }) {
     }
 }
 
+function* getMySweepstakesSaga({payload}: { payload: String }) {
+    getMySweepstakes(sweepstakeChannel)
+}
+
 function* watchSweepstakeChannel() {
     const action = yield take(sweepstakeChannel);
     yield put(action)
@@ -44,8 +48,13 @@ function* onSaveSweepstakeWatcher() {
     yield takeLatest(ActionType.SAVE_SWEEPSTAKE_REQUEST as any, saveSweepstakeSaga);
 }
 
+function* onGetMySweepstakesWatcher() {
+    yield takeLatest(ActionType.GET_MY_SWEEPSTAKES_REQUEST as any, getMySweepstakesSaga);
+}
+
 let sweepstakeSagas = [
     fork(onSaveSweepstakeWatcher),
+    fork(onGetMySweepstakesWatcher),
     fork(watchSweepstakeChannel)
 ];
 

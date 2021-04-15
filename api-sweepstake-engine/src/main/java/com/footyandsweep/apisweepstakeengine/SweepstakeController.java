@@ -18,6 +18,7 @@ package com.footyandsweep.apisweepstakeengine;
 
 import com.footyandsweep.apisweepstakeengine.dao.ParticipantIdDao;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
+import com.footyandsweep.apisweepstakeengine.engine.SweepstakeEngine;
 import com.footyandsweep.apisweepstakeengine.engine.saga.createSweepstake.CreateSweepstakeSaga;
 import com.footyandsweep.apisweepstakeengine.engine.saga.createSweepstake.CreateSweepstakeSagaData;
 import com.footyandsweep.apisweepstakeengine.engine.saga.deleteSweepstake.DeleteSweepstakeSaga;
@@ -32,11 +33,14 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class SweepstakeController {
 
   private final ResultHelper resultHelper;
   private final SweepstakeDao sweepstakeDao;
+  private final SweepstakeEngine sweepstakeEngine;
   private final ParticipantIdDao participantIdDao;
 
   private final CreateSweepstakeSaga createSweepstakeSaga;
@@ -48,6 +52,7 @@ public class SweepstakeController {
   public SweepstakeController(
       ResultHelper resultHelper,
       SweepstakeDao sweepstakeDao,
+      SweepstakeEngine sweepstakeEngine,
       ParticipantIdDao participantIdDao,
       CreateSweepstakeSaga createSweepstakeSaga,
       DeleteSweepstakeSaga deleteSweepstakeSaga,
@@ -55,6 +60,7 @@ public class SweepstakeController {
       SagaInstanceFactory sagaInstanceFactory) {
     this.resultHelper = resultHelper;
     this.sweepstakeDao = sweepstakeDao;
+    this.sweepstakeEngine = sweepstakeEngine;
     this.participantIdDao = participantIdDao;
     this.createSweepstakeSaga = createSweepstakeSaga;
     this.deleteSweepstakeSaga = deleteSweepstakeSaga;
@@ -97,5 +103,10 @@ public class SweepstakeController {
     sagaInstanceFactory.create(joinSweepstakeSaga, data);
 
     return ResponseEntity.ok("Joined Successfully");
+  }
+
+  @GetMapping("/sweepstakes/{userId}")
+  public ResponseEntity<List<Sweepstake>> getMySweepstakes(@PathVariable("userId") String userId) {
+    return ResponseEntity.ok(sweepstakeEngine.getAllSweepstakesByUser(userId));
   }
 }

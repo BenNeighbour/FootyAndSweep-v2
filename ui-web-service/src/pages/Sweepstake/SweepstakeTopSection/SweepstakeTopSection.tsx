@@ -15,9 +15,10 @@
  */
 
 
-import React, { FunctionComponent } from 'react';
+import React, {FunctionComponent} from 'react';
 import SearchBar from "../../../components/SearchBar/SearchBar";
 import Button from "../../../components/Button/Button";
+import "./SweepstakeTopSection.scss";
 
 interface OwnProps {
     isMobile: boolean;
@@ -28,35 +29,35 @@ interface OwnProps {
 type Props = OwnProps;
 
 const SweepstakeTopSection: FunctionComponent<Props> = (props) => {
-  return (
-      <div className={"topSection"}>
-          <nav className={"navigationSection"}>
-          </nav>
-          <div className={"logoSection"}>
-              <span>Logo Here</span>
-          </div>
-          <div className={"searchSection"}>
-              <SearchBar onChange={() => {
-              }} value={""}/>
-          </div>
-          <div className={"buttonSection"}>
-              {props.isMobile ?
-                  <Button onClick={() => props.setJoiningSweepstake(true)}
-                          title={"Create Sweepstake"}
-                          className={"createSweepstakeButton"}/> : undefined}
+    return (
+        <div className={"topSection"}>
+            <nav className={"navigationSection"}>
+            </nav>
+            <div className={"logoSection"}>
+                <span>Logo Here</span>
+            </div>
+            <div className={"searchSection"}>
+                <SearchBar onChange={() => {
+                }} value={""}/>
+            </div>
+            <div className={"buttonSection"}>
+                {props.isMobile ?
+                    <Button onClick={() => props.setJoiningSweepstake(true)}
+                            title={"Create Sweepstake"}
+                            className={"createSweepstakeButton"}/> : undefined}
 
-              <Button className={"joinSweepstakeButton"}
-                      onClick={() => props.setJoiningSweepstake(true)}
-                      title={"Join Sweepstake"}/>
-              <Button className={"earnCoinsButton"} title={"Earn FootyCoins"}/>
+                <Button className={"joinSweepstakeButton"}
+                        onClick={() => props.setJoiningSweepstake(true)}
+                        title={"Join Sweepstake"}/>
+                <Button className={"earnCoinsButton"} title={"Earn FootyCoins"}/>
 
-              <div className={"settingsLink"}/>
-          </div>
-          <div className={"opacitySection"}>
-              <h1 className={"title"}>Your Sweepstakes</h1>
-          </div>
-      </div>
-  );
+                <div className={"settingsLink"}/>
+            </div>
+            <div className={"opacitySection"}>
+                <h1 className={"title"}>Your Sweepstakes</h1>
+            </div>
+        </div>
+    );
 };
 
 export default SweepstakeTopSection;

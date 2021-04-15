@@ -21,7 +21,7 @@ import {SweepstakeReducerType} from "../../redux/reducers/saga/sweepstake";
 import {RootState} from "../../redux/rootReducer";
 import {connect} from "react-redux";
 import InputField from "../../components/InputField/InputField";
-import "./CreateSweepstake.scss";
+import "./CreateSweepstakeForm.scss";
 import TextArea from "../../components/TextArea/TextArea";
 import Switch from "../../components/Switch/Switch";
 
@@ -35,7 +35,7 @@ interface OwnProps {
 
 type Props = OwnProps;
 
-const CreateSweepstake: FunctionComponent<Props> = (props) => {
+const CreateSweepstakeForm: FunctionComponent<Props> = (props) => {
     if (props.state.isLoading) return <LoadingPage/>
 
     return (
@@ -89,4 +89,4 @@ const mapDispatchToProps = (state: RootState) => {
     return {}
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateSweepstake);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateSweepstakeForm);

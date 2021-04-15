@@ -24,8 +24,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.web.reactive.config.CorsRegistry;
 import org.springframework.web.reactive.config.EnableWebFlux;
 
 @EnableCaching
@@ -39,7 +41,10 @@ import org.springframework.web.reactive.config.EnableWebFlux;
 })
 @EnableConfigurationProperties(AppProperties.class)
 public class ApiGatewayServiceApplication {
+
   public static void main(String[] args) {
     SpringApplication.run(ApiGatewayServiceApplication.class, args);
   }
+
+
 }

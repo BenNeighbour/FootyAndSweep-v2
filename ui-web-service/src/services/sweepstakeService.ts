@@ -16,6 +16,7 @@
 
 import {ActionType, SweepstakeData} from "../redux/model";
 import {Client} from "@stomp/stompjs";
+import axios from "axios";
 
 export function saveSweepstake(client: Client, sweepstakeChannel: any, payload: SweepstakeData) {
     client.onConnect = () => {
@@ -41,5 +42,22 @@ export function saveSweepstake(client: Client, sweepstakeChannel: any, payload: 
     }
 
     client.activate();
+}
 
+
+export function getMySweepstakes(sweepstakeChannel: any) {
+    /* Get the user id */
+    let userId = localStorage.getItem("userId");
+
+    return axios.get(`http://api.footyandsweep-dev.com:30389/sweepstake/sweepstakes/${userId}`, {withCredentials: true}).then(value => {
+        sweepstakeChannel.put({
+            action: ActionType.GET_MY_SWEEPSTAKES_SUCCESS,
+            payload: value.data
+        })
+    }).catch((reason: any) => {
+        sweepstakeChannel.put({
+            action: ActionType.GET_MY_SWEEPSTAKES_ERROR,
+            payload: null
+        });
+    })
 }

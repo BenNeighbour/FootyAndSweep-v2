@@ -33,7 +33,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static io.eventuate.tram.commands.consumer.CommandWithDestinationBuilder.send;
@@ -138,5 +140,30 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
 
     assert participantIds != null;
     participantIds.forEach(participantIdDao::delete);
+  }
+
+  @Override
+  public List<Sweepstake> getAllSweepstakesByUser(String userId) {
+    /* Get all the sweepstake relations by the id */
+    Optional<List<ParticipantIds>> sweepstakeUserRelations =
+        participantIdDao.findAllByParticipantId(userId);
+
+    if (sweepstakeUserRelations.isPresent()) {
+      List<Sweepstake> participantSweepstakes = new ArrayList<>();
+
+      /* For each one, get the sweepstake for it and put it in the return array */
+      sweepstakeUserRelations
+          .get()
+          .forEach(
+              participantIds -> {
+                Sweepstake sweepstake =
+                    sweepstakeDao.findSweepstakeById(participantIds.getSweepstakeId());
+                if (sweepstake != null) participantSweepstakes.add(sweepstake);
+              });
+
+      return participantSweepstakes;
+    }
+
+    return new ArrayList<>();
   }
 }

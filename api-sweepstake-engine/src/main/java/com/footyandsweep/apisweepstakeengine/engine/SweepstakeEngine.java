@@ -23,6 +23,8 @@ import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
 import com.footyandsweep.apisweepstakeengine.relation.ParticipantIds;
 import io.eventuate.tram.commands.consumer.CommandWithDestination;
 
+import java.util.List;
+
 public interface SweepstakeEngine {
 
   void saveSweepstake(CreateSweepstakeSagaData sagaData);
@@ -42,4 +44,6 @@ public interface SweepstakeEngine {
   CommandWithDestination linkParticipantToSweepstake(String sweepstakeId, String participantId);
 
   void updateSweepstakeStatus(String sweepstakeId, SweepstakeCommon.SweepstakeStatus status);
+
+  List<Sweepstake> getAllSweepstakesByUser(String userId);
 }

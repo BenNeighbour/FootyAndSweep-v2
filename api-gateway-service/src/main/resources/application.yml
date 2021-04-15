@@ -29,6 +29,13 @@ spring:
         - id: 'api-sweepstake-engine'
           uri: 'ws://api-sweepstake-engine:8080'
           predicates:
+            - Path=/sweepstake-socket/**
+          filters:
+            - StripPrefix=1
+
+        - id: 'api-sweepstake-engine'
+          uri: 'http://api-sweepstake-engine:8080'
+          predicates:
             - Path=/sweepstake/**
           filters:
             - StripPrefix=1

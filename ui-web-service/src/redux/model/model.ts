@@ -39,6 +39,10 @@ export enum ActionType {
     SET_IS_SAVING_SWEEPSTAKE = 'action/SET_IS_SAVING_SWEEPSTAKE',
     SET_IS_JOINING_SWEEPSTAKE = 'action/SET_IS_JOINING_SWEEPSTAKE',
     SET_IS_BUYING_SWEEPSTAKE_TICKET = 'action/SET_IS_BUYING_SWEEPSTAKE_TICKET',
+
+    GET_MY_SWEEPSTAKES_REQUEST = 'action/GET_MY_SWEEPSTAKES_REQUEST',
+    GET_MY_SWEEPSTAKES_SUCCESS = 'action/GET_MY_SWEEPSTAKES_SUCCESS',
+    GET_MY_SWEEPSTAKES_ERROR = 'action/GET_MY_SWEEPSTAKES_ERROR',
 }
 
 export interface UserData {
@@ -89,12 +93,4 @@ export interface SweepstakeData {
 export interface BuyingTickets {
     isBuyingTickets: boolean;
     sweepstake: SweepstakeData | null;
-}
-
-export interface CreatingSweepstake {
-    creatingSweepstake: boolean;
-}
-
-export interface JoiningSweepstake {
-    joiningSweepstake: boolean;
 }
