@@ -1,4 +1,4 @@
-/*!
+/*
  *   Copyright 2021 FootyAndSweep
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,36 +15,23 @@
  */
 
 
-.outerLoginArea {
-  background: #0D1114;
-  box-shadow: -3px 4px 14px rgba(0, 0, 0, 0.7);
-  border-radius: 15px;
-  margin: 10px;
-  width: 100%;
+import React, { FunctionComponent } from 'react';
+import "./SiginWithGoogle.scss";
+import {FcGoogle} from "react-icons/all";
 
-  display: flex;
-  align-items: center;
-  place-items: center;
+interface OwnProps {}
 
-  flex: 1;
+type Props = OwnProps;
 
-  .fieldSection {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
+const SigninWithGoogle: FunctionComponent<Props> = (props) => {
+  return (
+      <div className={"signInWithGoogleContainer"}>
+          <FcGoogle
+              style={{
+                  padding: "5px 25px"
+              }} size={65}/>
+      </div>
+  );
+};
 
-    align-items: center;
-    place-items: center;
-    vertical-align: center;
-
-    .checkboxArea {
-      padding-top: 30px;
-      padding-bottom: 25px;
-    }
-
-    .submitButton {
-      width: 85%;
-    }
-  }
-}
+export default SigninWithGoogle;

@@ -27,6 +27,7 @@ import InputField from "../../../components/InputField/InputField";
 import "./LoginForm.scss";
 import Button from "../../../components/Button/Button";
 import Checkbox from "../../../components/Checkbox/Checkbox";
+import SigninWithGoogle from "../../../components/SocialButton/SigninWithGoogle";
 
 interface OwnProps {
     state: LoginAuthenticationReducerType;
@@ -61,16 +62,19 @@ const LoginForm: FunctionComponent<Props> = (props) => {
                 <InputField large type={"password"} onChange={() => {
                 }} style={{width: "85%"}} touched={false} errors={""} value={""} label={"Password"} name={"password"}/>
 
-                <Checkbox />
+                <Checkbox textLinkTo={"http://www.footyandsweep-dev.com:3000/terms"} textLink={"Terms & Conditions"} text={"I agree to FootyAndSweep"} />
 
                 <Button className={"submitButton"} style={{
-                    fontSize: "22px",
-                    lineHeight: "22px",
-                    padding: "20px",
+                    fontSize: "20px",
+                    lineHeight: "20px",
+                    padding: "12.5px",
                     width: "100%",
                     borderRadius: "10px",
                 }}
-                        onClick={() => {}} type={"submit"} title={"Sign In"}/>
+                        onClick={() => {
+                        }} type={"submit"} title={"Sign In"}/>
+
+                <SigninWithGoogle />
             </div>
         </div>
     );

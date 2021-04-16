@@ -17,16 +17,24 @@
 
 import React, {FunctionComponent} from 'react';
 import "./Checkbox.scss";
+import {useLocation} from "react-router-dom";
 
 interface OwnProps {
+    text: string;
+    textLink?: string | null;
+    textLinkTo?: string | null;
 }
 
 type Props = OwnProps;
 
 const Checkbox: FunctionComponent<Props> = (props) => {
+    const currentLocation = useLocation();
+
     return (
         <div className={"checkboxArea"}>
-            <label className="checkboxContainer"><span className={"text"}>I agree to FootyAndSweep Terms & Conditions</span>
+            <label className="checkboxContainer"><span className={"text"}>{props.text} <a
+                href={props.textLinkTo || currentLocation.pathname}
+                className={"textLink"}><b>{props.textLink}</b></a></span>
                 <input type="checkbox"/>
                 <span className="checkmark"/>
             </label>
