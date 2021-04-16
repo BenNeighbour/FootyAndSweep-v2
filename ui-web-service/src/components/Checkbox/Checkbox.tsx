@@ -15,11 +15,23 @@
  */
 
 
-import {ActionType, SweepstakeData} from "../../../model";
+import React, {FunctionComponent} from 'react';
+import "./Checkbox.scss";
 
-export const saveSweepstakeAction = (payload: SweepstakeData) => {
-    return {
-        type: ActionType.SAVE_SWEEPSTAKE_REQUEST,
-        payload
-    }
+interface OwnProps {
+}
+
+type Props = OwnProps;
+
+const Checkbox: FunctionComponent<Props> = (props) => {
+    return (
+        <div className={"checkboxArea"}>
+            <label className="checkboxContainer"><span className={"text"}>I agree to FootyAndSweep Terms & Conditions</span>
+                <input type="checkbox"/>
+                <span className="checkmark"/>
+            </label>
+        </div>
+    );
 };
+
+export default Checkbox;

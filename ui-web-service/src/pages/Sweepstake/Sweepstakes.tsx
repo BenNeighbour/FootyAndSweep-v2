@@ -31,12 +31,11 @@ import SweepstakeTopSection from "./SweepstakeTopSection/SweepstakeTopSection";
 import JoinSweepstakeModal from "../../views/JoinSweepstakeModal";
 import CreateSweepstakeModal from "../../views/CreateSweepstakeModal";
 import BuyTicketsModal from "../../views/BuyTicketsModal";
-import * as SweepstakeActions from "../../redux/reducers/saga/sweepstake/sweepstakeActions";
+import LoadingPage from "../Loading/LoadingPage";
 
 interface OwnProps extends RouteComponentProps {
     state: RootState;
     sweepstakePageActions: typeof SweepstakePageActions;
-    getSweepstakeActions: typeof SweepstakeActions;
 }
 
 type Props = OwnProps;
@@ -49,9 +48,10 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
     const isMobile = useMediaQuery({query: `(max-width: 768px)`});
 
     useEffect(() => {
-        props.getSweepstakeActions.getMySweepstakesAction("");
+        props.sweepstakePageActions.getMySweepstakesAction("");
     }, []);
 
+    if (props.state.sweepstakesPage.isLoading) return <LoadingPage />
 
     return (
         <div className={"container"}>
@@ -79,7 +79,7 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
                                         className={"createSweepstakeButton"}/>
                             </div>
 
-                            {sweepstakes.map((value: any, index: any) => {
+                            {props.state.sweepstakesPage.sweepstakes.map((value: any, index: any) => {
                                 return (
                                     <React.Fragment key={`sweepstake-${index}`}>
                                         <SweepstakeCard
@@ -90,7 +90,7 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
                                             isMobile={isMobile}
                                             sweepstakeHashTags={["#bhawhu", "#firstscorer"]}
                                             sweepstakeMetadata={"Jon Neighbour, Ben Neighbour, SwaggrMcJaggr..."}
-                                            sweepstakeName={"Jon’s Epic Sweepstake"} sweepstakeStatus={"Open"}
+                                            sweepstakeName={value.name} sweepstakeStatus={value.status}
                                             totalAmountOfTickets={8} ticketsPurchasedSoFar={2}/>
                                         {(index % 2) === 0 && isMobile ?
                                             <AdvertisementCard advertiserLink={"https://www.algoexpert.io"}
@@ -120,7 +120,6 @@ const mapStateToProps = (state: RootState) => {
 
 function mapDispatchToProps(dispatch: any) {
     return {
-        getSweepstakeActions: bindActionCreators(SweepstakeActions as any, dispatch),
         sweepstakePageActions: bindActionCreators(SweepstakePageActions as any, dispatch),
     };
 }

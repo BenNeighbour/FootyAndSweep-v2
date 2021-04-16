@@ -65,7 +65,6 @@ public class SweepstakeCommon implements Serializable {
   private String sweepstakeEventId;
 
   @NotNull(message = "You must select a sweepstake type!")
-  @Enumerated(EnumType.STRING)
   private SweepstakeTypeCommon sweepstakeType = this.getSweepstakeType();
 
   @Min(2)
@@ -112,18 +111,14 @@ public class SweepstakeCommon implements Serializable {
   }
 
   public enum SweepstakeStatus {
-    OPEN(0),
-    ALLOCATED(1),
-    CLOSED(2);
+    OPEN("Open"),
+    ALLOCATED("Allocated"),
+    CLOSED("Closed");
 
-    private int code;
+    private String value;
 
-    SweepstakeStatus(int code) {
-      this.code = code;
-    }
-
-    public int getSweepstakeStatus() {
-      return this.code;
+    SweepstakeStatus(String value) {
+      this.value = value;
     }
   }
 }

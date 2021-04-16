@@ -15,11 +15,10 @@
  */
 
 import React, {FunctionComponent, useEffect, useState} from 'react';
-import styled from "styled-components";
 import LoginForm from "./Login/LoginForm";
 import SignupForm from "./Signup/SignupForm";
 import {useHistory} from "react-router-dom";
-import Footer from "../../components/Footer/Footer";
+import "./PortalPage.scss";
 
 interface OwnProps {
 }
@@ -43,54 +42,20 @@ const PortalPage: FunctionComponent<Props> = (props) => {
 
     return (
         <>
-            <Container>
-                <LeftSection/>
-                <RightSection>
+            <div className={"portalContainer"}>
+                <div className={"leftSection"}>
                     {isLoggingIn ?
                         <LoginForm error={historyPreviousState !== undefined ? historyPreviousState.errors : null}
                                    setIsLoggingIn={(value: boolean) => setIsLoggingIn(value)}/> :
                         <SignupForm
                             error={historyPreviousState !== undefined ? historyPreviousState.errors : null}
                             setIsLoggingIn={(value: boolean) => setIsLoggingIn(value)}/>}
-                    <footer>
-                        <Footer/>
-                    </footer>
-                </RightSection>
-            </Container>
+                </div>
+                <div className={"rightSection"}>
+                </div>
+            </div>
         </>
     );
 };
-
-const Container = styled.div`
-width: 100vw;
-height: 100%;
-display: flex;
-flex-wrap: wrap;
-box-sizing: border-box;
-`;
-
-const LeftSection = styled.div`
-height: 100%;
-box-sizing: border-box;
-@media (min-width: 1280px) {
-    flex-grow: 0;
-    max-width: 50%;
-    flex-basis: 50%;
-}
-`;
-
-const RightSection = styled.div`
-height: 100%;
-margin: 0;
-display: flex;
-flex-direction: column;
-width: 100%;
-box-sizing: border-box;
-@media (min-width: 1280px) {
-    flex-grow: 0;
-    max-width: 50%;
-    flex-basis: 50%;
-}
-`;
 
 export default PortalPage;

@@ -20,6 +20,8 @@ import createReducer from "../../createReducer";
 import {SweepstakeReducerType} from "../sweepstake";
 
 export interface SweepstakesPageReducerType {
+    sweepstakes: any[];
+
     joiningSweepstake: boolean;
     creatingSweepstake: boolean;
 
@@ -34,6 +36,8 @@ export interface SweepstakesPageReducerType {
 }
 
 const defaultSweepstakePageState: SweepstakesPageReducerType = {
+    sweepstakes: [],
+
     joiningSweepstake: false,
     creatingSweepstake: false,
     buyingTickets: {
@@ -86,6 +90,29 @@ export const yourSweepstakesReducer = createReducer<SweepstakesPageReducerType>(
         return {
             ...state,
             isCreatingSweepstake: true,
+            isLoading: false,
+            failedMessage: action.payload
+        };
+    },
+
+    [ActionType.GET_MY_SWEEPSTAKES_REQUEST](state: SweepstakeReducerType) {
+        return {
+            ...state,
+            isLoading: true,
+        };
+    },
+
+    [ActionType.GET_MY_SWEEPSTAKES_SUCCESS](state: SweepstakeReducerType, action: Action<number>) {
+        return {
+            ...state,
+            isLoading: false,
+            sweepstakes: action.payload
+        };
+    },
+
+    [ActionType.GET_MY_SWEEPSTAKES_ERROR](state: SweepstakeReducerType, action: Action<number>) {
+        return {
+            ...state,
             isLoading: false,
             failedMessage: action.payload
         };

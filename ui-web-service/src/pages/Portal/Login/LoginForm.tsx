@@ -23,6 +23,10 @@ import {RootState} from "../../../redux/rootReducer";
 import {LoginAuthenticationReducerType} from "../../../redux/reducers/saga/authenticate";
 import LoadingPage from "../../Loading/LoadingPage";
 import * as yup from "yup";
+import InputField from "../../../components/InputField/InputField";
+import "./LoginForm.scss";
+import Button from "../../../components/Button/Button";
+import Checkbox from "../../../components/Checkbox/Checkbox";
 
 interface OwnProps {
     state: LoginAuthenticationReducerType;
@@ -49,8 +53,25 @@ const LoginForm: FunctionComponent<Props> = (props) => {
     if (props.state.isLoading) return <LoadingPage/>
 
     return (
-        <div>
+        <div className={"outerLoginArea"}>
+            <div className={"fieldSection"}>
+                <InputField large type={"text"} onChange={() => {
+                }} style={{width: "85%"}} touched={false} errors={""} value={""} label={"Username"} name={"username"}/>
 
+                <InputField large type={"password"} onChange={() => {
+                }} style={{width: "85%"}} touched={false} errors={""} value={""} label={"Password"} name={"password"}/>
+
+                <Checkbox />
+
+                <Button className={"submitButton"} style={{
+                    fontSize: "22px",
+                    lineHeight: "22px",
+                    padding: "20px",
+                    width: "100%",
+                    borderRadius: "10px",
+                }}
+                        onClick={() => {}} type={"submit"} title={"Sign In"}/>
+            </div>
         </div>
     );
 };

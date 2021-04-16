@@ -51,12 +51,12 @@ export function getMySweepstakes(sweepstakeChannel: any) {
 
     return axios.get(`http://api.footyandsweep-dev.com:30389/sweepstake/sweepstakes/${userId}`, {withCredentials: true}).then(value => {
         sweepstakeChannel.put({
-            action: ActionType.GET_MY_SWEEPSTAKES_SUCCESS,
+            type: ActionType.GET_MY_SWEEPSTAKES_SUCCESS,
             payload: value.data
         })
     }).catch((reason: any) => {
         sweepstakeChannel.put({
-            action: ActionType.GET_MY_SWEEPSTAKES_ERROR,
+            type: ActionType.GET_MY_SWEEPSTAKES_ERROR,
             payload: null
         });
     })

@@ -39,6 +39,13 @@ input {
   color: #DEE3EA;
 }
 
+.input-large {
+  line-height: 22px;
+  font-size: 16px;
+  padding-top: 19px;
+  padding-bottom: 19px;
+}
+
 .input-invalid {
   transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
   border: 2px solid #FD4D4D;

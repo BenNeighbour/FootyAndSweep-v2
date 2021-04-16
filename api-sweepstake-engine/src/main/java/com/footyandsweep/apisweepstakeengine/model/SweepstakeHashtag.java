@@ -16,28 +16,33 @@
 
 package com.footyandsweep.apisweepstakeengine.model;
 
-import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
-import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
-import com.footyandsweep.apicommonlibrary.model.user.UserCommon;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.List;
+import java.io.Serializable;
 
 @Setter
 @Getter
 @Entity
-@Table(name = "sweepstake")
-@Inheritance(strategy = InheritanceType.JOINED)
-public class Sweepstake extends SweepstakeCommon {
+@Table(name = "sweepstake_hashtag")
+@NoArgsConstructor
+@AllArgsConstructor
+public class SweepstakeHashtag implements Serializable {
 
-  private static final long serialVersionUID = -706809544736918166L;
+    private static final long serialVersionUID = -4397592868038524768L;
 
-  @Transient private List<TicketCommon> tickets;
+    @Id
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    private String id;
 
-  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = SweepstakeHashtag.class)
-  private List<SweepstakeHashtag> hashtags;
+    private String name;
 
-  @Transient private UserCommon owner;
+    public void setName(String name) {
+        this.name = "#" + name;
+    }
 }
