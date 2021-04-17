@@ -38,7 +38,7 @@ const combinedReducers = (history: History) =>
         loginForm: loginAuthenticationReducer,
         signupForm: signupAuthenticationReducer,
         saveSweepstake: saveSweepstakeReducer,
-        sweepstakesPage: yourSweepstakesReducer
+        sweepstakesPage: yourSweepstakesReducer,
     });
 
 export default combinedReducers;

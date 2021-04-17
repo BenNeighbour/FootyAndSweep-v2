@@ -14,22 +14,21 @@
  *   limitations under the License.
  */
 
+
 import React, {FunctionComponent, useEffect, useState} from 'react';
-import LoginForm from "./Login/LoginForm";
-import SignupForm from "./Signup/SignupForm";
 import {useHistory} from "react-router-dom";
-import "./PortalPage.scss";
+import SignupForm from "./SignupForm";
+import "./SignupPage.scss";
 
 interface OwnProps {
 }
 
 type Props = OwnProps;
 
-const PortalPage: FunctionComponent<Props> = (props) => {
+const SignupPage: FunctionComponent<Props> = (props) => {
     const history = useHistory<any>();
 
     const [historyPreviousState] = useState<any>(history.location.state);
-    const [isLoggingIn, setIsLoggingIn] = useState<boolean>(true);
 
     useEffect(() => {
         if (history.location.state && history.location.state.errors) {
@@ -41,21 +40,14 @@ const PortalPage: FunctionComponent<Props> = (props) => {
     }, [history]);
 
     return (
-        <>
-            <div className={`portalContainer${!isLoggingIn ? "-login" : "-signup" }`}>
-                <div className={"leftSection"}>
-                    {!isLoggingIn ?
-                        <LoginForm error={historyPreviousState !== undefined ? historyPreviousState.errors : null}
-                                   setIsLoggingIn={(value: boolean) => setIsLoggingIn(value)}/> : undefined}
-                </div>
-                <div className={"rightSection"}>
-                    <SignupForm
-                        error={historyPreviousState !== undefined ? historyPreviousState.errors : null}
-                        setIsLoggingIn={(value: boolean) => setIsLoggingIn(value)}/>
-                </div>
+        <div className={`signupContainer`}>
+            <div className={"leftSection"}>
             </div>
-        </>
+            <div className={"rightSection"}>
+                <SignupForm error={historyPreviousState !== undefined ? historyPreviousState.errors : null}/>
+            </div>
+        </div>
     );
 };
 
-export default PortalPage;
+export default SignupPage;

@@ -16,23 +16,23 @@
 
 
 import React, {FunctionComponent} from 'react';
-import {RootState} from "../../../redux/rootReducer";
+import {RootState} from "../../redux/rootReducer";
 import {bindActionCreators} from "redux";
-import * as AuthenticateActions from "../../../redux/reducers/saga/authenticate/authenticateActions";
+import * as AuthenticateActions from "../../redux/reducers/saga/authenticate/authenticateActions";
 import {connect} from "react-redux";
-import {SignupAuthenticationReducerType} from "../../../redux/reducers/saga/authenticate";
-import LoadingPage from "../../Loading/LoadingPage";
+import {SignupAuthenticationReducerType} from "../../redux/reducers/saga/authenticate";
+import LoadingPage from "../Loading/LoadingPage";
 import * as yup from 'yup';
-import InputField from "../../../components/InputField/InputField";
-import Checkbox from "../../../components/Checkbox/Checkbox";
-import Button from "../../../components/Button/Button";
-import SigninWithGoogle from "../../../components/SocialButton/Google/SigninWithGoogle";
-import SigninWithFacebook from "../../../components/SocialButton/Facebook/SigninWithFacebook";
+import InputField from "../../components/InputField/InputField";
+import Checkbox from "../../components/Checkbox/Checkbox";
+import Button from "../../components/Button/Button";
+import SigninWithGoogle from "../../components/SocialButton/Google/SigninWithGoogle";
+import SigninWithFacebook from "../../components/SocialButton/Facebook/SigninWithFacebook";
+import "./SignupForm.scss";
 
 interface OwnProps {
     state: SignupAuthenticationReducerType;
     actions: typeof AuthenticateActions;
-    setIsLoggingIn: (value: boolean) => void;
     error?: any | null;
 }
 
@@ -67,8 +67,8 @@ const SignupForm: FunctionComponent<Props> = (props) => {
     if (props.state.isLoading) return <LoadingPage/>
 
     return (
-        <div className={"outerLoginArea"}>
-            <div className={"loginFormContainer"}>
+        <div className={"outerSignupArea"}>
+            <div className={"signupFormContainer"}>
                 <div className={"fieldSection"}>
                     <InputField type={"text"} onChange={() => {
                     }} style={{width: "85%"}} touched={false} errors={""} value={""} label={"Full Name"}
@@ -109,9 +109,9 @@ const SignupForm: FunctionComponent<Props> = (props) => {
             </div>
 
             <div className={"bottomSection"}>
-                <span className={"text"}><b>Already Got an Account? </b></span><a
-                href={""}
-                className={"textLink"}><b>Get Logged In!</b></a>
+                <span className={"text"}><b>Already Got an Account? </b></span><span
+                onClick={() => {}}
+                className={"textLink"}><b>Get Logged In!</b></span>
             </div>
         </div>
     );

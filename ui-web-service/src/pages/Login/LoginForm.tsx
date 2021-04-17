@@ -17,22 +17,21 @@
 
 import React, {FunctionComponent} from 'react';
 import {bindActionCreators} from "redux";
-import * as AuthenticateActions from "../../../redux/reducers/saga/authenticate/authenticateActions";
+import * as AuthenticateActions from "../../redux/reducers/saga/authenticate/authenticateActions";
 import {connect} from "react-redux";
-import {RootState} from "../../../redux/rootReducer";
-import {LoginAuthenticationReducerType} from "../../../redux/reducers/saga/authenticate";
-import LoadingPage from "../../Loading/LoadingPage";
+import {RootState} from "../../redux/rootReducer";
+import {LoginAuthenticationReducerType} from "../../redux/reducers/saga/authenticate";
+import LoadingPage from "../Loading/LoadingPage";
 import * as yup from "yup";
-import InputField from "../../../components/InputField/InputField";
+import InputField from "../../components/InputField/InputField";
 import "./LoginForm.scss";
-import Button from "../../../components/Button/Button";
-import SigninWithGoogle from "../../../components/SocialButton/Google/SigninWithGoogle";
-import SigninWithFacebook from "../../../components/SocialButton/Facebook/SigninWithFacebook";
+import Button from "../../components/Button/Button";
+import SigninWithGoogle from "../../components/SocialButton/Google/SigninWithGoogle";
+import SigninWithFacebook from "../../components/SocialButton/Facebook/SigninWithFacebook";
 
 interface OwnProps {
     state: LoginAuthenticationReducerType;
     actions: typeof AuthenticateActions;
-    setIsLoggingIn: (value: boolean) => void;
     error?: string | null;
 }
 
@@ -85,9 +84,9 @@ const LoginForm: FunctionComponent<Props> = (props) => {
             </div>
 
             <div className={"bottomSection"}>
-                <span className={"text"}><b>No Account Yet? </b></span><a
-                href={""}
-                className={"textLink"}><b>Create an Account Now</b></a>
+                <span className={"text"}><b>No Account Yet? </b></span><span
+                onClick={() => {}}
+                className={"textLink"}><b>Create an Account Now!</b></span>
             </div>
         </div>
     );
