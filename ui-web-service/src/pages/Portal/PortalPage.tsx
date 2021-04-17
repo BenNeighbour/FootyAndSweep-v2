@@ -42,16 +42,16 @@ const PortalPage: FunctionComponent<Props> = (props) => {
 
     return (
         <>
-            <div className={"portalContainer"}>
+            <div className={`portalContainer${!isLoggingIn ? "-login" : "-signup" }`}>
                 <div className={"leftSection"}>
-                    {isLoggingIn ?
+                    {!isLoggingIn ?
                         <LoginForm error={historyPreviousState !== undefined ? historyPreviousState.errors : null}
-                                   setIsLoggingIn={(value: boolean) => setIsLoggingIn(value)}/> :
-                        <SignupForm
-                            error={historyPreviousState !== undefined ? historyPreviousState.errors : null}
-                            setIsLoggingIn={(value: boolean) => setIsLoggingIn(value)}/>}
+                                   setIsLoggingIn={(value: boolean) => setIsLoggingIn(value)}/> : undefined}
                 </div>
                 <div className={"rightSection"}>
+                    <SignupForm
+                        error={historyPreviousState !== undefined ? historyPreviousState.errors : null}
+                        setIsLoggingIn={(value: boolean) => setIsLoggingIn(value)}/>
                 </div>
             </div>
         </>

@@ -19,13 +19,15 @@ import React, { FunctionComponent } from 'react';
 import "./SiginWithGoogle.scss";
 import {FcGoogle} from "react-icons/all";
 
-interface OwnProps {}
+interface OwnProps {
+    href: string;
+}
 
 type Props = OwnProps;
 
 const SigninWithGoogle: FunctionComponent<Props> = (props) => {
   return (
-      <div className={"signInWithGoogleContainer"}>
+      <div onClick={() => window.location.replace(props.href)} className={"signInWithGoogleContainer"}>
           <FcGoogle
               style={{
                   padding: "5px 25px"

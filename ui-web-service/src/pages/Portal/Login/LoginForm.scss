@@ -25,26 +25,80 @@
   display: flex;
   align-items: center;
   place-items: center;
+  justify-content: center;
+  flex-direction: column;
 
+  position: relative;
   flex: 1;
 
-  .fieldSection {
+  .loginFormContainer {
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
+    height: fit-content;
+    position: relative;
 
-    align-items: center;
-    place-items: center;
-    vertical-align: center;
+    .fieldSection {
+      margin-bottom: 40px;
 
-    .checkboxArea {
-      padding-top: 30px;
-      padding-bottom: 25px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+
+      align-items: center;
+      place-items: center;
+      vertical-align: center;
+
+      .checkboxArea {
+        padding-top: 30px;
+        padding-bottom: 25px;
+      }
+
+      .submitButton {
+        width: 85%;
+      }
     }
 
-    .submitButton {
-      width: 85%;
+    .socialButtonSection {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      text-align: center;
+      place-items: center;
+      justify-content: center;
+    }
+  }
+
+  .bottomSection {
+    float: left;
+    display: flex;
+    text-align: left;
+    position: absolute;
+    gap: 10px;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-bottom: 40px;
+
+    .text {
+      font-size: 14px;
+      line-height: 25px;
+      color: #3D7CDB;
+      text-decoration: none;
+      padding-left: 5px;
+      padding-right: 5px;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+    }
+
+    .textLink {
+      font-size: 14px;
+      line-height: 25px;
+      color: #FFFFFF;
+      padding-bottom: 1px;
+      border-bottom-style: solid;
+      border-bottom-width: 2.5px;
+      width: fit-content;
     }
   }
 }

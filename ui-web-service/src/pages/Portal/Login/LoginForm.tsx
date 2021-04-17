@@ -26,8 +26,8 @@ import * as yup from "yup";
 import InputField from "../../../components/InputField/InputField";
 import "./LoginForm.scss";
 import Button from "../../../components/Button/Button";
-import Checkbox from "../../../components/Checkbox/Checkbox";
-import SigninWithGoogle from "../../../components/SocialButton/SigninWithGoogle";
+import SigninWithGoogle from "../../../components/SocialButton/Google/SigninWithGoogle";
+import SigninWithFacebook from "../../../components/SocialButton/Facebook/SigninWithFacebook";
 
 interface OwnProps {
     state: LoginAuthenticationReducerType;
@@ -55,26 +55,39 @@ const LoginForm: FunctionComponent<Props> = (props) => {
 
     return (
         <div className={"outerLoginArea"}>
-            <div className={"fieldSection"}>
-                <InputField large type={"text"} onChange={() => {
-                }} style={{width: "85%"}} touched={false} errors={""} value={""} label={"Username"} name={"username"}/>
+            <div className={"loginFormContainer"}>
+                <div className={"fieldSection"}>
+                    <InputField large type={"text"} onChange={() => {
+                    }} style={{width: "85%"}} touched={false} errors={""} value={""} label={"Username"}
+                                name={"username"}/>
 
-                <InputField large type={"password"} onChange={() => {
-                }} style={{width: "85%"}} touched={false} errors={""} value={""} label={"Password"} name={"password"}/>
+                    <InputField large type={"password"} onChange={() => {
+                    }} style={{width: "85%"}} touched={false} errors={""} value={""} label={"Password"}
+                                name={"password"}/>
 
-                <Checkbox textLinkTo={"http://www.footyandsweep-dev.com:3000/terms"} textLink={"Terms & Conditions"} text={"I agree to FootyAndSweep"} />
+                    <Button className={"submitButton"} style={{
+                        fontSize: "20px",
+                        lineHeight: "20px",
+                        padding: "12.5px",
+                        width: "100%",
+                        borderRadius: "10px",
+                    }}
+                            onClick={() => {
+                            }} type={"submit"} title={"Sign In"}/>
+                </div>
 
-                <Button className={"submitButton"} style={{
-                    fontSize: "20px",
-                    lineHeight: "20px",
-                    padding: "12.5px",
-                    width: "100%",
-                    borderRadius: "10px",
-                }}
-                        onClick={() => {
-                        }} type={"submit"} title={"Sign In"}/>
+                <div className={"socialButtonSection"}>
+                    <SigninWithGoogle
+                        href={"http://api.footyandsweep-dev.com:30389/oauth2/authorization/google?redirect_uri=http://www.footyandsweep-dev.com:3000/oauth/login"}/>
+                    <SigninWithFacebook
+                        href={"http://api.footyandsweep-dev.com:30389/oauth2/authorization/facebook?redirect_uri=http://www.footyandsweep-dev.com:3000/oauth/login"}/>
+                </div>
+            </div>
 
-                <SigninWithGoogle />
+            <div className={"bottomSection"}>
+                <span className={"text"}><b>No Account Yet? </b></span><a
+                href={""}
+                className={"textLink"}><b>Create an Account Now</b></a>
             </div>
         </div>
     );

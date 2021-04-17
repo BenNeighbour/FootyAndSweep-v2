@@ -1,5 +1,5 @@
 
-.portalContainer {
+.portalContainer-login {
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -33,6 +33,54 @@
     }
 
     .rightSection {
+      height: 100%;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      box-sizing: border-box;
+
+      flex: 2;
+    }
+  }
+}
+
+
+
+.portalContainer-signup {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  box-sizing: border-box;
+
+  .rightSection {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+
+    .outerLoginArea {
+      padding: 0;
+      margin: 0;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .rightSection {
+      height: 100%;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      place-items: center;
+      vertical-align: center;
+      text-align: center;
+
+      padding: 30px 50px;
+      flex: 1;
+    }
+
+    .leftSection {
       height: 100%;
       margin: 0;
       display: flex;
