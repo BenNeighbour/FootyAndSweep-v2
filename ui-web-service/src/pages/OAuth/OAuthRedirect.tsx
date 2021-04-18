@@ -33,7 +33,7 @@ const OAuthRedirect: FunctionComponent<Props> = (props) => {
     if (query.get("error") !== null) {
         return (
             <Redirect to={{
-                pathname: "/portal",
+                pathname: "/login",
                 state: {errors: query.get("error")}
             }}/>
         );

@@ -17,14 +17,14 @@
 
 import React, { FunctionComponent } from 'react';
 import {Form, Formik} from "formik";
-import Modal from "../components/Modal/Modal";
-import CreateSweepstakeForm from "../forms/CreateSweepstake/CreateSweepstakeForm";
+import Modal from "../../components/Modal/Modal";
+import CreateSweepstakeForm from "../../forms/CreateSweepstake/CreateSweepstakeForm";
 import * as yup from "yup";
-import {RootState} from "../redux/rootReducer";
+import {RootState} from "../../redux/rootReducer";
 import {bindActionCreators} from "redux";
-import * as SweepstakeActions from "../redux/reducers/saga/sweepstake/sweepstakeActions";
+import * as SweepstakeActions from "../../redux/reducers/saga/sweepstake/sweepstakeActions";
 import {connect} from "react-redux";
-import * as SweepstakePageActions from "../redux/reducers/saga/sweepstakePage/sweepstakePageActions";
+import * as SweepstakePageActions from "../../redux/reducers/saga/sweepstakePage/sweepstakePageActions";
 
 interface OwnProps {
     state: RootState;

@@ -52,6 +52,19 @@
         padding-bottom: 25px;
       }
 
+      .errorMessage {
+        float: left;
+        text-align: left;
+        width: 85%;
+        color: #FD4D4D;
+        padding-bottom: 10px;
+
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 22px;
+      }
+
       .submitButton {
         width: 85%;
       }

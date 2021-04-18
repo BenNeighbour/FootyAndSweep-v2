@@ -15,12 +15,12 @@
  */
 
 
-import React, {FunctionComponent} from 'react';
-import {RootState} from "../redux/rootReducer";
-import * as SweepstakePageActions from "../redux/reducers/saga/sweepstakePage/sweepstakePageActions";
-import Modal from "../components/Modal/Modal";
-import {connect} from "react-redux";
+import React, { FunctionComponent } from 'react';
+import {RootState} from "../../redux/rootReducer";
+import * as SweepstakePageActions from "../../redux/reducers/saga/sweepstakePage/sweepstakePageActions";
+import Modal from "../../components/Modal/Modal";
 import {bindActionCreators} from "redux";
+import {connect} from "react-redux";
 
 interface OwnProps {
     state: RootState;
@@ -29,14 +29,13 @@ interface OwnProps {
 
 type Props = OwnProps;
 
-const BuyTicketsModal: FunctionComponent<Props> = (props) => {
-    return (
-        <Modal setShowing={() => {
-        }} title={"Buy Tickets from Jon’s Epic Sweepstake"}
-               description={"Enter the number of tickets you would like to buy"}
-               showing={props.state.sweepstakesPage.buyingTickets.isBuyingTickets}>
-        </Modal>
-    );
+const JoinSweepstakeModal: FunctionComponent<Props> = (props) => {
+  return (
+      <Modal setShowing={props.sweepstakePageActions.setIsJoiningSweepstake} title={"Join a Sweepstake"}
+             description={"Enter a sweepstake code to join!"}
+             showing={props.state.sweepstakesPage.joiningSweepstake}>
+      </Modal>
+  );
 };
 
 const mapStateToProps = (state: RootState) => {
@@ -52,4 +51,4 @@ function mapDispatchToProps(dispatch: any) {
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(BuyTicketsModal);
+export default connect(mapStateToProps, mapDispatchToProps)(JoinSweepstakeModal);

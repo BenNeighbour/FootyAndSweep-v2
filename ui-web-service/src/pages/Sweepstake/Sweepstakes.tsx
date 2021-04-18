@@ -28,9 +28,9 @@ import * as SweepstakePageActions from "../../redux/reducers/saga/sweepstakePage
 import {RootState} from "../../redux/rootReducer";
 import {connect} from "react-redux";
 import SweepstakeTopSection from "./SweepstakeTopSection/SweepstakeTopSection";
-import JoinSweepstakeModal from "../../views/JoinSweepstakeModal";
-import CreateSweepstakeModal from "../../views/CreateSweepstakeModal";
-import BuyTicketsModal from "../../views/BuyTicketsModal";
+import JoinSweepstakeModal from "../../views/SweepstakesPage/JoinSweepstakeModal";
+import CreateSweepstakeModal from "../../views/SweepstakesPage/CreateSweepstakeModal";
+import BuyTicketsModal from "../../views/SweepstakesPage/BuyTicketsModal";
 import LoadingPage from "../Loading/LoadingPage";
 
 interface OwnProps extends RouteComponentProps {

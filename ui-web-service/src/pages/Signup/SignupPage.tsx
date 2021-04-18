@@ -17,7 +17,7 @@
 
 import React, {FunctionComponent, useEffect, useState} from 'react';
 import {useHistory} from "react-router-dom";
-import SignupForm from "./SignupForm";
+import SignupForm from "../../views/SignupForm/SignupForm";
 import "./SignupPage.scss";
 
 interface OwnProps {
@@ -44,7 +44,7 @@ const SignupPage: FunctionComponent<Props> = (props) => {
             <div className={"leftSection"}>
             </div>
             <div className={"rightSection"}>
-                <SignupForm error={historyPreviousState !== undefined ? historyPreviousState.errors : null}/>
+                <SignupForm history={history} error={historyPreviousState !== undefined ? historyPreviousState.errors : null}/>
             </div>
         </div>
     );

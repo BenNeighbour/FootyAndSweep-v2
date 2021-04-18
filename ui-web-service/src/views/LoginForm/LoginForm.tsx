@@ -16,88 +16,66 @@
 
 
 import React, {FunctionComponent} from 'react';
-import {RootState} from "../../redux/rootReducer";
 import {bindActionCreators} from "redux";
 import * as AuthenticateActions from "../../redux/reducers/saga/authenticate/authenticateActions";
 import {connect} from "react-redux";
-import {SignupAuthenticationReducerType} from "../../redux/reducers/saga/authenticate";
-import LoadingPage from "../Loading/LoadingPage";
-import * as yup from 'yup';
+import {RootState} from "../../redux/rootReducer";
+import {LoginAuthenticationReducerType} from "../../redux/reducers/saga/authenticate";
+import LoadingPage from "../../pages/Loading/LoadingPage";
+import * as yup from "yup";
 import InputField from "../../components/InputField/InputField";
-import Checkbox from "../../components/Checkbox/Checkbox";
+import "./LoginForm.scss";
 import Button from "../../components/Button/Button";
 import SigninWithGoogle from "../../components/SocialButton/Google/SigninWithGoogle";
 import SigninWithFacebook from "../../components/SocialButton/Facebook/SigninWithFacebook";
-import "./SignupForm.scss";
 
 interface OwnProps {
-    state: SignupAuthenticationReducerType;
+    state: LoginAuthenticationReducerType;
     actions: typeof AuthenticateActions;
-    error?: any | null;
+    error?: string | null;
+    history: any;
 }
 
 const schema = yup.object().shape({
-    username: yup
+    email: yup
         .string()
-        .required("You must enter a Username.")
-        .label("Username"),
-    email: yup.string()
         .email()
-        .required("You must enter an Email Address.")
-        .label("Email Address"),
+        .required("You must enter a username.")
+        .label("Username"),
     password: yup
         .string()
         .required("You must enter a Password.")
-        .label("Confirm Password"),
-    confirmPassword: yup
-        .string()
-        .oneOf([yup.ref('password'), null], 'Passwords must match')
-        .oneOf([yup.ref('password'), null], 'Passwords must match')
-        .required("You must enter a Confirm Password.")
-        .matches(
-            /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-            'Not strong enough'
-        )
-        .label("Confirm Password")
+        .label("Password")
 });
 
 type Props = OwnProps;
 
-const SignupForm: FunctionComponent<Props> = (props) => {
+const LoginForm: FunctionComponent<Props> = (props) => {
     if (props.state.isLoading) return <LoadingPage/>
 
     return (
-        <div className={"outerSignupArea"}>
-            <div className={"signupFormContainer"}>
+        <div className={"outerLoginArea"}>
+            <div className={"loginFormContainer"}>
                 <div className={"fieldSection"}>
-                    <InputField type={"text"} onChange={() => {
-                    }} style={{width: "85%"}} touched={false} errors={""} value={""} label={"Full Name"}
-                                name={"fullname"}/>
-
-                    <InputField type={"text"} onChange={() => {
+                    <InputField large type={"text"} onChange={() => {
                     }} style={{width: "85%"}} touched={false} errors={""} value={""} label={"Username"}
                                 name={"username"}/>
 
-                    <InputField type={"password"} onChange={() => {
+                    <InputField large type={"password"} onChange={() => {
                     }} style={{width: "85%"}} touched={false} errors={""} value={""} label={"Password"}
                                 name={"password"}/>
 
-                    <InputField type={"password"} onChange={() => {
-                    }} style={{width: "85%"}} touched={false} errors={""} value={""} label={"Comfirm Password"}
-                                name={"confirmpassword"}/>
-
-                    <Checkbox textLinkTo={"http://www.footyandsweep-dev.com:3000/terms"} textLink={"Terms & Conditions"}
-                              text={"I agree to FootyAndSweep"}/>
+                    <span className={"errorMessage"}>{props.error}</span>
 
                     <Button className={"submitButton"} style={{
-                        fontSize: "20px",
-                        lineHeight: "20px",
+                        fontSize: "15px",
+                        lineHeight: "17.5px",
                         padding: "12.5px",
                         width: "100%",
                         borderRadius: "10px",
                     }}
                             onClick={() => {
-                            }} type={"submit"} title={"Sign Up"}/>
+                            }} type={"submit"} title={"Sign In"}/>
                 </div>
 
                 <div className={"socialButtonSection"}>
@@ -109,9 +87,9 @@ const SignupForm: FunctionComponent<Props> = (props) => {
             </div>
 
             <div className={"bottomSection"}>
-                <span className={"text"}><b>Already Got an Account? </b></span><span
-                onClick={() => {}}
-                className={"textLink"}><b>Get Logged In!</b></span>
+                <span className={"text"}><b>No Account Yet? </b></span><span
+                onClick={() => props.history.push("/signup")}
+                className={"textLink"}><b>Create an Account Now!</b></span>
             </div>
         </div>
     );
@@ -119,10 +97,9 @@ const SignupForm: FunctionComponent<Props> = (props) => {
 
 const mapStateToProps = (state: RootState) => {
     return {
-        state: state.signupForm
+        state: state.loginForm
     }
 };
-
 
 function mapDispatchToProps(dispatch: any) {
     return {
@@ -130,4 +107,5 @@ function mapDispatchToProps(dispatch: any) {
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignupForm);
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

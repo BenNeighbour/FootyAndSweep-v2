@@ -16,7 +16,7 @@
 
 
 import React, {FunctionComponent, useEffect, useState} from 'react';
-import LoginForm from "./LoginForm";
+import LoginForm from "../../views/LoginForm/LoginForm";
 import {useHistory} from "react-router-dom";
 import "./LoginPage.scss"
 
@@ -41,11 +41,10 @@ const LoginPage: FunctionComponent<Props> = (props) => {
   return (
       <div className={`loginContainer`}>
           <div className={"leftSection"}>
-              <LoginForm error={historyPreviousState !== undefined ? historyPreviousState.errors : null} />
+              <LoginForm history={history} error={historyPreviousState !== undefined ? historyPreviousState.errors : null} />
           </div>
           <div className={"rightSection"}>
-              {/*<SignupForm*/}
-              {/*    error={historyPreviousState !== undefined ? historyPreviousState.errors : null}/>*/}
+
           </div>
       </div>
   );
