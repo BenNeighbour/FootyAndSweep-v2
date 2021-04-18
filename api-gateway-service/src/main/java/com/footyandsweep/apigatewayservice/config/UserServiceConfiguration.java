@@ -29,6 +29,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @Import({SagaParticipantConfiguration.class, OptimisticLockingDecoratorConfiguration.class})
@@ -36,8 +37,8 @@ import org.springframework.context.annotation.Import;
 public class UserServiceConfiguration {
 
   @Bean
-  public UserService userService(UserDao userDao, SweepstakeIdDao sweepstakeIdDao) {
-    return new UserServiceImpl(userDao, sweepstakeIdDao);
+  public UserService userService(UserDao userDao, SweepstakeIdDao sweepstakeIdDao, PasswordEncoder passwordEncoder) {
+    return new UserServiceImpl(userDao, passwordEncoder, sweepstakeIdDao);
   }
 
   @Bean

@@ -16,9 +16,13 @@
 
 package com.footyandsweep.apigatewayservice;
 
+import com.footyandsweep.apigatewayservice.model.User;
 import com.footyandsweep.apigatewayservice.payload.LoginRequest;
+import com.footyandsweep.apigatewayservice.payload.SignUpRequest;
 import com.footyandsweep.apigatewayservice.security.JwtTokenProvider;
+import com.footyandsweep.apigatewayservice.service.UserService;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
@@ -30,22 +34,58 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/auth")
 public class AuthenticationController {
 
+  private final UserService userService;
+
   private final JwtTokenProvider tokenProvider;
   private final ReactiveAuthenticationManager authenticationManager;
 
   public AuthenticationController(
-      JwtTokenProvider tokenProvider, ReactiveAuthenticationManager authenticationManager) {
+      UserService userService,
+      JwtTokenProvider tokenProvider,
+      ReactiveAuthenticationManager authenticationManager) {
+    this.userService = userService;
     this.tokenProvider = tokenProvider;
     this.authenticationManager = authenticationManager;
   }
 
+  @PostMapping("/signup")
+  public Mono<ResponseEntity> signup(@Valid @RequestBody Mono<SignUpRequest> authRequest) {
+    return authRequest
+        .flatMap(
+            signUpRequest -> {
+              /* Sign the user up */
+              Optional<User> user = userService.signupUser(signUpRequest);
+
+              if (user.isPresent()) {
+                /* Now, log the user in */
+                return loginHelper(
+                    Mono.just(
+                        new LoginRequest(signUpRequest.getEmail(), signUpRequest.getPassword())));
+              }
+
+              return Mono.empty();
+            })
+        .map(
+            o -> {
+              if (o == null)
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Something's not quite right...");
+              return ResponseEntity.ok(o);
+            });
+  }
+
   @PostMapping("/login")
   public Mono<ResponseEntity> login(@Valid @RequestBody Mono<LoginRequest> authRequest) {
+    return loginHelper(authRequest);
+  }
+
+  private Mono<ResponseEntity> loginHelper(Mono<LoginRequest> authRequest) {
     return authRequest
         .flatMap(
             login ->

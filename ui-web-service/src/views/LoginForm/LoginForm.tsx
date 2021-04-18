@@ -28,6 +28,7 @@ import "./LoginForm.scss";
 import Button from "../../components/Button/Button";
 import SigninWithGoogle from "../../components/SocialButton/Google/SigninWithGoogle";
 import SigninWithFacebook from "../../components/SocialButton/Facebook/SigninWithFacebook";
+import {Form, Formik} from "formik";
 
 interface OwnProps {
     state: LoginAuthenticationReducerType;
@@ -37,9 +38,8 @@ interface OwnProps {
 }
 
 const schema = yup.object().shape({
-    email: yup
+    username: yup
         .string()
-        .email()
         .required("You must enter a username.")
         .label("Username"),
     password: yup
@@ -55,42 +55,57 @@ const LoginForm: FunctionComponent<Props> = (props) => {
 
     return (
         <div className={"outerLoginArea"}>
-            <div className={"loginFormContainer"}>
-                <div className={"fieldSection"}>
-                    <InputField large type={"text"} onChange={() => {
-                    }} style={{width: "85%"}} touched={false} errors={""} value={""} label={"Username"}
-                                name={"username"}/>
+            <Formik
+                onSubmit={(formValues) => {
+                    props.actions.loginUserAction(formValues);
+                }}
+                validationSchema={schema}
+                initialValues={{
+                    username: "",
+                    password: ""
+                }}
+            >
+                {({values, handleChange, errors, touched}) => (
+                    <Form className={"form"}>
+                        <div className={"loginFormContainer"}>
+                            <div className={"fieldSection"}>
+                                <InputField large type={"text"} onChange={handleChange} style={{width: "85%"}}
+                                            touched={touched.username} errors={errors.username} value={values.username}
+                                            label={"Username"}
+                                            name={"username"}/>
 
-                    <InputField large type={"password"} onChange={() => {
-                    }} style={{width: "85%"}} touched={false} errors={""} value={""} label={"Password"}
-                                name={"password"}/>
+                                <InputField large type={"password"} onChange={handleChange} style={{width: "85%"}}
+                                            touched={touched.password} errors={errors.password} value={values.password}
+                                            label={"Password"}
+                                            name={"password"}/>
 
-                    <span className={"errorMessage"}>{props.error}</span>
+                                <span className={"errorMessage"}>{props.error}</span>
 
-                    <Button className={"submitButton"} style={{
-                        fontSize: "15px",
-                        lineHeight: "17.5px",
-                        padding: "12.5px",
-                        width: "100%",
-                        borderRadius: "10px",
-                    }}
-                            onClick={() => {
-                            }} type={"submit"} title={"Sign In"}/>
-                </div>
+                                <Button className={"submitButton"} style={{
+                                    fontSize: "15px",
+                                    lineHeight: "17.5px",
+                                    padding: "12.5px",
+                                    width: "100%",
+                                    borderRadius: "10px",
+                                }} type={"submit"} title={"Sign In"}/>
+                            </div>
 
-                <div className={"socialButtonSection"}>
-                    <SigninWithGoogle
-                        href={"http://api.footyandsweep-dev.com:30389/oauth2/authorization/google?redirect_uri=http://www.footyandsweep-dev.com:3000/oauth/login"}/>
-                    <SigninWithFacebook
-                        href={"http://api.footyandsweep-dev.com:30389/oauth2/authorization/facebook?redirect_uri=http://www.footyandsweep-dev.com:3000/oauth/login"}/>
-                </div>
-            </div>
+                            <div className={"socialButtonSection"}>
+                                <SigninWithGoogle
+                                    href={"http://api.footyandsweep-dev.com:30389/oauth2/authorization/google?redirect_uri=http://www.footyandsweep-dev.com:3000/oauth/login"}/>
+                                <SigninWithFacebook
+                                    href={"http://api.footyandsweep-dev.com:30389/oauth2/authorization/facebook?redirect_uri=http://www.footyandsweep-dev.com:3000/oauth/login"}/>
+                            </div>
+                        </div>
 
-            <div className={"bottomSection"}>
-                <span className={"text"}><b>No Account Yet? </b></span><span
-                onClick={() => props.history.push("/signup")}
-                className={"textLink"}><b>Create an Account Now!</b></span>
-            </div>
+                        <div className={"bottomSection"}>
+                            <span className={"text"}><b>No Account Yet? </b></span><span
+                            onClick={() => props.history.push("/signup")}
+                            className={"textLink"}><b>Create an Account Now!</b></span>
+                        </div>
+                    </Form>
+                )}
+            </Formik>
         </div>
     );
 };

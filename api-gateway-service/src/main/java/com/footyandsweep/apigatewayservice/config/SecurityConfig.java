@@ -41,7 +41,6 @@ import org.springframework.web.cors.reactive.CorsConfigurationSource;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 import reactor.core.publisher.Mono;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 @Configuration
@@ -93,6 +92,8 @@ public class SecurityConfig {
         .cors()
         .configurationSource(createCorsConfigSource())
         .and()
+        .csrf()
+        .disable()
         .securityContextRepository(NoOpServerSecurityContextRepository.getInstance())
         .authorizeExchange()
         .pathMatchers(HttpMethod.OPTIONS)

@@ -16,10 +16,8 @@
 
 
 import React, {FunctionComponent} from 'react';
-import {RootState} from "../../redux/rootReducer";
 import {bindActionCreators} from "redux";
 import * as AuthenticateActions from "../../redux/reducers/saga/authenticate/authenticateActions";
-import {connect} from "react-redux";
 import {SignupAuthenticationReducerType} from "../../redux/reducers/saga/authenticate";
 import LoadingPage from "../../pages/Loading/LoadingPage";
 import * as yup from 'yup';
@@ -29,6 +27,9 @@ import Button from "../../components/Button/Button";
 import SigninWithGoogle from "../../components/SocialButton/Google/SigninWithGoogle";
 import SigninWithFacebook from "../../components/SocialButton/Facebook/SigninWithFacebook";
 import "./SignupForm.scss";
+import {Form, Formik} from "formik";
+import {RootState} from "../../redux/rootReducer";
+import {connect} from "react-redux";
 
 interface OwnProps {
     state: SignupAuthenticationReducerType;
@@ -42,10 +43,6 @@ const schema = yup.object().shape({
         .string()
         .required("You must enter a Username.")
         .label("Username"),
-    email: yup.string()
-        .email()
-        .required("You must enter an Email Address.")
-        .label("Email Address"),
     password: yup
         .string()
         .required("You must enter a Password.")
@@ -65,66 +62,90 @@ const schema = yup.object().shape({
 type Props = OwnProps;
 
 const SignupForm: FunctionComponent<Props> = (props) => {
-    if (props.state.isLoading) return <LoadingPage/>
+        if (props.state.isLoading) return <LoadingPage/>
 
-    return (
-        <div className={"outerSignupArea"}>
-            <div className={"signupFormContainer"}>
-                <div className={"fieldSection"}>
-                    <InputField type={"text"} onChange={() => {
-                    }} style={{width: "85%"}} touched={false} errors={""} value={""} label={"Full Name"}
-                                name={"fullname"}/>
-
-                    <InputField type={"text"} onChange={() => {
-                    }} style={{width: "85%"}} touched={false} errors={""} value={""} label={"Username"}
-                                name={"username"}/>
-
-                    <InputField type={"password"} onChange={() => {
-                    }} style={{width: "85%"}} touched={false} errors={""} value={""} label={"Password"}
-                                name={"password"}/>
-
-                    <InputField type={"password"} onChange={() => {
-                    }} style={{width: "85%"}} touched={false} errors={""} value={""} label={"Comfirm Password"}
-                                name={"confirmpassword"}/>
-
-                    <span className={"errorMessage"}>{props.error}</span>
-
-                    <Checkbox textLinkTo={"http://www.footyandsweep-dev.com:3000/terms"} textLink={"Terms & Conditions"}
-                              text={"I agree to FootyAndSweep"}/>
-
-                    <Button className={"submitButton"} style={{
-                        fontSize: "15px",
-                        lineHeight: "17.5px",
-                        padding: "12.5px",
-                        width: "100%",
-                        borderRadius: "10px",
+        return (
+            <div className={"outerSignupArea"}>
+                <Formik
+                    onSubmit={(formValues) => {
+                        props.actions.signupUserAction(formValues);
                     }}
-                            onClick={() => {
-                            }} type={"submit"} title={"Sign Up"}/>
-                </div>
+                    validationSchema={schema}
+                    initialValues={{
+                        username: "",
+                        email: "",
+                        password: "",
+                        confirmPassword: ""
+                    }}
+                >
+                    {({values, handleChange, errors, touched}) => (
+                        <Form className={"form"}>
+                            <div className={"signupFormContainer"}>
+                                <div className={"fieldSection"}>
+                                    <InputField type={"text"} onChange={() => {
+                                    }} style={{width: "85%"}} touched={false} errors={""} value={""} label={"Full Name"}
+                                                name={"fullname"}/>
 
-                <div className={"socialButtonSection"}>
-                    <SigninWithGoogle
-                        href={"http://api.footyandsweep-dev.com:30389/oauth2/authorization/google?redirect_uri=http://www.footyandsweep-dev.com:3000/oauth/login?signup=true"}/>
-                    <SigninWithFacebook
-                        href={"http://api.footyandsweep-dev.com:30389/oauth2/authorization/facebook?redirect_uri=http://www.footyandsweep-dev.com:3000/oauth/login?signup=true"}/>
-                </div>
-            </div>
+                                    <InputField type={"text"} onChange={handleChange} style={{width: "85%"}}
+                                                touched={touched.username} errors={errors.username} value={values.username}
+                                                label={"Username"}
+                                                name={"username"}/>
 
-            <div className={"bottomSection"}>
-                <span className={"text"}><b>Already Got an Account? </b></span><span
-                onClick={() => props.history.push("/login")}
-                className={"textLink"}><b>Get Logged In!</b></span>
+                                    <InputField type={"password"} onChange={handleChange} style={{width: "85%"}}
+                                                touched={touched.password} errors={errors.password} value={values.password}
+                                                label={"Password"}
+                                                name={"password"}/>
+
+                                    <InputField type={"password"} onChange={handleChange} style={{width: "85%"}}
+                                                touched={touched.confirmPassword} errors={errors.confirmPassword}
+                                                value={values.confirmPassword}
+                                                label={"Comfirm Password"}
+                                                name={"confirmPassword"}/>
+
+                                    <span className={"errorMessage"}>{props.error}</span>
+
+                                    <Checkbox textLinkTo={"http://www.footyandsweep-dev.com:3000/terms"}
+                                              textLink={"Terms & Conditions"}
+                                              text={"I agree to FootyAndSweep"}/>
+
+                                    <Button className={"submitButton"} style={{
+                                        fontSize: "15px",
+                                        lineHeight: "17.5px",
+                                        padding: "12.5px",
+                                        width: "100%",
+                                        borderRadius: "10px",
+                                    }}
+                                            onClick={() => {
+                                            }} type={"submit"} title={"Sign Up"}/>
+                                </div>
+
+                                <div className={"socialButtonSection"}>
+                                    <SigninWithGoogle
+                                        href={"http://api.footyandsweep-dev.com:30389/oauth2/authorization/google?redirect_uri=http://www.footyandsweep-dev.com:3000/oauth/login?signup=true"}/>
+                                    <SigninWithFacebook
+                                        href={"http://api.footyandsweep-dev.com:30389/oauth2/authorization/facebook?redirect_uri=http://www.footyandsweep-dev.com:3000/oauth/login?signup=true"}/>
+                                </div>
+                            </div>
+
+                            <div className={"bottomSection"}>
+                                <span className={"text"}><b>Already Got an Account? </b></span><span
+                                onClick={() => props.history.push("/login")}
+                                className={"textLink"}><b>Get Logged In!</b></span>
+                            </div>
+                        </Form>
+                    )}
+                </Formik>
             </div>
-        </div>
-    );
-};
+        );
+    }
+;
 
 const mapStateToProps = (state: RootState) => {
-    return {
-        state: state.signupForm
+        return {
+            state: state.signupForm
+        }
     }
-};
+;
 
 
 function mapDispatchToProps(dispatch: any) {

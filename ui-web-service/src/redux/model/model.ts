@@ -54,14 +54,12 @@ export interface UserData {
 }
 
 export interface LoginData {
-    email: string | null;
+    username: string | null;
     password: string | null;
 }
 
 export interface SignupData {
     username: string | null;
-    email: string | null;
-    dateOfBirth: Date | null;
     password: string | null;
     confirmPassword: string | null;
 }

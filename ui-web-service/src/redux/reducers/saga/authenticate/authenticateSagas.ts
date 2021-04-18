@@ -22,7 +22,7 @@ const loginRequest = async (payload: LoginData) => {
     try {
         return await Axios({
             method: "post",
-            url: "http://api.footyandsweep-dev.com:30389/com.footyandsweep.AuthenticationService/login",
+            url: "http://api.footyandsweep-dev.com:30389/auth/login",
             data: payload,
             withCredentials: true
         });
@@ -35,7 +35,7 @@ const signupRequest = async (payload: SignupData) => {
     try {
         return await Axios({
             method: "post",
-            url: "http://api.footyandsweep-dev.com:30389/com.footyandsweep.AuthenticationService/signup",
+            url: "http://api.footyandsweep-dev.com:30389/auth/signup",
             data: payload,
             withCredentials: true
         });

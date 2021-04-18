@@ -16,16 +16,18 @@
 
 package com.footyandsweep.apigatewayservice.service;
 
-import com.footyandsweep.apigatewayservice.exception.SignUpException;
-import com.footyandsweep.apigatewayservice.model.User;
 import com.footyandsweep.apicommonlibrary.exceptions.InsufficientCreditsException;
 import com.footyandsweep.apicommonlibrary.exceptions.UserDoesNotExistException;
 import com.footyandsweep.apigatewayservice.dao.SweepstakeIdDao;
 import com.footyandsweep.apigatewayservice.dao.UserDao;
+import com.footyandsweep.apigatewayservice.exception.SignUpException;
+import com.footyandsweep.apigatewayservice.model.AuthProvider;
+import com.footyandsweep.apigatewayservice.model.User;
 import com.footyandsweep.apigatewayservice.payload.SignUpRequest;
 import com.footyandsweep.apigatewayservice.relation.SweepstakeIds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -40,10 +42,13 @@ public class UserServiceImpl implements UserService {
   private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ");
 
   private final UserDao userDao;
+  private final PasswordEncoder passwordEncoder;
   private final SweepstakeIdDao sweepstakeIdDao;
 
-  public UserServiceImpl(final UserDao userDao, final SweepstakeIdDao sweepstakeIdDao) {
+  public UserServiceImpl(
+      UserDao userDao, PasswordEncoder passwordEncoder, SweepstakeIdDao sweepstakeIdDao) {
     this.userDao = userDao;
+    this.passwordEncoder = passwordEncoder;
     this.sweepstakeIdDao = sweepstakeIdDao;
   }
 
@@ -110,6 +115,25 @@ public class UserServiceImpl implements UserService {
       throw new UserDoesNotExistException();
     } catch (InsufficientCreditsException e) {
       throw new InsufficientCreditsException();
+    }
+  }
+
+  @Override
+  public Optional<User> signupUser(SignUpRequest request) {
+    try{
+      this.checkSignUpRequestIsValid(request);
+
+      User user = new User();
+      user.setUsername(request.getUsername());
+      user.setEmail(request.getEmail());
+      user.setPassword(request.getPassword());
+      user.setProvider(AuthProvider.email_address);
+
+      user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+      return Optional.of(userDao.save(user));
+    } catch (Exception e) {
+      return Optional.empty();
     }
   }
 }
