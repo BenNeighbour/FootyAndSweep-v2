@@ -25,11 +25,13 @@ import com.footyandsweep.apisweepstakeengine.dao.ParticipantIdDao;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
 import com.footyandsweep.apisweepstakeengine.engine.saga.createSweepstake.CreateSweepstakeSagaData;
 import com.footyandsweep.apisweepstakeengine.engine.saga.deleteSweepstake.DeleteSweepstakeSagaData;
+import com.footyandsweep.apisweepstakeengine.grpc.client.SweepstakeClientGrpc;
 import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
 import com.footyandsweep.apisweepstakeengine.relation.ParticipantIds;
 import io.eventuate.tram.commands.consumer.CommandWithDestination;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -48,6 +50,9 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
 
   private final SweepstakeDao sweepstakeDao;
   private final ParticipantIdDao participantIdDao;
+
+  @Autowired
+  private SweepstakeClientGrpc sweepstakeClient;
 
   public SweepstakeEngineImpl(SweepstakeDao sweepstakeDao, ParticipantIdDao participantIdDao) {
     this.sweepstakeDao = sweepstakeDao;
@@ -158,6 +163,9 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
               participantIds -> {
                 Sweepstake sweepstake =
                     sweepstakeDao.findSweepstakeById(participantIds.getSweepstakeId());
+
+                /* Get the tickets for this sweepstake */
+                sweepstake.setTickets(sweepstakeClient.getSweepstakeTickets(sweepstake.getId()));
                 if (sweepstake != null) participantSweepstakes.add(sweepstake);
               });
 

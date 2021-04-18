@@ -17,19 +17,26 @@
 package com.footyandsweep.apisweepstakeengine.grpc.client;
 
 import com.footyandsweep.AllocationServiceGrpc;
+import com.footyandsweep.Common;
 import com.footyandsweep.SweepstakeServiceOuterClass;
+import com.footyandsweep.TicketServiceGrpc;
 import com.footyandsweep.apicommonlibrary.helper.ProtoConverterUtils;
+import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
 import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class SweepstakeClientGrpc {
 
   private final AllocationServiceGrpc.AllocationServiceBlockingStub allocationEngineChannel;
+  private final TicketServiceGrpc.TicketServiceBlockingStub ticketServiceChannel;
 
-  public SweepstakeClientGrpc(
-      AllocationServiceGrpc.AllocationServiceBlockingStub allocationEngineChannel) {
+  public SweepstakeClientGrpc(AllocationServiceGrpc.AllocationServiceBlockingStub allocationEngineChannel, TicketServiceGrpc.TicketServiceBlockingStub ticketServiceChannel) {
     this.allocationEngineChannel = allocationEngineChannel;
+    this.ticketServiceChannel = ticketServiceChannel;
   }
 
   public void allocateSweepstake(Sweepstake sweepstake) {
@@ -38,5 +45,14 @@ public class SweepstakeClientGrpc {
     ProtoConverterUtils.convertToProto(grpcSweepstake, sweepstake);
 
     allocationEngineChannel.allocateSweepstake(grpcSweepstake.build());
+  }
+
+  public List<TicketCommon> getSweepstakeTickets(String sweepstakeId) {
+    List<TicketCommon> ticketCommonList = new ArrayList<>();
+    ticketServiceChannel.getAllTicketsBySweepstakeId(Common.Id.newBuilder().setId(sweepstakeId).build()).getTicketList().forEach(ticket -> {
+      ticketCommonList.add(ProtoConverterUtils.convertToPojo(TicketCommon.class, ticket));
+    });
+
+    return ticketCommonList;
   }
 }

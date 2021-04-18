@@ -84,10 +84,28 @@
       .topRightSection {
         flex: 1;
 
-        .circleIndicator {
+        .circleIndicator-open {
           height: 8px;
           width: 8px;
           background: #46566B;
+          border-radius: 50%;
+          display: inline-block;
+          margin-right: 7.5px;
+        }
+
+        .circleIndicator-in-play {
+          height: 8px;
+          width: 8px;
+          background: rgba(255, 107, 0, 0.73);
+          border-radius: 50%;
+          display: inline-block;
+          margin-right: 7.5px;
+        }
+
+        .circleIndicator-settled {
+          height: 8px;
+          width: 8px;
+          background: #FD4D4D;
           border-radius: 50%;
           display: inline-block;
           margin-right: 7.5px;

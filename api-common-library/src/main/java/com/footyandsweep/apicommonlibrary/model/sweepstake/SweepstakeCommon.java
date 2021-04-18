@@ -114,7 +114,7 @@ public class SweepstakeCommon implements Serializable {
 
   public enum SweepstakeStatus {
     OPEN("Open"),
-    ALLOCATED("Allocated"),
+    INPLAY("In-Play"),
     SETTLED("Settled");
 
     private String value;

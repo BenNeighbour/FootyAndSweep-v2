@@ -35,7 +35,7 @@ function* saveSweepstakeSaga({payload}: { payload: SweepstakeData }) {
     }
 }
 
-function* getMySweepstakesSaga({payload}: { payload: String }) {
+function getMySweepstakesSaga({payload}: { payload: String }) {
     getMySweepstakes(sweepstakeChannel)
 }
 

@@ -15,7 +15,7 @@
  */
 
 
-import React, {Fragment, FunctionComponent, useEffect, useState} from 'react';
+import React, {Fragment, FunctionComponent, useEffect} from 'react';
 import SweepstakeCard from "../../components/SweepstakeCard/SweepstakeCard";
 import "./Sweepstakes.scss";
 import AdvertisementCard from "../../components/AdvertisementCard/AdvertisementCard";
@@ -41,15 +41,11 @@ interface OwnProps extends RouteComponentProps {
 type Props = OwnProps;
 
 const Sweepstakes: FunctionComponent<Props> = (props) => {
-    /* TODO: Change this! */
-    const [sweepstakes,] = useState<number[]>([1, 2, 3, 4, 5, 6, 7, 8, 9]);
-    // const [sweepstakes,] = useState<any>([]);
-
     const isMobile = useMediaQuery({query: `(max-width: 768px)`});
 
     useEffect(() => {
         props.sweepstakePageActions.getMySweepstakesAction("");
-    }, []);
+    }, [props.sweepstakePageActions]);
 
     if (props.state.sweepstakesPage.isLoading) return <LoadingPage />
 

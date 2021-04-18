@@ -17,11 +17,13 @@
 package com.footyandsweep.apisweepstakeengine.config;
 
 import com.footyandsweep.AllocationServiceGrpc;
+import com.footyandsweep.TicketServiceGrpc;
 import com.footyandsweep.apisweepstakeengine.dao.ParticipantIdDao;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
 import com.footyandsweep.apisweepstakeengine.engine.SweepstakeEngine;
 import com.footyandsweep.apisweepstakeengine.engine.SweepstakeEngineImpl;
 import com.footyandsweep.apisweepstakeengine.engine.handlers.SweepstakeCommandHandler;
+import com.footyandsweep.apisweepstakeengine.grpc.client.SweepstakeClientGrpc;
 import io.eventuate.tram.commands.consumer.CommandDispatcher;
 import io.eventuate.tram.sagas.participant.SagaCommandDispatcherFactory;
 import io.eventuate.tram.sagas.spring.orchestration.SagaOrchestratorConfiguration;
@@ -52,8 +54,16 @@ public class SweepstakeEngineConfiguration {
   }
 
   @Bean
+  public TicketServiceGrpc.TicketServiceBlockingStub ticketServiceChannel() {
+    ManagedChannel channel =
+            ManagedChannelBuilder.forAddress("api-ticket-engine", 9090).usePlaintext().build();
+
+    return TicketServiceGrpc.newBlockingStub(channel);
+  }
+
+  @Bean
   public SweepstakeEngine sweepstakeEngine(
-      SweepstakeDao sweepstakeDao, ParticipantIdDao participantIdDao) {
+          SweepstakeDao sweepstakeDao, ParticipantIdDao participantIdDao) {
     return new SweepstakeEngineImpl(sweepstakeDao, participantIdDao);
   }
 
