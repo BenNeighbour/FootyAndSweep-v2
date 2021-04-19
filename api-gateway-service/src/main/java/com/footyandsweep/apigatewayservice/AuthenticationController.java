@@ -16,15 +16,13 @@
 
 package com.footyandsweep.apigatewayservice;
 
+import com.footyandsweep.apigatewayservice.dao.UserDao;
 import com.footyandsweep.apigatewayservice.model.User;
 import com.footyandsweep.apigatewayservice.payload.LoginRequest;
 import com.footyandsweep.apigatewayservice.payload.SignUpRequest;
 import com.footyandsweep.apigatewayservice.security.JwtTokenProvider;
 import com.footyandsweep.apigatewayservice.service.UserService;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseCookie;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,21 +38,23 @@ import java.util.Optional;
 @RequestMapping("/auth")
 public class AuthenticationController {
 
-  private final UserService userService;
-
   private final JwtTokenProvider tokenProvider;
   private final ReactiveAuthenticationManager authenticationManager;
+  private final UserDao userDao;
+  private final UserService userService;
 
   public AuthenticationController(
       UserService userService,
       JwtTokenProvider tokenProvider,
-      ReactiveAuthenticationManager authenticationManager) {
+      ReactiveAuthenticationManager authenticationManager,
+      UserDao userDao) {
     this.userService = userService;
     this.tokenProvider = tokenProvider;
     this.authenticationManager = authenticationManager;
+    this.userDao = userDao;
   }
 
-  @PostMapping("/signup")
+  @PostMapping(value = "/signup", produces = MediaType.APPLICATION_JSON_VALUE)
   public Mono<ResponseEntity> signup(@Valid @RequestBody Mono<SignUpRequest> authRequest) {
     return authRequest
         .flatMap(
@@ -80,7 +80,7 @@ public class AuthenticationController {
             });
   }
 
-  @PostMapping("/login")
+  @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
   public Mono<ResponseEntity> login(@Valid @RequestBody Mono<LoginRequest> authRequest) {
     return loginHelper(authRequest);
   }
@@ -107,7 +107,9 @@ public class AuthenticationController {
                       .build()
                       .toString());
 
-              return ResponseEntity.ok().headers(responseHeaders).build();
+              return ResponseEntity.ok()
+                  .headers(responseHeaders)
+                  .body(userDao.findUserById(tokenProvider.getUserIdFromToken(jwt)));
             });
   }
 }

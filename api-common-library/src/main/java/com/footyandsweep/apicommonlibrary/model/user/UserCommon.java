@@ -16,6 +16,7 @@
 
 package com.footyandsweep.apicommonlibrary.model.user;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -49,17 +50,24 @@ public class UserCommon implements Serializable {
 
   private String username;
 
+  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   private String password;
 
   private String email;
 
   private BigDecimal balance = new BigDecimal("3.00");
 
+  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   private boolean isSubscribedToEmails;
 
+  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   private Date dateOfBirth;
 
-  @CreationTimestamp private Date created;
+  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+  @CreationTimestamp
+  private Date created;
 
-  @UpdateTimestamp private Date updated;
+  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+  @UpdateTimestamp
+  private Date updated;
 }

@@ -54,7 +54,7 @@ export interface UserData {
 }
 
 export interface LoginData {
-    username: string | null;
+    email: string | null;
     password: string | null;
 }
 

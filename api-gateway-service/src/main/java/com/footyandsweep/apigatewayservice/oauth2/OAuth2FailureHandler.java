@@ -34,23 +34,29 @@ public class OAuth2FailureHandler implements ServerAuthenticationFailureHandler 
   public Mono<Void> onAuthenticationFailure(
       WebFilterExchange webFilterExchange, AuthenticationException exception) {
     /* Make the target url have the error parameter on it */
-    String targetUrl =
-            null;
-    try {
-      targetUrl = UriComponentsBuilder.fromUriString("http://www.footyandsweep-dev.com:3000/oauth/login")
-          .queryParam("error", URLEncoder.encode(exception.getLocalizedMessage(), "UTF-8").replace("+", "%20"))
-          .build()
-          .toUriString();
-    } catch (Exception e) {
-      targetUrl = UriComponentsBuilder.fromUriString("http://www.footyandsweep-dev.com:3000/oauth/login")
-              .queryParam("error", "Hmmm...%20Somethings%20not%20right...")
-              .build()
-              .toUriString();
-    }
+    String targetUrl;
 
-    /* Redirect to the redirect uri */
-    webFilterExchange.getExchange().getResponse().setStatusCode(HttpStatus.TEMPORARY_REDIRECT);
-    webFilterExchange.getExchange().getResponse().getHeaders().setLocation(URI.create(targetUrl));
+    if (webFilterExchange.getExchange().getRequest().getPath().toString().contains("oauth")) {
+      try {
+        targetUrl =
+            UriComponentsBuilder.fromUriString("http://www.footyandsweep-dev.com:3000/oauth/login")
+                .queryParam(
+                    "error",
+                    URLEncoder.encode(exception.getLocalizedMessage(), "UTF-8").replace("+", "%20"))
+                .build()
+                .toUriString();
+      } catch (Exception e) {
+        targetUrl =
+            UriComponentsBuilder.fromUriString("http://www.footyandsweep-dev.com:3000/oauth/login")
+                .queryParam("error", "Hmmm...%20Somethings%20not%20right...")
+                .build()
+                .toUriString();
+      }
+
+      /* Redirect to the redirect uri */
+      webFilterExchange.getExchange().getResponse().setStatusCode(HttpStatus.TEMPORARY_REDIRECT);
+      webFilterExchange.getExchange().getResponse().getHeaders().setLocation(URI.create(targetUrl));
+    } else webFilterExchange.getExchange().getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
 
     return webFilterExchange.getExchange().getResponse().setComplete();
   }

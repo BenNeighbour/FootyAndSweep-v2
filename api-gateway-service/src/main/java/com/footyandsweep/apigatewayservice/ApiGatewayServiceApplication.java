@@ -27,8 +27,12 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.web.reactive.config.CorsRegistry;
+import org.springframework.http.MediaType;
 import org.springframework.web.reactive.config.EnableWebFlux;
+import org.springframework.web.reactive.function.server.RouterFunctions;
+import org.springframework.web.reactive.function.server.ServerResponse;
+
+import static org.springframework.web.reactive.function.server.RequestPredicates.accept;
 
 @EnableCaching
 @EnableWebFlux
@@ -36,8 +40,8 @@ import org.springframework.web.reactive.config.EnableWebFlux;
 @SpringBootApplication
 @EnableDiscoveryClient
 @Import({
-        TramMessageProducerJdbcConfiguration.class,
-        EventuateTramKafkaMessageConsumerConfiguration.class
+  TramMessageProducerJdbcConfiguration.class,
+  EventuateTramKafkaMessageConsumerConfiguration.class
 })
 @EnableConfigurationProperties(AppProperties.class)
 public class ApiGatewayServiceApplication {
@@ -45,6 +49,5 @@ public class ApiGatewayServiceApplication {
   public static void main(String[] args) {
     SpringApplication.run(ApiGatewayServiceApplication.class, args);
   }
-
 
 }
