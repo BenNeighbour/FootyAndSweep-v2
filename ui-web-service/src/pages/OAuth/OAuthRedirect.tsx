@@ -17,8 +17,14 @@
 
 import React, {FunctionComponent} from 'react';
 import {Redirect, RouteComponentProps, useLocation} from "react-router-dom";
+import {RootState} from "../../redux/rootReducer";
+import {bindActionCreators} from "redux";
+import * as UserAuthenticationActions from "../../redux/reducers/saga/authenticate/authenticateActions";
+import {connect} from "react-redux";
 
 interface OwnProps extends RouteComponentProps<any> {
+    state: RootState;
+    userAuthenticationActions: typeof UserAuthenticationActions;
 }
 
 type Props = OwnProps;
@@ -39,11 +45,36 @@ const OAuthRedirect: FunctionComponent<Props> = (props) => {
         );
     }
 
+    if (query.get("user_id") !== null) {
+        /* Dispatch login success */
+        props.userAuthenticationActions.oauthAuthenticationSuccessAction(query.get("user_id"));
+
+        return (
+            <Redirect to={{
+                pathname: "/sweepstakes",
+            }}/>
+        )
+    }
+
     return (
         <Redirect to={{
-            pathname: "/sweepstakes",
+            pathname: "/login",
+            state: {errors: "Something's not right... Try again later!"}
         }}/>
-    )
+    );
 };
 
-export default OAuthRedirect;
+const mapStateToProps = (state: RootState) => {
+        return {
+            state
+        }
+    }
+;
+
+function mapDispatchToProps(dispatch: any) {
+    return {
+        userAuthenticationActions: bindActionCreators(UserAuthenticationActions as any, dispatch),
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(OAuthRedirect);

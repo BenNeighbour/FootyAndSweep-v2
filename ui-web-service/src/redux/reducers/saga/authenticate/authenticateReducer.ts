@@ -63,7 +63,22 @@ export const loginAuthenticationReducer = createReducer<LoginAuthenticationReduc
         };
     },
 
-    [ActionType.AUTHENTICATE_LOGIN_SUCCESS](state: LoginAuthenticationReducerType) {
+    [ActionType.AUTHENTICATE_LOGIN_SUCCESS](state: LoginAuthenticationReducerType, action: Action<any>) {
+        localStorage.setItem("user_id", action.payload.id);
+
+        return {
+            ...state,
+            isLoading: false,
+            error: null
+        };
+    },
+
+    [ActionType.AUTHENTICATE_OAUTH_SUCCESS](state: LoginAuthenticationReducerType, action: Action<any>) {
+        /* Put the user id inside localstorage */
+        if (action.payload !== null) {
+            localStorage.setItem("user_id", action.payload.toString());
+        }
+
         return {
             ...state,
             isLoading: false,

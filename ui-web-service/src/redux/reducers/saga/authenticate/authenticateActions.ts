@@ -30,3 +30,10 @@ export const signupUserAction = (payload: SignupData) => {
         payload
     }
 };
+
+export const oauthAuthenticationSuccessAction = (payload?: string | null) => {
+    return {
+        type: ActionType.AUTHENTICATE_OAUTH_SUCCESS,
+        payload
+    }
+};

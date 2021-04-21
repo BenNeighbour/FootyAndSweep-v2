@@ -47,7 +47,7 @@ export function saveSweepstake(client: Client, sweepstakeChannel: any, payload: 
 
 export function getMySweepstakes(sweepstakeChannel: any) {
     /* Get the user id */
-    let userId = localStorage.getItem("userId");
+    let userId = localStorage.getItem("user_id");
 
     return axios.get(`http://api.footyandsweep-dev.com:30389/sweepstake/sweepstakes/${userId}`, {withCredentials: true}).then(value => {
         sweepstakeChannel.put({
@@ -60,4 +60,9 @@ export function getMySweepstakes(sweepstakeChannel: any) {
             payload: null
         });
     })
+}
+
+
+export async function checkIsAuthenticated() {
+    return await axios.get("http://api.footyandsweep-dev.com:30389/auth/check", {withCredentials: true});
 }

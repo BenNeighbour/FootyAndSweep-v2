@@ -21,6 +21,7 @@ import OAuthRedirect from "./pages/OAuth/OAuthRedirect";
 import LoadingPage from "./pages/Loading/LoadingPage";
 import LoginPage from "./pages/Login/LoginPage";
 import SignupPage from "./pages/Signup/SignupPage";
+import PrivateRoute from "./other/PrivateRoute";
 
 interface OwnProps {
 }
@@ -40,7 +41,7 @@ const Routes: FunctionComponent<Props> = (props) => {
                         component={LoginPage} exact path="/login"/>
                     <Route
                         component={SignupPage} exact path="/signup"/>
-                    <Route
+                    <PrivateRoute
                         component={Sweepstakes} exact path="/sweepstakes"/>
                 </Route>
             </Switch>

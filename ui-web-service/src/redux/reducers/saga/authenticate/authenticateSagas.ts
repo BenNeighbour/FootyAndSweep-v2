@@ -49,7 +49,9 @@ function* loginSaga({payload}: { payload: LoginData }) {
         const response = yield call(loginRequest, payload);
 
         if (response.status === 200) {
-            yield put({type: ActionType.AUTHENTICATE_LOGIN_SUCCESS, payload: response.data.username});
+            yield put({type: ActionType.AUTHENTICATE_LOGIN_SUCCESS, payload: response.data});
+
+            /* Redirect to /sweepstakes */
         } else if (response.status === 401) {
             yield put({type: ActionType.AUTHENTICATE_LOGIN_ERROR, payload: "Your Username/Password are invalid!"})
         } else {

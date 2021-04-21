@@ -23,12 +23,10 @@ import com.footyandsweep.apigatewayservice.payload.SignUpRequest;
 import com.footyandsweep.apigatewayservice.security.JwtTokenProvider;
 import com.footyandsweep.apigatewayservice.service.UserService;
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
@@ -52,6 +50,12 @@ public class AuthenticationController {
     this.tokenProvider = tokenProvider;
     this.authenticationManager = authenticationManager;
     this.userDao = userDao;
+  }
+
+  @GetMapping("/check")
+  @PreAuthorize("isAuthenticated()")
+  public Mono<ResponseEntity> amIAuthenticated() {
+    return Mono.just(ResponseEntity.status(HttpStatus.OK).build());
   }
 
   @PostMapping(value = "/signup", produces = MediaType.APPLICATION_JSON_VALUE)

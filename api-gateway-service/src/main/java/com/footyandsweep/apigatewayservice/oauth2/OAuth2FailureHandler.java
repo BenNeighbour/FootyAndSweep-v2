@@ -36,6 +36,7 @@ public class OAuth2FailureHandler implements ServerAuthenticationFailureHandler 
     /* Make the target url have the error parameter on it */
     String targetUrl;
 
+    /* If this is an OAuth 2.0 request, do the following */
     if (webFilterExchange.getExchange().getRequest().getPath().toString().contains("oauth")) {
       try {
         targetUrl =
@@ -46,6 +47,7 @@ public class OAuth2FailureHandler implements ServerAuthenticationFailureHandler 
                 .build()
                 .toUriString();
       } catch (Exception e) {
+        /* If something went wrong, just make the error code */
         targetUrl =
             UriComponentsBuilder.fromUriString("http://www.footyandsweep-dev.com:3000/oauth/login")
                 .queryParam("error", "Hmmm...%20Somethings%20not%20right...")
@@ -56,7 +58,10 @@ public class OAuth2FailureHandler implements ServerAuthenticationFailureHandler 
       /* Redirect to the redirect uri */
       webFilterExchange.getExchange().getResponse().setStatusCode(HttpStatus.TEMPORARY_REDIRECT);
       webFilterExchange.getExchange().getResponse().getHeaders().setLocation(URI.create(targetUrl));
-    } else webFilterExchange.getExchange().getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+    }
+
+    /* Otherwise, just return Unauthorized */
+    webFilterExchange.getExchange().getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
 
     return webFilterExchange.getExchange().getResponse().setComplete();
   }
