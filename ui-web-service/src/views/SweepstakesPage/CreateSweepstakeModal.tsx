@@ -75,7 +75,7 @@ const CreateSweepstakeModal: FunctionComponent<Props> = (props) => {
           initialValues={{
               name: "",
               isPrivate: true,
-              ownerId: `${localStorage.getItem("userId")}`,
+              ownerId: `${localStorage.getItem("user_id")}`,
               minimumPlayers: 2,
               stake: 0,
               description: "",

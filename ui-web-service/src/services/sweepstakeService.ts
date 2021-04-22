@@ -17,31 +17,44 @@
 import {ActionType, SweepstakeData} from "../redux/model";
 import {Client} from "@stomp/stompjs";
 import axios from "axios";
+import {eventChannel} from "redux-saga";
 
-export function saveSweepstake(client: Client, sweepstakeChannel: any, payload: SweepstakeData) {
-    client.onConnect = () => {
+export function saveSweepstake(client: Client, payload: SweepstakeData) {
+    return eventChannel(emit => {
+        client.onConnect = () => {
+            client.publish({
+                destination: '/sweepstakes/save', body: JSON.stringify(payload)
+            });
+            client.subscribe("/sweepstake-topic/save", (message: any) => {
+                if (JSON.parse(message.body).status !== "PENDING") {
+                    emit(JSON.parse(message.body));
+                }
+            })
+        };
 
-        client.publish({
-            destination: '/sweepstakes/save', body: JSON.stringify(payload)
-        });
+        client.activate();
 
-        client.subscribe("/sweepstake-topic/save", (message: any) => {
-            if (JSON.parse(message.body).status !== "PENDING") {
-                sweepstakeChannel.put({
-                    type: JSON.parse(message.body).status === "COMPLETED" ? ActionType.SAVE_SWEEPSTAKE_SUCCESS : ActionType.SAVE_SWEEPSTAKE_ERROR,
-                    payload: JSON.parse(message.body)
-                })
-            }
-        });
-    };
-    client.onDisconnect = () => {
-        sweepstakeChannel.put({
-            type: ActionType.SAVE_SWEEPSTAKE_ERROR,
-            payload: "Sorry, something went wrong on our end. Please try again later."
-        })
-    }
+        return () => {
+        };
+    })
 
-    client.activate();
+    // client.onConnect = () => {
+    //     client.publish({
+    //         destination: '/sweepstakes/save', body: JSON.stringify(payload)
+    //     });
+    //     client.subscribe("/sweepstake-topic/save", (message: any) => {
+    //         if (JSON.parse(message.body).status !== "PENDING") {
+    //             console.log("done fam");
+    //
+    //             sweepstakeChannel.put({
+    //                 type: JSON.parse(message.body).status === "COMPLETED" ? ActionType.SAVE_SWEEPSTAKE_SUCCESS : ActionType.SAVE_SWEEPSTAKE_ERROR,
+    //                 payload: JSON.parse(message.body)
+    //             });
+    //         }
+    //     });
+    // };
+    //
+    // client.activate();
 }
 
 
