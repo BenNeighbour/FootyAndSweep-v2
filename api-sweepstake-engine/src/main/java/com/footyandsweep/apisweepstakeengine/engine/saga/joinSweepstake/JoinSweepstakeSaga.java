@@ -16,21 +16,28 @@
 
 package com.footyandsweep.apisweepstakeengine.engine.saga.joinSweepstake;
 
+import com.footyandsweep.apicommonlibrary.cqrs.SagaResponse;
 import com.footyandsweep.apicommonlibrary.cqrs.user.LinkParticipantToSweepstakeFailure;
 import com.footyandsweep.apicommonlibrary.cqrs.user.ParticipantNotFound;
+import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apisweepstakeengine.engine.SweepstakeEngine;
+import com.footyandsweep.apisweepstakeengine.engine.saga.createSweepstake.CreateSweepstakeSagaData;
 import com.footyandsweep.apisweepstakeengine.relation.ParticipantIds;
 import io.eventuate.tram.sagas.orchestration.SagaDefinition;
 import io.eventuate.tram.sagas.simpledsl.SimpleSaga;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
 public class JoinSweepstakeSaga implements SimpleSaga<JoinSweepstakeSagaData> {
 
   private final SweepstakeEngine sweepstakeEngine;
+  private final SimpMessagingTemplate messagingTemplate;
 
-  public JoinSweepstakeSaga(SweepstakeEngine sweepstakeEngine) {
+  public JoinSweepstakeSaga(
+      SweepstakeEngine sweepstakeEngine, SimpMessagingTemplate messagingTemplate) {
     this.sweepstakeEngine = sweepstakeEngine;
+    this.messagingTemplate = messagingTemplate;
   }
 
   @Override
@@ -60,5 +67,37 @@ public class JoinSweepstakeSaga implements SimpleSaga<JoinSweepstakeSagaData> {
         .onReply(LinkParticipantToSweepstakeFailure.class, (sagaData, e) -> {})
         .build();
     // @formatter:on
+  }
+
+  @Override
+  public void onSagaCompletedSuccessfully(String sagaId, JoinSweepstakeSagaData sagaData) {
+    SagaResponse<String> sweepstakeSagaComplete =
+        new SagaResponse<>(
+            sagaId, SagaResponse.Status.COMPLETED, "Sweepstake joined!", sagaData.getSweepstakeId());
+
+    messagingTemplate.convertAndSend("/sweepstake-topic/join", sweepstakeSagaComplete);
+  }
+
+  @Override
+  public void onStarting(String sagaId, JoinSweepstakeSagaData sagaData) {
+    SagaResponse<String> sweepstakeSagaPending =
+        new SagaResponse<>(
+            sagaId,
+            SagaResponse.Status.PENDING,
+            "Joining Sweepstake...", "Joining Sweepstake");
+
+    messagingTemplate.convertAndSend("/sweepstake-topic/join", sweepstakeSagaPending);
+  }
+
+  @Override
+  public void onSagaRolledBack(String sagaId, JoinSweepstakeSagaData sagaData) {
+    SagaResponse<String> sweepstakeSagaError =
+        new SagaResponse<>(
+            sagaId,
+            SagaResponse.Status.FAILED,
+            "Join Sweepstake Failed!",
+            "");
+
+    messagingTemplate.convertAndSend("/sweepstake-topic/join", sweepstakeSagaError);
   }
 }

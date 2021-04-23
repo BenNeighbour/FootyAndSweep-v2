@@ -16,7 +16,6 @@
 
 
 import React, {FunctionComponent} from 'react';
-import LoadingPage from "../../pages/Loading/LoadingPage";
 import {SweepstakeReducerType} from "../../redux/reducers/saga/sweepstake";
 import {RootState} from "../../redux/rootReducer";
 import {connect} from "react-redux";
@@ -24,6 +23,7 @@ import InputField from "../../components/InputField/InputField";
 import "./CreateSweepstakeForm.scss";
 import TextArea from "../../components/TextArea/TextArea";
 import Switch from "../../components/Switch/Switch";
+import Spinner from "../../components/Spinner/Spinner";
 
 interface OwnProps {
     state: SweepstakeReducerType;
@@ -36,7 +36,13 @@ interface OwnProps {
 type Props = OwnProps;
 
 const CreateSweepstakeForm: FunctionComponent<Props> = (props) => {
-    if (props.state.isLoading) return <LoadingPage/>
+    if (props.state.isLoading) return (
+        <div style={{
+            textAlign: "center"
+        }} className={"loading"}>
+            <Spinner/>
+        </div>
+    );
 
     return (
         <div className={"form"}>

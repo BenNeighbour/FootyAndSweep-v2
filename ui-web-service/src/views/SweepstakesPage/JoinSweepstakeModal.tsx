@@ -15,27 +15,57 @@
  */
 
 
-import React, { FunctionComponent } from 'react';
+import React, {FunctionComponent} from 'react';
 import {RootState} from "../../redux/rootReducer";
-import * as SweepstakePageActions from "../../redux/reducers/saga/sweepstakePage/sweepstakePageActions";
+import * as SweepstakeActions from "../../redux/reducers/saga/sweepstake/sweepstakeActions";
 import Modal from "../../components/Modal/Modal";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
+import {Form, Formik} from "formik";
+import * as yup from "yup";
+import JoinSweepstakeForm from "../../forms/JoinSweepstake/JoinSweepstakeForm";
+import * as SweepstakePageActions from "../../redux/reducers/saga/sweepstakePage/sweepstakePageActions";
 
 interface OwnProps {
     state: RootState;
+    sweepstakeActions: typeof SweepstakeActions;
     sweepstakePageActions: typeof SweepstakePageActions;
 }
+
+const schema = yup.object().shape({
+    code: yup
+        .string()
+        .required("You must enter a Sweepstake Code.")
+        .label("Sweepstake Code")
+});
+
 
 type Props = OwnProps;
 
 const JoinSweepstakeModal: FunctionComponent<Props> = (props) => {
-  return (
-      <Modal setShowing={props.sweepstakePageActions.setIsJoiningSweepstake} title={"Join a Sweepstake"}
-             description={"Enter a sweepstake code to join!"}
-             showing={props.state.sweepstakesPage.joiningSweepstake}>
-      </Modal>
-  );
+    return (
+        <Formik
+            onSubmit={(formValues) => {
+                props.sweepstakeActions.joinSweepstakeAction(formValues.code);
+            }}
+            validationSchema={schema}
+            initialValues={{
+                code: ""
+            }}
+        >
+            {({values, handleChange, errors, touched}) => (
+                <Form>
+                    <Modal shrinksOnMobile={true} setShowing={props.sweepstakePageActions.setIsJoiningSweepstake}
+                           title={"Join a Sweepstake"}
+                           description={"Enter a sweepstake code to join!"}
+                           showing={props.state.sweepstakesPage.joiningSweepstake}>
+                        <JoinSweepstakeForm values={values} handleChange={handleChange} errors={errors}
+                                              touched={touched}/>
+                    </Modal>
+                </Form>
+            )}
+        </Formik>
+    );
 };
 
 const mapStateToProps = (state: RootState) => {
@@ -47,6 +77,7 @@ const mapStateToProps = (state: RootState) => {
 
 function mapDispatchToProps(dispatch: any) {
     return {
+        sweepstakeActions: bindActionCreators(SweepstakeActions as any, dispatch),
         sweepstakePageActions: bindActionCreators(SweepstakePageActions as any, dispatch),
     };
 }

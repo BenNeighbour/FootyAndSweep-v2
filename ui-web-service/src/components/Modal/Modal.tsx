@@ -25,6 +25,7 @@ interface OwnProps {
     title: string;
     description: string;
     isForm?: boolean | false;
+    shrinksOnMobile?: boolean | false;
 }
 
 type Props = OwnProps;
@@ -43,7 +44,7 @@ const Modal: FunctionComponent<Props> = (props) => {
     return (
         <Fragment>
             {
-                shouldRender ? <div className={"modalContainer"}
+                shouldRender ? <div className={`modalContainer${props.shrinksOnMobile ? "-unshrinked" : ""}`}
                                     style={{animation: `${props.showing ? "fadeIn" : "fadeOut"} 0.35s`}}
                                     onAnimationEnd={onAnimationEnd} onClick={() => props.setShowing(false)}>
                     <div className={"modalWrapper"}>

@@ -79,9 +79,9 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
                                 return (
                                     <React.Fragment key={`sweepstake-${index}`}>
                                         <SweepstakeCard
-                                            setIsBuyingTickets={(value: boolean) => props.sweepstakePageActions.setIsBuyingTickets({
-                                                isBuyingTickets: value,
-                                                sweepstake: null
+                                            setIsBuyingTickets={(sweepstake) => props.sweepstakePageActions.setIsBuyingTickets({
+                                                isBuyingTickets: true,
+                                                sweepstake: sweepstake
                                             })}
                                             isMobile={isMobile}
                                             sweepstakeHashTags={["#bhawhu", "#firstscorer"]}

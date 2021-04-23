@@ -1,4 +1,4 @@
-/*
+/*!
  *   Copyright 2021 FootyAndSweep
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,19 +14,18 @@
  *   limitations under the License.
  */
 
+.form {
+  width: 100%;
+  height: fit-content;
 
-import {ActionType, SweepstakeData} from "../../../model";
+  form {
+    width: 70%;
+    height: fit-content;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    grid-gap: 30px;
+    gap: 30px;
 
-export const saveSweepstakeAction = (payload: SweepstakeData) => {
-    return {
-        type: ActionType.SAVE_SWEEPSTAKE_REQUEST,
-        payload
-    }
-};
-
-export const joinSweepstakeAction = (payload: String) => {
-    return {
-        type: ActionType.JOIN_SWEEPSTAKE_REQUEST,
-        payload
-    }
-};
+  }
+}

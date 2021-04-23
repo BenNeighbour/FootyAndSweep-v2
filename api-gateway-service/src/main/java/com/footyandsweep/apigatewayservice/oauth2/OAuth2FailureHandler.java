@@ -58,10 +58,10 @@ public class OAuth2FailureHandler implements ServerAuthenticationFailureHandler 
       /* Redirect to the redirect uri */
       webFilterExchange.getExchange().getResponse().setStatusCode(HttpStatus.TEMPORARY_REDIRECT);
       webFilterExchange.getExchange().getResponse().getHeaders().setLocation(URI.create(targetUrl));
+    } else {
+      /* Otherwise, just return Unauthorized */
+      webFilterExchange.getExchange().getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
     }
-
-    /* Otherwise, just return Unauthorized */
-    webFilterExchange.getExchange().getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
 
     return webFilterExchange.getExchange().getResponse().setComplete();
   }

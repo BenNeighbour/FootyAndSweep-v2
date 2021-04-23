@@ -91,8 +91,8 @@ public class SweepstakeController {
     return sweepstakeDao.findSweepstakeByJoinCode(joinCode);
   }
 
-  @PostMapping("/join")
   @Transactional
+  @MessageMapping("/join")
   public ResponseEntity<String> join(
       @RequestParam("participantId") String participantId,
       @RequestParam("joinCode") String joinCode) {

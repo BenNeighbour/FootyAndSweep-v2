@@ -31,7 +31,7 @@ interface OwnProps {
     totalAmountOfTickets: number;
     ticketsPurchasedSoFar?: number;
 
-    setIsBuyingTickets: (value: boolean) => void;
+    setIsBuyingTickets: (sweepstake: any) => void;
 }
 
 type Props = OwnProps;
@@ -86,7 +86,7 @@ const SweepstakeCard: FunctionComponent<Props> = (props) => {
 
                     <div className={"bottomRightSection"}>
                         {/*  Buy Tickets call-to-action  */}
-                        <span onClick={() => props.setIsBuyingTickets(true)}>Buy Tickets →</span>
+                        <span onClick={() => props.setIsBuyingTickets({name: props.sweepstakeName})}>Buy Tickets →</span>
                     </div>
                 </div>
             </div>
