@@ -23,21 +23,18 @@ import com.footyandsweep.TicketServiceGrpc;
 import com.footyandsweep.apicommonlibrary.helper.ProtoConverterUtils;
 import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
 import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class SweepstakeClientGrpc {
 
   private final AllocationServiceGrpc.AllocationServiceBlockingStub allocationEngineChannel;
   private final TicketServiceGrpc.TicketServiceBlockingStub ticketServiceChannel;
-
-  public SweepstakeClientGrpc(AllocationServiceGrpc.AllocationServiceBlockingStub allocationEngineChannel, TicketServiceGrpc.TicketServiceBlockingStub ticketServiceChannel) {
-    this.allocationEngineChannel = allocationEngineChannel;
-    this.ticketServiceChannel = ticketServiceChannel;
-  }
 
   public void allocateSweepstake(Sweepstake sweepstake) {
     SweepstakeServiceOuterClass.Sweepstake.Builder grpcSweepstake =

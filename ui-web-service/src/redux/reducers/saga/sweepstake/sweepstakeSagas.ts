@@ -36,16 +36,7 @@ function* saveSweepstakeSaga({payload}: { payload: SweepstakeData }) {
                 payload: response.payload
             });
 
-            /* Call the next step by closing the modal */
-            yield put({
-                type: ActionType.SET_IS_SAVING_SWEEPSTAKE,
-                payload: {
-                    creatingSweepstake: false
-                }
-            });
-
             window.location.reload();
-
         } catch (err) {
             yield put({
                 type: ActionType.SAVE_SWEEPSTAKE_ERROR,
@@ -67,16 +58,7 @@ function* joinSweepstakeSaga({payload}: { payload: String }) {
                 payload: response.payload
             });
 
-            /* Call the next step by closing the modal */
-            yield put({
-                type: ActionType.SET_IS_JOINING_SWEEPSTAKE,
-                payload: {
-                    joiningSweepstake: false
-                }
-            });
-
             window.location.reload();
-
         } catch (err) {
             yield put({
                 type: ActionType.JOIN_SWEEPSTAKE_ERROR,

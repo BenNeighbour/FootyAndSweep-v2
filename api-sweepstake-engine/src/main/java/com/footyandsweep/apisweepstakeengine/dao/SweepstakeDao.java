@@ -31,26 +31,21 @@ import java.util.List;
 public interface SweepstakeDao extends JpaRepository<Sweepstake, String> {
 
   @Transactional
-  @CachePut(value = "sweepstakeCache", key = "#id")
   Sweepstake findSweepstakeById(String id);
 
   @Transactional
-  @CachePut(value = "sweepstakeCache", key = "#id")
   FootballMatchSweepstake findFootballMatchSweepstakeById(String id);
 
   @Transactional
-  @CachePut(value = "sweepstakeCache", key = "#result.getId()")
   Sweepstake findSweepstakeByJoinCode(String joinCode);
 
   @Transactional
   List<Sweepstake> findAllSweepstakesByStatus(SweepstakeCommon.SweepstakeStatus status);
 
   @Transactional
-  @CacheEvict(value = "sweepstakeCache", key = "#sweepstake.getId()")
   Sweepstake save(Sweepstake sweepstake);
 
   @Transactional
-  @CacheEvict(value = "sweepstakeCache", key = "#sweepstake.getId()")
   void delete(Sweepstake sweepstake);
 
   List<Sweepstake> findAllSweepstakeBySweepstakeEventId(String sweepstakeEventId);

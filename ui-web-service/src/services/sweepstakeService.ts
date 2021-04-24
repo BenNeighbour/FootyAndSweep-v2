@@ -67,7 +67,13 @@ export function joinSweepstake(client: Client, payload: String) {
     return eventChannel(emit => {
         client.onConnect = () => {
             client.publish({
-                destination: `/sweepstakes/join${"?participantId=" + localStorage.getItem("user_id") + "?joinCode=" + payload}`
+                destination: `/sweepstakes/join`,
+                body: JSON.stringify({
+                    participantId: localStorage.getItem("user_id"),
+                    sweepstakeJoinCode: payload,
+                    sweepstakeId: "",
+                    sweepstakeParticipantId: ""
+                })
             });
             client.subscribe("/sweepstake-topic/join", (message: any) => {
                 if (JSON.parse(message.body).status !== "PENDING") {

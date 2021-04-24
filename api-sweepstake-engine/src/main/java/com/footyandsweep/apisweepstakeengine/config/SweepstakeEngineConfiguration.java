@@ -63,8 +63,8 @@ public class SweepstakeEngineConfiguration {
 
   @Bean
   public SweepstakeEngine sweepstakeEngine(
-          SweepstakeDao sweepstakeDao, ParticipantIdDao participantIdDao) {
-    return new SweepstakeEngineImpl(sweepstakeDao, participantIdDao);
+          SweepstakeDao sweepstakeDao, ParticipantIdDao participantIdDao, SweepstakeClientGrpc sweepstakeClientGrpc) {
+    return new SweepstakeEngineImpl(sweepstakeDao, participantIdDao, sweepstakeClientGrpc);
   }
 
   @Bean

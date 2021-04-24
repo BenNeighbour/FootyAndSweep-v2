@@ -31,13 +31,16 @@ import com.google.rpc.Code;
 import com.google.rpc.Status;
 import io.grpc.protobuf.StatusProto;
 import io.grpc.stub.StreamObserver;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.beanutils.BeanUtils;
+import org.springframework.beans.factory.annotation.Required;
 
 import javax.validation.ValidationException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 @GrpcService
+@RequiredArgsConstructor
 public class SweepstakeControllerGrpc extends SweepstakeServiceGrpc.SweepstakeServiceImplBase {
 
   private final SweepstakeEngineImpl sweepstakeEngine;
@@ -45,19 +48,6 @@ public class SweepstakeControllerGrpc extends SweepstakeServiceGrpc.SweepstakeSe
   private final ParticipantIdDao participantIdDao;
   private final ResultHelper resultHelper;
   private final FootballMatchDao footballMatchDao;
-
-  public SweepstakeControllerGrpc(
-      final SweepstakeEngineImpl sweepstakeEngine,
-      final SweepstakeDao sweepstakeDao,
-      final ParticipantIdDao participantIdDao,
-      final ResultHelper resultHelper,
-      final FootballMatchDao footballMatchDao) {
-    this.sweepstakeEngine = sweepstakeEngine;
-    this.sweepstakeDao = sweepstakeDao;
-    this.participantIdDao = participantIdDao;
-    this.resultHelper = resultHelper;
-    this.footballMatchDao = footballMatchDao;
-  }
 
   @Override
   public void findSweepstakeByJoinCode(

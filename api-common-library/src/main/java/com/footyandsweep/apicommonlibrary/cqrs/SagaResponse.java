@@ -31,7 +31,6 @@ public class SagaResponse<T> implements Serializable {
 
   private static final long serialVersionUID = -1309461297612605680L;
 
-  private String transactionId;
   private Status status;
   private String message;
   private T payload;
