@@ -42,7 +42,7 @@ const SweepstakeTopSection: FunctionComponent<Props> = (props) => {
             </div>
             <div className={"buttonSection"}>
                 {props.isMobile ?
-                    <Button onClick={() => props.setJoiningSweepstake(true)}
+                    <Button onClick={() => props.setCreatingSweepstake(true)}
                             title={"Create Sweepstake"}
                             className={"createSweepstakeButton"}/> : undefined}
 
