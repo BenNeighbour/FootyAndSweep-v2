@@ -16,12 +16,12 @@
 
 
 import React, {FunctionComponent} from 'react';
-import LoadingPage from "../../pages/Loading/LoadingPage";
 import {SweepstakeReducerType} from "../../redux/reducers/saga/sweepstake";
 import {RootState} from "../../redux/rootReducer";
 import {connect} from "react-redux";
 import InputField from "../../components/InputField/InputField";
 import "./JoinSweepstakeForm.scss";
+import Spinner from "../../components/Spinner/Spinner";
 
 interface OwnProps {
     state: SweepstakeReducerType;
@@ -34,7 +34,13 @@ interface OwnProps {
 type Props = OwnProps;
 
 const JoinSweepstakeForm: FunctionComponent<Props> = (props) => {
-    if (props.state.isLoading) return <LoadingPage/>
+    if (props.state.isLoading) return (
+        <div style={{
+            textAlign: "center"
+        }} className={"loading"}>
+            <Spinner/>
+        </div>
+    );
 
     return (
         <div className={"form"}>
@@ -43,13 +49,16 @@ const JoinSweepstakeForm: FunctionComponent<Props> = (props) => {
                             errors={props.errors.code} type={"text"} onChange={props.handleChange}
                             value={props.values.code}/>
             </div>
+            <div>
+                {props.state.error}
+            </div>
         </div>
     );
 };
 
 const mapStateToProps = (state: RootState) => {
     return {
-        state: state.saveSweepstake
+        state: state.sweepstake
     }
 };
 

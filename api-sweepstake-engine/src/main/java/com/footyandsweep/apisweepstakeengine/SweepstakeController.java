@@ -82,7 +82,7 @@ public class SweepstakeController {
   public void join(JoinSweepstakeSagaData request) {
     if (sweepstakeDao.findSweepstakeByJoinCode(request.getSweepstakeJoinCode()) == null) {
       SagaResponse<String> sweepstakeSagaError =
-          new SagaResponse<>(SagaResponse.Status.FAILED, "Invalid Join Code!", "Invalid JoinCode!");
+          new SagaResponse<>(SagaResponse.Status.FAILED, "Invalid Join Code!", "Invalid Join Code!");
 
       messagingTemplate.convertAndSend("/sweepstake-topic/join", sweepstakeSagaError);
     } else {

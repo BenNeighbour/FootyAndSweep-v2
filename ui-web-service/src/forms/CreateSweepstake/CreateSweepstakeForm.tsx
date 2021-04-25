@@ -87,7 +87,7 @@ const CreateSweepstakeForm: FunctionComponent<Props> = (props) => {
 
 const mapStateToProps = (state: RootState) => {
     return {
-        state: state.saveSweepstake
+        state: state.sweepstake
     }
 };
 

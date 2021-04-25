@@ -58,7 +58,7 @@ function* joinSweepstakeSaga({payload}: { payload: String }) {
                 payload: response.payload
             });
 
-            window.location.reload();
+            // window.location.reload();
         } catch (err) {
             yield put({
                 type: ActionType.JOIN_SWEEPSTAKE_ERROR,
