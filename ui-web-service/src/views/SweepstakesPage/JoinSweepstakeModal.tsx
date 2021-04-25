@@ -55,7 +55,7 @@ const JoinSweepstakeModal: FunctionComponent<Props> = (props) => {
         >
             {({values, handleChange, errors, touched}) => (
                 <Form>
-                    <Modal shrinksOnMobile={true} setShowing={props.sweepstakePageActions.setIsJoiningSweepstake}
+                    <Modal small={true} shrinksOnMobile={true} setShowing={props.sweepstakePageActions.setIsJoiningSweepstake}
                            title={"Join a Sweepstake"}
                            description={"Enter a sweepstake code to join!"}
                            showing={props.state.sweepstakesPage.joiningSweepstake}>
