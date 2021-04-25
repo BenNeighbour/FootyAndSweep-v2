@@ -59,7 +59,7 @@ const JoinSweepstakeModal: FunctionComponent<Props> = (props) => {
                            title={"Join a Sweepstake"}
                            description={"Enter a sweepstake code to join!"}
                            showing={props.state.sweepstakesPage.joiningSweepstake}>
-                        <JoinSweepstakeForm values={values} handleChange={handleChange} errors={errors}
+                        <JoinSweepstakeForm values={values} handleChange={handleChange} errors={errors.code || props.state.sweepstake.error}
                                               touched={touched}/>
                     </Modal>
                 </Form>
