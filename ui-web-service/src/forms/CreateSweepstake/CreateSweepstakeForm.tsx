@@ -31,6 +31,7 @@ interface OwnProps {
     touched: any;
     values: any;
     handleChange: any;
+    handleBlur: any;
 }
 
 type Props = OwnProps;
@@ -51,11 +52,11 @@ const CreateSweepstakeForm: FunctionComponent<Props> = (props) => {
                         value={props.values.isPrivate}
                         label={"Sweepstake Privacy"}/>
 
-                <InputField name={"name"} touched={props.touched.name} label={"Sweepstake Name"}
+                <InputField handleBlur={props.handleBlur} name={"name"} touched={props.touched.name} label={"Sweepstake Name"}
                             errors={props.errors.name} type={"text"} onChange={props.handleChange}
                             value={props.values.name}/>
 
-                <TextArea name={"description"} touched={props.touched.description}
+                <TextArea handleBlur={props.handleBlur} name={"description"} touched={props.touched.description}
                           label={"Sweepstake Description"}
                           errors={props.errors.description} onChange={props.handleChange}
                           value={props.values.description}/>
@@ -77,7 +78,7 @@ const CreateSweepstakeForm: FunctionComponent<Props> = (props) => {
             </div>
 
             <div className={"rightFieldSection"}>
-                <InputField name={"stake"} touched={props.touched.stake} label={"Stake (eg. £1.00, £1.75)"}
+                <InputField handleBlur={props.handleBlur} name={"stake"} touched={props.touched.stake} label={"Stake (eg. £1.00, £1.75)"}
                             errors={props.errors.stake} type={"number"} onChange={props.handleChange}
                             value={props.values.stake}/>
             </div>

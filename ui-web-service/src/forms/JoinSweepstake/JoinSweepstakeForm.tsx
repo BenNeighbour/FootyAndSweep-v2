@@ -29,6 +29,7 @@ interface OwnProps {
     touched: any;
     values: any;
     handleChange: any;
+    handleBlur: any;
 }
 
 type Props = OwnProps;
@@ -45,7 +46,7 @@ const JoinSweepstakeForm: FunctionComponent<Props> = (props) => {
     return (
         <div className={"form"}>
             <div className={"fieldSection"}>
-                <InputField name={"code"} touched={props.touched.code} label={"Sweepstake Code"}
+                <InputField handleBlur={props.handleBlur} name={"code"} touched={props.touched.code} label={"Sweepstake Code"}
                             errors={props.errors} type={"text"} onChange={props.handleChange}
                             value={props.values.code} />
             </div>

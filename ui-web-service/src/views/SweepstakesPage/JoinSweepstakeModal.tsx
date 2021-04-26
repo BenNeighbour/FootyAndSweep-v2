@@ -53,17 +53,28 @@ const JoinSweepstakeModal: FunctionComponent<Props> = (props) => {
                 code: ""
             }}
         >
-            {({values, handleChange, errors, touched}) => (
-                <Form>
-                    <Modal small={true} shrinksOnMobile={true} setShowing={props.sweepstakePageActions.setIsJoiningSweepstake}
-                           title={"Join a Sweepstake"}
-                           description={"Enter a sweepstake code to join!"}
-                           showing={props.state.sweepstakesPage.joiningSweepstake}>
-                        <JoinSweepstakeForm values={values} handleChange={handleChange} errors={errors.code || props.state.sweepstake.error}
-                                              touched={touched}/>
-                    </Modal>
-                </Form>
-            )}
+            {(formik) => {
+                const {
+                    values,
+                    handleChange,
+                    errors,
+                    touched,
+                    handleBlur,
+                } = formik;
+                return (
+                    <Form>
+                        <Modal small={true} shrinksOnMobile={true}
+                               setShowing={props.sweepstakePageActions.setIsJoiningSweepstake}
+                               title={"Join a Sweepstake"}
+                               description={"Enter a sweepstake code to join!"}
+                               showing={props.state.sweepstakesPage.joiningSweepstake}>
+                            <JoinSweepstakeForm handleBlur={handleBlur} values={values} handleChange={handleChange}
+                                                errors={errors.code || props.state.sweepstake.error}
+                                                touched={touched}/>
+                        </Modal>
+                    </Form>
+                )
+            }}
         </Formik>
     );
 };

@@ -57,8 +57,6 @@ function* joinSweepstakeSaga({payload}: { payload: String }) {
                 type: response.status === "COMPLETED" ? ActionType.JOIN_SWEEPSTAKE_REQUEST : ActionType.JOIN_SWEEPSTAKE_ERROR,
                 payload: response.payload
             });
-
-            // window.location.reload();
         } catch (err) {
             yield put({
                 type: ActionType.JOIN_SWEEPSTAKE_ERROR,

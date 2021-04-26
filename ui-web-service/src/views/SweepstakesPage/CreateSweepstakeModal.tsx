@@ -15,7 +15,7 @@
  */
 
 
-import React, { FunctionComponent } from 'react';
+import React, {FunctionComponent} from 'react';
 import {Form, Formik} from "formik";
 import Modal from "../../components/Modal/Modal";
 import CreateSweepstakeForm from "../../forms/CreateSweepstake/CreateSweepstakeForm";
@@ -66,36 +66,47 @@ const schema = yup.object().shape({
 type Props = OwnProps;
 
 const CreateSweepstakeModal: FunctionComponent<Props> = (props) => {
-  return (
-      <Formik
-          onSubmit={(formValues) => {
-              props.saveSweepstakeActions.saveSweepstakeAction(formValues);
-          }}
-          validationSchema={schema}
-          initialValues={{
-              name: "",
-              isPrivate: true,
-              ownerId: `${localStorage.getItem("user_id")}`,
-              minimumPlayers: 2,
-              stake: 0,
-              description: "",
-              type: "Correct Score H/T",
-              event: "sdf"
-          }}
-      >
-          {({values, handleChange, errors, touched}) => (
-              <Form>
-                  <Modal isForm setShowing={props.sweepstakePageActions.setIsCreatingSweepstake}
-                         title={"Create a Sweepstake"}
-                         description={"Fill the following fields to create a new sweepstake"}
-                         showing={props.state.sweepstakesPage.creatingSweepstake}>
-                      <CreateSweepstakeForm values={values} handleChange={handleChange} errors={errors}
-                                            touched={touched}/>
-                  </Modal>
-              </Form>
-          )}
-      </Formik>
-  );
+    return (
+        <Formik
+            onSubmit={(formValues) => {
+                props.saveSweepstakeActions.saveSweepstakeAction(formValues);
+            }}
+            validateOnBlur={true}
+            validateOnChange={true}
+            validationSchema={schema}
+            initialValues={{
+                name: "",
+                isPrivate: true,
+                ownerId: `${localStorage.getItem("user_id")}`,
+                minimumPlayers: 2,
+                stake: "",
+                description: "",
+                type: "Correct Score H/T",
+                event: "sdf"
+            }}
+        >
+            {(formik) => {
+                const {
+                    values,
+                    handleChange,
+                    errors,
+                    touched,
+                    handleBlur,
+                } = formik;
+                return (
+                    <Form>
+                        <Modal isForm setShowing={props.sweepstakePageActions.setIsCreatingSweepstake}
+                               title={"Create a Sweepstake"}
+                               description={"Fill the following fields to create a new sweepstake"}
+                               showing={props.state.sweepstakesPage.creatingSweepstake}>
+                            <CreateSweepstakeForm handleBlur={handleBlur} values={values} handleChange={handleChange} errors={errors}
+                                                  touched={touched}/>
+                        </Modal>
+                    </Form>
+                )
+            }}
+        </Formik>
+    );
 };
 
 const mapStateToProps = (state: RootState) => {

@@ -29,6 +29,7 @@ interface OwnProps {
     errors: any | null;
     touched: any | null;
     large?: boolean | false;
+    handleBlur?: any;
 }
 
 type Props = OwnProps;
@@ -37,17 +38,17 @@ const InputField: FunctionComponent<Props> = (props) => {
     return (
         <div className={"inputArea"} style={props.style}>
             <div className={"inputContainer"}>
-                <input autoComplete={"off"} aria-autocomplete={"none"}
-                       className={`input${props.large ? "-large" : ""}${props.errors ? "-invalid" : ""}`}
+                <input onBlur={props.handleBlur} autoComplete={"off"} aria-autocomplete={"none"}
+                       className={`input${props.large ? "-large" : ""}${props.errors && props.touched ? "-invalid" : ""}`}
                        name={props.name}
                        disabled={props.disabled || false} type={props.type}
                        value={props.value}
                        onChange={props.onChange}
                        placeholder={props.label || ""}/>
             </div>
-            {props.errors && props.touched ? (
+            {props.errors && props.touched && (
                 <span className={"errorTextMessage"}>{props.errors}</span>
-            ) : undefined}
+            )}
             <br/>
         </div>
     );

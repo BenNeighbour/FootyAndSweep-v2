@@ -28,6 +28,7 @@ export function saveSweepstake(client: Client, payload: SweepstakeData) {
             client.subscribe("/sweepstake-topic/save", (message: any) => {
                 if (JSON.parse(message.body).status !== "PENDING") {
                     emit(JSON.parse(message.body));
+                    client.deactivate();
                 }
             })
         };
@@ -78,13 +79,13 @@ export function joinSweepstake(client: Client, payload: String) {
             client.subscribe("/sweepstake-topic/join", (message: any) => {
                 if (JSON.parse(message.body).status !== "PENDING") {
                     emit(JSON.parse(message.body));
+                    client.deactivate();
                 }
             })
         };
 
         client.activate();
-
         return () => {
         };
-    })
+    });
 }

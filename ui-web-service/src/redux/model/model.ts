@@ -91,7 +91,7 @@ export interface SweepstakeData {
     sweepstakeType?: SweepstakeType;
     minimumPlayers: number;
     minimumPlayerTickets?: number;
-    stake: number;
+    stake: number | string;
     totalNumberOfTickets?: number;
 }
 
