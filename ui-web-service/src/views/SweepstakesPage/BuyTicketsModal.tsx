@@ -21,22 +21,30 @@ import * as SweepstakePageActions from "../../redux/reducers/saga/sweepstakePage
 import Modal from "../../components/Modal/Modal";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
+import {SweepstakeData} from "../../redux/model";
 
 interface OwnProps {
     state: RootState;
     sweepstakePageActions: typeof SweepstakePageActions;
+    sweepstake: SweepstakeData | null;
 }
 
 type Props = OwnProps;
 
 const BuyTicketsModal: FunctionComponent<Props> = (props) => {
-    return (
-        <Modal setShowing={() => {
-        }} title={"Buy Tickets from Jon’s Epic Sweepstake"}
-               description={"Enter the number of tickets you would like to buy"}
-               showing={props.state.sweepstakesPage.buyingTickets.isBuyingTickets}>
-        </Modal>
-    );
+    if (props.sweepstake !== null) {
+        return (
+            <Modal setShowing={(value: boolean) => props.sweepstakePageActions.setIsBuyingTickets({
+                isBuyingTickets: value,
+                sweepstake: null
+            })} title={`Buy Tickets from ${props.sweepstake.name}`}
+                   description={"Enter the number of tickets you would like to buy"}
+                   showing={props.state.sweepstakesPage.buyingTickets.isBuyingTickets}>
+            </Modal>
+        );
+    }
+
+    return null;
 };
 
 const mapStateToProps = (state: RootState) => {

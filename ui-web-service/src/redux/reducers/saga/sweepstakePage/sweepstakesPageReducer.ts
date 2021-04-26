@@ -71,9 +71,7 @@ export const yourSweepstakesReducer = createReducer<SweepstakesPageReducerType>(
         return {
             ...state,
             isLoading: false,
-            buyingTickets: {
-
-            }
+            buyingTickets: action.payload
         };
     },
 

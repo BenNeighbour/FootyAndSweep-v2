@@ -53,7 +53,7 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
         <div className={"container"}>
             <CreateSweepstakeModal/>
             <JoinSweepstakeModal/>
-            <BuyTicketsModal/>
+            <BuyTicketsModal sweepstake={props.state.sweepstakesPage.buyingTickets.sweepstake}/>
 
             <Fragment>
                 <SweepstakeTopSection setJoiningSweepstake={props.sweepstakePageActions.setIsJoiningSweepstake}
