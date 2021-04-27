@@ -16,19 +16,24 @@
 
 package com.footyandsweep.apiticketengine.engine.saga;
 
+import com.footyandsweep.apicommonlibrary.cqrs.SagaResponse;
+import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apiticketengine.engine.TicketEngine;
+import com.footyandsweep.apiticketengine.model.Ticket;
 import io.eventuate.tram.sagas.orchestration.SagaDefinition;
 import io.eventuate.tram.sagas.simpledsl.SimpleSaga;
+import lombok.RequiredArgsConstructor;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
+@RequiredArgsConstructor
 public class BuyTicketSaga implements SimpleSaga<BuyTicketSagaData> {
 
   private final TicketEngine ticketEngine;
-
-  public BuyTicketSaga(TicketEngine ticketEngine) {
-    this.ticketEngine = ticketEngine;
-  }
+  private final SimpMessagingTemplate messagingTemplate;
 
   @Override
   public SagaDefinition<BuyTicketSagaData> getSagaDefinition() {
@@ -47,5 +52,36 @@ public class BuyTicketSaga implements SimpleSaga<BuyTicketSagaData> {
         .invokeParticipant(ticketEngine::updateUserBalance)
         .build();
     // @formatter:on
+  }
+
+  @Override
+  public void onSagaCompletedSuccessfully(String sagaId, BuyTicketSagaData sagaData) {
+    SagaResponse<List<Ticket>> ticketSagaComplete =
+            new SagaResponse<>(
+                    SagaResponse.Status.COMPLETED, "Ticket Bought!", sagaData.getSavedTickets());
+
+    messagingTemplate.convertAndSend("/ticket-topic/save", ticketSagaComplete);
+  }
+
+  @Override
+  public void onStarting(String sagaId, BuyTicketSagaData sagaData) {
+    SagaResponse<BuyTicketSagaData> ticketSagaPending =
+            new SagaResponse<>(
+                    SagaResponse.Status.PENDING,
+                    "Buying Tickets...",
+                    sagaData);
+
+    messagingTemplate.convertAndSend("/ticket-topic/save", ticketSagaPending);
+  }
+
+  @Override
+  public void onSagaRolledBack(String sagaId, BuyTicketSagaData sagaData) {
+    SagaResponse<String> ticketSagaError =
+            new SagaResponse<>(
+                    SagaResponse.Status.FAILED,
+                    "Buying Ticket Failed!",
+                    "");
+
+    messagingTemplate.convertAndSend("/ticket-topic/save", ticketSagaError);
   }
 }

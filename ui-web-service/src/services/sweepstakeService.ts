@@ -99,7 +99,7 @@ export function buySweepstakeTickets(client: Client, payload: String) {
                     participantId: localStorage.getItem("user_id"),
                 })
             });
-            client.subscribe("/tickets-topic/join", (message: any) => {
+            client.subscribe("/ticket-topic/join", (message: any) => {
                 if (JSON.parse(message.body).status !== "PENDING") {
                     emit(JSON.parse(message.body));
                     client.deactivate();
