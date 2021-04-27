@@ -15,107 +15,90 @@
  */
 
 
-import React, {Fragment, FunctionComponent, useState} from 'react';
+import React, {Fragment, FunctionComponent, useEffect} from 'react';
 import SweepstakeCard from "../../components/SweepstakeCard/SweepstakeCard";
 import "./Sweepstakes.scss";
 import AdvertisementCard from "../../components/AdvertisementCard/AdvertisementCard";
-import SearchBar from "../../components/SearchBar/SearchBar";
 import {useMediaQuery} from 'react-responsive';
 import Button from "../../components/Button/Button";
 import ProfileCard from "../../components/ProfileCard/ProfileCard";
 import {RouteComponentProps} from "react-router-dom";
-import Modal from "../../components/Modal/Modal";
-import CreateSweepstake from "../CreateSweepstake/CreateSweepstake";
+import {bindActionCreators} from "redux";
+import * as SweepstakePageActions from "../../redux/reducers/saga/sweepstakePage/sweepstakePageActions";
+import {RootState} from "../../redux/rootReducer";
+import {connect} from "react-redux";
+import SweepstakeTopSection from "./SweepstakeTopSection/SweepstakeTopSection";
+import JoinSweepstakeModal from "../../views/SweepstakesPage/JoinSweepstakeModal";
+import CreateSweepstakeModal from "../../views/SweepstakesPage/CreateSweepstakeModal";
+import BuyTicketsModal from "../../views/SweepstakesPage/BuyTicketsModal";
+import LoadingPage from "../Loading/LoadingPage";
 
 interface OwnProps extends RouteComponentProps {
+    state: RootState;
+    sweepstakePageActions: typeof SweepstakePageActions;
 }
 
 type Props = OwnProps;
 
 const Sweepstakes: FunctionComponent<Props> = (props) => {
-    /* TODO: Change this! */
-    const [sweepstakes,] = useState<number[]>([1, 2, 3, 4, 5, 6, 7, 8, 9]);
     const isMobile = useMediaQuery({query: `(max-width: 768px)`});
 
-    const [isCreatingSweepstake, setIsCreatingSweepstake] = useState<boolean>(false);
-    const [isJoiningSweepstake, setIsJoiningSweepstake] = useState<boolean>(false);
-    const [isBuyingTickets, setIsBuyingTickets] = useState<boolean>(false);
+    useEffect(() => {
+        props.sweepstakePageActions.getMySweepstakesAction("");
+    }, [props.sweepstakePageActions]);
+
+    if (props.state.sweepstakesPage.isLoading) return <LoadingPage />
 
     return (
         <div className={"container"}>
-            <Modal setShowing={setIsCreatingSweepstake} title={"Create a Sweepstake"}
-                   description={"Fill the following fields to create a new sweepstake"} showing={isCreatingSweepstake}>
-                <CreateSweepstake />
-            </Modal>
-            <Modal setShowing={setIsJoiningSweepstake} title={"Join a Sweepstake"}
-                   description={"Enter a sweepstake code to join!"} showing={isJoiningSweepstake}>
-                {/*<CreateSweepstake/>*/}
-            </Modal>
-            <Modal setShowing={setIsBuyingTickets} title={"Buy Tickets from Jon’s Epic Sweepstake"}
-                   description={"Enter the number of tickets you would like to buy"} showing={isBuyingTickets}>
-                {/*<CreateSweepstake/>*/}
-            </Modal>
+            <CreateSweepstakeModal/>
+            <JoinSweepstakeModal/>
+            <BuyTicketsModal sweepstake={props.state.sweepstakesPage.buyingTickets.sweepstake}/>
 
             <Fragment>
-                <div className={"topSection"}>
-                    <nav className={"navigationSection"}>
-                    </nav>
-                    <div className={"logoSection"}>
-                        <span>Logo Here</span>
-                    </div>
-                    <div className={"searchSection"}>
-                        <SearchBar onChange={() => {
-                        }} value={""}/>
-                    </div>
-                    <div className={"buttonSection"}>
-                        {isMobile ?
-                            <Button onClick={() => setIsCreatingSweepstake(true)} title={"Create Sweepstake"}
-                                    className={"createSweepstakeButton"}/> : undefined}
+                <SweepstakeTopSection setJoiningSweepstake={props.sweepstakePageActions.setIsJoiningSweepstake}
+                                      setCreatingSweepstake={props.sweepstakePageActions.setIsCreatingSweepstake}
+                                      isMobile={isMobile}/>
 
-                        <Button className={"joinSweepstakeButton"} onClick={() => setIsJoiningSweepstake(true)}
-                                title={"Join Sweepstake"}/>
-                        <Button className={"earnCoinsButton"} title={"Earn FootyCoins"}/>
-
-                        <div className={"settingsLink"}/>
-                    </div>
-                    <div className={"opacitySection"}>
-                        <h1 className={"title"}>Your Sweepstakes</h1>
-                    </div>
-                </div>
-
-                <div className={"sweepstakesContainer"}>
+                <div className={`sweepstakesContainer`}>
                     <div className={"leftSweepstakeSection"}>
                         <ProfileCard className={"profileCard"}/>
                     </div>
-                    <div className={"sweepstakes"}>
-                        <div className={"titleDesktopSection"}>
-                            <div className={"titleBound"}>
-                                <h1 className={"title"}>Your Sweepstakes</h1>
+                    <div className={"mainSweepstakeSection"}>
+                        <div className={"sweepstakes"}>
+                            <div className={"titleDesktopSection"}>
+                                <div className={"titleBound"}>
+                                    <h1 className={"title"}>Your Sweepstakes</h1>
+                                </div>
+                                <Button onClick={() => props.sweepstakePageActions.setIsCreatingSweepstake(true)}
+                                        title={"Create Sweepstake"}
+                                        className={"createSweepstakeButton"}/>
                             </div>
-                            <Button onClick={() => setIsCreatingSweepstake(true)} title={"Create Sweepstake"}
-                                    className={"createSweepstakeButton"}/>
-                        </div>
 
-                        {sweepstakes.map((value, index) => {
-                            return (
-                                <React.Fragment key={`sweepstake-${index}`}>
-                                    <SweepstakeCard
-                                        setIsBuyingTickets={setIsBuyingTickets}
-                                        isMobile={isMobile}
-                                        sweepstakeHashTags={["#bhawhu", "#firstscorer"]}
-                                        sweepstakeMetadata={"Jon Neighbour, Ben Neighbour, SwaggrMcJaggr..."}
-                                        sweepstakeName={"Jon’s Epic Sweepstake"} sweepstakeStatus={"Open"}
-                                        totalAmountOfTickets={8} ticketsPurchasedSoFar={2}/>
-                                    {(index % 2) === 0 && isMobile ?
-                                        <AdvertisementCard advertiserLink={"https://www.algoexpert.io"}
-                                                           isMobile={true}/> : undefined}
-                                </React.Fragment>
-                            );
-                        })}
-                    </div>
-                    <div className={"rightSweepstakeSection"}>
-                        <AdvertisementCard advertiserLink={"https://www.algoexpert.io"} isMobile={false}/>
-                        <AdvertisementCard advertiserLink={"https://www.algoexpert.io"} isMobile={false}/>
+                            {props.state.sweepstakesPage.sweepstakes.map((value: any, index: any) => {
+                                return (
+                                    <React.Fragment key={`sweepstake-${index}`}>
+                                        <SweepstakeCard
+                                            setIsBuyingTickets={(sweepstake) => props.sweepstakePageActions.setIsBuyingTickets({
+                                                isBuyingTickets: true,
+                                                sweepstake: sweepstake
+                                            })}
+                                            isMobile={isMobile}
+                                            sweepstakeHashTags={["#bhawhu", "#firstscorer"]}
+                                            sweepstakeMetadata={"Jon Neighbour, Ben Neighbour, SwaggrMcJaggr..."}
+                                            sweepstakeName={value.name} sweepstakeStatus={value.status}
+                                            totalAmountOfTickets={8} ticketsPurchasedSoFar={2}/>
+                                        {(index % 2) === 0 && isMobile ?
+                                            <AdvertisementCard advertiserLink={"https://www.algoexpert.io"}
+                                                               isMobile={true}/> : undefined}
+                                    </React.Fragment>
+                                );
+                            })}
+                        </div>
+                        <div className={"rightSweepstakeSection"}>
+                            <AdvertisementCard advertiserLink={"https://www.algoexpert.io"} isMobile={false}/>
+                            <AdvertisementCard advertiserLink={"https://www.algoexpert.io"} isMobile={false}/>
+                        </div>
                     </div>
                 </div>
             </Fragment>
@@ -124,4 +107,17 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
     );
 };
 
-export default Sweepstakes;
+const mapStateToProps = (state: RootState) => {
+        return {
+            state
+        }
+    }
+;
+
+function mapDispatchToProps(dispatch: any) {
+    return {
+        sweepstakePageActions: bindActionCreators(SweepstakePageActions as any, dispatch),
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Sweepstakes);

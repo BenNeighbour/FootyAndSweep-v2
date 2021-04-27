@@ -14,25 +14,85 @@
  *   limitations under the License.
  */
 
-import {channel} from 'redux-saga';
-import {fork, put, take, takeLatest} from 'redux-saga/effects';
+import {call, fork, put, take, takeLatest} from 'redux-saga/effects';
 import {ActionType, SweepstakeData} from "../../../model";
 import {Client} from "@stomp/stompjs";
-import {saveSweepstake} from "../../../../services/sweepstakeService";
+import {
+    buySweepstakeTickets,
+    getMySweepstakes,
+    joinSweepstake,
+    saveSweepstake
+} from "../../../../services/sweepstakeService";
+import {channel} from "redux-saga";
 
 const sweepstakeChannel = channel();
 const client = new Client();
-client.brokerURL = "ws://api.footyandsweep-dev.com:30389/sweepstake/socket";
+client.brokerURL = "ws://api.footyandsweep-dev.com:30389/sweepstake-socket/socket";
 
 function* saveSweepstakeSaga({payload}: { payload: SweepstakeData }) {
-    try {
-        saveSweepstake(client, sweepstakeChannel, payload);
-    } catch (error) {
-        yield put({
-            type: ActionType.SAVE_SWEEPSTAKE_ERROR,
-            payload: "Hmm, Something's not quite right! Try again later!"
-        })
+    const socketChannel = yield call(saveSweepstake, client, payload)
+
+    while (true) {
+        try {
+            let response = yield take(socketChannel);
+
+            yield put({
+                type: response.status === "COMPLETED" ? ActionType.SAVE_SWEEPSTAKE_SUCCESS : ActionType.SAVE_SWEEPSTAKE_ERROR,
+                payload: response.payload
+            });
+
+            window.location.reload();
+        } catch (err) {
+            yield put({
+                type: ActionType.SAVE_SWEEPSTAKE_ERROR,
+                payload: "Hmm, Something's not quite right! Try again later!"
+            })
+        }
     }
+}
+
+function* joinSweepstakeSaga({payload}: { payload: String }) {
+    const socketChannel = yield call(joinSweepstake, client, payload)
+
+    while (true) {
+        try {
+            let response = yield take(socketChannel);
+
+            yield put({
+                type: response.status === "COMPLETED" ? ActionType.JOIN_SWEEPSTAKE_REQUEST : ActionType.JOIN_SWEEPSTAKE_ERROR,
+                payload: response.payload
+            });
+        } catch (err) {
+            yield put({
+                type: ActionType.JOIN_SWEEPSTAKE_ERROR,
+                payload: "Hmm, Something's not quite right! Try again later!"
+            })
+        }
+    }
+}
+
+function* buySweepstakeTicketsSaga({payload}: { payload: String }) {
+    const socketChannel = yield call(buySweepstakeTickets, client, payload)
+
+    while (true) {
+        try {
+            let response = yield take(socketChannel);
+
+            yield put({
+                type: response.status === "COMPLETED" ? ActionType.BUY_SWEEPSTAKE_TICKET_SUCCESS : ActionType.BUY_SWEEPSTAKE_TICKET_FAILED,
+                payload: response.payload
+            });
+        } catch (err) {
+            yield put({
+                type: ActionType.BUY_SWEEPSTAKE_TICKET_FAILED,
+                payload: "Hmm, Something's not quite right! Try again later!"
+            })
+        }
+    }
+}
+
+function getMySweepstakesSaga({payload}: { payload: String }) {
+    getMySweepstakes(sweepstakeChannel)
 }
 
 function* watchSweepstakeChannel() {
@@ -44,9 +104,25 @@ function* onSaveSweepstakeWatcher() {
     yield takeLatest(ActionType.SAVE_SWEEPSTAKE_REQUEST as any, saveSweepstakeSaga);
 }
 
+function* onJoinSweepstakeWatcher() {
+    yield takeLatest(ActionType.JOIN_SWEEPSTAKE_REQUEST as any, joinSweepstakeSaga);
+}
+
+function* onBuySweepstakeTicketsWatcher() {
+    yield takeLatest(ActionType.BUY_SWEEPSTAKE_TICKET_REQUEST as any, buySweepstakeTicketsSaga);
+}
+
+
+function* onGetMySweepstakesWatcher() {
+    yield takeLatest(ActionType.GET_MY_SWEEPSTAKES_REQUEST as any, getMySweepstakesSaga);
+}
+
 let sweepstakeSagas = [
+    fork(watchSweepstakeChannel),
     fork(onSaveSweepstakeWatcher),
-    fork(watchSweepstakeChannel)
+    fork(onJoinSweepstakeWatcher),
+    fork(onBuySweepstakeTicketsWatcher),
+    fork(onGetMySweepstakesWatcher)
 ];
 
 export default sweepstakeSagas;

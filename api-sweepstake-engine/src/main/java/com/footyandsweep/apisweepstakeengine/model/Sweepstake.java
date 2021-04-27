@@ -36,5 +36,8 @@ public class Sweepstake extends SweepstakeCommon {
 
   @Transient private List<TicketCommon> tickets;
 
+  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = SweepstakeHashtag.class)
+  private List<SweepstakeHashtag> hashtags;
+
   @Transient private UserCommon owner;
 }

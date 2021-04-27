@@ -31,13 +31,12 @@ interface OwnProps {
     totalAmountOfTickets: number;
     ticketsPurchasedSoFar?: number;
 
-    setIsBuyingTickets: (value: boolean) => void;
+    setIsBuyingTickets: (sweepstake: any) => void;
 }
 
 type Props = OwnProps;
 
 const SweepstakeCard: FunctionComponent<Props> = (props) => {
-    /* TODO: REMOVE THIS!! */
     let startingDate: Date = new Date();
     startingDate.setDate(new Date().getDate() + 6);
 
@@ -62,14 +61,19 @@ const SweepstakeCard: FunctionComponent<Props> = (props) => {
                         {props.sweepstakeHashTags.map((value, index) => (
                             <Tooltip text={value} key={index}/>
                         ))}
-                        {!props.isMobile ? <CountdownTooltip startingDate={startingDate}
-                                                             colorCode={"#46566B"}/> : undefined}
+                        {!props.isMobile ? props.sweepstakeStatus.toLowerCase() === "open" ?
+                            <CountdownTooltip startingDate={startingDate}
+                                              colorCode={"#46566B"}/> :
+                            props.sweepstakeStatus.toLowerCase() === "in-play" ?
+                                <Tooltip text={"In-Play"} colorCode={"rgba(255, 107, 0, 0.73)"}/> :
+                                <Tooltip text={"Settled"} colorCode={"#FD4D4D"}/> : undefined}
                     </div>
                 </div>
                 <div className={"rightSection"}>
                     <div className={"topRightSection"}>
                         {/*  Status with circle color indicator  */}
-                        <span><span className={"circleIndicator"}/>{props.sweepstakeStatus}</span>
+                        <span><span
+                            className={`circleIndicator-${props.sweepstakeStatus.toLowerCase()}`}/>{props.sweepstakeStatus}</span>
                         <br/>
 
                         {/*  Number of Tickets (with purchased at the end if it's open)  */}
@@ -82,7 +86,7 @@ const SweepstakeCard: FunctionComponent<Props> = (props) => {
 
                     <div className={"bottomRightSection"}>
                         {/*  Buy Tickets call-to-action  */}
-                        <span onClick={() => props.setIsBuyingTickets(true)}>Buy Tickets →</span>
+                        <span onClick={() => props.setIsBuyingTickets({name: props.sweepstakeName})}>Buy Tickets →</span>
                     </div>
                 </div>
             </div>

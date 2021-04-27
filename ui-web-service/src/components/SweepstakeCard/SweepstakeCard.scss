@@ -14,6 +14,12 @@
  *   limitations under the License.
  */
 
+.sweepstakeCardContainer:hover {
+  transform: scale(1.015);
+  background-color: #242c37;
+  box-shadow: none;
+}
+
 .sweepstakeCardContainer {
   animation: fadeInDown 0.5s;
   animation-fill-mode: backwards;
@@ -24,6 +30,9 @@
   border-radius: 8px;
   margin: 11px 18px;
   padding: 11px;
+  cursor: pointer;
+  transition-duration: .30s;
+  transition-timing-function: cubic-bezier(.4,0,.2,1);
 
   .mainSection {
     display: flex;
@@ -75,10 +84,28 @@
       .topRightSection {
         flex: 1;
 
-        .circleIndicator {
+        .circleIndicator-open {
           height: 8px;
           width: 8px;
           background: #46566B;
+          border-radius: 50%;
+          display: inline-block;
+          margin-right: 7.5px;
+        }
+
+        .circleIndicator-in-play {
+          height: 8px;
+          width: 8px;
+          background: rgba(255, 107, 0, 0.73);
+          border-radius: 50%;
+          display: inline-block;
+          margin-right: 7.5px;
+        }
+
+        .circleIndicator-settled {
+          height: 8px;
+          width: 8px;
+          background: #FD4D4D;
           border-radius: 50%;
           display: inline-block;
           margin-right: 7.5px;

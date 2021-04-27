@@ -16,30 +16,99 @@
 
 import {ActionType, SweepstakeData} from "../redux/model";
 import {Client} from "@stomp/stompjs";
+import axios from "axios";
+import {eventChannel} from "redux-saga";
 
-export function saveSweepstake(client: Client, sweepstakeChannel: any, payload: SweepstakeData) {
-    client.onConnect = () => {
+export function saveSweepstake(client: Client, payload: SweepstakeData) {
+    return eventChannel(emit => {
+        client.onConnect = () => {
+            client.publish({
+                destination: '/sweepstakes/save', body: JSON.stringify(payload)
+            });
+            client.subscribe("/sweepstake-topic/save", (message: any) => {
+                if (JSON.parse(message.body).status !== "PENDING") {
+                    emit(JSON.parse(message.body));
+                    client.deactivate();
+                }
+            })
+        };
 
-        client.publish({
-            destination: '/sweepstakes/save', body: JSON.stringify(payload)
-        });
+        client.activate();
 
-        client.subscribe("/sweepstake-topic/save", (message: any) => {
-            if (JSON.parse(message.body).status !== "PENDING") {
-                sweepstakeChannel.put({
-                    type: JSON.parse(message.body).status === "COMPLETED" ? ActionType.SAVE_SWEEPSTAKE_SUCCESS : ActionType.SAVE_SWEEPSTAKE_ERROR,
-                    payload: JSON.parse(message.body)
-                })
-            }
-        });
-    };
-    client.onDisconnect = () => {
+        return () => {
+        };
+    })
+}
+
+
+export function getMySweepstakes(sweepstakeChannel: any) {
+    /* Get the user id */
+    let userId = localStorage.getItem("user_id");
+
+    return axios.get(`http://api.footyandsweep-dev.com:30389/sweepstake/sweepstakes/${userId}`, {withCredentials: true}).then(value => {
         sweepstakeChannel.put({
-            type: ActionType.SAVE_SWEEPSTAKE_ERROR,
-            payload: "Sorry, something went wrong on our end. Please try again later."
+            type: ActionType.GET_MY_SWEEPSTAKES_SUCCESS,
+            payload: value.data
         })
-    }
+    }).catch((reason: any) => {
+        sweepstakeChannel.put({
+            type: ActionType.GET_MY_SWEEPSTAKES_ERROR,
+            payload: null
+        });
+    })
+}
 
-    client.activate();
 
+export async function checkIsAuthenticated() {
+    return await axios.get("http://api.footyandsweep-dev.com:30389/auth/check", {withCredentials: true});
+}
+
+
+export function joinSweepstake(client: Client, payload: String) {
+    return eventChannel(emit => {
+        client.onConnect = () => {
+            client.publish({
+                destination: `/sweepstakes/join`,
+                body: JSON.stringify({
+                    participantId: localStorage.getItem("user_id"),
+                    sweepstakeJoinCode: payload,
+                    sweepstakeId: "",
+                    sweepstakeParticipantId: ""
+                })
+            });
+            client.subscribe("/sweepstake-topic/join", (message: any) => {
+                if (JSON.parse(message.body).status !== "PENDING") {
+                    emit(JSON.parse(message.body));
+                    client.deactivate();
+                }
+            })
+        };
+
+        client.activate();
+        return () => {
+        };
+    });
+}
+
+export function buySweepstakeTickets(client: Client, payload: String) {
+    return eventChannel(emit => {
+        client.onConnect = () => {
+            client.publish({
+                destination: `/tickets/buy`,
+                body: JSON.stringify({
+                    participantId: localStorage.getItem("user_id"),
+                })
+            });
+            client.subscribe("/ticket-topic/join", (message: any) => {
+                if (JSON.parse(message.body).status !== "PENDING") {
+                    emit(JSON.parse(message.body));
+                    client.deactivate();
+                }
+            })
+        };
+
+        client.activate();
+        return () => {
+        };
+    });
 }

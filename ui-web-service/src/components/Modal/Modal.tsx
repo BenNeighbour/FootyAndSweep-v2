@@ -24,6 +24,9 @@ interface OwnProps {
     setShowing: (value: boolean) => void;
     title: string;
     description: string;
+    isForm?: boolean | false;
+    shrinksOnMobile?: boolean | false;
+    small?: boolean | undefined;
 }
 
 type Props = OwnProps;
@@ -42,11 +45,11 @@ const Modal: FunctionComponent<Props> = (props) => {
     return (
         <Fragment>
             {
-                shouldRender ? <div className={"modalContainer"}
+                shouldRender ? <div className={`modalContainer${props.shrinksOnMobile ? "-unshrinked" : ""}`}
                                     style={{animation: `${props.showing ? "fadeIn" : "fadeOut"} 0.35s`}}
                                     onAnimationEnd={onAnimationEnd} onClick={() => props.setShowing(false)}>
                     <div className={"modalWrapper"}>
-                        <div className={"modal"} onClick={e => e.stopPropagation()}>
+                        <div className={"modal"} onClick={e => e.stopPropagation()} style={{minWidth: `${props.small ? "25vw" : "60vw"}`}}>
                             <div className={"titleSection"}>
                                 <div className={"titleOpacity"}>
                                     <span className={"modalTitle"}>{props.title}</span>
@@ -59,8 +62,8 @@ const Modal: FunctionComponent<Props> = (props) => {
                             </div>
 
                             <div className={"bottomSection"}>
-                                <Button className={"submitButton"} onClick={() => {
-                                }} title={props.title}/>
+                                <Button className={"submitButton"} type={props.isForm ? "submit" : null}
+                                        title={props.title}/>
                             </div>
                         </div>
                     </div>

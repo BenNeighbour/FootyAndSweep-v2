@@ -45,7 +45,7 @@ public class ResultSchedulerConfig {
   @Scheduled(fixedRate = 120000)
   public void fetchAndDecisionSweepstakes() {
     sweepstakeDao
-        .findAllSweepstakesByStatus(SweepstakeCommon.SweepstakeStatus.ALLOCATED)
+        .findAllSweepstakesByStatus(SweepstakeCommon.SweepstakeStatus.INPLAY)
         /* TODO: Filter by the current football match id */
         .forEach(
             sweepstake -> {

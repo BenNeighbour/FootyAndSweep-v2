@@ -15,16 +15,31 @@
  */
 
 
-import React, {FunctionComponent} from 'react';
+import React, {FunctionComponent, useEffect, useState} from 'react';
 import {Redirect, Route} from 'react-router-dom';
+import {checkIsAuthenticated} from "../services/sweepstakeService";
+import LoadingPage from "../pages/Loading/LoadingPage";
 
-const PrivateRoute: FunctionComponent<any> = ({component, isAuthenticated, ...rest}) => {
-    const routeComponent = (props: any) => (
-        isAuthenticated
-            ? React.createElement(component, props)
-            : <Redirect to={{pathname: '/portal'}}/>
-    );
-    return <Route {...rest} render={routeComponent}/>;
+const PrivateRoute: FunctionComponent<any> = ({component, ...rest}) => {
+    const [isAuthenticated, setIsAuthenticated] = useState<null | boolean>(null);
+
+    useEffect(() => {
+        const callback = async () => {
+            await checkIsAuthenticated().then(response => {
+                setIsAuthenticated(response.status === 200);
+            }).catch(_ => setIsAuthenticated(false));
+        };
+
+        callback();
+    });
+
+    if (isAuthenticated === null) {
+        return <LoadingPage />
+    } else if (!isAuthenticated) {
+        return <Redirect to={"/login"} />
+    }
+
+    return <Route {...rest} render={(props) => React.createElement(component, props)}/>;
 };
 
 export default PrivateRoute;

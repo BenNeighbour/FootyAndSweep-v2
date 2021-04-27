@@ -23,20 +23,16 @@ import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apisweepstakeengine.engine.SweepstakeEngine;
 import io.eventuate.tram.sagas.orchestration.SagaDefinition;
 import io.eventuate.tram.sagas.simpledsl.SimpleSaga;
+import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class CreateSweepstakeSaga implements SimpleSaga<CreateSweepstakeSagaData> {
 
   private final SweepstakeEngine sweepstakeEngine;
   private final SimpMessagingTemplate messagingTemplate;
-
-  public CreateSweepstakeSaga(
-      SweepstakeEngine sweepstakeEngine, SimpMessagingTemplate messagingTemplate) {
-    this.sweepstakeEngine = sweepstakeEngine;
-    this.messagingTemplate = messagingTemplate;
-  }
 
   @Override
   public SagaDefinition<CreateSweepstakeSagaData> getSagaDefinition() {
@@ -69,7 +65,7 @@ public class CreateSweepstakeSaga implements SimpleSaga<CreateSweepstakeSagaData
   public void onSagaCompletedSuccessfully(String sagaId, CreateSweepstakeSagaData sagaData) {
     SagaResponse<SweepstakeCommon> sweepstakeSagaComplete =
         new SagaResponse<>(
-            sagaId, SagaResponse.Status.COMPLETED, "Sweepstake created!", sagaData.getSweepstake());
+            SagaResponse.Status.COMPLETED, "Sweepstake created!", sagaData.getSweepstake());
 
     messagingTemplate.convertAndSend("/sweepstake-topic/save", sweepstakeSagaComplete);
   }
@@ -78,7 +74,6 @@ public class CreateSweepstakeSaga implements SimpleSaga<CreateSweepstakeSagaData
   public void onStarting(String sagaId, CreateSweepstakeSagaData sagaData) {
     SagaResponse<SweepstakeCommon> sweepstakeSagaPending =
         new SagaResponse<>(
-            sagaId,
             SagaResponse.Status.PENDING,
             "Creating Sweepstake...",
             sagaData.getSweepstake());
@@ -90,7 +85,6 @@ public class CreateSweepstakeSaga implements SimpleSaga<CreateSweepstakeSagaData
   public void onSagaRolledBack(String sagaId, CreateSweepstakeSagaData sagaData) {
     SagaResponse<SweepstakeCommon> sweepstakeSagaError =
         new SagaResponse<>(
-            sagaId,
             SagaResponse.Status.FAILED,
             "Create Sweepstake Failed!",
             sagaData.getSweepstake());

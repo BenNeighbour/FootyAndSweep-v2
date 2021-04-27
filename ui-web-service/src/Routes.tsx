@@ -16,10 +16,12 @@
 
 import React, {FunctionComponent} from 'react';
 import {Route, Switch} from "react-router";
-import PortalPage from "./pages/Portal/PortalPage";
 import Sweepstakes from "./pages/Sweepstake/Sweepstakes";
-import OAuthRedirect from "./pages/Portal/OAuth/OAuthRedirect";
+import OAuthRedirect from "./pages/OAuth/OAuthRedirect";
 import LoadingPage from "./pages/Loading/LoadingPage";
+import LoginPage from "./pages/Login/LoginPage";
+import SignupPage from "./pages/Signup/SignupPage";
+import PrivateRoute from "./other/PrivateRoute";
 
 interface OwnProps {
 }
@@ -36,8 +38,10 @@ const Routes: FunctionComponent<Props> = (props) => {
                     <Route
                         component={OAuthRedirect} exact path="/oauth/login"/>
                     <Route
-                        component={PortalPage} exact path="/portal"/>
+                        component={LoginPage} exact path="/login"/>
                     <Route
+                        component={SignupPage} exact path="/signup"/>
+                    <PrivateRoute
                         component={Sweepstakes} exact path="/sweepstakes"/>
                 </Route>
             </Switch>

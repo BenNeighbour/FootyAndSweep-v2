@@ -39,7 +39,32 @@ input {
   color: #DEE3EA;
 }
 
+.input-large {
+  overflow: hidden;
+  box-sizing: border-box;
+  width: 100%;
+  outline: none;
+  margin: 0;
+  background: #242C37;
+  border: 1px solid #242C37;
+  border-radius: 8px;
+  box-shadow: -3px 4px 14px rgba(0, 0, 0, 0.7);
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  color: #DEE3EA;
+  line-height: 22px;
+  font-size: 16px;
+  padding-top: 19px;
+  padding-bottom: 19px;
+}
+
 .input-invalid {
+  transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  border: 2px solid #FD4D4D;
+}
+
+.input-large-invalid {
   transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
   border: 2px solid #FD4D4D;
 }

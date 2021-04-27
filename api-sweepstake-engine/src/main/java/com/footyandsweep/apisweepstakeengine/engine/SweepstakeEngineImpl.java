@@ -25,20 +25,26 @@ import com.footyandsweep.apisweepstakeengine.dao.ParticipantIdDao;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
 import com.footyandsweep.apisweepstakeengine.engine.saga.createSweepstake.CreateSweepstakeSagaData;
 import com.footyandsweep.apisweepstakeengine.engine.saga.deleteSweepstake.DeleteSweepstakeSagaData;
+import com.footyandsweep.apisweepstakeengine.grpc.client.SweepstakeClientGrpc;
 import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
 import com.footyandsweep.apisweepstakeengine.relation.ParticipantIds;
 import io.eventuate.tram.commands.consumer.CommandWithDestination;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static io.eventuate.tram.commands.consumer.CommandWithDestinationBuilder.send;
 
 @Service
+@RequiredArgsConstructor
 public class SweepstakeEngineImpl implements SweepstakeEngine {
 
   private static final Logger log = LoggerFactory.getLogger(SweepstakeEngineImpl.class);
@@ -46,11 +52,7 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
 
   private final SweepstakeDao sweepstakeDao;
   private final ParticipantIdDao participantIdDao;
-
-  public SweepstakeEngineImpl(SweepstakeDao sweepstakeDao, ParticipantIdDao participantIdDao) {
-    this.sweepstakeDao = sweepstakeDao;
-    this.participantIdDao = participantIdDao;
-  }
+  private final SweepstakeClientGrpc sweepstakeClient;
 
   @Override
   public void saveSweepstake(CreateSweepstakeSagaData sagaData) {
@@ -67,23 +69,28 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
     /* Find the sweepstake */
     Sweepstake sweepstake = sweepstakeDao.findSweepstakeByJoinCode(joinCode);
 
-    /* Check if the user is already in the sweepstake */
-    List<ParticipantIds> sweepstakeParticipantIds =
-        participantIdDao.findAllParticipantIdsBySweepstakeId(sweepstake.getId());
+    if (sweepstake != null) {
 
-    sweepstakeParticipantIds =
-        sweepstakeParticipantIds.stream()
-            .filter(participantIds -> participantIds.getParticipantId().equals(participantId))
-            .collect(Collectors.toList());
+      /* Check if the user is already in the sweepstake */
+      List<ParticipantIds> sweepstakeParticipantIds =
+          participantIdDao.findAllParticipantIdsBySweepstakeId(sweepstake.getId());
 
-    if (sweepstakeParticipantIds.isEmpty()) {
-      /* If the user isn't in the sweepstake, then add it to the participant list */
-      ParticipantIds newParticipant = new ParticipantIds(sweepstake.getId(), participantId);
+      sweepstakeParticipantIds =
+          sweepstakeParticipantIds.stream()
+              .filter(participantIds -> participantIds.getParticipantId().equals(participantId))
+              .collect(Collectors.toList());
 
-      newParticipant = participantIdDao.save(newParticipant);
-      return newParticipant;
+      if (sweepstakeParticipantIds.isEmpty()) {
+        /* If the user isn't in the sweepstake, then add it to the participant list */
+        ParticipantIds newParticipant = new ParticipantIds(sweepstake.getId(), participantId);
+
+        newParticipant = participantIdDao.save(newParticipant);
+        return newParticipant;
+      } else {
+        throw new ParticipantAlreadyJoinedException("You are already part of this sweepstake!");
+      }
     } else {
-      throw new ParticipantAlreadyJoinedException("You are already part of this sweepstake!");
+      throw new RuntimeException("Invalid Join Code!");
     }
   }
 
@@ -138,5 +145,33 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
 
     assert participantIds != null;
     participantIds.forEach(participantIdDao::delete);
+  }
+
+  @Override
+  public List<Sweepstake> getAllSweepstakesByUser(String userId) {
+    /* Get all the sweepstake relations by the id */
+    Optional<List<ParticipantIds>> sweepstakeUserRelations =
+        participantIdDao.findAllByParticipantId(userId);
+
+    if (sweepstakeUserRelations.isPresent()) {
+      List<Sweepstake> participantSweepstakes = new ArrayList<>();
+
+      /* For each one, get the sweepstake for it and put it in the return array */
+      sweepstakeUserRelations
+          .get()
+          .forEach(
+              participantIds -> {
+                Sweepstake sweepstake =
+                    sweepstakeDao.findSweepstakeById(participantIds.getSweepstakeId());
+
+                /* Get the tickets for this sweepstake */
+                sweepstake.setTickets(sweepstakeClient.getSweepstakeTickets(sweepstake.getId()));
+                if (sweepstake != null) participantSweepstakes.add(sweepstake);
+              });
+
+      return participantSweepstakes;
+    }
+
+    return new ArrayList<>();
   }
 }

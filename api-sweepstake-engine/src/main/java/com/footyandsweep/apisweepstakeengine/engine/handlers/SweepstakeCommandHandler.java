@@ -25,17 +25,15 @@ import io.eventuate.tram.commands.consumer.CommandHandlers;
 import io.eventuate.tram.commands.consumer.CommandMessage;
 import io.eventuate.tram.messaging.common.Message;
 import io.eventuate.tram.sagas.participant.SagaCommandHandlersBuilder;
+import lombok.RequiredArgsConstructor;
 
 import static io.eventuate.tram.commands.consumer.CommandHandlerReplyBuilder.withFailure;
 import static io.eventuate.tram.commands.consumer.CommandHandlerReplyBuilder.withSuccess;
 
+@RequiredArgsConstructor
 public class SweepstakeCommandHandler {
 
   private final SweepstakeEngine sweepstakeEngine;
-
-  public SweepstakeCommandHandler(SweepstakeEngine sweepstakeEngine) {
-    this.sweepstakeEngine = sweepstakeEngine;
-  }
 
   public CommandHandlers commandHandlerDefinitions() {
     return SagaCommandHandlersBuilder.fromChannel("sweepstake-engine-events")

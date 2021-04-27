@@ -25,6 +25,8 @@ export enum ActionType {
     AUTHENTICATE_LOGIN_SUCCESS = 'action/AUTHENTICATE_LOGIN_SUCCESS',
     AUTHENTICATE_LOGIN_ERROR = 'action/AUTHENTICATE_LOGIN_ERROR',
 
+    AUTHENTICATE_OAUTH_SUCCESS = 'action/AUTHENTICATE_OAUTH_SUCCESS',
+
     /* Signup */
     AUTHENTICATE_SIGNUP_REQUEST = 'action/AUTHENTICATE_SIGNUP_REQUEST',
     AUTHENTICATE_SIGNUP_SUCCESS = 'action/AUTHENTICATE_SIGNUP_SUCCESS',
@@ -34,6 +36,25 @@ export enum ActionType {
     SAVE_SWEEPSTAKE_REQUEST = 'action/SAVE_SWEEPSTAKE_REQUEST',
     SAVE_SWEEPSTAKE_SUCCESS = 'action/SAVE_SWEEPSTAKE_SUCCESS',
     SAVE_SWEEPSTAKE_ERROR = 'action/SAVE_SWEEPSTAKE_ERROR',
+
+    /* Join Sweepstake */
+    JOIN_SWEEPSTAKE_REQUEST = 'action/JOIN_SWEEPSTAKE_REQUEST',
+    JOIN_SWEEPSTAKE_SUCCESS = 'action/JOIN_SWEEPSTAKE_SUCCESS',
+    JOIN_SWEEPSTAKE_ERROR = 'action/JOIN_SWEEPSTAKE_ERROR',
+
+    /* Buy Sweepstake */
+    BUY_SWEEPSTAKE_TICKET_REQUEST = 'action/BUY_SWEEPSTAKE_TICKET_REQUEST',
+    BUY_SWEEPSTAKE_TICKET_SUCCESS = 'action/BUY_SWEEPSTAKE_TICKET_SUCCESS',
+    BUY_SWEEPSTAKE_TICKET_FAILED = 'action/BUY_SWEEPSTAKE_TICKET_FAILED',
+
+    /* Sweepstake Page states */
+    SET_IS_SAVING_SWEEPSTAKE = 'action/SET_IS_SAVING_SWEEPSTAKE',
+    SET_IS_JOINING_SWEEPSTAKE = 'action/SET_IS_JOINING_SWEEPSTAKE',
+    SET_IS_BUYING_SWEEPSTAKE_TICKET = 'action/SET_IS_BUYING_SWEEPSTAKE_TICKET',
+
+    GET_MY_SWEEPSTAKES_REQUEST = 'action/GET_MY_SWEEPSTAKES_REQUEST',
+    GET_MY_SWEEPSTAKES_SUCCESS = 'action/GET_MY_SWEEPSTAKES_SUCCESS',
+    GET_MY_SWEEPSTAKES_ERROR = 'action/GET_MY_SWEEPSTAKES_ERROR',
 }
 
 export interface UserData {
@@ -49,8 +70,6 @@ export interface LoginData {
 
 export interface SignupData {
     username: string | null;
-    email: string | null;
-    dateOfBirth: Date | null;
     password: string | null;
     confirmPassword: string | null;
 }
@@ -77,6 +96,11 @@ export interface SweepstakeData {
     sweepstakeType?: SweepstakeType;
     minimumPlayers: number;
     minimumPlayerTickets?: number;
-    stake: number;
+    stake: number | string;
     totalNumberOfTickets?: number;
+}
+
+export interface BuyingTickets {
+    isBuyingTickets: boolean;
+    sweepstake: SweepstakeData | null;
 }

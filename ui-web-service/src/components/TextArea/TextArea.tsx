@@ -28,6 +28,7 @@ interface OwnProps {
     style?: React.CSSProperties | {},
     errors: any | null;
     touched: any | null;
+    handleBlur: any;
 }
 
 type Props = OwnProps;
@@ -48,15 +49,15 @@ const TextArea: FunctionComponent<Props> = (props) => {
     return (
         <div className={"textArea"}>
             <div className={"textContainer"}>
-              <textarea id={"textarea"} className={`textarea${props.errors ? "-invalid" : ""}`} name={props.name}
+              <textarea onBlur={props.handleBlur} id={"textarea"} className={`textarea${props.errors && props.touched ? "-invalid" : ""}`} name={props.name}
                         disabled={props.disabled || false}
                         value={props.value}
                         onChange={props.onChange}
                         placeholder={props.label || ""}/>
             </div>
-            {props.errors && props.touched ? (
+            {props.errors && props.touched && (
                 <span className={"errorTextMessage"}>{props.errors}</span>
-            ) : undefined}
+            )}
             <br/>
         </div>
     );

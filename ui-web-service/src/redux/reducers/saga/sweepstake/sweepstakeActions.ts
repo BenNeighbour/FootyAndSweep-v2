@@ -23,3 +23,10 @@ export const saveSweepstakeAction = (payload: SweepstakeData) => {
         payload
     }
 };
+
+export const joinSweepstakeAction = (payload: String) => {
+    return {
+        type: ActionType.JOIN_SWEEPSTAKE_REQUEST,
+        payload
+    }
+};

@@ -19,16 +19,14 @@ package com.footyandsweep.apisweepstakeengine.engine.saga.deleteSweepstake;
 import com.footyandsweep.apisweepstakeengine.engine.SweepstakeEngine;
 import io.eventuate.tram.sagas.orchestration.SagaDefinition;
 import io.eventuate.tram.sagas.simpledsl.SimpleSaga;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class DeleteSweepstakeSaga implements SimpleSaga<DeleteSweepstakeSagaData> {
 
   private final SweepstakeEngine sweepstakeEngine;
-
-  public DeleteSweepstakeSaga(SweepstakeEngine sweepstakeEngine) {
-    this.sweepstakeEngine = sweepstakeEngine;
-  }
 
   @Override
   public SagaDefinition<DeleteSweepstakeSagaData> getSagaDefinition() {

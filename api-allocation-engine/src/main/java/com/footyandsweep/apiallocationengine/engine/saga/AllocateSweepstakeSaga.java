@@ -41,7 +41,7 @@ public class AllocateSweepstakeSaga implements SimpleSaga<AllocateSweepstakeSaga
         .invokeParticipant(
             sagaData ->
                 allocationEngine.updateSweepstakeStatus(
-                    sagaData.getSweepstake().getId(), SweepstakeCommon.SweepstakeStatus.ALLOCATED))
+                    sagaData.getSweepstake().getId(), SweepstakeCommon.SweepstakeStatus.INPLAY))
         .onReply(
             UpdateSweepstakeStatusFailure.class,
             (sagaData, failure) ->

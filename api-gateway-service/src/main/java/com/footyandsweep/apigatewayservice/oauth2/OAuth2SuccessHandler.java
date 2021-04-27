@@ -35,6 +35,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.server.WebFilterExchange;
 import org.springframework.security.web.server.authentication.ServerAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Mono;
 
 import java.lang.reflect.InvocationTargetException;
@@ -88,22 +89,25 @@ public class OAuth2SuccessHandler implements ServerAuthenticationSuccessHandler 
       User user = userDao.findUserByEmail(userPrincipal.getAttributes().get("email").toString());
 
       /* Get the registration id */
-      String registrationId = webFilterExchange.getExchange().getRequest().getPath().toString().split("/")[4];
+      String registrationId =
+          webFilterExchange.getExchange().getRequest().getPath().toString().split("/")[4];
 
       /* Check the signup query param  */
       if (!isSigningUp) {
         /* If the user does not exist, they need to sign up first */
         if (user == null) throw new OAuth2AuthenticationProcessingException("You must sign up!");
 
-        updateExistingUser(user, OAuth2UserInfoFactory.getOAuth2UserInfo(registrationId, userPrincipal.getAttributes()));
+        updateExistingUser(
+            user,
+            OAuth2UserInfoFactory.getOAuth2UserInfo(registrationId, userPrincipal.getAttributes()));
       } else {
         /* The user is signing up */
-        registerNewUser(OAuth2UserInfoFactory.getOAuth2UserInfo(registrationId, userPrincipal.getAttributes()));
+        registerNewUser(
+            OAuth2UserInfoFactory.getOAuth2UserInfo(registrationId, userPrincipal.getAttributes()));
       }
 
       /* Set the cookie */
       String token = tokenProvider.createToken(authentication);
-
       webFilterExchange
           .getExchange()
           .getResponse()
@@ -115,6 +119,12 @@ public class OAuth2SuccessHandler implements ServerAuthenticationSuccessHandler 
                   .httpOnly(true)
                   .path("/")
                   .build());
+
+      targetUrl =
+          UriComponentsBuilder.fromUriString(targetUrl)
+              .queryParam("user_id", user.getId())
+              .build()
+              .toUriString();
 
     } catch (IllegalAccessException | InvocationTargetException e) {
       e.printStackTrace();

@@ -36,7 +36,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.context.NoOpServerSecurityContextRepository;
 import org.springframework.security.web.server.savedrequest.NoOpServerRequestCache;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.reactive.CorsConfigurationSource;
+import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 import reactor.core.publisher.Mono;
+
+import java.util.Collections;
 
 @Configuration
 @EnableWebFluxSecurity
@@ -84,6 +89,11 @@ public class SecurityConfig {
     http.requestCache()
         .requestCache(NoOpServerRequestCache.getInstance())
         .and()
+        .cors()
+        .configurationSource(createCorsConfigSource())
+        .and()
+        .csrf()
+        .disable()
         .securityContextRepository(NoOpServerSecurityContextRepository.getInstance())
         .authorizeExchange()
         .pathMatchers(HttpMethod.OPTIONS)
@@ -131,5 +141,24 @@ public class SecurityConfig {
     http.addFilterAfter(jwtAuthenticationRepository(), SecurityWebFiltersOrder.AUTHENTICATION);
 
     return http.build();
+  }
+
+  public CorsConfigurationSource createCorsConfigSource() {
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    CorsConfiguration config = new CorsConfiguration();
+
+    config.addAllowedOrigin("http://www.footyandsweep-dev.com:3000");
+    config.addAllowedMethod("OPTIONS");
+    config.addAllowedMethod("GET");
+    config.addAllowedMethod("PUT");
+    config.addAllowedMethod("POST");
+    config.addAllowedMethod("DELETE");
+
+    config.setAllowedHeaders(Collections.singletonList("*"));
+
+    config.setAllowCredentials(true);
+
+    source.registerCorsConfiguration("/**", config);
+    return source;
   }
 }

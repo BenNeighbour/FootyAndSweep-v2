@@ -24,13 +24,16 @@ import com.footyandsweep.apiticketengine.engine.saga.BuyTicketSagaData;
 import com.footyandsweep.apiticketengine.model.BuyTicketObject;
 import com.footyandsweep.apiticketengine.model.Ticket;
 import io.eventuate.tram.sagas.orchestration.SagaInstanceFactory;
+import lombok.RequiredArgsConstructor;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/internal/ticket")
+@RequiredArgsConstructor
 public class TicketController {
 
   private final BuyTicketSaga buyTicketSaga;
@@ -38,21 +41,15 @@ public class TicketController {
 
   private final SagaInstanceFactory sagaInstanceFactory;
 
-  public TicketController(
-      BuyTicketSaga buyTicketSaga, TicketDao ticketDao, SagaInstanceFactory sagaInstanceFactory) {
-    this.buyTicketSaga = buyTicketSaga;
-    this.ticketDao = ticketDao;
-    this.sagaInstanceFactory = sagaInstanceFactory;
-  }
-
   @GetMapping("/by/sweepstake/{sweepstakeId}")
   public Optional<List<Ticket>> findTicketBySweepstakeId(
       @PathVariable("sweepstakeId") String sweepstakeId) {
     return ticketDao.findAllTicketsBySweepstakeId(sweepstakeId);
   }
 
-  @PostMapping("/buy")
-  public BuyTicketObject buyTickets(@RequestBody BuyTicketObject buyTicket) {
+  @Transactional
+  @MessageMapping("/buy")
+  public void buyTickets(BuyTicketObject buyTicket) {
     BuyTicketSagaData data = new BuyTicketSagaData();
     data.setNumberOfTickets(buyTicket.getNumberOfTickets());
     data.setParentSweepstake(new SweepstakeCommon());
@@ -62,7 +59,5 @@ public class TicketController {
     data.getParticipant().setId(buyTicket.getOwnerId());
 
     sagaInstanceFactory.create(buyTicketSaga, data);
-
-    return buyTicket;
   }
 }

@@ -22,7 +22,7 @@ const loginRequest = async (payload: LoginData) => {
     try {
         return await Axios({
             method: "post",
-            url: "http://api.footyandsweep-dev.com:30389/com.footyandsweep.AuthenticationService/login",
+            url: "http://api.footyandsweep-dev.com:30389/auth/login",
             data: payload,
             withCredentials: true
         });
@@ -35,7 +35,7 @@ const signupRequest = async (payload: SignupData) => {
     try {
         return await Axios({
             method: "post",
-            url: "http://api.footyandsweep-dev.com:30389/com.footyandsweep.AuthenticationService/signup",
+            url: "http://api.footyandsweep-dev.com:30389/auth/signup",
             data: payload,
             withCredentials: true
         });
@@ -49,7 +49,9 @@ function* loginSaga({payload}: { payload: LoginData }) {
         const response = yield call(loginRequest, payload);
 
         if (response.status === 200) {
-            yield put({type: ActionType.AUTHENTICATE_LOGIN_SUCCESS, payload: response.data.username});
+            yield put({type: ActionType.AUTHENTICATE_LOGIN_SUCCESS, payload: response.data});
+
+            /* Redirect to /sweepstakes */
         } else if (response.status === 401) {
             yield put({type: ActionType.AUTHENTICATE_LOGIN_ERROR, payload: "Your Username/Password are invalid!"})
         } else {

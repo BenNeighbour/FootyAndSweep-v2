@@ -16,8 +16,10 @@
 
 package com.footyandsweep.apisweepstakeengine;
 
+import com.footyandsweep.apicommonlibrary.cqrs.SagaResponse;
 import com.footyandsweep.apisweepstakeengine.dao.ParticipantIdDao;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
+import com.footyandsweep.apisweepstakeengine.engine.SweepstakeEngine;
 import com.footyandsweep.apisweepstakeengine.engine.saga.createSweepstake.CreateSweepstakeSaga;
 import com.footyandsweep.apisweepstakeengine.engine.saga.createSweepstake.CreateSweepstakeSagaData;
 import com.footyandsweep.apisweepstakeengine.engine.saga.deleteSweepstake.DeleteSweepstakeSaga;
@@ -27,16 +29,22 @@ import com.footyandsweep.apisweepstakeengine.engine.saga.joinSweepstake.JoinSwee
 import com.footyandsweep.apisweepstakeengine.helper.ResultHelper;
 import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
 import io.eventuate.tram.sagas.orchestration.SagaInstanceFactory;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
+@RequiredArgsConstructor
 public class SweepstakeController {
 
   private final ResultHelper resultHelper;
   private final SweepstakeDao sweepstakeDao;
+  private final SweepstakeEngine sweepstakeEngine;
   private final ParticipantIdDao participantIdDao;
 
   private final CreateSweepstakeSaga createSweepstakeSaga;
@@ -44,23 +52,7 @@ public class SweepstakeController {
   private final JoinSweepstakeSaga joinSweepstakeSaga;
 
   private final SagaInstanceFactory sagaInstanceFactory;
-
-  public SweepstakeController(
-      ResultHelper resultHelper,
-      SweepstakeDao sweepstakeDao,
-      ParticipantIdDao participantIdDao,
-      CreateSweepstakeSaga createSweepstakeSaga,
-      DeleteSweepstakeSaga deleteSweepstakeSaga,
-      JoinSweepstakeSaga joinSweepstakeSaga,
-      SagaInstanceFactory sagaInstanceFactory) {
-    this.resultHelper = resultHelper;
-    this.sweepstakeDao = sweepstakeDao;
-    this.participantIdDao = participantIdDao;
-    this.createSweepstakeSaga = createSweepstakeSaga;
-    this.deleteSweepstakeSaga = deleteSweepstakeSaga;
-    this.joinSweepstakeSaga = joinSweepstakeSaga;
-    this.sagaInstanceFactory = sagaInstanceFactory;
-  }
+  private final SimpMessagingTemplate messagingTemplate;
 
   @Transactional
   @MessageMapping("/save")
@@ -85,17 +77,21 @@ public class SweepstakeController {
     return sweepstakeDao.findSweepstakeByJoinCode(joinCode);
   }
 
-  @PostMapping("/join")
   @Transactional
-  public ResponseEntity<String> join(
-      @RequestParam("participantId") String participantId,
-      @RequestParam("joinCode") String joinCode) {
-    JoinSweepstakeSagaData data = new JoinSweepstakeSagaData();
-    data.setSweepstakeJoinCode(joinCode);
-    data.setParticipantId(participantId);
+  @MessageMapping("/join")
+  public void join(JoinSweepstakeSagaData request) {
+    if (sweepstakeDao.findSweepstakeByJoinCode(request.getSweepstakeJoinCode()) == null) {
+      SagaResponse<String> sweepstakeSagaError =
+          new SagaResponse<>(SagaResponse.Status.FAILED, "Invalid Join Code!", "Invalid Join Code!");
 
-    sagaInstanceFactory.create(joinSweepstakeSaga, data);
+      messagingTemplate.convertAndSend("/sweepstake-topic/join", sweepstakeSagaError);
+    } else {
+      sagaInstanceFactory.create(joinSweepstakeSaga, request);
+    }
+  }
 
-    return ResponseEntity.ok("Joined Successfully");
+  @GetMapping("/sweepstakes/{userId}")
+  public ResponseEntity<List<Sweepstake>> getMySweepstakes(@PathVariable("userId") String userId) {
+    return ResponseEntity.ok(sweepstakeEngine.getAllSweepstakesByUser(userId));
   }
 }

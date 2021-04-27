@@ -16,6 +16,8 @@
 
 package com.footyandsweep.apicommonlibrary.model.sweepstake;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.gson.annotations.Expose;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
@@ -65,7 +67,6 @@ public class SweepstakeCommon implements Serializable {
   private String sweepstakeEventId;
 
   @NotNull(message = "You must select a sweepstake type!")
-  @Enumerated(EnumType.STRING)
   private SweepstakeTypeCommon sweepstakeType = this.getSweepstakeType();
 
   @Min(2)
@@ -112,18 +113,19 @@ public class SweepstakeCommon implements Serializable {
   }
 
   public enum SweepstakeStatus {
-    OPEN(0),
-    ALLOCATED(1),
-    CLOSED(2);
+    OPEN("Open"),
+    INPLAY("In-Play"),
+    SETTLED("Settled");
 
-    private int code;
+    private String value;
 
-    SweepstakeStatus(int code) {
-      this.code = code;
+    SweepstakeStatus(String value) {
+      this.value = value;
     }
 
-    public int getSweepstakeStatus() {
-      return this.code;
+    @JsonValue
+    public String getValue() {
+      return value;
     }
   }
 }

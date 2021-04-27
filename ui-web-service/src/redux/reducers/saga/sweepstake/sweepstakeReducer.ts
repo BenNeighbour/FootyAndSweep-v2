@@ -29,7 +29,7 @@ const defaultSweepstakeState: SweepstakeReducerType = {
     error: undefined,
 }
 
-export const saveSweepstakeReducer = createReducer<SweepstakeReducerType>(defaultSweepstakeState, {
+export const sweepstakeReducer = createReducer<SweepstakeReducerType>(defaultSweepstakeState, {
     [ActionType.SAVE_SWEEPSTAKE_REQUEST](state: SweepstakeReducerType) {
         return {
             ...state,
@@ -41,7 +41,6 @@ export const saveSweepstakeReducer = createReducer<SweepstakeReducerType>(defaul
         return {
             ...state,
             sweepstake: state.sweepstake,
-            isLoading: false,
             error: null
         };
     },
@@ -53,4 +52,29 @@ export const saveSweepstakeReducer = createReducer<SweepstakeReducerType>(defaul
             error: action.payload,
         };
     },
+
+
+    [ActionType.JOIN_SWEEPSTAKE_REQUEST](state: SweepstakeReducerType) {
+        return {
+            ...state,
+            isLoading: true,
+        };
+    },
+
+    [ActionType.JOIN_SWEEPSTAKE_SUCCESS](state: SweepstakeReducerType) {
+        return {
+            ...state,
+            sweepstake: state.sweepstake,
+            error: null
+        };
+    },
+
+    [ActionType.JOIN_SWEEPSTAKE_ERROR](state: SweepstakeReducerType, action: Action<number>) {
+        return {
+            ...state,
+            isLoading: false,
+            error: action.payload,
+        };
+    },
+
 });

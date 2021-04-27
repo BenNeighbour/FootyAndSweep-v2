@@ -17,9 +17,11 @@
 package com.footyandsweep.apigatewayservice.service;
 
 import com.footyandsweep.apigatewayservice.exception.SignUpException;
+import com.footyandsweep.apigatewayservice.model.User;
 import com.footyandsweep.apigatewayservice.payload.SignUpRequest;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 public interface UserService {
 
@@ -32,4 +34,6 @@ public interface UserService {
   void saveSweepstakeId(String sweepstakeId, String participantId);
 
   void updateUserBalance(String userId, BigDecimal amountDeducted);
+
+  Optional<User> signupUser(SignUpRequest request);
 }
