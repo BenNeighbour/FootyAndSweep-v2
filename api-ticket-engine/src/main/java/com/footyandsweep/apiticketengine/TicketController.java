@@ -24,26 +24,20 @@ import com.footyandsweep.apiticketengine.engine.saga.BuyTicketSagaData;
 import com.footyandsweep.apiticketengine.model.BuyTicketObject;
 import com.footyandsweep.apiticketengine.model.Ticket;
 import io.eventuate.tram.sagas.orchestration.SagaInstanceFactory;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/internal/ticket")
+@RequiredArgsConstructor
 public class TicketController {
 
   private final BuyTicketSaga buyTicketSaga;
   private final TicketDao ticketDao;
 
   private final SagaInstanceFactory sagaInstanceFactory;
-
-  public TicketController(
-      BuyTicketSaga buyTicketSaga, TicketDao ticketDao, SagaInstanceFactory sagaInstanceFactory) {
-    this.buyTicketSaga = buyTicketSaga;
-    this.ticketDao = ticketDao;
-    this.sagaInstanceFactory = sagaInstanceFactory;
-  }
 
   @GetMapping("/by/sweepstake/{sweepstakeId}")
   public Optional<List<Ticket>> findTicketBySweepstakeId(

@@ -76,4 +76,5 @@ export const sweepstakeReducer = createReducer<SweepstakeReducerType>(defaultSwe
             error: action.payload,
         };
     },
+
 });

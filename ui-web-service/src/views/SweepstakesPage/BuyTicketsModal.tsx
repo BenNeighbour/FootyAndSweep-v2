@@ -17,7 +17,8 @@
 
 import React, {FunctionComponent} from 'react';
 import {RootState} from "../../redux/rootReducer";
-import * as SweepstakePageActions from "../../redux/reducers/saga/sweepstakePage/sweepstakePageActions";
+import * as SweepstakePageActions from "../../redux/reducers/saga/sweepstakePage";
+import * as TicketActions from "../../redux/reducers/saga/ticket";
 import Modal from "../../components/Modal/Modal";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
@@ -29,6 +30,7 @@ import BuyTicketsForm from "../../forms/BuyTicketsForm/BuyTicketsForm";
 interface OwnProps {
     state: RootState;
     sweepstakePageActions: typeof SweepstakePageActions;
+    ticketActions: typeof TicketActions;
     sweepstake: SweepstakeData | null;
 }
 
@@ -50,7 +52,7 @@ const BuyTicketsModal: FunctionComponent<Props> = (props) => {
         return (
             <Formik
                 onSubmit={(formValues) => {
-                    console.log(formValues);
+                    props.ticketActions.buySweepstakeTicketsAction(formValues);
                 }}
                 validationSchema={schema}
                 initialValues={{
@@ -97,6 +99,7 @@ const mapStateToProps = (state: RootState) => {
 function mapDispatchToProps(dispatch: any) {
     return {
         sweepstakePageActions: bindActionCreators(SweepstakePageActions as any, dispatch),
+        ticketActions: bindActionCreators(TicketActions as any, dispatch),
     };
 }
 

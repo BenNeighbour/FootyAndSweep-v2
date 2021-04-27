@@ -17,7 +17,12 @@
 import {call, fork, put, take, takeLatest} from 'redux-saga/effects';
 import {ActionType, SweepstakeData} from "../../../model";
 import {Client} from "@stomp/stompjs";
-import {getMySweepstakes, joinSweepstake, saveSweepstake} from "../../../../services/sweepstakeService";
+import {
+    buySweepstakeTickets,
+    getMySweepstakes,
+    joinSweepstake,
+    saveSweepstake
+} from "../../../../services/sweepstakeService";
 import {channel} from "redux-saga";
 
 const sweepstakeChannel = channel();
@@ -66,6 +71,26 @@ function* joinSweepstakeSaga({payload}: { payload: String }) {
     }
 }
 
+function* buySweepstakeTicketsSaga({payload}: { payload: String }) {
+    const socketChannel = yield call(buySweepstakeTickets, client, payload)
+
+    while (true) {
+        try {
+            let response = yield take(socketChannel);
+
+            yield put({
+                type: response.status === "COMPLETED" ? ActionType.BUY_SWEEPSTAKE_TICKET_SUCCESS : ActionType.BUY_SWEEPSTAKE_TICKET_FAILED,
+                payload: response.payload
+            });
+        } catch (err) {
+            yield put({
+                type: ActionType.BUY_SWEEPSTAKE_TICKET_FAILED,
+                payload: "Hmm, Something's not quite right! Try again later!"
+            })
+        }
+    }
+}
+
 function getMySweepstakesSaga({payload}: { payload: String }) {
     getMySweepstakes(sweepstakeChannel)
 }
@@ -83,6 +108,10 @@ function* onJoinSweepstakeWatcher() {
     yield takeLatest(ActionType.JOIN_SWEEPSTAKE_REQUEST as any, joinSweepstakeSaga);
 }
 
+function* onBuySweepstakeTicketsWatcher() {
+    yield takeLatest(ActionType.BUY_SWEEPSTAKE_TICKET_REQUEST as any, buySweepstakeTicketsSaga);
+}
+
 
 function* onGetMySweepstakesWatcher() {
     yield takeLatest(ActionType.GET_MY_SWEEPSTAKES_REQUEST as any, getMySweepstakesSaga);
@@ -92,6 +121,7 @@ let sweepstakeSagas = [
     fork(watchSweepstakeChannel),
     fork(onSaveSweepstakeWatcher),
     fork(onJoinSweepstakeWatcher),
+    fork(onBuySweepstakeTicketsWatcher),
     fork(onGetMySweepstakesWatcher)
 ];
 

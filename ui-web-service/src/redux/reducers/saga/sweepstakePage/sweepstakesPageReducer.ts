@@ -115,4 +115,26 @@ export const yourSweepstakesReducer = createReducer<SweepstakesPageReducerType>(
             failedMessage: action.payload
         };
     },
+
+    [ActionType.BUY_SWEEPSTAKE_TICKET_REQUEST](state: SweepstakesPageReducerType) {
+        return {
+            ...state,
+            isLoading: true,
+        };
+    },
+
+    [ActionType.BUY_SWEEPSTAKE_TICKET_SUCCESS](state: SweepstakesPageReducerType) {
+        return {
+            ...state,
+            error: null
+        };
+    },
+
+    [ActionType.BUY_SWEEPSTAKE_TICKET_FAILED](state: SweepstakesPageReducerType, action: Action<number>) {
+        return {
+            ...state,
+            isLoading: false,
+            error: action.payload,
+        };
+    },
 });

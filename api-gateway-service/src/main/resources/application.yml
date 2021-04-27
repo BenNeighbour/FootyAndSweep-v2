@@ -40,6 +40,13 @@ spring:
           filters:
             - StripPrefix=1
 
+        - id: 'api-ticket-engine'
+          uri: 'ws://api-ticket-engine:8080'
+          predicates:
+            - Path=/ticket-socket/**
+          filters:
+            - StripPrefix=1
+
   security:
     oauth2:
       client:

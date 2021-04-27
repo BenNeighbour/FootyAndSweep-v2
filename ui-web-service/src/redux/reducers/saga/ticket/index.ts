@@ -15,5 +15,4 @@
  */
 
 
-export * from "./sweepstakesPageReducer";
-export * from "./sweepstakePageActions";
+export * from "./ticketActions";

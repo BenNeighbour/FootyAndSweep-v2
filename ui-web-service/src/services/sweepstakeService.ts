@@ -89,3 +89,26 @@ export function joinSweepstake(client: Client, payload: String) {
         };
     });
 }
+
+export function buySweepstakeTickets(client: Client, payload: String) {
+    return eventChannel(emit => {
+        client.onConnect = () => {
+            client.publish({
+                destination: `/tickets/buy`,
+                body: JSON.stringify({
+                    participantId: localStorage.getItem("user_id"),
+                })
+            });
+            client.subscribe("/tickets-topic/join", (message: any) => {
+                if (JSON.parse(message.body).status !== "PENDING") {
+                    emit(JSON.parse(message.body));
+                    client.deactivate();
+                }
+            })
+        };
+
+        client.activate();
+        return () => {
+        };
+    });
+}

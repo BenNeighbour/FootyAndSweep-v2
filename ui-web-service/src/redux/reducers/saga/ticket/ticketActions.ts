@@ -15,5 +15,11 @@
  */
 
 
-export * from "./sweepstakesPageReducer";
-export * from "./sweepstakePageActions";
+import {ActionType, BuyingTickets} from "../../../model";
+
+export const buySweepstakeTicketsAction = (payload: {numberOfTickets: number}) => {
+    return {
+        type: ActionType.BUY_SWEEPSTAKE_TICKET_REQUEST,
+        payload
+    }
+};
