@@ -22,6 +22,9 @@ import Modal from "../../components/Modal/Modal";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {SweepstakeData} from "../../redux/model";
+import {Form, Formik} from "formik";
+import * as yup from "yup";
+import BuyTicketsForm from "../../forms/BuyTicketsForm/BuyTicketsForm";
 
 interface OwnProps {
     state: RootState;
@@ -29,18 +32,55 @@ interface OwnProps {
     sweepstake: SweepstakeData | null;
 }
 
+const schema = yup.object().shape({
+    numberOfTickets: yup
+        .number()
+        .required("You must enter a Number of Tickets to Buy!")
+        .test(
+            'isPositive',
+            'The Number of Tickets must be valid',
+            (value: any) => value > 0)
+        .label("Number Of Tickets")
+});
+
 type Props = OwnProps;
 
 const BuyTicketsModal: FunctionComponent<Props> = (props) => {
     if (props.sweepstake !== null) {
         return (
-            <Modal setShowing={(value: boolean) => props.sweepstakePageActions.setIsBuyingTickets({
-                isBuyingTickets: value,
-                sweepstake: null
-            })} title={`Buy Tickets from ${props.sweepstake.name}`}
-                   description={"Enter the number of tickets you would like to buy"}
-                   showing={props.state.sweepstakesPage.buyingTickets.isBuyingTickets}>
-            </Modal>
+            <Formik
+                onSubmit={(formValues) => {
+                    console.log(formValues);
+                }}
+                validationSchema={schema}
+                initialValues={{
+                    numberOfTickets: 0
+                }}
+            >
+                {(formik) => {
+                    const {
+                        values,
+                        handleChange,
+                        errors,
+                        touched,
+                        handleBlur,
+                    } = formik;
+                    if (props.sweepstake !== null) return (
+                        <Form>
+                            <Modal small={true} shrinksOnMobile={true} setShowing={(value: boolean) => props.sweepstakePageActions.setIsBuyingTickets({
+                                isBuyingTickets: value,
+                                sweepstake: null
+                            })} title={`Buy Tickets from ${props.sweepstake.name}`}
+                                   description={"Enter the number of tickets you would like to buy"}
+                                   showing={props.state.sweepstakesPage.buyingTickets.isBuyingTickets}>
+                                <BuyTicketsForm handleBlur={handleBlur} values={values} handleChange={handleChange}
+                                                    errors={errors.numberOfTickets || props.state.sweepstake.error}
+                                                    touched={touched}/>
+                            </Modal>
+                        </Form>
+                    )
+                }}
+            </Formik>
         );
     }
 
