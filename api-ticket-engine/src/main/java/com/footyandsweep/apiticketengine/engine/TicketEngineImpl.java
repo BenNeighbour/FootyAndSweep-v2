@@ -22,12 +22,13 @@ import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
 import com.footyandsweep.apiticketengine.dao.TicketDao;
 import com.footyandsweep.apiticketengine.engine.saga.BuyTicketSagaData;
+import com.footyandsweep.apiticketengine.grpc.client.TicketClientGrpc;
 import com.footyandsweep.apiticketengine.model.Ticket;
 import io.eventuate.tram.commands.consumer.CommandWithDestination;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
@@ -38,29 +39,19 @@ import java.util.Optional;
 import static io.eventuate.tram.commands.consumer.CommandWithDestinationBuilder.send;
 
 @Service
+@RequiredArgsConstructor
 public class TicketEngineImpl implements TicketEngine {
 
   private static final Logger log = LoggerFactory.getLogger(TicketEngineImpl.class);
   private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ");
 
   private final TicketDao ticketDao;
-  private final RestTemplate restTemplate;
+  private final TicketClientGrpc ticketClientGrpc;
 
-  public TicketEngineImpl(TicketDao ticketDao, RestTemplate restTemplate) {
-    this.ticketDao = ticketDao;
-    this.restTemplate = restTemplate;
-  }
-
-  /* TODO: REPLACE WITH GRPC CLIENTS */
   @Override
   public void getParentSweepstakeAndParticipant(BuyTicketSagaData sagaData) {
     /* Get the sweepstake object that has the joinCode */
-    Optional<SweepstakeCommon> parentSweepstake =
-        Optional.ofNullable(
-            restTemplate.getForObject(
-                "http://api-sweepstake-engine:8080/sweepstake/test/by/joinCode/"
-                    + sagaData.getParentSweepstake().getJoinCode(),
-                SweepstakeCommon.class));
+    Optional<SweepstakeCommon> parentSweepstake = ticketClientGrpc.joinSweepstake(sagaData.getParentSweepstake().getJoinCode());
 
     assert parentSweepstake.isPresent();
     sagaData.setParentSweepstake(parentSweepstake.get());

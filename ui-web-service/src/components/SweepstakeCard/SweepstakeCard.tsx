@@ -25,6 +25,7 @@ interface OwnProps {
 
     sweepstakeStatus: string;
     sweepstakeName: string;
+    sweepstakeJoinCode: string;
     sweepstakeMetadata: string;
     sweepstakeHashTags: string[];
 
@@ -86,7 +87,7 @@ const SweepstakeCard: FunctionComponent<Props> = (props) => {
 
                     <div className={"bottomRightSection"}>
                         {/*  Buy Tickets call-to-action  */}
-                        <span onClick={() => props.setIsBuyingTickets({name: props.sweepstakeName})}>Buy Tickets →</span>
+                        <span onClick={() => props.setIsBuyingTickets({name: props.sweepstakeName, joinCode: props.sweepstakeJoinCode})}>Buy Tickets →</span>
                     </div>
                 </div>
             </div>

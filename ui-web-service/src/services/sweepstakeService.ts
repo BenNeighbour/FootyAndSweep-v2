@@ -90,16 +90,18 @@ export function joinSweepstake(client: Client, payload: String) {
     });
 }
 
-export function buySweepstakeTickets(client: Client, payload: String) {
+export function buySweepstakeTickets(client: Client, payload: {sweepstake: any, numberOfTickets: number}) {
     return eventChannel(emit => {
         client.onConnect = () => {
             client.publish({
                 destination: `/tickets/buy`,
                 body: JSON.stringify({
-                    participantId: localStorage.getItem("user_id"),
+                    ownerId: localStorage.getItem("user_id"),
+                    numberOfTickets: payload.numberOfTickets,
+                    joinCode: payload.sweepstake.joinCode
                 })
             });
-            client.subscribe("/ticket-topic/join", (message: any) => {
+            client.subscribe("/ticket-topic/buy", (message: any) => {
                 if (JSON.parse(message.body).status !== "PENDING") {
                     emit(JSON.parse(message.body));
                     client.deactivate();

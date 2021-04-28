@@ -52,7 +52,7 @@ const BuyTicketsModal: FunctionComponent<Props> = (props) => {
         return (
             <Formik
                 onSubmit={(formValues) => {
-                    props.ticketActions.buySweepstakeTicketsAction(formValues);
+                    props.ticketActions.buySweepstakeTicketsAction({sweepstake: props.sweepstake, numberOfTickets: formValues.numberOfTickets});
                 }}
                 validationSchema={schema}
                 initialValues={{
