@@ -46,7 +46,7 @@ const CreateSweepstakeForm: FunctionComponent<Props> = (props) => {
     );
 
     return (
-        <div className={"form"}>
+        <div className={"sweepstakeForm"}>
             <div className={"leftFieldSection"}>
                 <Switch statusText={"Your Sweepstake is"} falseText={"Public"} trueText={"Private"}
                         value={props.values.isPrivate}

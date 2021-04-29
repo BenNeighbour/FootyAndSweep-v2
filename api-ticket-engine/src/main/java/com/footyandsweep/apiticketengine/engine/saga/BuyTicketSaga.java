@@ -17,7 +17,6 @@
 package com.footyandsweep.apiticketengine.engine.saga;
 
 import com.footyandsweep.apicommonlibrary.cqrs.SagaResponse;
-import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apiticketengine.engine.TicketEngine;
 import com.footyandsweep.apiticketengine.model.Ticket;
 import io.eventuate.tram.sagas.orchestration.SagaDefinition;
@@ -60,7 +59,7 @@ public class BuyTicketSaga implements SimpleSaga<BuyTicketSagaData> {
             new SagaResponse<>(
                     SagaResponse.Status.COMPLETED, "Ticket Bought!", sagaData.getSavedTickets());
 
-    messagingTemplate.convertAndSend("/ticket-topic/save", ticketSagaComplete);
+    messagingTemplate.convertAndSend("/ticket-topic/buy", ticketSagaComplete);
   }
 
   @Override
@@ -71,7 +70,7 @@ public class BuyTicketSaga implements SimpleSaga<BuyTicketSagaData> {
                     "Buying Tickets...",
                     sagaData);
 
-    messagingTemplate.convertAndSend("/ticket-topic/save", ticketSagaPending);
+    messagingTemplate.convertAndSend("/ticket-topic/buy", ticketSagaPending);
   }
 
   @Override
@@ -82,6 +81,6 @@ public class BuyTicketSaga implements SimpleSaga<BuyTicketSagaData> {
                     "Buying Ticket Failed!",
                     "");
 
-    messagingTemplate.convertAndSend("/ticket-topic/save", ticketSagaError);
+    messagingTemplate.convertAndSend("/ticket-topic/buy", ticketSagaError);
   }
 }

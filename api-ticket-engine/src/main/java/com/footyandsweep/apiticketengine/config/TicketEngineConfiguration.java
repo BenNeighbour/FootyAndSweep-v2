@@ -16,20 +16,23 @@
 
 package com.footyandsweep.apiticketengine.config;
 
+import com.footyandsweep.SweepstakeServiceGrpc;
 import com.footyandsweep.apiticketengine.dao.TicketDao;
 import com.footyandsweep.apiticketengine.engine.TicketEngine;
 import com.footyandsweep.apiticketengine.engine.TicketEngineImpl;
 import com.footyandsweep.apiticketengine.engine.handlers.TicketCommandHandler;
+import com.footyandsweep.apiticketengine.grpc.client.TicketClientGrpc;
 import io.eventuate.tram.commands.consumer.CommandDispatcher;
 import io.eventuate.tram.sagas.participant.SagaCommandDispatcherFactory;
 import io.eventuate.tram.sagas.spring.orchestration.SagaOrchestratorConfiguration;
 import io.eventuate.tram.sagas.spring.participant.SagaParticipantConfiguration;
 import io.eventuate.tram.spring.optimisticlocking.OptimisticLockingDecoratorConfiguration;
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.web.client.RestTemplate;
 
 @Configuration
 @EnableAutoConfiguration
@@ -41,8 +44,16 @@ import org.springframework.web.client.RestTemplate;
 public class TicketEngineConfiguration {
 
   @Bean
-  public TicketEngine ticketEngine(TicketDao ticketDao, RestTemplate restTemplate) {
-    return new TicketEngineImpl(ticketDao, restTemplate);
+  public SweepstakeServiceGrpc.SweepstakeServiceBlockingStub sweepstakeServiceChannel() {
+    ManagedChannel channel =
+        ManagedChannelBuilder.forAddress("api-sweepstake-engine", 9090).usePlaintext().build();
+
+    return SweepstakeServiceGrpc.newBlockingStub(channel);
+  }
+
+  @Bean
+  public TicketEngine ticketEngine(TicketDao ticketDao, TicketClientGrpc ticketClientGrpc) {
+    return new TicketEngineImpl(ticketDao, ticketClientGrpc);
   }
 
   @Bean

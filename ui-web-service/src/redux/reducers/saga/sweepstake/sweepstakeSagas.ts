@@ -26,10 +26,10 @@ import {
 import {channel} from "redux-saga";
 
 const sweepstakeChannel = channel();
-const client = new Client();
-client.brokerURL = "ws://api.footyandsweep-dev.com:30389/sweepstake-socket/socket";
 
 function* saveSweepstakeSaga({payload}: { payload: SweepstakeData }) {
+    const client = new Client();
+    client.brokerURL = "ws://api.footyandsweep-dev.com:30389/sweepstake-socket/socket";
     const socketChannel = yield call(saveSweepstake, client, payload)
 
     while (true) {
@@ -52,6 +52,8 @@ function* saveSweepstakeSaga({payload}: { payload: SweepstakeData }) {
 }
 
 function* joinSweepstakeSaga({payload}: { payload: String }) {
+    const client = new Client();
+    client.brokerURL = "ws://api.footyandsweep-dev.com:30389/sweepstake-socket/socket";
     const socketChannel = yield call(joinSweepstake, client, payload)
 
     while (true) {
@@ -71,9 +73,10 @@ function* joinSweepstakeSaga({payload}: { payload: String }) {
     }
 }
 
-function* buySweepstakeTicketsSaga({payload}: { payload: String }) {
+function* buySweepstakeTicketsSaga({payload}: { payload: { sweepstake: any, numberOfTickets: number } }) {
+    const client = new Client();
+    client.brokerURL = "ws://api.footyandsweep-dev.com:30389/ticket-socket/socket";
     const socketChannel = yield call(buySweepstakeTickets, client, payload)
-
     while (true) {
         try {
             let response = yield take(socketChannel);

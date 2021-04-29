@@ -27,7 +27,7 @@ export interface SweepstakesPageReducerType {
 
     buyingTickets: {
         isBuyingTickets: boolean;
-        sweepstake: SweepstakeData | null;
+        sweepstake: SweepstakeData;
     };
 
     successMessage: string | null;
@@ -42,7 +42,13 @@ const defaultSweepstakePageState: SweepstakesPageReducerType = {
     creatingSweepstake: false,
     buyingTickets: {
         isBuyingTickets: false,
-        sweepstake: null
+        sweepstake: {
+            name: "",
+            ownerId: `${localStorage.getItem("user_id")}`,
+            isPrivate: false,
+            minimumPlayers: 0,
+            stake: ""
+        }
     },
 
     successMessage: null,
@@ -126,6 +132,11 @@ export const yourSweepstakesReducer = createReducer<SweepstakesPageReducerType>(
     [ActionType.BUY_SWEEPSTAKE_TICKET_SUCCESS](state: SweepstakesPageReducerType) {
         return {
             ...state,
+            isLoading: false,
+            buyingTickets: {
+                isBuyingTickets: false,
+                sweepstake: null
+            },
             error: null
         };
     },

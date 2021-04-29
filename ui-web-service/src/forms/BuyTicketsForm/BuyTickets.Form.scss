@@ -15,7 +15,7 @@
  */
 
 
-.form {
+.buyTicketForm {
   width: 100%;
   height: fit-content;
 
@@ -27,6 +27,14 @@
     flex-wrap: wrap;
     grid-gap: 30px;
     gap: 30px;
+    padding: 0 !important;
+  }
+}
 
+@media (max-width: 1200px) {
+  .buyTicketForm {
+    width: 100%;
+    height: fit-content;
+    padding: 0;
   }
 }

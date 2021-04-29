@@ -24,17 +24,15 @@ import io.eventuate.tram.commands.consumer.CommandHandlers;
 import io.eventuate.tram.commands.consumer.CommandMessage;
 import io.eventuate.tram.messaging.common.Message;
 import io.eventuate.tram.sagas.participant.SagaCommandHandlersBuilder;
+import lombok.RequiredArgsConstructor;
 
 import static io.eventuate.tram.commands.consumer.CommandHandlerReplyBuilder.withFailure;
 import static io.eventuate.tram.commands.consumer.CommandHandlerReplyBuilder.withSuccess;
 
+@RequiredArgsConstructor
 public class TicketCommandHandler {
 
   private final TicketEngine ticketEngine;
-
-  public TicketCommandHandler(TicketEngine ticketEngine) {
-    this.ticketEngine = ticketEngine;
-  }
 
   public CommandHandlers commandHandlerDefinitions() {
     return SagaCommandHandlersBuilder.fromChannel("ticket-engine-events")

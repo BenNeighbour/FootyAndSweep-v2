@@ -15,9 +15,9 @@
  */
 
 
-import {ActionType, BuyingTickets} from "../../../model";
+import {ActionType} from "../../../model";
 
-export const buySweepstakeTicketsAction = (payload: {numberOfTickets: number}) => {
+export const buySweepstakeTicketsAction = (payload: {sweepstake: any, numberOfTickets: number}) => {
     return {
         type: ActionType.BUY_SWEEPSTAKE_TICKET_REQUEST,
         payload

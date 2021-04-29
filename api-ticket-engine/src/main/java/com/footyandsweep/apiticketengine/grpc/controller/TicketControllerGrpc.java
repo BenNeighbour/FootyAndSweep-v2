@@ -24,18 +24,16 @@ import com.footyandsweep.apiticketengine.dao.TicketDao;
 import com.footyandsweep.apiticketengine.grpc.util.GrpcService;
 import com.footyandsweep.apiticketengine.model.Ticket;
 import io.grpc.stub.StreamObserver;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.Optional;
 
 @GrpcService
+@RequiredArgsConstructor
 public class TicketControllerGrpc extends TicketServiceGrpc.TicketServiceImplBase {
 
   private final TicketDao ticketDao;
-
-  public TicketControllerGrpc(TicketDao ticketDao) {
-    this.ticketDao = ticketDao;
-  }
 
   @Override
   public void findTicketById(
