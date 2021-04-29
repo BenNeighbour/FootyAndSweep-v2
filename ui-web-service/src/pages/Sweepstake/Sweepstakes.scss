@@ -40,12 +40,14 @@
     width: 100%;
     justify-content: center;
     box-sizing: border-box;
-    height: 28vh;
+    height: fit-content;
     overflow: hidden;
     object-fit: contain;
     place-items: center;
 
     .opacitySection {
+      padding-top: 15px;
+      padding-bottom: 15px;
       display: flex;
       flex: 1;
       place-items: center;
@@ -56,6 +58,7 @@
     }
 
     .searchSection {
+      padding: 15px;
       height: fit-content;
       font-family: 'Inter', sans-serif;
       position: relative;
@@ -64,6 +67,11 @@
       background: #0F1318;
       object-fit: contain;
       width: 100%;
+
+      .searchBarContainer {
+        margin-left: 15px;
+        margin-right: 15px;
+      }
     }
 
     .logoSection {
@@ -74,9 +82,12 @@
     }
 
     .buttonSection {
+      height: fit-content;
+      padding: 15px;
       box-sizing: border-box;
       display: flex;
       flex: 1 1;
+      gap: 3px;
       flex-flow: row;
       background: #0F1318;
       object-fit: contain;
@@ -91,10 +102,8 @@
 
       .createSweepstakeButton, .joinSweepstakeButton, .earnCoinsButton {
         .buttonContainer {
-          font-size: 12px;
-          line-height: 13px;
-          padding-left: 10px;
-          padding-right: 10px;
+          font-size: 10px;
+          line-height: 10px;
         }
       }
 
