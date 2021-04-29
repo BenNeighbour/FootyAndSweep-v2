@@ -31,7 +31,7 @@ interface OwnProps {
     state: RootState;
     sweepstakePageActions: typeof SweepstakePageActions;
     ticketActions: typeof TicketActions;
-    sweepstake: SweepstakeData | null;
+    sweepstake: SweepstakeData;
 }
 
 const schema = yup.object().shape({
@@ -48,50 +48,45 @@ const schema = yup.object().shape({
 type Props = OwnProps;
 
 const BuyTicketsModal: FunctionComponent<Props> = (props) => {
-    if (props.sweepstake !== null) {
-        return (
-            <Formik
-                onSubmit={(formValues) => {
-                    props.ticketActions.buySweepstakeTicketsAction({
-                        sweepstake: props.sweepstake,
-                        numberOfTickets: formValues.numberOfTickets
-                    });
-                }}
-                validationSchema={schema}
-                initialValues={{
-                    numberOfTickets: 0
-                }}
-            >
-                {(formik) => {
-                    const {
-                        values,
-                        handleChange,
-                        errors,
-                        touched,
-                        handleBlur,
-                    } = formik;
-                    if (props.sweepstake !== null) return (
-                        <Form>
-                            <Modal small={true} shrinksOnMobile={true}
-                                   setShowing={(value: boolean) => props.sweepstakePageActions.setIsBuyingTickets({
-                                       isBuyingTickets: value,
-                                       sweepstake: null
-                                   })} title={`Buy Tickets from ${props.sweepstake.name}`}
-                                   description={"Enter the number of tickets you would like to buy"}
-                                   showing={props.state.sweepstakesPage.buyingTickets.isBuyingTickets}>
-                                <BuyTicketsForm handleBlur={handleBlur} values={values} handleChange={handleChange}
-                                                errors={errors.numberOfTickets || props.state.sweepstake.error}
-                                                touched={touched}/>
-                            </Modal>
-                        </Form>
-                    )
-                }}
-            </Formik>
-        );
-    }
-
-
-    return null;
+    return (
+        <Formik
+            onSubmit={(formValues) => {
+                props.ticketActions.buySweepstakeTicketsAction({
+                    sweepstake: props.sweepstake,
+                    numberOfTickets: formValues.numberOfTickets
+                });
+            }}
+            validationSchema={schema}
+            initialValues={{
+                numberOfTickets: 0
+            }}
+        >
+            {(formik) => {
+                const {
+                    values,
+                    handleChange,
+                    errors,
+                    touched,
+                    handleBlur,
+                } = formik;
+                if (props.sweepstake !== null) return (
+                    <Form>
+                        <Modal small={true} shrinksOnMobile={true}
+                               setShowing={(value: boolean) => props.sweepstakePageActions.setIsBuyingTickets({
+                                   isBuyingTickets: value,
+                                   sweepstake: null
+                               })} title={`Buy Tickets from ${props.sweepstake.name}`}
+                               description={"Enter the number of tickets you would like to buy"}
+                               showing={props.state.sweepstakesPage.buyingTickets.isBuyingTickets}>
+                            <BuyTicketsForm handleBlur={handleBlur} values={values} handleChange={handleChange}
+                                            errors={errors.numberOfTickets || props.state.sweepstake.error}
+                                            touched={touched}/>
+                        </Modal>
+                    </Form>
+                )
+            }}
+        </Formik>
+    );
 };
 
 const mapStateToProps = (state: RootState) => {

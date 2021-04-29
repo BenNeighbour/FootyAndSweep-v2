@@ -44,7 +44,7 @@ const JoinSweepstakeForm: FunctionComponent<Props> = (props) => {
     );
 
     return (
-        <div className={"form"}>
+        <div className={"buyTicketForm"}>
             <div className={"fieldSection"}>
                 <InputField handleBlur={props.handleBlur} name={"code"} touched={props.touched.code} label={"Sweepstake Code"}
                             errors={props.errors} type={"text"} onChange={props.handleChange}
