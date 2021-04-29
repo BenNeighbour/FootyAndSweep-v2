@@ -52,7 +52,10 @@ const BuyTicketsModal: FunctionComponent<Props> = (props) => {
         return (
             <Formik
                 onSubmit={(formValues) => {
-                    props.ticketActions.buySweepstakeTicketsAction({sweepstake: props.sweepstake, numberOfTickets: formValues.numberOfTickets});
+                    props.ticketActions.buySweepstakeTicketsAction({
+                        sweepstake: props.sweepstake,
+                        numberOfTickets: formValues.numberOfTickets
+                    });
                 }}
                 validationSchema={schema}
                 initialValues={{
@@ -69,15 +72,16 @@ const BuyTicketsModal: FunctionComponent<Props> = (props) => {
                     } = formik;
                     if (props.sweepstake !== null) return (
                         <Form>
-                            <Modal small={true} shrinksOnMobile={true} setShowing={(value: boolean) => props.sweepstakePageActions.setIsBuyingTickets({
-                                isBuyingTickets: value,
-                                sweepstake: null
-                            })} title={`Buy Tickets from ${props.sweepstake.name}`}
+                            <Modal small={true} shrinksOnMobile={true}
+                                   setShowing={(value: boolean) => props.sweepstakePageActions.setIsBuyingTickets({
+                                       isBuyingTickets: value,
+                                       sweepstake: null
+                                   })} title={`Buy Tickets from ${props.sweepstake.name}`}
                                    description={"Enter the number of tickets you would like to buy"}
                                    showing={props.state.sweepstakesPage.buyingTickets.isBuyingTickets}>
                                 <BuyTicketsForm handleBlur={handleBlur} values={values} handleChange={handleChange}
-                                                    errors={errors.numberOfTickets || props.state.sweepstake.error}
-                                                    touched={touched}/>
+                                                errors={errors.numberOfTickets || props.state.sweepstake.error}
+                                                touched={touched}/>
                             </Modal>
                         </Form>
                     )
@@ -85,6 +89,7 @@ const BuyTicketsModal: FunctionComponent<Props> = (props) => {
             </Formik>
         );
     }
+
 
     return null;
 };

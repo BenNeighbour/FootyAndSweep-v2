@@ -47,7 +47,7 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
         props.sweepstakePageActions.getMySweepstakesAction("");
     }, [props.sweepstakePageActions]);
 
-    if (props.state.sweepstakesPage.isLoading) return <LoadingPage />
+    if (props.state.sweepstakesPage.isLoading) return <LoadingPage/>
 
     return (
         <div className={"container"}>
@@ -79,10 +79,12 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
                                 return (
                                     <React.Fragment key={`sweepstake-${index}`}>
                                         <SweepstakeCard
-                                            setIsBuyingTickets={(sweepstake) => {console.log(sweepstake); props.sweepstakePageActions.setIsBuyingTickets({
-                                                isBuyingTickets: true,
-                                                sweepstake: sweepstake
-                                            })}}
+                                            setIsBuyingTickets={(sweepstake) => {
+                                                props.sweepstakePageActions.setIsBuyingTickets({
+                                                    isBuyingTickets: true,
+                                                    sweepstake: sweepstake
+                                                })
+                                            }}
                                             sweepstakeJoinCode={value.joinCode}
                                             isMobile={isMobile}
                                             sweepstakeHashTags={["#bhawhu", "#firstscorer"]}
