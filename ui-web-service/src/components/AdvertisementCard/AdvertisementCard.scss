@@ -41,6 +41,7 @@
     overflow: hidden;
     max-height: fit-content;
     transition: all .2s ease-in-out;
+    z-index: 1000;
 
     .mainSection {
       cursor: pointer;
