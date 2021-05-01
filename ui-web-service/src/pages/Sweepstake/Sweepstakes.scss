@@ -58,23 +58,6 @@
       -webkit-backdrop-filter: blur(2px);
     }
 
-    .searchSection {
-      padding: 15px;
-      height: fit-content;
-      font-family: 'Inter', sans-serif;
-      position: relative;
-      display: flex;
-      flex: 1;
-      background: #0F1318;
-      object-fit: contain;
-      width: 100%;
-
-      .searchBarContainer {
-        margin-left: 15px;
-        margin-right: 15px;
-      }
-    }
-
     .logoSection {
       visibility: hidden;
       clear: both;
@@ -133,8 +116,6 @@
 }
 
 .sweepstakesContainer {
-  scrollbar-color: #151A21 transparent;
-
   width: 100%;
   height: 100%;
   display: flex;
@@ -244,13 +225,6 @@
           background-image: url("http://www.footyandsweep-dev.com:3000/profile.jpg");
         }
       }
-
-      .searchSection {
-        height: fit-content;
-        flex: 1;
-        width: 100%;
-        background-color: transparent;
-      }
     }
 
     .sweepstakesContainer {
@@ -335,14 +309,6 @@
   }
 
   .container {
-    .topSection {
-      .searchSection {
-        display: none;
-        flex: 0;
-        visibility: hidden;
-      }
-    }
-
     .sweepstakesContainer {
       .leftSweepstakeSection {
         visibility: hidden;
