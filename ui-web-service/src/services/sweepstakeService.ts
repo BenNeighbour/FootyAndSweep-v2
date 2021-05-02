@@ -59,6 +59,21 @@ export function getMySweepstakes(sweepstakeChannel: any) {
 }
 
 
+export function getProfileInfo(sweepstakeChannel: any) {
+    return axios.get(`http://api.footyandsweep-dev.com:30389/auth/me/`, {withCredentials: true}).then(value => {
+        sweepstakeChannel.put({
+            type: ActionType.GET_PROFILE_INFO_SUCCESS,
+            payload: value.data
+        })
+    }).catch((reason: any) => {
+        sweepstakeChannel.put({
+            type: ActionType.GET_PROFILE_INFO_ERROR,
+            payload: null
+        });
+    })
+}
+
+
 export async function checkIsAuthenticated() {
     return await axios.get("http://api.footyandsweep-dev.com:30389/auth/check", {withCredentials: true});
 }

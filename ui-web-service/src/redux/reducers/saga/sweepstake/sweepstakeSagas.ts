@@ -21,7 +21,8 @@ import {
     buySweepstakeTickets,
     getMySweepstakes,
     joinSweepstake,
-    saveSweepstake
+    saveSweepstake,
+    getProfileInfo
 } from "../../../../services/sweepstakeService";
 import {channel} from "redux-saga";
 
@@ -98,6 +99,10 @@ function getMySweepstakesSaga({payload}: { payload: String }) {
     getMySweepstakes(sweepstakeChannel)
 }
 
+function getProfileInfoSaga() {
+    getProfileInfo(sweepstakeChannel);
+}
+
 function* watchSweepstakeChannel() {
     const action = yield take(sweepstakeChannel);
     yield put(action)
@@ -120,11 +125,16 @@ function* onGetMySweepstakesWatcher() {
     yield takeLatest(ActionType.GET_MY_SWEEPSTAKES_REQUEST as any, getMySweepstakesSaga);
 }
 
+function* onGetProfileDetailsWatcher() {
+    yield takeLatest(ActionType.GET_PROFILE_INFO_REQUEST as any, getProfileInfoSaga);
+}
+
 let sweepstakeSagas = [
     fork(watchSweepstakeChannel),
     fork(onSaveSweepstakeWatcher),
     fork(onJoinSweepstakeWatcher),
     fork(onBuySweepstakeTicketsWatcher),
+    fork(onGetProfileDetailsWatcher),
     fork(onGetMySweepstakesWatcher)
 ];
 

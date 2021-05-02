@@ -17,9 +17,12 @@
 package com.footyandsweep.apigatewayservice;
 
 import com.footyandsweep.apigatewayservice.dao.UserDao;
+import com.footyandsweep.apigatewayservice.exception.ResourceNotFoundException;
 import com.footyandsweep.apigatewayservice.model.User;
+import com.footyandsweep.apigatewayservice.model.UserPrincipal;
 import com.footyandsweep.apigatewayservice.payload.LoginRequest;
 import com.footyandsweep.apigatewayservice.payload.SignUpRequest;
+import com.footyandsweep.apigatewayservice.security.CurrentUser;
 import com.footyandsweep.apigatewayservice.security.JwtTokenProvider;
 import com.footyandsweep.apigatewayservice.service.UserService;
 import org.springframework.http.*;
@@ -116,4 +119,12 @@ public class AuthenticationController {
                   .body(userDao.findUserById(tokenProvider.getUserIdFromToken(jwt)));
             });
   }
+
+    @GetMapping(value = "/me", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("isAuthenticated()")
+    public Mono<User> me(@CurrentUser UserPrincipal userPrincipal) {
+        return Mono.just(userDao
+                .findById(userPrincipal.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userPrincipal.getId())));
+    }
 }

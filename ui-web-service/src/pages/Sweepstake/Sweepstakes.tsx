@@ -44,6 +44,7 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
     const isMobile = useMediaQuery({query: `(max-width: 768px)`});
 
     useEffect(() => {
+        props.sweepstakePageActions.getProfileInfoAction();
         props.sweepstakePageActions.getMySweepstakesAction("");
     }, [props.sweepstakePageActions]);
 

@@ -48,3 +48,9 @@ export const getMySweepstakesAction = (payload: String) => {
         payload
     }
 };
+
+export const getProfileInfoAction = () => {
+    return {
+        type: ActionType.GET_PROFILE_INFO_REQUEST
+    }
+};

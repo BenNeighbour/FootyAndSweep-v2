@@ -148,4 +148,27 @@ export const yourSweepstakesReducer = createReducer<SweepstakesPageReducerType>(
             error: action.payload,
         };
     },
+
+
+    [ActionType.GET_PROFILE_INFO_REQUEST](state: SweepstakesPageReducerType) {
+        return {
+            ...state,
+            isLoading: true,
+        };
+    },
+
+    [ActionType.GET_PROFILE_INFO_SUCCESS](state: SweepstakesPageReducerType) {
+        return {
+            ...state,
+            isLoading: false,
+            error: null
+        };
+    },
+
+    [ActionType.GET_PROFILE_INFO_ERROR](state: SweepstakesPageReducerType, action: Action<number>) {
+        return {
+            ...state,
+            isLoading: false
+        };
+    },
 });

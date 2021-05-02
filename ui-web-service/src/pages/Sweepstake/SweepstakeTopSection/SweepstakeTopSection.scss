@@ -43,10 +43,10 @@
     position: relative;
     display: flex;
     flex: 2;
-    background: #0F1318;
     object-fit: contain;
     width: 100%;
     padding: 15px;
+    background: transparent;
 
     .searchBarContainer {
       margin-left: 15px;
@@ -155,7 +155,9 @@
 }
 
 @media (max-width: 768px) {
-  .searchSection {
-    background: #0F1318;
+  .topSection {
+    .searchSection {
+      background: #0F1318;
+    }
   }
 }
