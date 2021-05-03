@@ -59,6 +59,7 @@
     clear: both;
     display: none;
     flex: 0;
+    padding: 15px;
   }
 
   .buttonSection {
@@ -102,6 +103,7 @@
       justify-content: center;
       align-items: flex-start;
       place-items: center;
+      overflow: hidden;
 
       .opacitySection {
         visibility: hidden;
@@ -114,6 +116,10 @@
         display: flex;
         visibility: visible;
         flex: 1;
+        width: fit-content;
+        height: inherit;
+        position: relative;
+        padding: 15px;
       }
 
       .buttonSection {

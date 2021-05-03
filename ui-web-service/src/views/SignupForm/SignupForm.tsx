@@ -82,14 +82,15 @@ const SignupForm: FunctionComponent<Props> = (props) => {
                         <Form className={"form"}>
                             <div className={"signupFormContainer"}>
                                 <div className={"fieldSection"}>
-                                    <InputField type={"text"} onChange={() => {
-                                    }} style={{width: "85%"}} touched={false} errors={""} value={""} label={"Full Name"}
-                                                name={"fullname"}/>
-
                                     <InputField type={"text"} onChange={handleChange} style={{width: "85%"}}
                                                 touched={touched.username} errors={errors.username} value={values.username}
-                                                label={"Username"}
+                                                label={"Full Name"}
                                                 name={"username"}/>
+
+                                    <InputField type={"email"} onChange={handleChange} style={{width: "85%"}}
+                                                touched={touched.email} errors={errors.email} value={values.email}
+                                                label={"Email Address"}
+                                                name={"email"}/>
 
                                     <InputField type={"password"} onChange={handleChange} style={{width: "85%"}}
                                                 touched={touched.password} errors={errors.password} value={values.password}
@@ -99,7 +100,7 @@ const SignupForm: FunctionComponent<Props> = (props) => {
                                     <InputField type={"password"} onChange={handleChange} style={{width: "85%"}}
                                                 touched={touched.confirmPassword} errors={errors.confirmPassword}
                                                 value={values.confirmPassword}
-                                                label={"Comfirm Password"}
+                                                label={"Confirm Password"}
                                                 name={"confirmPassword"}/>
 
                                     <span className={"errorMessage"}>{props.error}</span>

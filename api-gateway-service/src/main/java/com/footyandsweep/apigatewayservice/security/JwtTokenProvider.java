@@ -17,7 +17,9 @@
 package com.footyandsweep.apigatewayservice.security;
 
 import com.footyandsweep.apigatewayservice.config.AppProperties;
+import com.footyandsweep.apigatewayservice.dao.UserDao;
 import com.footyandsweep.apigatewayservice.model.UserPrincipal;
+import com.google.gson.Gson;
 import io.jsonwebtoken.*;
 import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
@@ -31,16 +33,18 @@ import org.springframework.stereotype.Service;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.Date;
-import java.util.UUID;
+import java.util.HashMap;
 
 @Service
 public class JwtTokenProvider {
 
   private static final Logger logger = LoggerFactory.getLogger(JwtTokenProvider.class);
 
+  private final UserDao userDao;
   private AppProperties appProperties;
 
-  public JwtTokenProvider(AppProperties appProperties) {
+  public JwtTokenProvider(UserDao userDao, AppProperties appProperties) {
+    this.userDao = userDao;
     this.appProperties = appProperties;
   }
 
@@ -48,6 +52,7 @@ public class JwtTokenProvider {
     try {
       UserPrincipal userPrincipal = new UserPrincipal();
       BeanUtils.copyProperties(userPrincipal, authentication.getPrincipal());
+      BeanUtils.copyProperties(userPrincipal, userDao.findUserByEmail(userPrincipal.getAttributes().get("email").toString()));
 
       Date now = new Date();
       Date expiryDate = new Date(now.getTime() + appProperties.getAuth().getTokenExpirationMsec());
@@ -55,8 +60,7 @@ public class JwtTokenProvider {
       return Jwts.builder()
           .setIssuer("footyandsweep")
           .claim("metadata", userPrincipal.getAttributes())
-          .claim("sub", userPrincipal.getId())
-          .setId(UUID.randomUUID().toString())
+          .setId(userPrincipal.getId())
           .setIssuedAt(new Date())
           .setExpiration(expiryDate)
           .signWith(SignatureAlgorithm.HS256, appProperties.getAuth().getTokenSecret())
@@ -69,23 +73,24 @@ public class JwtTokenProvider {
   }
 
   public String getUserIdFromToken(String token) {
+    Claims claims = Jwts.parser()
+            .setSigningKey(appProperties.getAuth().getTokenSecret())
+            .parseClaimsJws(token)
+            .getBody();
+
+    return claims.getId();
+  }
+
+  public Authentication getAuthentication(String token) {
     Claims claims =
         Jwts.parser()
             .setSigningKey(appProperties.getAuth().getTokenSecret())
             .parseClaimsJws(token)
             .getBody();
 
-    return claims.getSubject();
-  }
-
-
-  public Authentication getAuthentication(String token) {
-    Claims claims = Jwts.parser()
-            .setSigningKey(appProperties.getAuth().getTokenSecret())
-            .parseClaimsJws(token)
-            .getBody();
-
-    Collection<? extends GrantedAuthority> authorities = claims == null ? AuthorityUtils.NO_AUTHORITIES
+    Collection<? extends GrantedAuthority> authorities =
+        claims == null
+            ? AuthorityUtils.NO_AUTHORITIES
             : AuthorityUtils.commaSeparatedStringToAuthorityList(claims.toString());
 
     UserPrincipal principal = new UserPrincipal(claims.getSubject(), "", "", authorities);

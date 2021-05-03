@@ -20,6 +20,7 @@ import com.footyandsweep.apigatewayservice.oauth2.CustomAuthorizationRequestRepo
 import com.footyandsweep.apigatewayservice.oauth2.OAuth2FailureHandler;
 import com.footyandsweep.apigatewayservice.oauth2.OAuth2SuccessHandler;
 import com.footyandsweep.apigatewayservice.security.JwtAuthenticationRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -45,6 +46,7 @@ import java.util.Collections;
 
 @Configuration
 @EnableWebFluxSecurity
+@RequiredArgsConstructor
 @EnableReactiveMethodSecurity
 public class SecurityConfig {
 
@@ -52,17 +54,6 @@ public class SecurityConfig {
   private final OAuth2FailureHandler oAuth2FailureHandler;
   private final CustomAuthorizationRequestRepository authorizationRequestRepository;
   private final ReactiveUserDetailsService userDetailsService;
-
-  public SecurityConfig(
-      OAuth2SuccessHandler oAuth2SuccessHandler,
-      OAuth2FailureHandler oAuth2FailureHandler,
-      CustomAuthorizationRequestRepository authorizationRequestRepository,
-      ReactiveUserDetailsService userDetailsService) {
-    this.oAuth2SuccessHandler = oAuth2SuccessHandler;
-    this.oAuth2FailureHandler = oAuth2FailureHandler;
-    this.authorizationRequestRepository = authorizationRequestRepository;
-    this.userDetailsService = userDetailsService;
-  }
 
   @Bean
   public ReactiveAuthenticationManager authenticationManager() {

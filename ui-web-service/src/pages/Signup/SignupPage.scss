@@ -54,14 +54,35 @@
     }
 
     .leftSection {
-      height: 100%;
-      margin: 0;
       display: flex;
+      height: 100%;
       flex-direction: column;
       width: 100%;
       box-sizing: border-box;
+      text-align: center;
+      justify-content: center;
+      margin: auto;
+      position: relative;
+      place-items: center;
 
       flex: 2;
+
+      .largeLogo {
+        display: inline-flex;
+        text-align: center;
+        height: fit-content;
+        justify-content: center;
+
+        .brandTitle {
+          width: 100%;
+          text-align: center;
+          font-size: 4vh;
+          line-height: 100%;
+          color: #ffffff;
+          font-weight: 500;
+          margin: auto;
+        }
+      }
     }
   }
 }

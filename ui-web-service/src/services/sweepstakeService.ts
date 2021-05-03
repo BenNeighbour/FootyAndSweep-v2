@@ -60,7 +60,7 @@ export function getMySweepstakes(sweepstakeChannel: any) {
 
 
 export function getProfileInfo(sweepstakeChannel: any) {
-    return axios.get(`http://api.footyandsweep-dev.com:30389/auth/me/`, {withCredentials: true}).then(value => {
+    return axios.get(`http://api.footyandsweep-dev.com:30389/auth/me/`, {withCredentials: true, headers: {"Authorization": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJmb290eWFuZHN3ZWVwIiwibWV0YWRhdGEiOnsic3ViIjoiMTExMTQyNzg1MzQ5MTI4MzE3OTMyIiwibmFtZSI6IkJlbiBOZWlnaGJvdXIiLCJnaXZlbl9uYW1lIjoiQmVuIiwiZmFtaWx5X25hbWUiOiJOZWlnaGJvdXIiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUFUWEFKenJ4UHFaeVlIdEt4XzdSUDFKdlhkakxqNHpKRm9ORE1wWEdjQlo9czk2LWMiLCJlbWFpbCI6ImJlbi5uZWlnaGJvdXIuZGV2QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJsb2NhbGUiOiJlbiJ9LCJqdGkiOiIzYmU5MjBiYS0xY2JmLTQxOTktYTE4ZS03NmZjZmY1MTI1ZmEiLCJpYXQiOjE2MTk5ODc0MzYsImV4cCI6MjQ4Mzk4NzQzNn0.cdMdd_8-i-JHZgbd6z-pFcnfrhlUAIyBvg6JtkaqABE"}}).then(value => {
         sweepstakeChannel.put({
             type: ActionType.GET_PROFILE_INFO_SUCCESS,
             payload: value.data

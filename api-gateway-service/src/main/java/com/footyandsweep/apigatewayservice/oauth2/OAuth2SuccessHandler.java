@@ -28,6 +28,7 @@ import com.footyandsweep.apigatewayservice.security.JwtTokenProvider;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.protobuf.util.JsonFormat;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
@@ -43,6 +44,7 @@ import java.net.URI;
 import java.util.Arrays;
 
 @Component
+@RequiredArgsConstructor
 public class OAuth2SuccessHandler implements ServerAuthenticationSuccessHandler {
 
   private static final Gson gson =
@@ -53,11 +55,6 @@ public class OAuth2SuccessHandler implements ServerAuthenticationSuccessHandler 
 
   private final JwtTokenProvider tokenProvider;
   private final UserDao userDao;
-
-  public OAuth2SuccessHandler(JwtTokenProvider tokenProvider, UserDao userDao) {
-    this.tokenProvider = tokenProvider;
-    this.userDao = userDao;
-  }
 
   @Override
   public Mono<Void> onAuthenticationSuccess(

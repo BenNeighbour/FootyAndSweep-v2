@@ -41,8 +41,8 @@ const schema = yup.object().shape({
     email: yup
         .string()
         .email()
-        .required("You must enter a username.")
-        .label("Username"),
+        .required("You must enter an Email Address.")
+        .label("Email Address"),
     password: yup
         .string()
         .required("You must enter a Password.")

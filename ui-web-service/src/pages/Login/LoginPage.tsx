@@ -19,6 +19,7 @@ import React, {FunctionComponent, useEffect, useState} from 'react';
 import LoginForm from "../../views/LoginForm/LoginForm";
 import {useHistory} from "react-router-dom";
 import "./LoginPage.scss"
+import Logo from "../../icons/logo.png";
 
 interface OwnProps {}
 
@@ -44,7 +45,9 @@ const LoginPage: FunctionComponent<Props> = (props) => {
               <LoginForm history={history} error={historyPreviousState !== undefined ? historyPreviousState.errors : null} />
           </div>
           <div className={"rightSection"}>
-
+              <div className={"largeLogo"}><img alt={""} src={Logo} style={{
+                  width: "10vw"
+              }}/></div>
           </div>
       </div>
   );

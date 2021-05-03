@@ -31,6 +31,10 @@
   position: relative;
   flex: 1;
 
+  .form {
+    width: 100%;
+  }
+
   .signupFormContainer {
     width: 100%;
     height: fit-content;
