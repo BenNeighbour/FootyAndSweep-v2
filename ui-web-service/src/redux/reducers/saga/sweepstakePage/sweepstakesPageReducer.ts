@@ -21,6 +21,7 @@ import {SweepstakeReducerType} from "../sweepstake";
 
 export interface SweepstakesPageReducerType {
     sweepstakes: any[];
+    profileInfo: any;
 
     joiningSweepstake: boolean;
     creatingSweepstake: boolean;
@@ -37,6 +38,7 @@ export interface SweepstakesPageReducerType {
 
 const defaultSweepstakePageState: SweepstakesPageReducerType = {
     sweepstakes: [],
+    profileInfo: null,
 
     joiningSweepstake: false,
     creatingSweepstake: false,
@@ -157,15 +159,16 @@ export const yourSweepstakesReducer = createReducer<SweepstakesPageReducerType>(
         };
     },
 
-    [ActionType.GET_PROFILE_INFO_SUCCESS](state: SweepstakesPageReducerType) {
+    [ActionType.GET_PROFILE_INFO_SUCCESS](state: SweepstakesPageReducerType, action: Action<any>) {
         return {
             ...state,
             isLoading: false,
+            profileInfo: action.payload,
             error: null
         };
     },
 
-    [ActionType.GET_PROFILE_INFO_ERROR](state: SweepstakesPageReducerType, action: Action<number>) {
+    [ActionType.GET_PROFILE_INFO_ERROR](state: SweepstakesPageReducerType) {
         return {
             ...state,
             isLoading: false

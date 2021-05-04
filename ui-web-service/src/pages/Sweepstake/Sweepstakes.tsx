@@ -63,7 +63,7 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
 
                 <div className={`sweepstakesContainer`}>
                     <div className={"leftSweepstakeSection"}>
-                        <ProfileCard className={"profileCard"}/>
+                        <ProfileCard profile={props.state.sweepstakesPage.profileInfo} className={"profileCard"}/>
                     </div>
                     <div className={"mainSweepstakeSection"}>
                         <div className={"sweepstakes"}>

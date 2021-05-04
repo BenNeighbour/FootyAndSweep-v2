@@ -110,3 +110,12 @@ export interface BuyingTickets {
     isBuyingTickets: boolean;
     sweepstake: SweepstakeData | null;
 }
+
+export interface ProfileData {
+    balance: number;
+    email: string;
+    id: string;
+    profilePicture: string;
+    provider: string;
+    username: string;
+}
