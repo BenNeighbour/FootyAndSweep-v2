@@ -76,7 +76,7 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
                                         className={"createSweepstakeButton"}/>
                             </div>
 
-                            {props.state.sweepstakesPage.sweepstakes.map((value: any, index: any) => {
+                            {props.state.sweepstakesPage.sweepstakes.length > 0 ? props.state.sweepstakesPage.sweepstakes.map((value: any, index: any) => {
                                 return (
                                     <React.Fragment key={`sweepstake-${index}`}>
                                         <SweepstakeCard
@@ -97,7 +97,11 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
                                                                isMobile={true}/> : undefined}
                                     </React.Fragment>
                                 );
-                            })}
+                            }) : (
+                                <div className={"no-sweepstakes"}>
+                                    <span className={"no-sweepstakes-text"}>Oh sorry! You've got no recent sweepstakes, join or create one of your own</span>
+                                </div>
+                            )}
                         </div>
                         <div className={"rightSweepstakeSection"}>
                             <AdvertisementCard advertiserLink={"https://www.algoexpert.io"} isMobile={false}/>

@@ -96,11 +96,31 @@ function* buySweepstakeTicketsSaga({payload}: { payload: { sweepstake: any, numb
 }
 
 function getMySweepstakesSaga({payload}: { payload: String }) {
-    getMySweepstakes(sweepstakeChannel)
+    getMySweepstakes().then(value => {
+        sweepstakeChannel.put({
+            type: ActionType.GET_MY_SWEEPSTAKES_SUCCESS,
+            payload: value.data
+        })
+    }).catch((reason: any) => {
+        sweepstakeChannel.put({
+            type: ActionType.GET_MY_SWEEPSTAKES_ERROR,
+            payload: null
+        });
+    })
 }
 
 function getProfileInfoSaga() {
-    getProfileInfo(sweepstakeChannel);
+    getProfileInfo().then(value => {
+        sweepstakeChannel.put({
+            type: ActionType.GET_PROFILE_INFO_SUCCESS,
+            payload: value.data
+        })
+    }).catch((reason: any) => {
+        sweepstakeChannel.put({
+            type: ActionType.GET_PROFILE_INFO_ERROR,
+            payload: null
+        });
+    });
 }
 
 function* watchSweepstakeChannel() {
@@ -131,11 +151,11 @@ function* onGetProfileDetailsWatcher() {
 
 let sweepstakeSagas = [
     fork(watchSweepstakeChannel),
+    fork(onGetMySweepstakesWatcher),
     fork(onSaveSweepstakeWatcher),
     fork(onJoinSweepstakeWatcher),
     fork(onBuySweepstakeTicketsWatcher),
-    fork(onGetProfileDetailsWatcher),
-    fork(onGetMySweepstakesWatcher)
+    fork(onGetProfileDetailsWatcher)
 ];
 
 export default sweepstakeSagas;

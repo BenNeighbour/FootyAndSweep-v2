@@ -139,6 +139,26 @@
     width: 100%;
     margin-top: 28vh;
 
+    .no-sweepstakes {
+      padding: 0 30px;
+      visibility: visible;
+      display: flex;
+      justify-content: space-between;
+      text-align: center;
+
+      .no-sweepstakes-text {
+        visibility: visible;
+        display: flex;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 15px;
+        line-height: 18px;
+        color: #B2BDCD;
+        padding-top: 2vh;
+        padding-bottom: 2vh;
+      }
+    }
+
     .titleDesktopSection {
       visibility: hidden;
       clear: both;

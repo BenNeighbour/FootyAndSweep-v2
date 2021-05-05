@@ -108,7 +108,7 @@ export const yourSweepstakesReducer = createReducer<SweepstakesPageReducerType>(
         };
     },
 
-    [ActionType.GET_MY_SWEEPSTAKES_SUCCESS](state: SweepstakeReducerType, action: Action<number>) {
+    [ActionType.GET_MY_SWEEPSTAKES_SUCCESS](state: SweepstakeReducerType, action: Action<any>) {
         return {
             ...state,
             isLoading: false,
