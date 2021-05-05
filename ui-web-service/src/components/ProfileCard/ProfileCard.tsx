@@ -34,7 +34,9 @@ const ProfileCard: FunctionComponent<Props> = (props) => {
             <div className={"profileCardContainer"}>
                 <div className={"mainSection"}>
                     <div className={"profilePictureSection"}>
-                        <img alt={""} src={props.profile.profilePicture} />
+                        <img alt={""} style={{
+                            width: "70px"
+                        }}  src={props.profile.profilePicture}/>
                     </div>
                     <div className={"metadataSection"}>
                         <div className={"usernameSection"}>
@@ -47,7 +49,9 @@ const ProfileCard: FunctionComponent<Props> = (props) => {
                             </div>
                         </div>
                         <div className={"balanceSection"}>
-                            <span className={"balance"}><CountUp end={props.profile.balance} duration={2} /></span>
+                            <span className={"balance"}><CountUp end={props.profile.balance}
+                                                                 decimals={(props.profile.balance % 1) !== 0 ? 2 : 0}
+                                                                 duration={2}/></span>
                             <br/>
                             <span className={"currency"}>FootyCoins</span>
                         </div>

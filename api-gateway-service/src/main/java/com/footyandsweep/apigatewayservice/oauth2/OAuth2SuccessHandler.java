@@ -89,18 +89,18 @@ public class OAuth2SuccessHandler implements ServerAuthenticationSuccessHandler 
       String registrationId =
           webFilterExchange.getExchange().getRequest().getPath().toString().split("/")[4];
 
+      /* If the user does not exist, they need to sign up first */
+      if (user == null) throw new OAuth2AuthenticationProcessingException("You must sign up!");
+
       /* Check the signup query param  */
       if (!isSigningUp) {
-        /* If the user does not exist, they need to sign up first */
-        if (user == null) throw new OAuth2AuthenticationProcessingException("You must sign up!");
 
         updateExistingUser(
             user,
             OAuth2UserInfoFactory.getOAuth2UserInfo(registrationId, userPrincipal.getAttributes()));
       } else {
         /* The user is signing up */
-        registerNewUser(
-            OAuth2UserInfoFactory.getOAuth2UserInfo(registrationId, userPrincipal.getAttributes()));
+        user = registerNewUser(OAuth2UserInfoFactory.getOAuth2UserInfo(registrationId, userPrincipal.getAttributes()));
       }
 
       /* Set the cookie */

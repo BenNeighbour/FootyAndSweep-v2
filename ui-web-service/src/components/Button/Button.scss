@@ -14,13 +14,13 @@
  *   limitations under the License.
  */
 
-$accent: #3D7CDB;
+$accent: #00B2FD;
 $white: #ffffff;
 
 .buttonContainer {
   padding: 9px 50px;
 
-  background: rgba(61, 124, 219, 0.9);
+  background: rgba(0, 178, 253, 0.9);
   border-radius: 8px;
   cursor: pointer;
 
@@ -39,5 +39,5 @@ $white: #ffffff;
 }
 
 .buttonContainer:hover {
-  background-color: rgba(61, 124, 219, 0.75);
+  background-color: rgba(0, 178, 253, 0.8);
 }
