@@ -18,9 +18,7 @@
 .outerLoginArea {
   background: #0D1114;
   box-shadow: -3px 4px 14px rgba(0, 0, 0, 0.7);
-  border-radius: 15px;
-  margin: 10px;
-  width: 100%;
+  width: 480px;
 
   display: flex;
   align-items: center;
@@ -29,94 +27,135 @@
   flex-direction: column;
 
   position: relative;
-  flex: 1;
+
+  .innerLoginArea {
+    padding: 35px;
+    display: flex;
+    align-items: center;
+    place-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+
+    .loginFormContainer {
+      width: 100%;
+      height: fit-content;
+      position: relative;
+
+
+      .fieldSection {
+        margin-bottom: 40px;
+
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+
+        align-items: center;
+        place-items: center;
+        vertical-align: center;
+
+        .checkboxArea {
+          padding-top: 30px;
+          padding-bottom: 25px;
+        }
+
+        .errorMessage {
+          float: left;
+          text-align: left;
+          width: 85%;
+          color: #FD4D4D;
+          padding-bottom: 10px;
+
+          font-style: normal;
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 22px;
+        }
+
+        .submitButton {
+          width: 85%;
+        }
+      }
+
+      .socialButtonSection {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        text-align: center;
+        place-items: center;
+        justify-content: center;
+      }
+    }
+
+    .bottomSection {
+      float: left;
+      display: flex;
+      text-align: left;
+      position: absolute;
+      gap: 10px;
+      bottom: 0;
+      width: 100%;
+      left: 0;
+      padding-left: 10%;
+      padding-right: 10%;
+      padding-bottom: 40px;
+
+      .text {
+        font-size: 14px;
+        line-height: 25px;
+        color: #00B2FD;
+        text-decoration: none;
+        padding-left: 5px;
+        padding-right: 5px;
+        font-weight: 800;
+        letter-spacing: 0.03em;
+      }
+
+      .textLink {
+        font-size: 14px;
+        line-height: 25px;
+        color: #FFFFFF;
+        padding-bottom: 1px;
+        border-bottom-style: solid;
+        border-bottom-width: 2.5px;
+        width: fit-content;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .tabSection {
+    width: 100%;
+    display: flex;
+    overflow: hidden;
+
+    .tab {
+      line-height: 60px;
+      flex: 1;
+      box-shadow: -3px 4px 14px rgba(0, 0, 0, 0.7);
+      position: relative;
+      z-index: 1;
+      font-weight: 700;
+      font-size: 16px;
+      background: #0B0E11;
+      color: #ffffff;
+    }
+
+    .tab-active {
+      line-height: 60px;
+      flex: 1;
+      box-shadow: -3px 4px 14px rgba(0, 0, 0, 0.7);
+      position: relative;
+      z-index: 1;
+      background: #0D1114;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 16px;
+    }
+  }
 
   .form {
     width: 100%;
   }
 
-  .loginFormContainer {
-    width: 100%;
-    height: fit-content;
-    position: relative;
-
-    .fieldSection {
-      margin-bottom: 40px;
-
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-
-      align-items: center;
-      place-items: center;
-      vertical-align: center;
-
-      .checkboxArea {
-        padding-top: 30px;
-        padding-bottom: 25px;
-      }
-
-      .errorMessage {
-        float: left;
-        text-align: left;
-        width: 85%;
-        color: #FD4D4D;
-        padding-bottom: 10px;
-
-        font-style: normal;
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 22px;
-      }
-
-      .submitButton {
-        width: 85%;
-      }
-    }
-
-    .socialButtonSection {
-      width: 100%;
-      display: flex;
-      flex-direction: row;
-      text-align: center;
-      place-items: center;
-      justify-content: center;
-    }
-  }
-
-  .bottomSection {
-    float: left;
-    display: flex;
-    text-align: left;
-    position: absolute;
-    gap: 10px;
-    bottom: 0;
-    width: 100%;
-    left: 0;
-    padding-left: 10%;
-    padding-right: 10%;
-    padding-bottom: 40px;
-
-    .text {
-      font-size: 14px;
-      line-height: 25px;
-      color: #00B2FD;
-      text-decoration: none;
-      padding-left: 5px;
-      padding-right: 5px;
-      font-weight: 800;
-      letter-spacing: 0.03em;
-    }
-
-    .textLink {
-      font-size: 14px;
-      line-height: 25px;
-      color: #FFFFFF;
-      padding-bottom: 1px;
-      border-bottom-style: solid;
-      border-bottom-width: 2.5px;
-      width: fit-content;
-      cursor: pointer;
-    }
-  }
 }

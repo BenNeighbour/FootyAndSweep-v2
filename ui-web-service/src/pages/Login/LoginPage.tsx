@@ -41,13 +41,8 @@ const LoginPage: FunctionComponent<Props> = (props) => {
 
   return (
       <div className={`loginContainer`}>
-          <div className={"leftSection"}>
+          <div className={"mainSection"}>
               <LoginForm history={history} error={historyPreviousState !== undefined ? historyPreviousState.errors : null} />
-          </div>
-          <div className={"rightSection"}>
-              <div className={"largeLogo"}><img alt={""} src={Logo} style={{
-                  width: "10vw"
-              }}/></div>
           </div>
       </div>
   );
