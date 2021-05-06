@@ -20,9 +20,9 @@ import {Client} from "@stomp/stompjs";
 import {
     buySweepstakeTickets,
     getMySweepstakes,
+    getProfileInfo,
     joinSweepstake,
-    saveSweepstake,
-    getProfileInfo
+    saveSweepstake
 } from "../../../../services/sweepstakeService";
 import {channel} from "redux-saga";
 
@@ -95,32 +95,37 @@ function* buySweepstakeTicketsSaga({payload}: { payload: { sweepstake: any, numb
     }
 }
 
-function getMySweepstakesSaga({payload}: { payload: String }) {
-    getMySweepstakes().then(value => {
-        sweepstakeChannel.put({
-            type: ActionType.GET_MY_SWEEPSTAKES_SUCCESS,
-            payload: value.data
-        })
-    }).catch((reason: any) => {
-        sweepstakeChannel.put({
-            type: ActionType.GET_MY_SWEEPSTAKES_ERROR,
+function* getMySweepstakesSaga({payload}: { payload: String }) {
+    const value = yield call(() => {return getMySweepstakes().then(value => value).catch(reason => reason)});
+
+    if (value.data) {
+        yield put({
+                type: ActionType.GET_MY_SWEEPSTAKES_SUCCESS,
+                payload: value.data
+            })
+    } else {
+        yield put({
+                type: ActionType.GET_MY_SWEEPSTAKES_ERROR,
             payload: null
         });
-    })
+    }
+
 }
 
-function getProfileInfoSaga() {
-    getProfileInfo().then(value => {
-        sweepstakeChannel.put({
+function* getProfileInfoSaga() {
+    const value = yield call(() => {return getProfileInfo().then(value => value).catch(reason => reason)});
+
+    if (value.data) {
+        yield put({
             type: ActionType.GET_PROFILE_INFO_SUCCESS,
             payload: value.data
         })
-    }).catch((reason: any) => {
-        sweepstakeChannel.put({
+    } else {
+        yield put({
             type: ActionType.GET_PROFILE_INFO_ERROR,
             payload: null
         });
-    });
+    }
 }
 
 function* watchSweepstakeChannel() {

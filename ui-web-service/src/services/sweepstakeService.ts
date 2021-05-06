@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-import {ActionType, SweepstakeData} from "../redux/model";
+import {SweepstakeData} from "../redux/model";
 import {Client} from "@stomp/stompjs";
 import axios from "axios";
 import {eventChannel} from "redux-saga";
