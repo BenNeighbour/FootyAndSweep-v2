@@ -19,7 +19,6 @@ import React, {FunctionComponent, useEffect, useState} from 'react';
 import LoginForm from "../../views/LoginForm/LoginForm";
 import {useHistory} from "react-router-dom";
 import "./LoginPage.scss"
-import Logo from "../../icons/logo.png";
 
 interface OwnProps {}
 

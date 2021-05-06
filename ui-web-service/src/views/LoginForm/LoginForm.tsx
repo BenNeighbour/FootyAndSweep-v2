@@ -57,8 +57,8 @@ const LoginForm: FunctionComponent<Props> = (props) => {
     return (
         <div className={"outerLoginArea"}>
             <div className={"tabSection"}>
-                <a className={"tab"}>Sign Up</a>
-                <a className={"tab-active"}>Log In</a>
+                <a className={"tab"} href={"http://www.footyandsweep-dev.com:3000/signup"}>Sign Up</a>
+                <a className={"tab-active"} href={"http://www.footyandsweep-dev.com:3000/login"}>Log In</a>
             </div>
             <div className={"innerLoginArea"}>
                 <Formik
