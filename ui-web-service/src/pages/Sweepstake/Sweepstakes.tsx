@@ -32,6 +32,7 @@ import JoinSweepstakeModal from "../../views/SweepstakesPage/JoinSweepstakeModal
 import CreateSweepstakeModal from "../../views/SweepstakesPage/CreateSweepstakeModal";
 import BuyTicketsModal from "../../views/SweepstakesPage/BuyTicketsModal";
 import LoadingPage from "../Loading/LoadingPage";
+import Spinner from "../../components/Spinner/Spinner";
 
 interface OwnProps extends RouteComponentProps {
     state: RootState;
@@ -97,11 +98,11 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
                                                                isMobile={true}/> : undefined}
                                     </React.Fragment>
                                 );
-                            }) : (
-                                <div className={"no-sweepstakes"}>
-                                    <span className={"no-sweepstakes-text"}>Oh sorry! You've got no recent sweepstakes, join or create one of your own</span>
+                            }) : props.state.sweepstakesPage.isLoading ? (
+                                <div>
+                                    <Spinner/>
                                 </div>
-                            )}
+                            ) : null}
                         </div>
                         <div className={"rightSweepstakeSection"}>
                             <AdvertisementCard advertiserLink={"https://www.algoexpert.io"} isMobile={false}/>

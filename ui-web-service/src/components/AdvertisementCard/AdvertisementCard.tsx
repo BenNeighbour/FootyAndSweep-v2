@@ -48,7 +48,7 @@ const AdvertisementCard: FunctionComponent<Props> = (props) => {
                         </div>
                         <span
                             className={"advertisementSubtitle"}>{props.isMobile ? "AlgoExpert | Ace the Coding Interviews with absolute flying colors" : "AlgoExpert | Ace the Coding Interviews"}</span>
-                        <span className={"advertisementDetailsDesktop"}>The sponsor/advertiser can put whatever bullshit they would like here as long as it satifies the sponsor/advertiser’s needs which is to get traffic which is why a good description is here and a link to their homepage is below</span>
+                        <span className={"advertisementDetailsDesktop"}>The sponsor/advertiser can put whatever they would like here as long as it satisfies the sponsor/advertiser’s needs which is to get traffic which is why a good description is here and a link to their homepage is below</span>
                         <div className={"desktopCallToAction"}>
                             <span onClick={() => document.location.href = props.advertiserLink}
                                   className={"advertisementLink"}>Go to AlgoExpert →</span>

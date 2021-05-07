@@ -66,76 +66,78 @@ const SignupForm: FunctionComponent<Props> = (props) => {
 
         return (
             <div className={"outerSignupArea"}>
-                <Formik
-                    onSubmit={(formValues) => {
-                        props.actions.signupUserAction(formValues);
-                    }}
-                    validationSchema={schema}
-                    initialValues={{
-                        username: "",
-                        email: "",
-                        password: "",
-                        confirmPassword: ""
-                    }}
-                >
-                    {({values, handleChange, errors, touched}) => (
-                        <Form className={"form"}>
-                            <div className={"signupFormContainer"}>
-                                <div className={"fieldSection"}>
-                                    <InputField type={"text"} onChange={handleChange} style={{width: "85%"}}
-                                                touched={touched.username} errors={errors.username} value={values.username}
-                                                label={"Full Name"}
-                                                name={"username"}/>
+                <div className={"tabSection"}>
+                    <span className={"tab-active"}>Sign Up</span>
+                    <span className={"tab"} onClick={() => props.history.push("/login")}>Log In</span>
+                </div>
+                <div className={"innerSignupArea"}>
+                    <Formik
+                        onSubmit={(formValues) => {
+                            props.actions.signupUserAction(formValues);
+                        }}
+                        validationSchema={schema}
+                        initialValues={{
+                            username: "",
+                            email: "",
+                            password: "",
+                            confirmPassword: ""
+                        }}
+                    >
+                        {({values, handleChange, errors, touched}) => (
+                            <Form className={"form"}>
+                                <div className={"signupFormContainer"}>
+                                    <div className={"fieldSection"}>
+                                        <InputField type={"text"} onChange={handleChange} style={{width: "85%"}}
+                                                    touched={touched.username} errors={errors.username}
+                                                    value={values.username}
+                                                    label={"Full Name"}
+                                                    name={"username"}/>
 
-                                    <InputField type={"email"} onChange={handleChange} style={{width: "85%"}}
-                                                touched={touched.email} errors={errors.email} value={values.email}
-                                                label={"Email Address"}
-                                                name={"email"}/>
+                                        <InputField type={"email"} onChange={handleChange} style={{width: "85%"}}
+                                                    touched={touched.email} errors={errors.email} value={values.email}
+                                                    label={"Email Address"}
+                                                    name={"email"}/>
 
-                                    <InputField type={"password"} onChange={handleChange} style={{width: "85%"}}
-                                                touched={touched.password} errors={errors.password} value={values.password}
-                                                label={"Password"}
-                                                name={"password"}/>
+                                        <InputField type={"password"} onChange={handleChange} style={{width: "85%"}}
+                                                    touched={touched.password} errors={errors.password}
+                                                    value={values.password}
+                                                    label={"Password"}
+                                                    name={"password"}/>
 
-                                    <InputField type={"password"} onChange={handleChange} style={{width: "85%"}}
-                                                touched={touched.confirmPassword} errors={errors.confirmPassword}
-                                                value={values.confirmPassword}
-                                                label={"Confirm Password"}
-                                                name={"confirmPassword"}/>
+                                        <InputField type={"password"} onChange={handleChange} style={{width: "85%"}}
+                                                    touched={touched.confirmPassword} errors={errors.confirmPassword}
+                                                    value={values.confirmPassword}
+                                                    label={"Confirm Password"}
+                                                    name={"confirmPassword"}/>
 
-                                    <span className={"errorMessage"}>{props.error}</span>
+                                        <span className={"errorMessage"}>{props.error}</span>
 
-                                    <Checkbox textLinkTo={"http://www.footyandsweep-dev.com:3000/terms"}
-                                              textLink={"Terms & Conditions"}
-                                              text={"I agree to FootyAndSweep"}/>
+                                        <Checkbox textLinkTo={"http://www.footyandsweep-dev.com:3000/terms"}
+                                                  textLink={"Terms & Conditions"}
+                                                  text={"I agree to FootyAndSweep"}/>
 
-                                    <Button className={"submitButton"} style={{
-                                        fontSize: "15px",
-                                        lineHeight: "17.5px",
-                                        padding: "12.5px",
-                                        width: "100%",
-                                        borderRadius: "10px",
-                                    }}
-                                            onClick={() => {
-                                            }} type={"submit"} title={"Sign Up"}/>
+                                        <Button className={"submitButton"} style={{
+                                            fontSize: "15px",
+                                            lineHeight: "17.5px",
+                                            padding: "12.5px",
+                                            width: "100%",
+                                            borderRadius: "10px",
+                                        }}
+                                                onClick={() => {
+                                                }} type={"submit"} title={"Sign Up"}/>
+                                    </div>
+
+                                    <div className={"socialButtonSection"}>
+                                        <SigninWithGoogle
+                                            href={"http://api.footyandsweep-dev.com:30389/oauth2/authorization/google?redirect_uri=http://www.footyandsweep-dev.com:3000/oauth/login?signup=true"}/>
+                                        <SigninWithFacebook
+                                            href={"http://api.footyandsweep-dev.com:30389/oauth2/authorization/facebook?redirect_uri=http://www.footyandsweep-dev.com:3000/oauth/login?signup=true"}/>
+                                    </div>
                                 </div>
-
-                                <div className={"socialButtonSection"}>
-                                    <SigninWithGoogle
-                                        href={"http://api.footyandsweep-dev.com:30389/oauth2/authorization/google?redirect_uri=http://www.footyandsweep-dev.com:3000/oauth/login?signup=true"}/>
-                                    <SigninWithFacebook
-                                        href={"http://api.footyandsweep-dev.com:30389/oauth2/authorization/facebook?redirect_uri=http://www.footyandsweep-dev.com:3000/oauth/login?signup=true"}/>
-                                </div>
-                            </div>
-
-                            <div className={"bottomSection"}>
-                                <span className={"text"}><b>Already Got an Account? </b></span><span
-                                onClick={() => props.history.push("/login")}
-                                className={"textLink"}><b>Get Logged In!</b></span>
-                            </div>
-                        </Form>
-                    )}
-                </Formik>
+                            </Form>
+                        )}
+                    </Formik>
+                </div>
             </div>
         );
     }

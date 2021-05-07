@@ -19,7 +19,6 @@ import React, {FunctionComponent, useEffect, useState} from 'react';
 import {useHistory} from "react-router-dom";
 import SignupForm from "../../views/SignupForm/SignupForm";
 import "./SignupPage.scss";
-import Logo from "../../icons/logo.png";
 
 interface OwnProps {
 }
@@ -42,12 +41,7 @@ const SignupPage: FunctionComponent<Props> = (props) => {
 
     return (
         <div className={`signupContainer`}>
-            <div className={"leftSection"}>
-                <div className={"largeLogo"}><img alt={""} src={Logo} style={{
-                    width: "10vw"
-                }}/></div>
-            </div>
-            <div className={"rightSection"}>
+            <div className={"mainSection"}>
                 <SignupForm history={history}
                             error={historyPreviousState !== undefined ? historyPreviousState.errors : null}/>
             </div>
