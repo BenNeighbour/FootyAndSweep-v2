@@ -18,7 +18,8 @@
 .outerLoginArea {
   background: #0D1114;
   box-shadow: -3px 4px 14px rgba(0, 0, 0, 0.7);
-  width: 480px;
+  min-width: 30vw;
+  border-radius: 8px;
 
   display: block;
   align-items: center;
@@ -130,6 +131,7 @@
     overflow: hidden;
 
     .tab {
+      border-radius: 8px;
       line-height: 60px;
       flex: 1;
       box-shadow: -3px 4px 14px rgba(0, 0, 0, 0.7);
@@ -144,6 +146,7 @@
     }
 
     .tab-active {
+      border-radius: 8px;
       line-height: 60px;
       flex: 1;
       box-shadow: -3px 4px 14px rgba(0, 0, 0, 0.7);

@@ -30,15 +30,12 @@
     justify-content: center;
   }
 
-  @media (max-width: 1280px) {
     .outerLoginArea {
       padding: 0;
       margin: 0;
       border-radius: 0;
     }
-  }
 
-  @media (min-width: 1280px) {
     .mainSection {
       height: 100%;
       box-sizing: border-box;
@@ -51,5 +48,4 @@
       padding: 30px 50px;
       flex: 1;
     }
-  }
 }
