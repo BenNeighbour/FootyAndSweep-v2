@@ -43,7 +43,6 @@
       height: fit-content;
       position: relative;
 
-
       .fieldSection {
         margin-bottom: 40px;
 
@@ -131,7 +130,7 @@
     overflow: hidden;
 
     .tab {
-      border-radius: 8px;
+      border-radius: 8px 0 0 0;
       line-height: 60px;
       flex: 1;
       box-shadow: -3px 4px 14px rgba(0, 0, 0, 0.7);
@@ -146,7 +145,7 @@
     }
 
     .tab-active {
-      border-radius: 8px;
+      border-radius: 0 8px 0 0;
       line-height: 60px;
       flex: 1;
       box-shadow: -3px 4px 14px rgba(0, 0, 0, 0.7);

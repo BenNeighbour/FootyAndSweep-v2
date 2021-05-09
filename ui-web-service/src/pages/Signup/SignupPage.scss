@@ -21,32 +21,48 @@
   display: flex;
   box-sizing: border-box;
   overflow: hidden;
+  justify-content: center;
 
   .mainSection {
     padding: 0;
     margin: 0;
     height: 100%;
-    display: flex;
+    display: inline-block;
     justify-content: center;
-    border-radius: 8px;
+    text-align: center;
+
+    .brandSection {
+      border: 0;
+      font: inherit;
+      font-size: 100%;
+      outline: 0;
+      padding: 0;
+      margin-bottom: 2.5vh;
+
+      .smallLogo {
+        width: 5vw;
+        margin-bottom: 2.5vh;
+      }
+
+      .description {
+        font-size: 20px;
+        color: #ffffff;
+      }
+    }
   }
 
   .outerSignupArea {
     padding: 0;
     margin: 0;
-    border-radius: 0;
   }
 
   .mainSection {
     height: 100%;
     box-sizing: border-box;
-    display: flex;
+    display: inherit;
     flex-direction: column;
     place-items: center;
-    vertical-align: center;
+    vertical-align: middle;
     text-align: center;
-
-    padding: 30px 50px;
-    flex: 1;
   }
 }
