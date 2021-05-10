@@ -14,10 +14,12 @@
  *   limitations under the License.
  */
 
-.sweepstakeCardContainer:hover {
+.sweepstakeCardContainer:hover, .sweepstakeCardContainer:focus {
+  transform-style: flat;
   transform: scale(1.015);
   background-color: #242c37;
   box-shadow: none;
+  z-index: -1;
 }
 
 .sweepstakeCardContainer {

@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-import {ActionType, SweepstakeData} from "../redux/model";
+import {SweepstakeData} from "../redux/model";
 import {Client} from "@stomp/stompjs";
 import axios from "axios";
 import {eventChannel} from "redux-saga";
@@ -41,21 +41,16 @@ export function saveSweepstake(client: Client, payload: SweepstakeData) {
 }
 
 
-export function getMySweepstakes(sweepstakeChannel: any) {
+export function getMySweepstakes() {
     /* Get the user id */
     let userId = localStorage.getItem("user_id");
 
-    return axios.get(`http://api.footyandsweep-dev.com:30389/sweepstake/sweepstakes/${userId}`, {withCredentials: true}).then(value => {
-        sweepstakeChannel.put({
-            type: ActionType.GET_MY_SWEEPSTAKES_SUCCESS,
-            payload: value.data
-        })
-    }).catch((reason: any) => {
-        sweepstakeChannel.put({
-            type: ActionType.GET_MY_SWEEPSTAKES_ERROR,
-            payload: null
-        });
-    })
+    return axios.get(`http://api.footyandsweep-dev.com:30389/sweepstake/sweepstakes/${userId}`, {withCredentials: true});
+}
+
+
+export function getProfileInfo() {
+    return axios.get(`http://api.footyandsweep-dev.com:30389/auth/me/`, {withCredentials: true});
 }
 
 

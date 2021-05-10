@@ -19,6 +19,7 @@ import React, {FunctionComponent, useEffect, useState} from 'react';
 import LoginForm from "../../views/LoginForm/LoginForm";
 import {useHistory} from "react-router-dom";
 import "./LoginPage.scss"
+import Logo from "../../icons/logo.png";
 
 interface OwnProps {}
 
@@ -40,11 +41,14 @@ const LoginPage: FunctionComponent<Props> = (props) => {
 
   return (
       <div className={`loginContainer`}>
-          <div className={"leftSection"}>
+          <div className={"mainSection"}>
+              <div className={"brandSection"}>
+                  <img src={Logo} alt={""} className={"smallLogo"}/>
+                  <div>
+                      <span className={"description"}>The best Sweepstakes Platform on the Planet.</span>
+                  </div>
+              </div>
               <LoginForm history={history} error={historyPreviousState !== undefined ? historyPreviousState.errors : null} />
-          </div>
-          <div className={"rightSection"}>
-
           </div>
       </div>
   );

@@ -19,8 +19,6 @@ package com.footyandsweep.apigatewayservice.security;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpCookie;
-import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.ReactiveSecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -29,7 +27,6 @@ import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
-import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -43,7 +40,7 @@ public class JwtAuthenticationRepository implements WebFilter {
   public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
     try {
       /* Get the token from the token cookie */
-      Optional<String> token = getTokenFromCookie(exchange.getRequest());
+      Optional<String> token = CookieUtils.getTokenFromCookie(exchange.getRequest());
 
       if (token.isPresent() && tokenProvider.validateToken(token.get())) {
         Authentication authentication = this.tokenProvider.getAuthentication(token.get());
@@ -58,12 +55,4 @@ public class JwtAuthenticationRepository implements WebFilter {
     return chain.filter(exchange);
   }
 
-  private Optional<String> getTokenFromCookie(ServerHttpRequest request) {
-    /* Find the cookie with the name of token */
-    List<HttpCookie> cookie = request.getCookies().get("token");
-
-    if (cookie == null || cookie.isEmpty() || cookie.get(0) == null) return Optional.empty();
-
-    return Optional.of(cookie.get(0).getValue());
-  }
 }

@@ -19,6 +19,8 @@ import React, {FunctionComponent} from 'react';
 import SearchBar from "../../../components/SearchBar/SearchBar";
 import Button from "../../../components/Button/Button";
 import "./SweepstakeTopSection.scss";
+import Logo from "../../../icons/logo.png";
+import {useHistory} from "react-router-dom";
 
 interface OwnProps {
     isMobile: boolean;
@@ -29,12 +31,18 @@ interface OwnProps {
 type Props = OwnProps;
 
 const SweepstakeTopSection: FunctionComponent<Props> = (props) => {
+    const history = useHistory();
+
     return (
         <div className={"topSection"}>
             <nav className={"navigationSection"}>
             </nav>
             <div className={"logoSection"}>
-                <span>Logo Here</span>
+                <img onClick={() => history.push("/")} src={Logo} alt={""} style={{
+                    width: "55px",
+                    margin: "0px 10px",
+                    cursor: "pointer"
+                }} className={"logo"} />
             </div>
             <div className={"searchSection"}>
                 <SearchBar onChange={() => {

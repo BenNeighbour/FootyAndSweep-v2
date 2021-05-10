@@ -16,6 +16,7 @@
 
 package com.footyandsweep.apigatewayservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.footyandsweep.apicommonlibrary.model.user.UserCommon;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,9 +40,11 @@ public class User extends UserCommon {
   @Column(name = "profilePicture", length = 100000)
   private String profilePicture;
 
+  @JsonIgnore
   @Column(name = "providerId")
   private String providerId;
 
+  @JsonIgnore
   @Column(name = "isEmailVerified", nullable = false)
   private Boolean isEmailVerified = false;
 }

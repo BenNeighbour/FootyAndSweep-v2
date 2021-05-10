@@ -16,23 +16,29 @@
 
 package com.footyandsweep.apigatewayservice;
 
+import com.footyandsweep.apigatewayservice.config.AppProperties;
 import com.footyandsweep.apigatewayservice.dao.UserDao;
 import com.footyandsweep.apigatewayservice.model.User;
 import com.footyandsweep.apigatewayservice.payload.LoginRequest;
 import com.footyandsweep.apigatewayservice.payload.SignUpRequest;
+import com.footyandsweep.apigatewayservice.security.CookieUtils;
 import com.footyandsweep.apigatewayservice.security.JwtTokenProvider;
 import com.footyandsweep.apigatewayservice.service.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.*;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/auth")
 public class AuthenticationController {
 
@@ -40,17 +46,7 @@ public class AuthenticationController {
   private final ReactiveAuthenticationManager authenticationManager;
   private final UserDao userDao;
   private final UserService userService;
-
-  public AuthenticationController(
-      UserService userService,
-      JwtTokenProvider tokenProvider,
-      ReactiveAuthenticationManager authenticationManager,
-      UserDao userDao) {
-    this.userService = userService;
-    this.tokenProvider = tokenProvider;
-    this.authenticationManager = authenticationManager;
-    this.userDao = userDao;
-  }
+  private AppProperties appProperties;
 
   @GetMapping("/check")
   @PreAuthorize("isAuthenticated()")
@@ -115,5 +111,22 @@ public class AuthenticationController {
                   .headers(responseHeaders)
                   .body(userDao.findUserById(tokenProvider.getUserIdFromToken(jwt)));
             });
+  }
+
+  @GetMapping("/me")
+  @Transactional
+  public ResponseEntity<User> me(ServerHttpRequest request) {
+    /* Get the token from the token cookie */
+    Optional<String> token = CookieUtils.getTokenFromCookie(request);
+
+    if (token.isPresent() && tokenProvider.validateToken(token.get())) {
+      String userId = tokenProvider.getUserIdFromToken(token.get());
+      if (userId != null) {
+          User user = userDao.findUserById(userId);
+          if (user != null) return ResponseEntity.ok().body(user);
+      }
+    }
+
+    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
   }
 }

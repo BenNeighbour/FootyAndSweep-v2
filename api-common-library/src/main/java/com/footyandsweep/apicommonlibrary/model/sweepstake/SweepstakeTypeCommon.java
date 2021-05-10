@@ -20,7 +20,16 @@ import java.util.Map;
 
 public enum SweepstakeTypeCommon {
   Correct_Score_FT("Correct Score F/T"),
-  Correct_Score_HT("Correct Score H/T");
+  Correct_Score_HT("Correct Score H/T"),
+
+  RESULT_AT_HT("Result at H/T"),
+  RESULT_AT_FT("Result at F/T"),
+  RESULT_AT_HT_FT("Result at HT/FT"),
+
+  NUMBER_OF_GOALS_FT("Number of Goals F/T"),
+  NUMBER_OF_GOALS_HT("Number of Goals H/T"),
+  RESULT_AT_HT_1ST_HALF("Number of Goals 1st-Half"),
+  RESULT_AT_HT_2ND_HALF("Number of Goals 2st-Half");
 
   SweepstakeTypeCommon(String type) {}
 

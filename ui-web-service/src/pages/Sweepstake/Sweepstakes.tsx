@@ -32,6 +32,7 @@ import JoinSweepstakeModal from "../../views/SweepstakesPage/JoinSweepstakeModal
 import CreateSweepstakeModal from "../../views/SweepstakesPage/CreateSweepstakeModal";
 import BuyTicketsModal from "../../views/SweepstakesPage/BuyTicketsModal";
 import LoadingPage from "../Loading/LoadingPage";
+import Spinner from "../../components/Spinner/Spinner";
 
 interface OwnProps extends RouteComponentProps {
     state: RootState;
@@ -45,6 +46,7 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
 
     useEffect(() => {
         props.sweepstakePageActions.getMySweepstakesAction("");
+        props.sweepstakePageActions.getProfileInfoAction();
     }, [props.sweepstakePageActions]);
 
     if (props.state.sweepstakesPage.isLoading) return <LoadingPage/>
@@ -62,7 +64,7 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
 
                 <div className={`sweepstakesContainer`}>
                     <div className={"leftSweepstakeSection"}>
-                        <ProfileCard className={"profileCard"}/>
+                        <ProfileCard profile={props.state.sweepstakesPage.profileInfo} className={"profileCard"}/>
                     </div>
                     <div className={"mainSweepstakeSection"}>
                         <div className={"sweepstakes"}>
@@ -75,7 +77,7 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
                                         className={"createSweepstakeButton"}/>
                             </div>
 
-                            {props.state.sweepstakesPage.sweepstakes.map((value: any, index: any) => {
+                            {props.state.sweepstakesPage.sweepstakes.length > 0 ? props.state.sweepstakesPage.sweepstakes.map((value: any, index: any) => {
                                 return (
                                     <React.Fragment key={`sweepstake-${index}`}>
                                         <SweepstakeCard
@@ -96,7 +98,11 @@ const Sweepstakes: FunctionComponent<Props> = (props) => {
                                                                isMobile={true}/> : undefined}
                                     </React.Fragment>
                                 );
-                            })}
+                            }) : props.state.sweepstakesPage.isLoading ? (
+                                <div>
+                                    <Spinner/>
+                                </div>
+                            ) : null}
                         </div>
                         <div className={"rightSweepstakeSection"}>
                             <AdvertisementCard advertiserLink={"https://www.algoexpert.io"} isMobile={false}/>

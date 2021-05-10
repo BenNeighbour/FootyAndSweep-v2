@@ -14,26 +14,23 @@
  *   limitations under the License.
  */
 
-package com.footyandsweep.apigatewayservice.dao;
+package com.footyandsweep.apigatewayservice.security;
 
-import com.footyandsweep.apigatewayservice.model.User;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.http.HttpCookie;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 
-import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
-@Repository
-public interface UserDao extends JpaRepository<User, String> {
+public class CookieUtils {
 
-  User findUserById(String id);
+    public static Optional<String> getTokenFromCookie(ServerHttpRequest request) {
+        /* Find the cookie with the name of token */
+        List<HttpCookie> cookie = request.getCookies().get("token");
 
-  User findByUsername(String username);
+        if (cookie == null || cookie.isEmpty() || cookie.get(0) == null) return Optional.empty();
 
-  @Transactional
-  @CacheEvict(value = "userCache", key = "#email")
-  User findUserByEmail(String email);
+        return Optional.of(cookie.get(0).getValue());
+    }
 
-  Boolean existsByEmail(String email);
 }

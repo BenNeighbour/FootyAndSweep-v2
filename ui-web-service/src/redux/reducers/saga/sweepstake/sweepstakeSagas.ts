@@ -20,6 +20,7 @@ import {Client} from "@stomp/stompjs";
 import {
     buySweepstakeTickets,
     getMySweepstakes,
+    getProfileInfo,
     joinSweepstake,
     saveSweepstake
 } from "../../../../services/sweepstakeService";
@@ -94,8 +95,37 @@ function* buySweepstakeTicketsSaga({payload}: { payload: { sweepstake: any, numb
     }
 }
 
-function getMySweepstakesSaga({payload}: { payload: String }) {
-    getMySweepstakes(sweepstakeChannel)
+function* getMySweepstakesSaga({payload}: { payload: String }) {
+    const value = yield call(() => {return getMySweepstakes().then(value => value).catch(reason => reason)});
+
+    if (value.data) {
+        yield put({
+                type: ActionType.GET_MY_SWEEPSTAKES_SUCCESS,
+                payload: value.data
+            })
+    } else {
+        yield put({
+                type: ActionType.GET_MY_SWEEPSTAKES_ERROR,
+            payload: null
+        });
+    }
+
+}
+
+function* getProfileInfoSaga() {
+    const value = yield call(() => {return getProfileInfo().then(value => value).catch(reason => reason)});
+
+    if (value.data) {
+        yield put({
+            type: ActionType.GET_PROFILE_INFO_SUCCESS,
+            payload: value.data
+        })
+    } else {
+        yield put({
+            type: ActionType.GET_PROFILE_INFO_ERROR,
+            payload: null
+        });
+    }
 }
 
 function* watchSweepstakeChannel() {
@@ -120,12 +150,17 @@ function* onGetMySweepstakesWatcher() {
     yield takeLatest(ActionType.GET_MY_SWEEPSTAKES_REQUEST as any, getMySweepstakesSaga);
 }
 
+function* onGetProfileDetailsWatcher() {
+    yield takeLatest(ActionType.GET_PROFILE_INFO_REQUEST as any, getProfileInfoSaga);
+}
+
 let sweepstakeSagas = [
     fork(watchSweepstakeChannel),
+    fork(onGetMySweepstakesWatcher),
     fork(onSaveSweepstakeWatcher),
     fork(onJoinSweepstakeWatcher),
     fork(onBuySweepstakeTicketsWatcher),
-    fork(onGetMySweepstakesWatcher)
+    fork(onGetProfileDetailsWatcher)
 ];
 
 export default sweepstakeSagas;

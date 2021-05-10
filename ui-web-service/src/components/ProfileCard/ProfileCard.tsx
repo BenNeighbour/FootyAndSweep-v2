@@ -18,9 +18,12 @@
 import React, {FunctionComponent} from 'react';
 import "./ProfileCard.scss";
 import Tooltip from "../Tooltip/Tooltip";
+import {ProfileData} from "../../redux/model";
+import CountUp from "react-countup";
 
 interface OwnProps {
     className?: string | "";
+    profile: ProfileData;
 }
 
 type Props = OwnProps;
@@ -31,11 +34,14 @@ const ProfileCard: FunctionComponent<Props> = (props) => {
             <div className={"profileCardContainer"}>
                 <div className={"mainSection"}>
                     <div className={"profilePictureSection"}>
+                        <img alt={""} style={{
+                            width: "70px"
+                        }}  src={props.profile.profilePicture}/>
                     </div>
                     <div className={"metadataSection"}>
                         <div className={"usernameSection"}>
-                            <span className={"username"}>Ben Neighbour</span>
-                            <span className={"tag"}>@BenTheDev</span>
+                            <span className={"username"}>{props.profile.username}</span>
+                            <span className={"tag"}>@{props.profile.username.replace(" ", "")}</span>
                             <div className={"medals"}>
                                 <Tooltip className={"bronzeMedal"} text={"FS"}/>
                                 <Tooltip className={"silverMedal"} text={"FS"}/>
@@ -43,16 +49,12 @@ const ProfileCard: FunctionComponent<Props> = (props) => {
                             </div>
                         </div>
                         <div className={"balanceSection"}>
-                            <span className={"balance"}>910</span>
+                            <span className={"balance"}><CountUp end={props.profile.balance}
+                                                                 decimals={(props.profile.balance % 1) !== 0 ? 2 : 0}
+                                                                 duration={2}/></span>
                             <br/>
                             <span className={"currency"}>FootyCoins</span>
                         </div>
-                    </div>
-                </div>
-                <div className={"followerSection"}>
-                    <div className={"innerSection"}>
-                        <span className={"followers"}><b className={"number"}>9.4k</b> followers</span>
-                        <span className={"following"}><b className={"number"}>10</b> following</span>
                     </div>
                 </div>
             </div>

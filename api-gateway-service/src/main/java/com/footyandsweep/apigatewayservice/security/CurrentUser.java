@@ -1,4 +1,4 @@
-/*!
+/*
  *   Copyright 2021 FootyAndSweep
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,30 +14,14 @@
  *   limitations under the License.
  */
 
-$accent: #00B2FD;
-$white: #ffffff;
+package com.footyandsweep.apigatewayservice.security;
 
-.buttonContainer {
-  padding: 9px 50px;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
-  background: rgba(0, 178, 253, 0.9);
-  border-radius: 8px;
-  cursor: pointer;
+import java.lang.annotation.*;
 
-  font-family: 'Inter', sans-serif;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 14px;
-  line-height: 22px;
-
-  text-align: center;
-  color: #FFFFFF;
-  outline: none;
-  border-color: transparent;
-
-  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-}
-
-.buttonContainer:hover {
-  background-color: rgba(0, 178, 253, 0.8);
-}
+@Target({ElementType.PARAMETER, ElementType.TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@AuthenticationPrincipal
+public @interface CurrentUser {}

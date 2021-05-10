@@ -41,8 +41,8 @@ const schema = yup.object().shape({
     email: yup
         .string()
         .email()
-        .required("You must enter a username.")
-        .label("Username"),
+        .required("You must enter an Email Address.")
+        .label("Email Address"),
     password: yup
         .string()
         .required("You must enter a Password.")
@@ -56,57 +56,58 @@ const LoginForm: FunctionComponent<Props> = (props) => {
 
     return (
         <div className={"outerLoginArea"}>
-            <Formik
-                onSubmit={(formValues) => {
-                    props.actions.loginUserAction(formValues);
-                }}
-                validationSchema={schema}
-                initialValues={{
-                    email: "",
-                    password: ""
-                }}
-            >
-                {({values, handleChange, errors, touched}) => (
-                    <Form className={"form"}>
-                        <div className={"loginFormContainer"}>
-                            <div className={"fieldSection"}>
-                                <InputField large type={"text"} onChange={handleChange} style={{width: "85%"}}
-                                            touched={touched.email} errors={errors.email} value={values.email}
-                                            label={"Email Address"}
-                                            name={"email"}/>
+            <div className={"tabSection"}>
+                <span className={"tab"} onClick={() => props.history.push("/signup")}>Sign Up</span>
+                <span className={"tab-active"}>Log In</span>
+            </div>
+            <div className={"innerLoginArea"}>
+                <Formik
+                    onSubmit={(formValues) => {
+                        props.actions.loginUserAction(formValues);
+                    }}
+                    validationSchema={schema}
+                    initialValues={{
+                        email: "",
+                        password: ""
+                    }}
+                >
+                    {({values, handleChange, errors, touched}) => (
+                        <Form className={"form"}>
+                            <div className={"loginFormContainer"}>
+                                <div className={"fieldSection"}>
+                                    <InputField large type={"text"} onChange={handleChange} style={{width: "100%"}}
+                                                touched={touched.email} errors={errors.email} value={values.email}
+                                                label={"Email Address"}
+                                                name={"email"}/>
 
-                                <InputField large type={"password"} onChange={handleChange} style={{width: "85%"}}
-                                            touched={touched.password} errors={errors.password} value={values.password}
-                                            label={"Password"}
-                                            name={"password"}/>
+                                    <InputField large type={"password"} onChange={handleChange} style={{width: "100%"}}
+                                                touched={touched.password} errors={errors.password}
+                                                value={values.password}
+                                                label={"Password"}
+                                                name={"password"}/>
 
-                                <span className={"errorMessage"}>{props.error}</span>
+                                    <span className={"errorMessage"}>{props.error}</span>
 
-                                <Button className={"submitButton"} style={{
-                                    fontSize: "15px",
-                                    lineHeight: "17.5px",
-                                    padding: "12.5px",
-                                    width: "100%",
-                                    borderRadius: "10px",
-                                }} type={"submit"} title={"Sign In"}/>
+                                    <Button className={"submitButton"} style={{
+                                        fontSize: "15px",
+                                        lineHeight: "17.5px",
+                                        padding: "12.5px",
+                                        width: "100%",
+                                        borderRadius: "10px",
+                                    }} type={"submit"} title={"Sign In"}/>
+                                </div>
+
+                                <div className={"socialButtonSection"}>
+                                    <SigninWithGoogle
+                                        href={"http://api.footyandsweep-dev.com:30389/oauth2/authorization/google?redirect_uri=http://www.footyandsweep-dev.com:3000/oauth/login"}/>
+                                    <SigninWithFacebook
+                                        href={"http://api.footyandsweep-dev.com:30389/oauth2/authorization/facebook?redirect_uri=http://www.footyandsweep-dev.com:3000/oauth/login"}/>
+                                </div>
                             </div>
-
-                            <div className={"socialButtonSection"}>
-                                <SigninWithGoogle
-                                    href={"http://api.footyandsweep-dev.com:30389/oauth2/authorization/google?redirect_uri=http://www.footyandsweep-dev.com:3000/oauth/login"}/>
-                                <SigninWithFacebook
-                                    href={"http://api.footyandsweep-dev.com:30389/oauth2/authorization/facebook?redirect_uri=http://www.footyandsweep-dev.com:3000/oauth/login"}/>
-                            </div>
-                        </div>
-
-                        <div className={"bottomSection"}>
-                            <span className={"text"}><b>No Account Yet? </b></span><span
-                            onClick={() => props.history.push("/signup")}
-                            className={"textLink"}><b>Create an Account Now!</b></span>
-                        </div>
-                    </Form>
-                )}
-            </Formik>
+                        </Form>
+                    )}
+                </Formik>
+            </div>
         </div>
     );
 };
