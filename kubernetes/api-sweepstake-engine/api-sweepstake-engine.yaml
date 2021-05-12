@@ -9,10 +9,14 @@ spec:
   selector:
     matchLabels:
       app: api-sweepstake-engine
+      serving: "true"
   template:
     metadata:
       labels:
         app: api-sweepstake-engine
+        serving: "true"
+        version: "1.0"
+        visualize: "true"
     spec:
       containers:
         - name: api-sweepstake-engine
@@ -53,6 +57,7 @@ metadata:
   name: api-sweepstake-engine
   labels:
     app: api-sweepstake-engine
+    visualize: "true"
 spec:
   ports:
     - port: 9090
@@ -62,5 +67,6 @@ spec:
       name: http1
       protocol: TCP
   selector:
+    serving: "true"
     app: api-sweepstake-engine
   type: NodePort
