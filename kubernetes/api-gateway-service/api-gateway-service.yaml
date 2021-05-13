@@ -9,10 +9,14 @@ spec:
   selector:
     matchLabels:
       app: api-gateway-service
+      serving: "true"
   template:
     metadata:
       labels:
         app: api-gateway-service
+        serving: "true"
+        version: "1.0"
+        visualize: "true"
     spec:
       containers:
         - name: api-gateway-service
@@ -53,6 +57,7 @@ metadata:
   name: api-gateway-service
   labels:
     app: api-gateway-service
+    visualize: "true"
 spec:
   ports:
     - port: 8080
@@ -65,4 +70,5 @@ spec:
       targetPort: 9090
   selector:
     app: api-gateway-service
+    serving: "true"
   type: NodePort

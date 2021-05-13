@@ -9,10 +9,14 @@ spec:
   selector:
     matchLabels:
       app: api-allocation-engine
+      serving: "true"
   template:
     metadata:
       labels:
         app: api-allocation-engine
+        serving: "true"
+        version: "1.0"
+        visualize: "true"
     spec:
       containers:
         - name: api-allocation-engine
@@ -53,6 +57,7 @@ metadata:
   name: api-allocation-engine
   labels:
     app: api-allocation-engine
+    visualize: "true"
 spec:
   ports:
     - port: 8080
@@ -63,4 +68,5 @@ spec:
       protocol: TCP
   selector:
     app: api-allocation-engine
+    serving: "true"
   type: NodePort

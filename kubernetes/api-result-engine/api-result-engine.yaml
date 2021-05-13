@@ -9,10 +9,14 @@ spec:
   selector:
     matchLabels:
       app: api-result-engine
+      serving: "true"
   template:
     metadata:
       labels:
         app: api-result-engine
+        serving: "true"
+        version: "1.0"
+        visualize: "true"
     spec:
       containers:
         - name: api-result-engine
@@ -53,10 +57,12 @@ metadata:
   name: api-result-engine
   labels:
     app: api-result-engine
+    visualize: "true"
 spec:
   ports:
     - port: 9090
       protocol: TCP
   selector:
     app: api-result-engine
+    serving: "true"
   type: NodePort

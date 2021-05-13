@@ -1,9 +1,9 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
-  name: api-sweepstake-engine
+  name: api-gateway-service
 spec:
-  host: api-sweepstake-engine.default.svc.cluster.local
+  host: api-gateway-service.default.svc.cluster.local
   trafficPolicy:
     connectionPool:
       tcp:

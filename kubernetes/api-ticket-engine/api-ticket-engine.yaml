@@ -9,10 +9,14 @@ spec:
   selector:
     matchLabels:
       app: api-ticket-engine
+      serving: "true"
   template:
     metadata:
       labels:
         app: api-ticket-engine
+        serving: "true"
+        version: "1.0"
+        visualize: "true"
     spec:
       containers:
         - name: api-ticket-engine
@@ -53,6 +57,7 @@ metadata:
   name: api-ticket-engine
   labels:
     app: api-ticket-engine
+    visualize: "true"
 spec:
   ports:
     - port: 9090
@@ -63,4 +68,5 @@ spec:
       protocol: TCP
   selector:
     app: api-ticket-engine
+    serving: "true"
   type: NodePort

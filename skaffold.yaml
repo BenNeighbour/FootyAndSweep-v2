@@ -37,4 +37,4 @@ deploy:
       - kubernetes/api-event-broker/api-cdc-service.yaml
       - kubernetes/api-gateway-service/api-gateway-service.yaml
       - kubernetes/api-gateway-service/api-gateway-service-config.yaml
-      - kubernetes/api-sweepstake-engine/networking/*.yaml
+      - kubernetes/*/networking/*.yaml
