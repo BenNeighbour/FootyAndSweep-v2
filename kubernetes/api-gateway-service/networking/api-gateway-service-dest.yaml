@@ -2,6 +2,7 @@ apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
   name: api-gateway-service
+  namespace: default
 spec:
   host: api-gateway-service.default.svc.cluster.local
   trafficPolicy:

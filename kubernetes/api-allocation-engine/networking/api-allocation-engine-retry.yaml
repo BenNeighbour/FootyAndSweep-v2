@@ -2,9 +2,10 @@ apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
   name: api-allocation-engine
+  namespace: default
 spec:
   hosts:
-    - api-allocation-engine
+    - api-allocation-engine.default.svc.cluster.local
   http:
     - route:
       - destination:
