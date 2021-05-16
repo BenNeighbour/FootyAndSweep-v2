@@ -64,10 +64,10 @@ metadata:
 spec:
   ports:
     - port: 9090
-      name: http2
+      name: grpc
       protocol: TCP
     - port: 8080
-      name: http1
+      name: tcp
       protocol: TCP
   selector:
     app: api-ticket-engine

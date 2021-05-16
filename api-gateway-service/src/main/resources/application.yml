@@ -27,7 +27,7 @@ spring:
 
       routes:
         - id: 'api-sweepstake-engine'
-          uri: 'ws://api-sweepstake-engine:8080'
+          uri: 'ws://api-sweepstake-engine.default.svc.cluster.local:8080'
           predicates:
             - Path=/sweepstake-socket/**
           filters:

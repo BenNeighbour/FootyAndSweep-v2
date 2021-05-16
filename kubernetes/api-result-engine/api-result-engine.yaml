@@ -64,6 +64,10 @@ metadata:
 spec:
   ports:
     - port: 9090
+      name: grpc
+      protocol: TCP
+    - port: 8080
+      name: tcp
       protocol: TCP
   selector:
     app: api-result-engine

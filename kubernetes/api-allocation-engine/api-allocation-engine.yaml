@@ -63,11 +63,11 @@ metadata:
     visualize: "true"
 spec:
   ports:
-    - port: 8080
-      name: port1
-      protocol: TCP
     - port: 9090
-      name: port2
+      name: grpc
+      protocol: TCP
+    - port: 8080
+      name: tcp
       protocol: TCP
   selector:
     app: api-allocation-engine

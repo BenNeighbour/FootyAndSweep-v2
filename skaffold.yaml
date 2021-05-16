@@ -38,3 +38,4 @@ deploy:
       - kubernetes/api-gateway-service/api-gateway-service.yaml
       - kubernetes/api-gateway-service/api-gateway-service-config.yaml
       - kubernetes/*/networking/*.yaml
+      - kubernetes/istio-gateway.yaml

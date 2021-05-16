@@ -7,8 +7,6 @@ spec:
   host: api-sweepstake-engine.default.svc.cluster.local
   trafficPolicy:
     connectionPool:
-      tcp:
-        maxConnections: 100
       http:
         maxRequestsPerConnection: 10
         http1MaxPendingRequests: 1024
