@@ -6,9 +6,8 @@ metadata:
 spec:
   gateways:
     - internal-gtw
-    - mesh
   hosts:
-    - api-ticket-engine.default.svc.cluster.local
+    - "*"
   tcp:
   - route:
     - destination:

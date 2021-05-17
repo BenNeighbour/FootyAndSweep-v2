@@ -66,7 +66,7 @@ public class ResultEngineImpl implements ResultEngine {
 
     /* TODO: CREATE A BEAN FOR THIS FOR EACH SERVICE IN EVERY SERVICE */
     ManagedChannel channel =
-        ManagedChannelBuilder.forAddress("api-sweepstake-engine", 9090).usePlaintext().build();
+        ManagedChannelBuilder.forAddress("api-sweepstake-engine", 9090).useTransportSecurity().build();
 
     SweepstakeServiceGrpc.SweepstakeServiceBlockingStub clientStub =
         SweepstakeServiceGrpc.newBlockingStub(channel);
@@ -116,7 +116,7 @@ public class ResultEngineImpl implements ResultEngine {
             Arrays.asList(
                 Objects.requireNonNull(
                     restTemplate.getForObject(
-                        "http://api-ticket-engine/internal/ticket/by/sweepstake/"
+                        "https://api-ticket-engine/internal/ticket/by/sweepstake/"
                             + sagaData.getSweepstake().getId(),
                         TicketCommon[].class))));
 
@@ -178,7 +178,7 @@ public class ResultEngineImpl implements ResultEngine {
             Optional.ofNullable(
                 restTemplate
                     .postForEntity(
-                        "http://api-sweepstake-engine:8080/internal/sweepstake/result",
+                        "https://api-sweepstake-engine:8080/internal/sweepstake/result",
                         sweepstake,
                         Map.class)
                     .getBody());
@@ -190,7 +190,7 @@ public class ResultEngineImpl implements ResultEngine {
   private AllocationCommon getTicketAllocation(String ticketId) {
     return restTemplate
         .getForEntity(
-            "http://api-allocation-engine:8080/internal/allocation/by/ticket/" + ticketId,
+            "https://api-allocation-engine:8080/internal/allocation/by/ticket/" + ticketId,
             AllocationCommon.class)
         .getBody();
   }

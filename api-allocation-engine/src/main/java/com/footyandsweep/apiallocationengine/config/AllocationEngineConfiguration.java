@@ -40,7 +40,7 @@ public class AllocationEngineConfiguration {
   @Bean
   public SweepstakeServiceGrpc.SweepstakeServiceBlockingStub sweepstakeEngineChannel() {
     ManagedChannel channel =
-        ManagedChannelBuilder.forAddress("api-sweepstake-engine", 9090).usePlaintext().build();
+        ManagedChannelBuilder.forAddress("api-sweepstake-engine", 9090).useTransportSecurity().build();
 
     return SweepstakeServiceGrpc.newBlockingStub(channel);
   }

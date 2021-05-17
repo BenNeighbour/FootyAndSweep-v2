@@ -67,6 +67,7 @@ spec:
       name: grpc
       protocol: TCP
     - port: 8080
+      nodePort: 30389
       name: tcp
       protocol: TCP
   selector:

@@ -7,11 +7,15 @@ metadata:
     app: internal-gtw
 spec:
   selector:
+    istio: ingressgateway
     app: internal-ingressgateway
   servers:
     - port:
-        number: 80
-        protocol: HTTP
-        name: http
+        number: 443
+        protocol: HTTPS
+        name: https
+      tls:
+        mode: SIMPLE
+        credentialName: footyandsweep-dev-credential
       hosts:
-        - "*"
+        - "api.footyandsweep-dev.com"
