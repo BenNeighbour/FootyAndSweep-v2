@@ -11,11 +11,8 @@ spec:
     app: internal-ingressgateway
   servers:
     - port:
-        number: 443
-        protocol: HTTPS
-        name: https
-      tls:
-        mode: SIMPLE
-        credentialName: footyandsweep-dev-credential
+        number: 80
+        protocol: HTTP
+        name: http
       hosts:
         - "api.footyandsweep-dev.com"

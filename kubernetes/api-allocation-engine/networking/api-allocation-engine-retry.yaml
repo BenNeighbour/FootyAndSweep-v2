@@ -6,15 +6,19 @@ metadata:
 spec:
   gateways:
     - internal-gtw
+    - mesh
   hosts:
     - "api.footyandsweep-dev.com"
-  tcp:
-    - route:
+  http:
+    - match:
+        - uri:
+            prefix: /grpc
+      route:
         - destination:
             host: api-allocation-engine.default.svc.cluster.local
             port:
-              number: 8080
-  http:
+              number: 9090
+
     - match:
         - uri:
             prefix: /
@@ -22,4 +26,4 @@ spec:
         - destination:
             host: api-allocation-engine.default.svc.cluster.local
             port:
-              number: 9090
+              number: 8080

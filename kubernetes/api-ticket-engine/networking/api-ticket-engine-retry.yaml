@@ -6,17 +6,24 @@ metadata:
 spec:
   gateways:
     - internal-gtw
+    - mesh
   hosts:
-    - "*"
-  tcp:
-  - route:
-    - destination:
-        host: api-ticket-engine.default.svc.cluster.local
-        port:
-          number: 8080
+    - "api.footyandsweep-dev.com"
   http:
-  - route:
-    - destination:
-        host: api-ticket-engine.default.svc.cluster.local
-        port:
-          number: 9090
+    - match:
+        - uri:
+            prefix: /grpc
+      route:
+        - destination:
+            host: api-ticket-engine.default.svc.cluster.local
+            port:
+              number: 9090
+
+    - match:
+        - uri:
+            prefix: /
+      route:
+        - destination:
+            host: api-ticket-engine.default.svc.cluster.local
+            port:
+              number: 8080
