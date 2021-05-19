@@ -66,7 +66,7 @@ public class ResultEngineImpl implements ResultEngine {
 
     /* TODO: CREATE A BEAN FOR THIS FOR EACH SERVICE IN EVERY SERVICE */
     ManagedChannel channel =
-        ManagedChannelBuilder.forAddress("api-sweepstake-engine", 9090).useTransportSecurity().build();
+        ManagedChannelBuilder.forAddress("api-sweepstake-engine", 9090).usePlaintext().build();
 
     SweepstakeServiceGrpc.SweepstakeServiceBlockingStub clientStub =
         SweepstakeServiceGrpc.newBlockingStub(channel);

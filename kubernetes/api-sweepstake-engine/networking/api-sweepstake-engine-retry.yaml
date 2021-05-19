@@ -6,11 +6,11 @@ metadata:
 spec:
   gateways:
     - internal-gtw
-    - mesh
   hosts:
     - "api.footyandsweep-dev.com"
   http:
     - match:
+        - port: 9090
         - uri:
             prefix: /grpc
       route:
@@ -20,6 +20,7 @@ spec:
               number: 9090
 
     - match:
+        - port: 8080
         - uri:
             prefix: /
       route:

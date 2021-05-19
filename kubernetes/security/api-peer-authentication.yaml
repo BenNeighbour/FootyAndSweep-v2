@@ -1,7 +1,7 @@
 apiVersion: "security.istio.io/v1beta1"
-kind: "PeerAuthentication"
+kind: MeshPolicy
 metadata:
   name: "default"
 spec:
   mtls:
-    mode: STRICT
+    mode: PERMISSIVE
