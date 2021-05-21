@@ -1,7 +1,8 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: internal-gtw
+  name: internal-ingressgateway
+  namespace: default
 spec:
   selector:
     istio: ingressgateway
@@ -9,10 +10,18 @@ spec:
   servers:
     - port:
         number: 80
-        protocol: HTTPS
+        name: http
+        protocol: HTTP
+      hosts:
+        - "*"
+      tls:
+        httpsRedirect: true
+    - port:
         name: https
+        number: 443
+        protocol: HTTPS
       tls:
         mode: SIMPLE
         credentialName: footyandsweep-dev-credential
       hosts:
-        - "api.footyandsweep-dev.com"
+        - "*"

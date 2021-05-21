@@ -5,8 +5,8 @@ metadata:
   namespace: default
 spec:
   gateways:
-    - internal-gtw
     - mesh
+    - internal-ingressgateway.istio-system.svc.cluster.local
   hosts:
     - "api.footyandsweep-dev.com"
   tcp:

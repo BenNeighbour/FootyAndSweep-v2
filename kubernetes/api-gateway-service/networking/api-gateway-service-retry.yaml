@@ -5,9 +5,9 @@ metadata:
   namespace: default
 spec:
   gateways:
-    - internal-gtw
+    - internal-ingressgateway.istio-system.svc.cluster.local
   hosts:
-    - "api.footyandsweep-dev.com"
+    - "*"
   http:
     - match:
         - port: 9090

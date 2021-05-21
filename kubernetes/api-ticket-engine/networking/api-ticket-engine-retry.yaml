@@ -5,9 +5,10 @@ metadata:
   namespace: default
 spec:
   gateways:
-    - internal-gtw
+    - mesh
+    - internal-ingressgateway.istio-system.svc.cluster.local
   hosts:
-    - "api.footyandsweep-dev.com"
+    - api-ticket-engine.default.svc.cluster.local
   http:
     - match:
         - port: 9090
@@ -15,7 +16,7 @@ spec:
             prefix: /grpc
       route:
         - destination:
-            host: api-gateway-engine.default.svc.cluster.local
+            host: api-ticket-engine.default.svc.cluster.local
             port:
               number: 9090
 
@@ -25,6 +26,6 @@ spec:
             prefix: /
       route:
         - destination:
-            host: api-gateway-engine.default.svc.cluster.local
+            host: api-ticket-engine.default.svc.cluster.local
             port:
               number: 8080

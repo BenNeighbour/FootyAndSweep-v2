@@ -34,7 +34,7 @@ spring:
             - StripPrefix=1
 
         - id: 'api-sweepstake-engine'
-          uri: 'https://api-sweepstake-engine:8080'
+          uri: 'http://api-sweepstake-engine:8080'
           predicates:
             - Path=/sweepstake/**
           filters:
