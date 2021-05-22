@@ -108,7 +108,7 @@ public class TicketEngineImpl implements TicketEngine {
   }
 
   private void ticketIteratorHelper(BuyTicketSagaData sagaData) {
-    sagaData.setSavedTickets(new ArrayList<>());
+    sagaData.setSavedTicketIds(new ArrayList<>());
 
     try {
       /* When valid, buy each of the tickets for the user */
@@ -122,7 +122,7 @@ public class TicketEngineImpl implements TicketEngine {
 
         /* Persist that ticket while adding it onto the list of bought tickets for that user */
         ticket = ticketDao.save(ticket);
-        sagaData.getSavedTickets().add(ticket);
+        sagaData.getSavedTicketIds().add(ticket.getId());
       }
     } catch (Exception e) {
       /* Get the error message and ping it back to the client */

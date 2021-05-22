@@ -8,7 +8,7 @@ spec:
     - mesh
     - internal-ingressgateway.istio-system.svc.cluster.local
   hosts:
-    - "api.footyandsweep-dev.com"
+    - api-kafka.default.svc.cluster.local
   tcp:
     - route:
       - destination:

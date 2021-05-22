@@ -45,8 +45,8 @@ public class BuyTicketSaga implements SimpleSaga<BuyTicketSagaData> {
         .withCompensation(
             sagaData ->
                 sagaData
-                    .getSavedTickets()
-                    .forEach(currentTicket -> ticketEngine.deleteTicket(currentTicket.getId())))
+                    .getSavedTicketIds()
+                    .forEach(ticketEngine::deleteTicket))
         .step()
         .invokeParticipant(ticketEngine::updateUserBalance)
         .build();
@@ -55,9 +55,9 @@ public class BuyTicketSaga implements SimpleSaga<BuyTicketSagaData> {
 
   @Override
   public void onSagaCompletedSuccessfully(String sagaId, BuyTicketSagaData sagaData) {
-    SagaResponse<List<Ticket>> ticketSagaComplete =
+    SagaResponse<List<String>> ticketSagaComplete =
             new SagaResponse<>(
-                    SagaResponse.Status.COMPLETED, "Ticket Bought!", sagaData.getSavedTickets());
+                    SagaResponse.Status.COMPLETED, "Ticket(s) Bought!", sagaData.getSavedTicketIds());
 
     messagingTemplate.convertAndSend("/ticket-topic/buy", ticketSagaComplete);
   }
