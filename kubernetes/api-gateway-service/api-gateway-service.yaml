@@ -9,10 +9,17 @@ spec:
   selector:
     matchLabels:
       app: api-gateway-service
+      serving: "true"
   template:
     metadata:
       labels:
         app: api-gateway-service
+        serving: "true"
+        version: "1.0"
+        visualize: "true"
+
+      annotations:
+        sidecar.istio.io/inject: "true"
     spec:
       containers:
         - name: api-gateway-service
@@ -53,16 +60,17 @@ metadata:
   name: api-gateway-service
   labels:
     app: api-gateway-service
+    visualize: "true"
 spec:
   ports:
-    - port: 8080
-      name: tcp
-      targetPort: 8080
-      nodePort: 30389
     - port: 9090
-      name: http2
+      name: grpc
       protocol: TCP
-      targetPort: 9090
+    - port: 8080
+      nodePort: 30389
+      name: tcp
+      protocol: TCP
   selector:
     app: api-gateway-service
+    serving: "true"
   type: NodePort

@@ -33,6 +33,6 @@ import java.util.List;
 public class BuyTicketSagaData {
   private UserCommon participant;
   private SweepstakeCommon parentSweepstake;
-  private List<Ticket> savedTickets;
+  private List<String> savedTicketIds;
   private int numberOfTickets;
 }

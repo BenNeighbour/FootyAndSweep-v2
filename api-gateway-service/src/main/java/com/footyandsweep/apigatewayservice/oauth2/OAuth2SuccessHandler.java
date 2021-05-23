@@ -90,7 +90,7 @@ public class OAuth2SuccessHandler implements ServerAuthenticationSuccessHandler 
           webFilterExchange.getExchange().getRequest().getPath().toString().split("/")[4];
 
       /* If the user does not exist, they need to sign up first */
-      if (user == null) throw new OAuth2AuthenticationProcessingException("You must sign up!");
+      if (user == null && !isSigningUp) throw new OAuth2AuthenticationProcessingException("You must sign up!");
 
       /* Check the signup query param  */
       if (!isSigningUp) {

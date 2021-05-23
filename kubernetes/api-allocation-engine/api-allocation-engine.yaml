@@ -9,10 +9,17 @@ spec:
   selector:
     matchLabels:
       app: api-allocation-engine
+      serving: "true"
   template:
     metadata:
       labels:
         app: api-allocation-engine
+        serving: "true"
+        version: "1.0"
+        visualize: "true"
+
+      annotations:
+        sidecar.istio.io/inject: "true"
     spec:
       containers:
         - name: api-allocation-engine
@@ -53,14 +60,16 @@ metadata:
   name: api-allocation-engine
   labels:
     app: api-allocation-engine
+    visualize: "true"
 spec:
   ports:
-    - port: 8080
-      name: port1
-      protocol: TCP
     - port: 9090
-      name: port2
+      name: grpc
+      protocol: TCP
+    - port: 8080
+      name: tcp
       protocol: TCP
   selector:
     app: api-allocation-engine
+    serving: "true"
   type: NodePort

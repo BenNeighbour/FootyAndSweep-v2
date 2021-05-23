@@ -9,7 +9,7 @@ spring:
 
   zipkin:
     base:
-      url: http://${ZIPKIN_CONNECT
+      url: https://${ZIPKIN_CONNECT}
 
   jpa:
     hibernate:
