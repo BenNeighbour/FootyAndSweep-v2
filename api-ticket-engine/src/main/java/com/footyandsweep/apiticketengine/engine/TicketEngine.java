@@ -17,6 +17,7 @@
 package com.footyandsweep.apiticketengine.engine;
 
 import com.footyandsweep.apiticketengine.engine.saga.BuyTicketSagaData;
+import com.footyandsweep.apiticketengine.model.Ticket;
 import io.eventuate.tram.commands.consumer.CommandWithDestination;
 
 public interface TicketEngine {

@@ -145,9 +145,11 @@ public class TicketEngineImpl implements TicketEngine {
   @Override
   public void modifyTickets(String ticketId, String allocationId) {
     Ticket ticket = ticketDao.findTicketById(ticketId);
-    ticket.setAllocationId(allocationId);
 
-    ticketDao.saveAndFlush(ticket);
+    if (ticket != null) {
+      ticket.setAllocationId(allocationId);
+      ticketDao.saveAndFlush(ticket);
+    }
   }
 
   @Override

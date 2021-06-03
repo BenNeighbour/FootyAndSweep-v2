@@ -20,48 +20,95 @@ import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeTypeCommon;
 import com.footyandsweep.apicommonlibrary.model.user.UserCommon;
 import com.footyandsweep.apiticketengine.dao.TicketDao;
-import com.footyandsweep.apiticketengine.engine.TicketEngine;
 import com.footyandsweep.apiticketengine.engine.TicketEngineImpl;
 import com.footyandsweep.apiticketengine.engine.saga.BuyTicketSagaData;
 import com.footyandsweep.apiticketengine.grpc.client.TicketClientGrpc;
+import com.footyandsweep.apiticketengine.model.Ticket;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import org.junit.runner.RunWith;
+import org.mockito.*;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.test.context.TestPropertySource;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
+@RunWith(MockitoJUnitRunner.class)
+@TestPropertySource("classpath:/test/application-test.yaml")
 public class TicketEngineTest {
 
-    private TicketDao ticketDao = Mockito.mock(TicketDao.class);
-    private TicketClientGrpc ticketClientGrpc = Mockito.mock(TicketClientGrpc.class);
-    private TicketEngine ticketEngine;
+  @Mock private TicketDao ticketDao;
+
+  @Mock private TicketClientGrpc ticketClientGrpc;
+
+  @InjectMocks private TicketEngineImpl ticketEngine;
 
   @BeforeEach
-  void setup() {
-    this.ticketEngine = new TicketEngineImpl(ticketDao, ticketClientGrpc);
+  public void setUp() {
+    MockitoAnnotations.initMocks(this);
   }
 
-    @Test
-    public void shouldBuyTickets() {
-        UserCommon user = new UserCommon();
-        user.setId(UUID.randomUUID().toString());
-        user.setBalance(new BigDecimal("100.00"));
+  @Test
+  public void shouldBuyTickets() {
+    UserCommon user = new UserCommon();
+    user.setId(UUID.randomUUID().toString());
+    user.setBalance(new BigDecimal("100.00"));
 
-        SweepstakeCommon parentSweepstake = new SweepstakeCommon();
-        parentSweepstake.setId(UUID.randomUUID().toString());
-        parentSweepstake.setName("Test");
-        parentSweepstake.setStake(new BigDecimal("3.00"));
-        parentSweepstake.setSweepstakeType(SweepstakeTypeCommon.Correct_Score_FT);
-        parentSweepstake.setStatus(SweepstakeCommon.SweepstakeStatus.OPEN);
+    SweepstakeCommon parentSweepstake = new SweepstakeCommon();
+    parentSweepstake.setId(UUID.randomUUID().toString());
+    parentSweepstake.setName("Test");
+    parentSweepstake.setStake(new BigDecimal("3.00"));
+    parentSweepstake.setSweepstakeType(SweepstakeTypeCommon.Correct_Score_FT);
+    parentSweepstake.setStatus(SweepstakeCommon.SweepstakeStatus.OPEN);
 
-        BuyTicketSagaData sagaData = new BuyTicketSagaData();
-        sagaData.setParentSweepstake(parentSweepstake);
-        sagaData.setNumberOfTickets(3);
+    BuyTicketSagaData sagaData = new BuyTicketSagaData();
+    sagaData.setParentSweepstake(parentSweepstake);
+    sagaData.setNumberOfTickets(3);
+    sagaData.setParticipant(user);
 
-        ticketEngine.buyTickets(sagaData);
+    ticketEngine.buyTickets(sagaData);
 
-        Assertions.assertNotNull(ticketDao.findAllTicketsBySweepstakeId(parentSweepstake.getId()));
-    }
+    Mockito.verify(ticketDao).save(Mockito.any(Ticket.class));
+
+    Assertions.assertNotNull(ticketDao.findAllTicketsBySweepstakeId(parentSweepstake.getId()));
+  }
+
+  @Test
+  public void shouldModifyTickets() {
+    String allocationId = UUID.randomUUID().toString();
+    Ticket ticket = new Ticket();
+    ticket.setId(UUID.randomUUID().toString());
+    ticket.setAllocationId(allocationId);
+    ticket.setUserId(UUID.randomUUID().toString());
+    ticket.setSweepstakeId(UUID.randomUUID().toString());
+
+    Mockito.when(ticketDao.save(Mockito.any(Ticket.class))).thenAnswer(i -> i.getArguments()[0]);
+
+    ticket = ticketDao.save(ticket);
+
+    Mockito.when(ticketDao.findTicketById(ArgumentMatchers.anyString())).thenReturn(ticket);
+
+    ticketEngine.modifyTickets(ticket.getId(), UUID.randomUUID().toString());
+
+    Assertions.assertNotEquals(
+        ticketDao.findTicketById(ticket.getId()).getAllocationId(), allocationId);
+  }
+
+  @Test
+  public void shouldDeleteTickets() {
+    Ticket ticket = new Ticket();
+    ticket.setId(UUID.randomUUID().toString());
+    ticket.setUserId(UUID.randomUUID().toString());
+    ticket.setSweepstakeId(UUID.randomUUID().toString());
+
+    Mockito.when(ticketDao.save(Mockito.any(Ticket.class))).thenAnswer(i -> i.getArguments()[0]);
+
+    ticket = ticketDao.save(ticket);
+
+    ticketEngine.deleteTicket(ticket.getId());
+
+    Assertions.assertNull(ticketDao.findTicketById(ticket.getId()));
+  }
 }
