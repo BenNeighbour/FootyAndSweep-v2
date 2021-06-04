@@ -22,7 +22,6 @@ import com.footyandsweep.apicommonlibrary.model.user.UserCommon;
 import com.footyandsweep.apiticketengine.dao.TicketDao;
 import com.footyandsweep.apiticketengine.engine.TicketEngineImpl;
 import com.footyandsweep.apiticketengine.engine.saga.BuyTicketSagaData;
-import com.footyandsweep.apiticketengine.grpc.client.TicketClientGrpc;
 import com.footyandsweep.apiticketengine.model.Ticket;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,18 +29,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.*;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.test.context.TestPropertySource;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
 @RunWith(MockitoJUnitRunner.class)
-@TestPropertySource("classpath:/test/application-test.yaml")
 public class TicketEngineTest {
 
   @Mock private TicketDao ticketDao;
-
-  @Mock private TicketClientGrpc ticketClientGrpc;
 
   @InjectMocks private TicketEngineImpl ticketEngine;
 
@@ -68,8 +63,10 @@ public class TicketEngineTest {
     sagaData.setNumberOfTickets(3);
     sagaData.setParticipant(user);
 
+    /* Call the service method */
     ticketEngine.buyTickets(sagaData);
 
+    /* Actually verify that it's been saved */
     Mockito.verify(ticketDao).save(Mockito.any(Ticket.class));
 
     Assertions.assertNotNull(ticketDao.findAllTicketsBySweepstakeId(parentSweepstake.getId()));

@@ -30,12 +30,8 @@ import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
 import com.footyandsweep.apisweepstakeengine.relation.ParticipantIds;
 import io.eventuate.tram.commands.consumer.CommandWithDestination;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -47,31 +43,28 @@ import static io.eventuate.tram.commands.consumer.CommandWithDestinationBuilder.
 @RequiredArgsConstructor
 public class SweepstakeEngineImpl implements SweepstakeEngine {
 
-  private static final Logger log = LoggerFactory.getLogger(SweepstakeEngineImpl.class);
-  private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ");
-
   private final SweepstakeDao sweepstakeDao;
   private final ParticipantIdDao participantIdDao;
   private final SweepstakeClientGrpc sweepstakeClient;
 
   @Override
   public void saveSweepstake(CreateSweepstakeSagaData sagaData) {
-    Sweepstake sweepstake = (Sweepstake) sagaData.getSweepstake();
+    Sweepstake sweepstake;
 
     /* Saving the sweepstake */
-    sweepstake = sweepstakeDao.save(sweepstake);
+    sweepstake = sweepstakeDao.save((Sweepstake) sagaData.getSweepstake());
 
+    /* Set the sweepstake id to what the dao has generated it as */
     sagaData.getSweepstake().setId(sweepstake.getId());
   }
 
   @Override
-  public ParticipantIds createSweepstakeParticipantRelation(String joinCode, String participantId) {
+  public ParticipantIds createSweepstakeParticipantRelation(String joinCode, String participantId) throws RuntimeException {
     /* Find the sweepstake */
     Sweepstake sweepstake = sweepstakeDao.findSweepstakeByJoinCode(joinCode);
 
     if (sweepstake != null) {
-
-      /* Check if the user is already in the sweepstake */
+      /* Check if the user is already in the sweepstake, get the current participants */
       List<ParticipantIds> sweepstakeParticipantIds =
           participantIdDao.findAllParticipantIdsBySweepstakeId(sweepstake.getId());
 
