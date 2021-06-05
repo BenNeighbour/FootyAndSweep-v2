@@ -59,7 +59,7 @@ public class SweepstakeEngineImpl implements SweepstakeEngine {
   }
 
   @Override
-  public ParticipantIds createSweepstakeParticipantRelation(String joinCode, String participantId) throws RuntimeException {
+  public ParticipantIds createSweepstakeParticipantRelation(String joinCode, String participantId) {
     /* Find the sweepstake */
     Sweepstake sweepstake = sweepstakeDao.findSweepstakeByJoinCode(joinCode);
 

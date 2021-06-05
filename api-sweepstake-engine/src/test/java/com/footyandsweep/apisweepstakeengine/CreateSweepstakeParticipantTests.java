@@ -22,11 +22,8 @@ import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeTypeCommon;
 import com.footyandsweep.apisweepstakeengine.dao.ParticipantIdDao;
 import com.footyandsweep.apisweepstakeengine.dao.SweepstakeDao;
 import com.footyandsweep.apisweepstakeengine.engine.SweepstakeEngineImpl;
-import com.footyandsweep.apisweepstakeengine.engine.saga.createSweepstake.CreateSweepstakeSagaData;
 import com.footyandsweep.apisweepstakeengine.model.Sweepstake;
 import com.footyandsweep.apisweepstakeengine.relation.ParticipantIds;
-import org.junit.Rule;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -39,7 +36,9 @@ import java.util.List;
 import java.util.UUID;
 
 @RunWith(MockitoJUnitRunner.class)
-public class SweepstakeEngineTest {
+public class CreateSweepstakeParticipantTests {
+
+    private static Sweepstake sweepstake = new Sweepstake();
 
     @Mock
     private SweepstakeDao sweepstakeDao;
@@ -52,55 +51,52 @@ public class SweepstakeEngineTest {
 
     @BeforeEach
     public void setUp() {
+        sweepstake.setId(UUID.randomUUID().toString());
+        sweepstake.setName("Test");
+        sweepstake.setOwnerId(UUID.randomUUID().toString());
+        sweepstake.setSweepstakeEventId(UUID.randomUUID().toString());
+        sweepstake.setIsPrivate(false);
+        sweepstake.setStake(new BigDecimal("3.00"));
+        sweepstake.setSweepstakeType(SweepstakeTypeCommon.Correct_Score_FT);
+        sweepstake.setStatus(SweepstakeCommon.SweepstakeStatus.OPEN);
+        sweepstake.setMinimumPlayers(2);
+        sweepstake.setMaximumPlayerTickets(4);
+        sweepstake.setTotalNumberOfTickets(4);
+
         MockitoAnnotations.initMocks(this);
     }
 
     @Test
-    public void shouldSaveSweepstake() {
-        Sweepstake sweepstake = new Sweepstake();
-        sweepstake.setId(UUID.randomUUID().toString());
-        sweepstake.setName("Test");
-        sweepstake.setOwnerId(UUID.randomUUID().toString());
-        sweepstake.setSweepstakeEventId(UUID.randomUUID().toString());
-        sweepstake.setIsPrivate(false);
-        sweepstake.setStake(new BigDecimal("3.00"));
-        sweepstake.setSweepstakeType(SweepstakeTypeCommon.Correct_Score_FT);
-        sweepstake.setStatus(SweepstakeCommon.SweepstakeStatus.OPEN);
-        sweepstake.setMinimumPlayers(2);
-        sweepstake.setMaximumPlayerTickets(4);
-        sweepstake.setTotalNumberOfTickets(4);
-
-        CreateSweepstakeSagaData data = new CreateSweepstakeSagaData();
-        data.setSweepstake(sweepstake);
+    public void shouldThrowInvalidJoinCode() {
+        String participantId = UUID.randomUUID().toString();
 
         Mockito.when(sweepstakeDao.save(Mockito.any(Sweepstake.class))).thenAnswer(i -> i.getArguments()[0]);
-        Mockito.when(sweepstakeDao.findSweepstakeById(ArgumentMatchers.anyString())).thenReturn(sweepstake);
 
-        sweepstakeEngine.saveSweepstake(data);
+        sweepstake = sweepstakeDao.save(sweepstake);
 
-        /* Actually verify that it's been saved */
-        Mockito.verify(sweepstakeDao).save(Mockito.any(Sweepstake.class));
+        Mockito.when(participantIdDao.save(Mockito.any(ParticipantIds.class))).thenAnswer(i -> i.getArguments()[0]);
 
-        /* Check that it's in the  */
-        Assertions.assertNotNull(sweepstakeDao.findSweepstakeById(data.getSweepstake().getId()));
+        ParticipantIds owner = new ParticipantIds();
+        owner.setSweepstakeId(sweepstake.getId());
+        owner.setParticipantId(participantId);
+
+        owner = participantIdDao.save(owner);
+
+        List<ParticipantIds> ids = new ArrayList<>();
+        ids.add(owner);
+
+        Mockito.when(sweepstakeDao.findSweepstakeById(sweepstake.getId())).thenReturn(sweepstake);
+        Mockito.when(sweepstakeDao.findSweepstakeByJoinCode(sweepstake.getJoinCode())).thenReturn(sweepstake);
+        Mockito.when(participantIdDao.findAllParticipantIdsBySweepstakeId(ArgumentMatchers.anyString())).thenReturn(ids);
+
+        org.assertj.core.api.Assertions.assertThatThrownBy(() -> sweepstakeEngine.createSweepstakeParticipantRelation(SweepstakeCommon.generateSweepstakeCode(), UUID.randomUUID().toString()))
+                .isInstanceOf(RuntimeException.class)
+                .hasMessage("Invalid Join Code!");
     }
 
     @Test
-    public void shouldNotCreateSweepstakeParticipantRelation() {
+    public void shouldNotCreateRelation() {
         String participantId = UUID.randomUUID().toString();
-
-        Sweepstake sweepstake = new Sweepstake();
-        sweepstake.setId(UUID.randomUUID().toString());
-        sweepstake.setName("Test");
-        sweepstake.setOwnerId(UUID.randomUUID().toString());
-        sweepstake.setSweepstakeEventId(UUID.randomUUID().toString());
-        sweepstake.setIsPrivate(false);
-        sweepstake.setStake(new BigDecimal("3.00"));
-        sweepstake.setSweepstakeType(SweepstakeTypeCommon.Correct_Score_FT);
-        sweepstake.setStatus(SweepstakeCommon.SweepstakeStatus.OPEN);
-        sweepstake.setMinimumPlayers(2);
-        sweepstake.setMaximumPlayerTickets(4);
-        sweepstake.setTotalNumberOfTickets(4);
 
         Mockito.when(sweepstakeDao.save(Mockito.any(Sweepstake.class))).thenAnswer(i -> i.getArguments()[0]);
 
