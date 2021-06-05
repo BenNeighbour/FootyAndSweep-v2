@@ -35,18 +35,14 @@ import java.util.UUID;
 @RunWith(MockitoJUnitRunner.class)
 public class SaveSweepstakeTests {
 
+  private static final Sweepstake sweepstake = new Sweepstake();
+
   @Mock private SweepstakeDao sweepstakeDao;
 
   @InjectMocks private SweepstakeEngineImpl sweepstakeEngine;
 
   @BeforeEach
   public void setUp() {
-    MockitoAnnotations.initMocks(this);
-  }
-
-  @Test
-  public void shouldSaveSweepstake() {
-    Sweepstake sweepstake = new Sweepstake();
     sweepstake.setId(UUID.randomUUID().toString());
     sweepstake.setName("Test");
     sweepstake.setOwnerId(UUID.randomUUID().toString());
@@ -59,6 +55,11 @@ public class SaveSweepstakeTests {
     sweepstake.setMaximumPlayerTickets(4);
     sweepstake.setTotalNumberOfTickets(4);
 
+    MockitoAnnotations.initMocks(this);
+  }
+
+  @Test
+  public void shouldSaveSweepstake() {
     CreateSweepstakeSagaData data = new CreateSweepstakeSagaData();
     data.setSweepstake(sweepstake);
 

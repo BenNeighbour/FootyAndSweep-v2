@@ -36,21 +36,28 @@ import java.util.UUID;
 @RunWith(MockitoJUnitRunner.class)
 public class TicketEngineTest {
 
+  private static Ticket ticket;
+  private static final UserCommon user = new UserCommon();
+
   @Mock private TicketDao ticketDao;
 
   @InjectMocks private TicketEngineImpl ticketEngine;
 
   @BeforeEach
   public void setUp() {
+    ticket.setId(UUID.randomUUID().toString());
+    ticket.setAllocationId(UUID.randomUUID().toString());
+    ticket.setUserId(UUID.randomUUID().toString());
+    ticket.setSweepstakeId(UUID.randomUUID().toString());
+
+    user.setId(UUID.randomUUID().toString());
+    user.setBalance(new BigDecimal("100.00"));
+
     MockitoAnnotations.initMocks(this);
   }
 
   @Test
   public void shouldBuyTickets() {
-    UserCommon user = new UserCommon();
-    user.setId(UUID.randomUUID().toString());
-    user.setBalance(new BigDecimal("100.00"));
-
     SweepstakeCommon parentSweepstake = new SweepstakeCommon();
     parentSweepstake.setId(UUID.randomUUID().toString());
     parentSweepstake.setName("Test");
@@ -74,12 +81,7 @@ public class TicketEngineTest {
 
   @Test
   public void shouldModifyTickets() {
-    String allocationId = UUID.randomUUID().toString();
-    Ticket ticket = new Ticket();
-    ticket.setId(UUID.randomUUID().toString());
-    ticket.setAllocationId(allocationId);
-    ticket.setUserId(UUID.randomUUID().toString());
-    ticket.setSweepstakeId(UUID.randomUUID().toString());
+    String allocationId = ticket.getAllocationId();
 
     Mockito.when(ticketDao.save(Mockito.any(Ticket.class))).thenAnswer(i -> i.getArguments()[0]);
 
@@ -95,11 +97,6 @@ public class TicketEngineTest {
 
   @Test
   public void shouldDeleteTickets() {
-    Ticket ticket = new Ticket();
-    ticket.setId(UUID.randomUUID().toString());
-    ticket.setUserId(UUID.randomUUID().toString());
-    ticket.setSweepstakeId(UUID.randomUUID().toString());
-
     Mockito.when(ticketDao.save(Mockito.any(Ticket.class))).thenAnswer(i -> i.getArguments()[0]);
 
     ticket = ticketDao.save(ticket);
