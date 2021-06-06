@@ -36,7 +36,7 @@ import java.util.UUID;
 @RunWith(MockitoJUnitRunner.class)
 public class TicketEngineTest {
 
-  private static Ticket ticket;
+  private static Ticket ticket = new Ticket();
   private static final UserCommon user = new UserCommon();
 
   @Mock private TicketDao ticketDao;

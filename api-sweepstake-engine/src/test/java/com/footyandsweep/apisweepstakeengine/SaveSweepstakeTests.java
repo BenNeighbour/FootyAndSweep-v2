@@ -75,4 +75,19 @@ public class SaveSweepstakeTests {
 
     Assertions.assertNotNull(sweepstakeDao.findSweepstakeById(data.getSweepstake().getId()));
   }
+
+  @Test
+  public void shouldModifySweepstake() {
+    Mockito.when(sweepstakeDao.saveAndFlush(Mockito.any(Sweepstake.class)))
+            .thenAnswer(i -> i.getArguments()[0]);
+    Mockito.when(sweepstakeDao.findSweepstakeById(ArgumentMatchers.anyString()))
+            .thenReturn(sweepstake);
+
+    sweepstakeEngine.updateSweepstakeStatus(sweepstake.getId(), SweepstakeCommon.SweepstakeStatus.SETTLED);
+
+    /* Actually verify that it's been saved */
+    Mockito.verify(sweepstakeDao).saveAndFlush(Mockito.any(Sweepstake.class));
+
+    Assertions.assertEquals(sweepstakeDao.findSweepstakeById(sweepstake.getId()).getStatus(), SweepstakeCommon.SweepstakeStatus.SETTLED);
+  }
 }
