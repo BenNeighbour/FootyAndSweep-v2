@@ -16,11 +16,17 @@
 
 package com.footyandsweep.apiresultengine.config;
 
+import com.footyandsweep.AllocationServiceGrpc;
+import com.footyandsweep.SweepstakeServiceGrpc;
+import com.footyandsweep.TicketServiceGrpc;
 import com.footyandsweep.apiresultengine.dao.ResultDao;
 import com.footyandsweep.apiresultengine.engine.ResultEngine;
 import com.footyandsweep.apiresultengine.engine.ResultEngineImpl;
+import com.footyandsweep.apiresultengine.grpc.client.ResultClientGrpc;
 import io.eventuate.tram.sagas.spring.orchestration.SagaOrchestratorConfiguration;
 import io.eventuate.tram.spring.optimisticlocking.OptimisticLockingDecoratorConfiguration;
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,7 +39,32 @@ import org.springframework.web.client.RestTemplate;
 public class ResultEngineConfiguration {
 
   @Bean
-  public ResultEngine resultEngine(ResultDao resultDao, RestTemplate restTemplate) {
-    return new ResultEngineImpl(resultDao, restTemplate);
+  public SweepstakeServiceGrpc.SweepstakeServiceBlockingStub sweepstakeEngineChannel() {
+    ManagedChannel channel =
+            ManagedChannelBuilder.forAddress("api-sweepstake-engine", 9090).usePlaintext().build();
+
+    return SweepstakeServiceGrpc.newBlockingStub(channel);
   }
+
+  @Bean
+  public TicketServiceGrpc.TicketServiceBlockingStub ticketEngineChannel() {
+    ManagedChannel channel =
+            ManagedChannelBuilder.forAddress("api-ticket-engine", 9090).usePlaintext().build();
+
+    return TicketServiceGrpc.newBlockingStub(channel);
+  }
+
+  @Bean
+  public AllocationServiceGrpc.AllocationServiceBlockingStub allocationEngineChannel() {
+    ManagedChannel channel =
+            ManagedChannelBuilder.forAddress("api-allocation-engine", 9090).usePlaintext().build();
+
+    return AllocationServiceGrpc.newBlockingStub(channel);
+  }
+
+  @Bean
+  public ResultEngine resultEngine(ResultDao resultDao, RestTemplate restTemplate, ResultClientGrpc resultClientGrpc) {
+    return new ResultEngineImpl(resultDao, restTemplate, resultClientGrpc);
+  }
+
 }

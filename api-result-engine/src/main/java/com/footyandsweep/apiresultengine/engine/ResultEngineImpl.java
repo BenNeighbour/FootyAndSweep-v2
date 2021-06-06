@@ -16,8 +16,6 @@
 
 package com.footyandsweep.apiresultengine.engine;
 
-import com.footyandsweep.Common;
-import com.footyandsweep.SweepstakeServiceGrpc;
 import com.footyandsweep.SweepstakeServiceOuterClass;
 import com.footyandsweep.apicommonlibrary.cqrs.user.UpdateUserBalanceCommand;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
@@ -26,10 +24,10 @@ import com.footyandsweep.apicommonlibrary.model.ticket.AllocationCommon;
 import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
 import com.footyandsweep.apiresultengine.dao.ResultDao;
 import com.footyandsweep.apiresultengine.engine.saga.ProcessSweepstakeResultSagaData;
+import com.footyandsweep.apiresultengine.grpc.client.ResultClientGrpc;
 import com.footyandsweep.apiresultengine.model.FootballMatchResult;
 import io.eventuate.tram.commands.consumer.CommandWithDestination;
-import io.grpc.ManagedChannel;
-import io.grpc.ManagedChannelBuilder;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.slf4j.Logger;
@@ -46,6 +44,7 @@ import java.util.*;
 import static io.eventuate.tram.commands.consumer.CommandWithDestinationBuilder.send;
 
 @Service
+@RequiredArgsConstructor
 public class ResultEngineImpl implements ResultEngine {
 
   private static final Logger log = LoggerFactory.getLogger(ResultEngineImpl.class);
@@ -53,31 +52,15 @@ public class ResultEngineImpl implements ResultEngine {
 
   private final ResultDao resultDao;
   private final RestTemplate restTemplate;
-
-  public ResultEngineImpl(ResultDao resultDao, RestTemplate restTemplate) {
-    this.resultDao = resultDao;
-    this.restTemplate = restTemplate;
-  }
+  private final ResultClientGrpc resultClientGrpc;
 
   @Override
   public void processSweepstakeResult(ProcessSweepstakeResultSagaData sagaData) {
     /* Cast the result to a Football Match Result */
     FootballMatchResult footballMatchResult = (FootballMatchResult) sagaData.getResult();
 
-    /* TODO: CREATE A BEAN FOR THIS FOR EACH SERVICE IN EVERY SERVICE */
-    ManagedChannel channel =
-        ManagedChannelBuilder.forAddress("api-sweepstake-engine", 9090).usePlaintext().build();
-
-    SweepstakeServiceGrpc.SweepstakeServiceBlockingStub clientStub =
-        SweepstakeServiceGrpc.newBlockingStub(channel);
-
     SweepstakeServiceOuterClass.SweepstakeList sweepstakesWithResult =
-        clientStub.findSweepstakeByFootballMatchId(
-            Common.Id.newBuilder()
-                .setId(footballMatchResult.getFootballMatchId().toString())
-                .build());
-
-    channel.shutdown();
+        resultClientGrpc.getSweepstakeByFootballMatchId(footballMatchResult.getFootballMatchId());
 
     /* For each sweepstake, process the tickets for it */
     sweepstakesWithResult
@@ -111,59 +94,45 @@ public class ResultEngineImpl implements ResultEngine {
     Map<Integer, String> winningResultMap = this.getSweepstakeResultMap(sagaData.getSweepstake());
 
     /* Get a list of tickets that belong to the sweepstake */
-    Optional<List<TicketCommon>> ticketList =
-        Optional.of(
-            Arrays.asList(
-                Objects.requireNonNull(
-                    restTemplate.getForObject(
-                        "https://api-ticket-engine/internal/ticket/by/sweepstake/"
-                            + sagaData.getSweepstake().getId(),
-                        TicketCommon[].class))));
+    List<TicketCommon> ticketList =
+        resultClientGrpc.findAllTicketsBySweepstakeId(sagaData.getSweepstake().getId());
 
     /* Seeing if the winning ticket is present */
     boolean isWinningTicketPresent =
-        ticketList.get().stream()
+        ticketList.stream()
             .anyMatch(
                 ticket ->
                     winningResultMap.containsKey(
-                        this.getTicketAllocation(ticket.getId()).getCode()));
+                        resultClientGrpc.getTicketAllocation(ticket.getId()).getCode()));
 
-    ticketList
-        .get()
-        .forEach(
-            ticket -> {
-              if (isWinningTicketPresent) {
-                if (winningResultMap.containsKey(
-                    this.getTicketAllocation(ticket.getId()).getCode())) {
-                  ticket.setStatus(TicketCommon.TicketStatus.WON);
-                  BigDecimal totalPot =
-                      sagaData
-                          .getSweepstake()
-                          .getStake()
-                          .multiply(new BigDecimal(ticketList.get().size()));
+    ticketList.forEach(
+        ticket -> {
+          if (isWinningTicketPresent) {
+            if (winningResultMap.containsKey(resultClientGrpc.getTicketAllocation(ticket.getId()).getCode())) {
+              ticket.setStatus(TicketCommon.TicketStatus.WON);
+              BigDecimal totalPot =
+                  sagaData.getSweepstake().getStake().multiply(new BigDecimal(ticketList.size()));
 
-                  if (winningResultMap.values().size() > 1) {
-                    totalPot =
-                        totalPot.divide(
-                            new BigDecimal(winningResultMap.values().size()), RoundingMode.DOWN);
-                    totalPot = totalPot.setScale(2, RoundingMode.DOWN);
-                  }
-
-                  /* Update user balance */
-                  sagaData.setUserBalanceMap(new ImmutablePair<>(ticket.getUserId(), totalPot));
-
-                } else {
-                  ticket.setStatus(TicketCommon.TicketStatus.LOST);
-                }
-              } else {
-                ticket.setStatus(TicketCommon.TicketStatus.REFUNDED);
-                /* Update the user balance */
-                //                sagaData.setUserBalanceMap(ticket.getUserId(),
-                // sagaData.getSweepstake().getStake());
-                sagaData.setUserBalanceMap(
-                    new ImmutablePair<>(ticket.getUserId(), sagaData.getSweepstake().getStake()));
+              if (winningResultMap.values().size() > 1) {
+                totalPot =
+                    totalPot.divide(
+                        new BigDecimal(winningResultMap.values().size()), RoundingMode.DOWN);
+                totalPot = totalPot.setScale(2, RoundingMode.DOWN);
               }
-            });
+
+              /* Update user balance */
+              sagaData.setUserBalanceMap(new ImmutablePair<>(ticket.getUserId(), totalPot));
+
+            } else {
+              ticket.setStatus(TicketCommon.TicketStatus.LOST);
+            }
+          } else {
+            ticket.setStatus(TicketCommon.TicketStatus.REFUNDED);
+            /* Update the user balance */
+            sagaData.setUserBalanceMap(
+                new ImmutablePair<>(ticket.getUserId(), sagaData.getSweepstake().getStake()));
+          }
+        });
   }
 
   private Map<Integer, String> getSweepstakeResultMap(SweepstakeCommon sweepstake) {
@@ -185,14 +154,6 @@ public class ResultEngineImpl implements ResultEngine {
     }
 
     return resultMap.orElse(new HashMap<>());
-  }
-
-  private AllocationCommon getTicketAllocation(String ticketId) {
-    return restTemplate
-        .getForEntity(
-            "https://api-allocation-engine:8080/internal/allocation/by/ticket/" + ticketId,
-            AllocationCommon.class)
-        .getBody();
   }
 
   @Override
