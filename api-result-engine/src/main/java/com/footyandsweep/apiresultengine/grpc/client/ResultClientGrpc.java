@@ -62,4 +62,9 @@ public class ResultClientGrpc {
 
     return ProtoConverterUtils.convertToPojo(AllocationCommon.class, allocationEngineChannel.getAllocationById(Common.Id.newBuilder().setId(allocationId).build()));
   }
+
+  public SweepstakeServiceOuterClass.PairList getSweepstakeResults(String sweepstakeId) {
+    Common.Id id = Common.Id.newBuilder().setId(sweepstakeId).build();
+    return sweepstakeEngineChannel.resultHelper(id);
+  }
 }

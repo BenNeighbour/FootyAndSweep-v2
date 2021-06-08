@@ -74,13 +74,9 @@ public class AllocationClientGrpc {
   }
 
   public HashMap<Integer, String> resultHelper(SweepstakeCommon sweepstake) {
-    SweepstakeServiceOuterClass.Sweepstake.Builder sweepstakeBuilder =
-        SweepstakeServiceOuterClass.Sweepstake.newBuilder();
-    ProtoConverterUtils.convertToProto(sweepstakeBuilder, sweepstake);
-
     HashMap<Integer, String> returnMap = new HashMap<>();
     sweepstakeEngineChannel
-        .resultHelper(sweepstakeBuilder.build())
+        .resultHelper(Common.Id.newBuilder().setId(sweepstake.getId()).build())
         .getPairsList()
         .forEach(
             pair -> {

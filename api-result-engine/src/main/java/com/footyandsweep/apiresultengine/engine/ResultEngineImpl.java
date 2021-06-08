@@ -20,7 +20,6 @@ import com.footyandsweep.SweepstakeServiceOuterClass;
 import com.footyandsweep.apicommonlibrary.cqrs.user.UpdateUserBalanceCommand;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeCommon;
 import com.footyandsweep.apicommonlibrary.model.sweepstake.SweepstakeTypeCommon;
-import com.footyandsweep.apicommonlibrary.model.ticket.AllocationCommon;
 import com.footyandsweep.apicommonlibrary.model.ticket.TicketCommon;
 import com.footyandsweep.apiresultengine.dao.ResultDao;
 import com.footyandsweep.apiresultengine.engine.saga.ProcessSweepstakeResultSagaData;
@@ -33,13 +32,15 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static io.eventuate.tram.commands.consumer.CommandWithDestinationBuilder.send;
 
@@ -51,7 +52,6 @@ public class ResultEngineImpl implements ResultEngine {
   private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ");
 
   private final ResultDao resultDao;
-  private final RestTemplate restTemplate;
   private final ResultClientGrpc resultClientGrpc;
 
   @Override
@@ -108,7 +108,8 @@ public class ResultEngineImpl implements ResultEngine {
     ticketList.forEach(
         ticket -> {
           if (isWinningTicketPresent) {
-            if (winningResultMap.containsKey(resultClientGrpc.getTicketAllocation(ticket.getId()).getCode())) {
+            if (winningResultMap.containsKey(
+                resultClientGrpc.getTicketAllocation(ticket.getId()).getCode())) {
               ticket.setStatus(TicketCommon.TicketStatus.WON);
               BigDecimal totalPot =
                   sagaData.getSweepstake().getStake().multiply(new BigDecimal(ticketList.size()));
@@ -137,23 +138,21 @@ public class ResultEngineImpl implements ResultEngine {
 
   private Map<Integer, String> getSweepstakeResultMap(SweepstakeCommon sweepstake) {
     /* Defining the result map so it can be modified in the iteration */
-    Optional<Map<Integer, String>> resultMap = Optional.empty();
+    SweepstakeServiceOuterClass.PairList resultMap =
+        SweepstakeServiceOuterClass.PairList.newBuilder().build();
 
     /* Going over all of the sweepstake types in the enum in order to programmatically determine what method will be invoked on the result helper */
     for (SweepstakeTypeCommon i : SweepstakeTypeCommon.values()) {
       /* Call result helper to get the field and return a function that returns the right maps to back */
       if (sweepstake.getSweepstakeType().equals(i))
-        resultMap =
-            Optional.ofNullable(
-                restTemplate
-                    .postForEntity(
-                        "https://api-sweepstake-engine:8080/internal/sweepstake/result",
-                        sweepstake,
-                        Map.class)
-                    .getBody());
+        resultMap = resultClientGrpc.getSweepstakeResults(sweepstake.getId());
     }
 
-    return resultMap.orElse(new HashMap<>());
+    Map<Integer, String> returnMap = new HashMap<>();
+
+    resultMap.getPairsList().forEach(pair -> returnMap.put(pair.getKey(), pair.getValue()));
+
+    return returnMap;
   }
 
   @Override
