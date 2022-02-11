@@ -71,7 +71,7 @@
     "@svgr/cli": "^5.5.0",
     "@types/react-responsive": "^8.0.2",
     "@types/redux-logger": "^3.0.8",
-    "node-sass": "^5.0.0",
+    "node-sass": "^7.0.0",
     "redux-logger": "^3.0.6"
   }
 }
