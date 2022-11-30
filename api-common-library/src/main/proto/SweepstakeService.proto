@@ -73,5 +73,5 @@ service SweepstakeService {
   rpc getResultHelperMap(Sweepstake) returns (Map);
   rpc requestNewSweepstake(Sweepstake) returns (Sweepstake);
   rpc getAllSweepstakeParticipants(Id) returns (Ids);
-  rpc resultHelper(Sweepstake) returns (PairList);
+  rpc resultHelper(Id) returns (PairList);
 }

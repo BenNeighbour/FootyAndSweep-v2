@@ -2,7 +2,26 @@ syntax = "proto3";
 package com.footyandsweep;
 
 import 'google/protobuf/empty.proto';
+import "Common.proto";
+
+message FootballMatchResult {
+  string id = 1;
+  bool isProcessed = 2;
+  string footballMatchId = 3;
+  int32 halfTimeHomeScore = 4;
+  int32 halfTimeAwayScore = 5;
+  int32 fullTimeHomeScore = 6;
+  int32 fullTimeAwayScore = 7;
+  int32 firstGoalMinute = 8;
+  int32 lastGoalMinute = 9;
+  int32 numberOfYellowCards = 10;
+  int32 numberOfCornersHalfTime = 11;
+  int32 numberOfCornersFullTime = 12;
+  string firstGoalScorer = 13;
+  string lastGoalScorer = 14;
+}
 
 service ResultService {
   rpc checkForSweepstakeResults(google.protobuf.Empty) returns (google.protobuf.Empty);
+  rpc getResultsBySweepstakeId(Id) returns (FootballMatchResult);
 }

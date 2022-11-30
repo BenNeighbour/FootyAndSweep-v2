@@ -14,6 +14,1603 @@ public final class ResultServiceOuterClass {
     registerAllExtensions(
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
+  public interface FootballMatchResultOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.footyandsweep.FootballMatchResult)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>string id = 1;</code>
+     */
+    java.lang.String getId();
+    /**
+     * <code>string id = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getIdBytes();
+
+    /**
+     * <code>bool isProcessed = 2;</code>
+     */
+    boolean getIsProcessed();
+
+    /**
+     * <code>string footballMatchId = 3;</code>
+     */
+    java.lang.String getFootballMatchId();
+    /**
+     * <code>string footballMatchId = 3;</code>
+     */
+    com.google.protobuf.ByteString
+        getFootballMatchIdBytes();
+
+    /**
+     * <code>int32 halfTimeHomeScore = 4;</code>
+     */
+    int getHalfTimeHomeScore();
+
+    /**
+     * <code>int32 halfTimeAwayScore = 5;</code>
+     */
+    int getHalfTimeAwayScore();
+
+    /**
+     * <code>int32 fullTimeHomeScore = 6;</code>
+     */
+    int getFullTimeHomeScore();
+
+    /**
+     * <code>int32 fullTimeAwayScore = 7;</code>
+     */
+    int getFullTimeAwayScore();
+
+    /**
+     * <code>int32 firstGoalMinute = 8;</code>
+     */
+    int getFirstGoalMinute();
+
+    /**
+     * <code>int32 lastGoalMinute = 9;</code>
+     */
+    int getLastGoalMinute();
+
+    /**
+     * <code>int32 numberOfYellowCards = 10;</code>
+     */
+    int getNumberOfYellowCards();
+
+    /**
+     * <code>int32 numberOfCornersHalfTime = 11;</code>
+     */
+    int getNumberOfCornersHalfTime();
+
+    /**
+     * <code>int32 numberOfCornersFullTime = 12;</code>
+     */
+    int getNumberOfCornersFullTime();
+
+    /**
+     * <code>string firstGoalScorer = 13;</code>
+     */
+    java.lang.String getFirstGoalScorer();
+    /**
+     * <code>string firstGoalScorer = 13;</code>
+     */
+    com.google.protobuf.ByteString
+        getFirstGoalScorerBytes();
+
+    /**
+     * <code>string lastGoalScorer = 14;</code>
+     */
+    java.lang.String getLastGoalScorer();
+    /**
+     * <code>string lastGoalScorer = 14;</code>
+     */
+    com.google.protobuf.ByteString
+        getLastGoalScorerBytes();
+  }
+  /**
+   * Protobuf type {@code com.footyandsweep.FootballMatchResult}
+   */
+  public  static final class FootballMatchResult extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:com.footyandsweep.FootballMatchResult)
+      FootballMatchResultOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use FootballMatchResult.newBuilder() to construct.
+    private FootballMatchResult(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private FootballMatchResult() {
+      id_ = "";
+      isProcessed_ = false;
+      footballMatchId_ = "";
+      halfTimeHomeScore_ = 0;
+      halfTimeAwayScore_ = 0;
+      fullTimeHomeScore_ = 0;
+      fullTimeAwayScore_ = 0;
+      firstGoalMinute_ = 0;
+      lastGoalMinute_ = 0;
+      numberOfYellowCards_ = 0;
+      numberOfCornersHalfTime_ = 0;
+      numberOfCornersFullTime_ = 0;
+      firstGoalScorer_ = "";
+      lastGoalScorer_ = "";
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private FootballMatchResult(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              id_ = s;
+              break;
+            }
+            case 16: {
+
+              isProcessed_ = input.readBool();
+              break;
+            }
+            case 26: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              footballMatchId_ = s;
+              break;
+            }
+            case 32: {
+
+              halfTimeHomeScore_ = input.readInt32();
+              break;
+            }
+            case 40: {
+
+              halfTimeAwayScore_ = input.readInt32();
+              break;
+            }
+            case 48: {
+
+              fullTimeHomeScore_ = input.readInt32();
+              break;
+            }
+            case 56: {
+
+              fullTimeAwayScore_ = input.readInt32();
+              break;
+            }
+            case 64: {
+
+              firstGoalMinute_ = input.readInt32();
+              break;
+            }
+            case 72: {
+
+              lastGoalMinute_ = input.readInt32();
+              break;
+            }
+            case 80: {
+
+              numberOfYellowCards_ = input.readInt32();
+              break;
+            }
+            case 88: {
+
+              numberOfCornersHalfTime_ = input.readInt32();
+              break;
+            }
+            case 96: {
+
+              numberOfCornersFullTime_ = input.readInt32();
+              break;
+            }
+            case 106: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              firstGoalScorer_ = s;
+              break;
+            }
+            case 114: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              lastGoalScorer_ = s;
+              break;
+            }
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.footyandsweep.ResultServiceOuterClass.internal_static_com_footyandsweep_FootballMatchResult_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.footyandsweep.ResultServiceOuterClass.internal_static_com_footyandsweep_FootballMatchResult_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.footyandsweep.ResultServiceOuterClass.FootballMatchResult.class, com.footyandsweep.ResultServiceOuterClass.FootballMatchResult.Builder.class);
+    }
+
+    public static final int ID_FIELD_NUMBER = 1;
+    private volatile java.lang.Object id_;
+    /**
+     * <code>string id = 1;</code>
+     */
+    public java.lang.String getId() {
+      java.lang.Object ref = id_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        id_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string id = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getIdBytes() {
+      java.lang.Object ref = id_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        id_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int ISPROCESSED_FIELD_NUMBER = 2;
+    private boolean isProcessed_;
+    /**
+     * <code>bool isProcessed = 2;</code>
+     */
+    public boolean getIsProcessed() {
+      return isProcessed_;
+    }
+
+    public static final int FOOTBALLMATCHID_FIELD_NUMBER = 3;
+    private volatile java.lang.Object footballMatchId_;
+    /**
+     * <code>string footballMatchId = 3;</code>
+     */
+    public java.lang.String getFootballMatchId() {
+      java.lang.Object ref = footballMatchId_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        footballMatchId_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string footballMatchId = 3;</code>
+     */
+    public com.google.protobuf.ByteString
+        getFootballMatchIdBytes() {
+      java.lang.Object ref = footballMatchId_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        footballMatchId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int HALFTIMEHOMESCORE_FIELD_NUMBER = 4;
+    private int halfTimeHomeScore_;
+    /**
+     * <code>int32 halfTimeHomeScore = 4;</code>
+     */
+    public int getHalfTimeHomeScore() {
+      return halfTimeHomeScore_;
+    }
+
+    public static final int HALFTIMEAWAYSCORE_FIELD_NUMBER = 5;
+    private int halfTimeAwayScore_;
+    /**
+     * <code>int32 halfTimeAwayScore = 5;</code>
+     */
+    public int getHalfTimeAwayScore() {
+      return halfTimeAwayScore_;
+    }
+
+    public static final int FULLTIMEHOMESCORE_FIELD_NUMBER = 6;
+    private int fullTimeHomeScore_;
+    /**
+     * <code>int32 fullTimeHomeScore = 6;</code>
+     */
+    public int getFullTimeHomeScore() {
+      return fullTimeHomeScore_;
+    }
+
+    public static final int FULLTIMEAWAYSCORE_FIELD_NUMBER = 7;
+    private int fullTimeAwayScore_;
+    /**
+     * <code>int32 fullTimeAwayScore = 7;</code>
+     */
+    public int getFullTimeAwayScore() {
+      return fullTimeAwayScore_;
+    }
+
+    public static final int FIRSTGOALMINUTE_FIELD_NUMBER = 8;
+    private int firstGoalMinute_;
+    /**
+     * <code>int32 firstGoalMinute = 8;</code>
+     */
+    public int getFirstGoalMinute() {
+      return firstGoalMinute_;
+    }
+
+    public static final int LASTGOALMINUTE_FIELD_NUMBER = 9;
+    private int lastGoalMinute_;
+    /**
+     * <code>int32 lastGoalMinute = 9;</code>
+     */
+    public int getLastGoalMinute() {
+      return lastGoalMinute_;
+    }
+
+    public static final int NUMBEROFYELLOWCARDS_FIELD_NUMBER = 10;
+    private int numberOfYellowCards_;
+    /**
+     * <code>int32 numberOfYellowCards = 10;</code>
+     */
+    public int getNumberOfYellowCards() {
+      return numberOfYellowCards_;
+    }
+
+    public static final int NUMBEROFCORNERSHALFTIME_FIELD_NUMBER = 11;
+    private int numberOfCornersHalfTime_;
+    /**
+     * <code>int32 numberOfCornersHalfTime = 11;</code>
+     */
+    public int getNumberOfCornersHalfTime() {
+      return numberOfCornersHalfTime_;
+    }
+
+    public static final int NUMBEROFCORNERSFULLTIME_FIELD_NUMBER = 12;
+    private int numberOfCornersFullTime_;
+    /**
+     * <code>int32 numberOfCornersFullTime = 12;</code>
+     */
+    public int getNumberOfCornersFullTime() {
+      return numberOfCornersFullTime_;
+    }
+
+    public static final int FIRSTGOALSCORER_FIELD_NUMBER = 13;
+    private volatile java.lang.Object firstGoalScorer_;
+    /**
+     * <code>string firstGoalScorer = 13;</code>
+     */
+    public java.lang.String getFirstGoalScorer() {
+      java.lang.Object ref = firstGoalScorer_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        firstGoalScorer_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string firstGoalScorer = 13;</code>
+     */
+    public com.google.protobuf.ByteString
+        getFirstGoalScorerBytes() {
+      java.lang.Object ref = firstGoalScorer_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        firstGoalScorer_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int LASTGOALSCORER_FIELD_NUMBER = 14;
+    private volatile java.lang.Object lastGoalScorer_;
+    /**
+     * <code>string lastGoalScorer = 14;</code>
+     */
+    public java.lang.String getLastGoalScorer() {
+      java.lang.Object ref = lastGoalScorer_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        lastGoalScorer_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string lastGoalScorer = 14;</code>
+     */
+    public com.google.protobuf.ByteString
+        getLastGoalScorerBytes() {
+      java.lang.Object ref = lastGoalScorer_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        lastGoalScorer_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!getIdBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, id_);
+      }
+      if (isProcessed_ != false) {
+        output.writeBool(2, isProcessed_);
+      }
+      if (!getFootballMatchIdBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, footballMatchId_);
+      }
+      if (halfTimeHomeScore_ != 0) {
+        output.writeInt32(4, halfTimeHomeScore_);
+      }
+      if (halfTimeAwayScore_ != 0) {
+        output.writeInt32(5, halfTimeAwayScore_);
+      }
+      if (fullTimeHomeScore_ != 0) {
+        output.writeInt32(6, fullTimeHomeScore_);
+      }
+      if (fullTimeAwayScore_ != 0) {
+        output.writeInt32(7, fullTimeAwayScore_);
+      }
+      if (firstGoalMinute_ != 0) {
+        output.writeInt32(8, firstGoalMinute_);
+      }
+      if (lastGoalMinute_ != 0) {
+        output.writeInt32(9, lastGoalMinute_);
+      }
+      if (numberOfYellowCards_ != 0) {
+        output.writeInt32(10, numberOfYellowCards_);
+      }
+      if (numberOfCornersHalfTime_ != 0) {
+        output.writeInt32(11, numberOfCornersHalfTime_);
+      }
+      if (numberOfCornersFullTime_ != 0) {
+        output.writeInt32(12, numberOfCornersFullTime_);
+      }
+      if (!getFirstGoalScorerBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 13, firstGoalScorer_);
+      }
+      if (!getLastGoalScorerBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 14, lastGoalScorer_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!getIdBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, id_);
+      }
+      if (isProcessed_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(2, isProcessed_);
+      }
+      if (!getFootballMatchIdBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, footballMatchId_);
+      }
+      if (halfTimeHomeScore_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(4, halfTimeHomeScore_);
+      }
+      if (halfTimeAwayScore_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(5, halfTimeAwayScore_);
+      }
+      if (fullTimeHomeScore_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(6, fullTimeHomeScore_);
+      }
+      if (fullTimeAwayScore_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(7, fullTimeAwayScore_);
+      }
+      if (firstGoalMinute_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(8, firstGoalMinute_);
+      }
+      if (lastGoalMinute_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(9, lastGoalMinute_);
+      }
+      if (numberOfYellowCards_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(10, numberOfYellowCards_);
+      }
+      if (numberOfCornersHalfTime_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(11, numberOfCornersHalfTime_);
+      }
+      if (numberOfCornersFullTime_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(12, numberOfCornersFullTime_);
+      }
+      if (!getFirstGoalScorerBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(13, firstGoalScorer_);
+      }
+      if (!getLastGoalScorerBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(14, lastGoalScorer_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.footyandsweep.ResultServiceOuterClass.FootballMatchResult)) {
+        return super.equals(obj);
+      }
+      com.footyandsweep.ResultServiceOuterClass.FootballMatchResult other = (com.footyandsweep.ResultServiceOuterClass.FootballMatchResult) obj;
+
+      boolean result = true;
+      result = result && getId()
+          .equals(other.getId());
+      result = result && (getIsProcessed()
+          == other.getIsProcessed());
+      result = result && getFootballMatchId()
+          .equals(other.getFootballMatchId());
+      result = result && (getHalfTimeHomeScore()
+          == other.getHalfTimeHomeScore());
+      result = result && (getHalfTimeAwayScore()
+          == other.getHalfTimeAwayScore());
+      result = result && (getFullTimeHomeScore()
+          == other.getFullTimeHomeScore());
+      result = result && (getFullTimeAwayScore()
+          == other.getFullTimeAwayScore());
+      result = result && (getFirstGoalMinute()
+          == other.getFirstGoalMinute());
+      result = result && (getLastGoalMinute()
+          == other.getLastGoalMinute());
+      result = result && (getNumberOfYellowCards()
+          == other.getNumberOfYellowCards());
+      result = result && (getNumberOfCornersHalfTime()
+          == other.getNumberOfCornersHalfTime());
+      result = result && (getNumberOfCornersFullTime()
+          == other.getNumberOfCornersFullTime());
+      result = result && getFirstGoalScorer()
+          .equals(other.getFirstGoalScorer());
+      result = result && getLastGoalScorer()
+          .equals(other.getLastGoalScorer());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + ID_FIELD_NUMBER;
+      hash = (53 * hash) + getId().hashCode();
+      hash = (37 * hash) + ISPROCESSED_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getIsProcessed());
+      hash = (37 * hash) + FOOTBALLMATCHID_FIELD_NUMBER;
+      hash = (53 * hash) + getFootballMatchId().hashCode();
+      hash = (37 * hash) + HALFTIMEHOMESCORE_FIELD_NUMBER;
+      hash = (53 * hash) + getHalfTimeHomeScore();
+      hash = (37 * hash) + HALFTIMEAWAYSCORE_FIELD_NUMBER;
+      hash = (53 * hash) + getHalfTimeAwayScore();
+      hash = (37 * hash) + FULLTIMEHOMESCORE_FIELD_NUMBER;
+      hash = (53 * hash) + getFullTimeHomeScore();
+      hash = (37 * hash) + FULLTIMEAWAYSCORE_FIELD_NUMBER;
+      hash = (53 * hash) + getFullTimeAwayScore();
+      hash = (37 * hash) + FIRSTGOALMINUTE_FIELD_NUMBER;
+      hash = (53 * hash) + getFirstGoalMinute();
+      hash = (37 * hash) + LASTGOALMINUTE_FIELD_NUMBER;
+      hash = (53 * hash) + getLastGoalMinute();
+      hash = (37 * hash) + NUMBEROFYELLOWCARDS_FIELD_NUMBER;
+      hash = (53 * hash) + getNumberOfYellowCards();
+      hash = (37 * hash) + NUMBEROFCORNERSHALFTIME_FIELD_NUMBER;
+      hash = (53 * hash) + getNumberOfCornersHalfTime();
+      hash = (37 * hash) + NUMBEROFCORNERSFULLTIME_FIELD_NUMBER;
+      hash = (53 * hash) + getNumberOfCornersFullTime();
+      hash = (37 * hash) + FIRSTGOALSCORER_FIELD_NUMBER;
+      hash = (53 * hash) + getFirstGoalScorer().hashCode();
+      hash = (37 * hash) + LASTGOALSCORER_FIELD_NUMBER;
+      hash = (53 * hash) + getLastGoalScorer().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.footyandsweep.ResultServiceOuterClass.FootballMatchResult parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.footyandsweep.ResultServiceOuterClass.FootballMatchResult parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.footyandsweep.ResultServiceOuterClass.FootballMatchResult parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.footyandsweep.ResultServiceOuterClass.FootballMatchResult parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.footyandsweep.ResultServiceOuterClass.FootballMatchResult parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.footyandsweep.ResultServiceOuterClass.FootballMatchResult parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.footyandsweep.ResultServiceOuterClass.FootballMatchResult parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.footyandsweep.ResultServiceOuterClass.FootballMatchResult parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.footyandsweep.ResultServiceOuterClass.FootballMatchResult parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.footyandsweep.ResultServiceOuterClass.FootballMatchResult parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.footyandsweep.ResultServiceOuterClass.FootballMatchResult parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.footyandsweep.ResultServiceOuterClass.FootballMatchResult parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.footyandsweep.ResultServiceOuterClass.FootballMatchResult prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code com.footyandsweep.FootballMatchResult}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.footyandsweep.FootballMatchResult)
+        com.footyandsweep.ResultServiceOuterClass.FootballMatchResultOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.footyandsweep.ResultServiceOuterClass.internal_static_com_footyandsweep_FootballMatchResult_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.footyandsweep.ResultServiceOuterClass.internal_static_com_footyandsweep_FootballMatchResult_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.footyandsweep.ResultServiceOuterClass.FootballMatchResult.class, com.footyandsweep.ResultServiceOuterClass.FootballMatchResult.Builder.class);
+      }
+
+      // Construct using com.footyandsweep.ResultServiceOuterClass.FootballMatchResult.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        id_ = "";
+
+        isProcessed_ = false;
+
+        footballMatchId_ = "";
+
+        halfTimeHomeScore_ = 0;
+
+        halfTimeAwayScore_ = 0;
+
+        fullTimeHomeScore_ = 0;
+
+        fullTimeAwayScore_ = 0;
+
+        firstGoalMinute_ = 0;
+
+        lastGoalMinute_ = 0;
+
+        numberOfYellowCards_ = 0;
+
+        numberOfCornersHalfTime_ = 0;
+
+        numberOfCornersFullTime_ = 0;
+
+        firstGoalScorer_ = "";
+
+        lastGoalScorer_ = "";
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.footyandsweep.ResultServiceOuterClass.internal_static_com_footyandsweep_FootballMatchResult_descriptor;
+      }
+
+      @java.lang.Override
+      public com.footyandsweep.ResultServiceOuterClass.FootballMatchResult getDefaultInstanceForType() {
+        return com.footyandsweep.ResultServiceOuterClass.FootballMatchResult.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.footyandsweep.ResultServiceOuterClass.FootballMatchResult build() {
+        com.footyandsweep.ResultServiceOuterClass.FootballMatchResult result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.footyandsweep.ResultServiceOuterClass.FootballMatchResult buildPartial() {
+        com.footyandsweep.ResultServiceOuterClass.FootballMatchResult result = new com.footyandsweep.ResultServiceOuterClass.FootballMatchResult(this);
+        result.id_ = id_;
+        result.isProcessed_ = isProcessed_;
+        result.footballMatchId_ = footballMatchId_;
+        result.halfTimeHomeScore_ = halfTimeHomeScore_;
+        result.halfTimeAwayScore_ = halfTimeAwayScore_;
+        result.fullTimeHomeScore_ = fullTimeHomeScore_;
+        result.fullTimeAwayScore_ = fullTimeAwayScore_;
+        result.firstGoalMinute_ = firstGoalMinute_;
+        result.lastGoalMinute_ = lastGoalMinute_;
+        result.numberOfYellowCards_ = numberOfYellowCards_;
+        result.numberOfCornersHalfTime_ = numberOfCornersHalfTime_;
+        result.numberOfCornersFullTime_ = numberOfCornersFullTime_;
+        result.firstGoalScorer_ = firstGoalScorer_;
+        result.lastGoalScorer_ = lastGoalScorer_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.footyandsweep.ResultServiceOuterClass.FootballMatchResult) {
+          return mergeFrom((com.footyandsweep.ResultServiceOuterClass.FootballMatchResult)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.footyandsweep.ResultServiceOuterClass.FootballMatchResult other) {
+        if (other == com.footyandsweep.ResultServiceOuterClass.FootballMatchResult.getDefaultInstance()) return this;
+        if (!other.getId().isEmpty()) {
+          id_ = other.id_;
+          onChanged();
+        }
+        if (other.getIsProcessed() != false) {
+          setIsProcessed(other.getIsProcessed());
+        }
+        if (!other.getFootballMatchId().isEmpty()) {
+          footballMatchId_ = other.footballMatchId_;
+          onChanged();
+        }
+        if (other.getHalfTimeHomeScore() != 0) {
+          setHalfTimeHomeScore(other.getHalfTimeHomeScore());
+        }
+        if (other.getHalfTimeAwayScore() != 0) {
+          setHalfTimeAwayScore(other.getHalfTimeAwayScore());
+        }
+        if (other.getFullTimeHomeScore() != 0) {
+          setFullTimeHomeScore(other.getFullTimeHomeScore());
+        }
+        if (other.getFullTimeAwayScore() != 0) {
+          setFullTimeAwayScore(other.getFullTimeAwayScore());
+        }
+        if (other.getFirstGoalMinute() != 0) {
+          setFirstGoalMinute(other.getFirstGoalMinute());
+        }
+        if (other.getLastGoalMinute() != 0) {
+          setLastGoalMinute(other.getLastGoalMinute());
+        }
+        if (other.getNumberOfYellowCards() != 0) {
+          setNumberOfYellowCards(other.getNumberOfYellowCards());
+        }
+        if (other.getNumberOfCornersHalfTime() != 0) {
+          setNumberOfCornersHalfTime(other.getNumberOfCornersHalfTime());
+        }
+        if (other.getNumberOfCornersFullTime() != 0) {
+          setNumberOfCornersFullTime(other.getNumberOfCornersFullTime());
+        }
+        if (!other.getFirstGoalScorer().isEmpty()) {
+          firstGoalScorer_ = other.firstGoalScorer_;
+          onChanged();
+        }
+        if (!other.getLastGoalScorer().isEmpty()) {
+          lastGoalScorer_ = other.lastGoalScorer_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.footyandsweep.ResultServiceOuterClass.FootballMatchResult parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.footyandsweep.ResultServiceOuterClass.FootballMatchResult) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private java.lang.Object id_ = "";
+      /**
+       * <code>string id = 1;</code>
+       */
+      public java.lang.String getId() {
+        java.lang.Object ref = id_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          id_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string id = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getIdBytes() {
+        java.lang.Object ref = id_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          id_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string id = 1;</code>
+       */
+      public Builder setId(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        id_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string id = 1;</code>
+       */
+      public Builder clearId() {
+        
+        id_ = getDefaultInstance().getId();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string id = 1;</code>
+       */
+      public Builder setIdBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        id_ = value;
+        onChanged();
+        return this;
+      }
+
+      private boolean isProcessed_ ;
+      /**
+       * <code>bool isProcessed = 2;</code>
+       */
+      public boolean getIsProcessed() {
+        return isProcessed_;
+      }
+      /**
+       * <code>bool isProcessed = 2;</code>
+       */
+      public Builder setIsProcessed(boolean value) {
+        
+        isProcessed_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool isProcessed = 2;</code>
+       */
+      public Builder clearIsProcessed() {
+        
+        isProcessed_ = false;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object footballMatchId_ = "";
+      /**
+       * <code>string footballMatchId = 3;</code>
+       */
+      public java.lang.String getFootballMatchId() {
+        java.lang.Object ref = footballMatchId_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          footballMatchId_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string footballMatchId = 3;</code>
+       */
+      public com.google.protobuf.ByteString
+          getFootballMatchIdBytes() {
+        java.lang.Object ref = footballMatchId_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          footballMatchId_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string footballMatchId = 3;</code>
+       */
+      public Builder setFootballMatchId(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        footballMatchId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string footballMatchId = 3;</code>
+       */
+      public Builder clearFootballMatchId() {
+        
+        footballMatchId_ = getDefaultInstance().getFootballMatchId();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string footballMatchId = 3;</code>
+       */
+      public Builder setFootballMatchIdBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        footballMatchId_ = value;
+        onChanged();
+        return this;
+      }
+
+      private int halfTimeHomeScore_ ;
+      /**
+       * <code>int32 halfTimeHomeScore = 4;</code>
+       */
+      public int getHalfTimeHomeScore() {
+        return halfTimeHomeScore_;
+      }
+      /**
+       * <code>int32 halfTimeHomeScore = 4;</code>
+       */
+      public Builder setHalfTimeHomeScore(int value) {
+        
+        halfTimeHomeScore_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 halfTimeHomeScore = 4;</code>
+       */
+      public Builder clearHalfTimeHomeScore() {
+        
+        halfTimeHomeScore_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int halfTimeAwayScore_ ;
+      /**
+       * <code>int32 halfTimeAwayScore = 5;</code>
+       */
+      public int getHalfTimeAwayScore() {
+        return halfTimeAwayScore_;
+      }
+      /**
+       * <code>int32 halfTimeAwayScore = 5;</code>
+       */
+      public Builder setHalfTimeAwayScore(int value) {
+        
+        halfTimeAwayScore_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 halfTimeAwayScore = 5;</code>
+       */
+      public Builder clearHalfTimeAwayScore() {
+        
+        halfTimeAwayScore_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int fullTimeHomeScore_ ;
+      /**
+       * <code>int32 fullTimeHomeScore = 6;</code>
+       */
+      public int getFullTimeHomeScore() {
+        return fullTimeHomeScore_;
+      }
+      /**
+       * <code>int32 fullTimeHomeScore = 6;</code>
+       */
+      public Builder setFullTimeHomeScore(int value) {
+        
+        fullTimeHomeScore_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 fullTimeHomeScore = 6;</code>
+       */
+      public Builder clearFullTimeHomeScore() {
+        
+        fullTimeHomeScore_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int fullTimeAwayScore_ ;
+      /**
+       * <code>int32 fullTimeAwayScore = 7;</code>
+       */
+      public int getFullTimeAwayScore() {
+        return fullTimeAwayScore_;
+      }
+      /**
+       * <code>int32 fullTimeAwayScore = 7;</code>
+       */
+      public Builder setFullTimeAwayScore(int value) {
+        
+        fullTimeAwayScore_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 fullTimeAwayScore = 7;</code>
+       */
+      public Builder clearFullTimeAwayScore() {
+        
+        fullTimeAwayScore_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int firstGoalMinute_ ;
+      /**
+       * <code>int32 firstGoalMinute = 8;</code>
+       */
+      public int getFirstGoalMinute() {
+        return firstGoalMinute_;
+      }
+      /**
+       * <code>int32 firstGoalMinute = 8;</code>
+       */
+      public Builder setFirstGoalMinute(int value) {
+        
+        firstGoalMinute_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 firstGoalMinute = 8;</code>
+       */
+      public Builder clearFirstGoalMinute() {
+        
+        firstGoalMinute_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int lastGoalMinute_ ;
+      /**
+       * <code>int32 lastGoalMinute = 9;</code>
+       */
+      public int getLastGoalMinute() {
+        return lastGoalMinute_;
+      }
+      /**
+       * <code>int32 lastGoalMinute = 9;</code>
+       */
+      public Builder setLastGoalMinute(int value) {
+        
+        lastGoalMinute_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 lastGoalMinute = 9;</code>
+       */
+      public Builder clearLastGoalMinute() {
+        
+        lastGoalMinute_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int numberOfYellowCards_ ;
+      /**
+       * <code>int32 numberOfYellowCards = 10;</code>
+       */
+      public int getNumberOfYellowCards() {
+        return numberOfYellowCards_;
+      }
+      /**
+       * <code>int32 numberOfYellowCards = 10;</code>
+       */
+      public Builder setNumberOfYellowCards(int value) {
+        
+        numberOfYellowCards_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 numberOfYellowCards = 10;</code>
+       */
+      public Builder clearNumberOfYellowCards() {
+        
+        numberOfYellowCards_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int numberOfCornersHalfTime_ ;
+      /**
+       * <code>int32 numberOfCornersHalfTime = 11;</code>
+       */
+      public int getNumberOfCornersHalfTime() {
+        return numberOfCornersHalfTime_;
+      }
+      /**
+       * <code>int32 numberOfCornersHalfTime = 11;</code>
+       */
+      public Builder setNumberOfCornersHalfTime(int value) {
+        
+        numberOfCornersHalfTime_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 numberOfCornersHalfTime = 11;</code>
+       */
+      public Builder clearNumberOfCornersHalfTime() {
+        
+        numberOfCornersHalfTime_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int numberOfCornersFullTime_ ;
+      /**
+       * <code>int32 numberOfCornersFullTime = 12;</code>
+       */
+      public int getNumberOfCornersFullTime() {
+        return numberOfCornersFullTime_;
+      }
+      /**
+       * <code>int32 numberOfCornersFullTime = 12;</code>
+       */
+      public Builder setNumberOfCornersFullTime(int value) {
+        
+        numberOfCornersFullTime_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 numberOfCornersFullTime = 12;</code>
+       */
+      public Builder clearNumberOfCornersFullTime() {
+        
+        numberOfCornersFullTime_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object firstGoalScorer_ = "";
+      /**
+       * <code>string firstGoalScorer = 13;</code>
+       */
+      public java.lang.String getFirstGoalScorer() {
+        java.lang.Object ref = firstGoalScorer_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          firstGoalScorer_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string firstGoalScorer = 13;</code>
+       */
+      public com.google.protobuf.ByteString
+          getFirstGoalScorerBytes() {
+        java.lang.Object ref = firstGoalScorer_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          firstGoalScorer_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string firstGoalScorer = 13;</code>
+       */
+      public Builder setFirstGoalScorer(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        firstGoalScorer_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string firstGoalScorer = 13;</code>
+       */
+      public Builder clearFirstGoalScorer() {
+        
+        firstGoalScorer_ = getDefaultInstance().getFirstGoalScorer();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string firstGoalScorer = 13;</code>
+       */
+      public Builder setFirstGoalScorerBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        firstGoalScorer_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object lastGoalScorer_ = "";
+      /**
+       * <code>string lastGoalScorer = 14;</code>
+       */
+      public java.lang.String getLastGoalScorer() {
+        java.lang.Object ref = lastGoalScorer_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          lastGoalScorer_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string lastGoalScorer = 14;</code>
+       */
+      public com.google.protobuf.ByteString
+          getLastGoalScorerBytes() {
+        java.lang.Object ref = lastGoalScorer_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          lastGoalScorer_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string lastGoalScorer = 14;</code>
+       */
+      public Builder setLastGoalScorer(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        lastGoalScorer_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string lastGoalScorer = 14;</code>
+       */
+      public Builder clearLastGoalScorer() {
+        
+        lastGoalScorer_ = getDefaultInstance().getLastGoalScorer();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string lastGoalScorer = 14;</code>
+       */
+      public Builder setLastGoalScorerBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        lastGoalScorer_ = value;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:com.footyandsweep.FootballMatchResult)
+    }
+
+    // @@protoc_insertion_point(class_scope:com.footyandsweep.FootballMatchResult)
+    private static final com.footyandsweep.ResultServiceOuterClass.FootballMatchResult DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.footyandsweep.ResultServiceOuterClass.FootballMatchResult();
+    }
+
+    public static com.footyandsweep.ResultServiceOuterClass.FootballMatchResult getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<FootballMatchResult>
+        PARSER = new com.google.protobuf.AbstractParser<FootballMatchResult>() {
+      @java.lang.Override
+      public FootballMatchResult parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new FootballMatchResult(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<FootballMatchResult> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<FootballMatchResult> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.footyandsweep.ResultServiceOuterClass.FootballMatchResult getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_footyandsweep_FootballMatchResult_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_com_footyandsweep_FootballMatchResult_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -24,10 +1621,22 @@ public final class ResultServiceOuterClass {
   static {
     java.lang.String[] descriptorData = {
       "\n\023ResultService.proto\022\021com.footyandsweep" +
-      "\032\033google/protobuf/empty.proto2\\\n\rResultS" +
-      "ervice\022K\n\031checkForSweepstakeResults\022\026.go" +
-      "ogle.protobuf.Empty\032\026.google.protobuf.Em" +
-      "ptyb\006proto3"
+      "\032\033google/protobuf/empty.proto\032\014Common.pr" +
+      "oto\"\374\002\n\023FootballMatchResult\022\n\n\002id\030\001 \001(\t\022" +
+      "\023\n\013isProcessed\030\002 \001(\010\022\027\n\017footballMatchId\030" +
+      "\003 \001(\t\022\031\n\021halfTimeHomeScore\030\004 \001(\005\022\031\n\021half" +
+      "TimeAwayScore\030\005 \001(\005\022\031\n\021fullTimeHomeScore" +
+      "\030\006 \001(\005\022\031\n\021fullTimeAwayScore\030\007 \001(\005\022\027\n\017fir" +
+      "stGoalMinute\030\010 \001(\005\022\026\n\016lastGoalMinute\030\t \001" +
+      "(\005\022\033\n\023numberOfYellowCards\030\n \001(\005\022\037\n\027numbe" +
+      "rOfCornersHalfTime\030\013 \001(\005\022\037\n\027numberOfCorn" +
+      "ersFullTime\030\014 \001(\005\022\027\n\017firstGoalScorer\030\r \001" +
+      "(\t\022\026\n\016lastGoalScorer\030\016 \001(\t2\267\001\n\rResultSer" +
+      "vice\022K\n\031checkForSweepstakeResults\022\026.goog" +
+      "le.protobuf.Empty\032\026.google.protobuf.Empt" +
+      "y\022Y\n\030getResultsBySweepstakeId\022\025.com.foot" +
+      "yandsweep.Id\032&.com.footyandsweep.Footbal" +
+      "lMatchResultb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -41,8 +1650,16 @@ public final class ResultServiceOuterClass {
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
           com.google.protobuf.EmptyProto.getDescriptor(),
+          com.footyandsweep.Common.getDescriptor(),
         }, assigner);
+    internal_static_com_footyandsweep_FootballMatchResult_descriptor =
+      getDescriptor().getMessageTypes().get(0);
+    internal_static_com_footyandsweep_FootballMatchResult_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_com_footyandsweep_FootballMatchResult_descriptor,
+        new java.lang.String[] { "Id", "IsProcessed", "FootballMatchId", "HalfTimeHomeScore", "HalfTimeAwayScore", "FullTimeHomeScore", "FullTimeAwayScore", "FirstGoalMinute", "LastGoalMinute", "NumberOfYellowCards", "NumberOfCornersHalfTime", "NumberOfCornersFullTime", "FirstGoalScorer", "LastGoalScorer", });
     com.google.protobuf.EmptyProto.getDescriptor();
+    com.footyandsweep.Common.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

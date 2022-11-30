@@ -59,6 +59,38 @@ public final class ResultServiceGrpc {
      return getCheckForSweepstakeResultsMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<com.footyandsweep.Common.Id,
+      com.footyandsweep.ResultServiceOuterClass.FootballMatchResult> getGetResultsBySweepstakeIdMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "getResultsBySweepstakeId",
+      requestType = com.footyandsweep.Common.Id.class,
+      responseType = com.footyandsweep.ResultServiceOuterClass.FootballMatchResult.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.footyandsweep.Common.Id,
+      com.footyandsweep.ResultServiceOuterClass.FootballMatchResult> getGetResultsBySweepstakeIdMethod() {
+    io.grpc.MethodDescriptor<com.footyandsweep.Common.Id, com.footyandsweep.ResultServiceOuterClass.FootballMatchResult> getGetResultsBySweepstakeIdMethod;
+    if ((getGetResultsBySweepstakeIdMethod = ResultServiceGrpc.getGetResultsBySweepstakeIdMethod) == null) {
+      synchronized (ResultServiceGrpc.class) {
+        if ((getGetResultsBySweepstakeIdMethod = ResultServiceGrpc.getGetResultsBySweepstakeIdMethod) == null) {
+          ResultServiceGrpc.getGetResultsBySweepstakeIdMethod = getGetResultsBySweepstakeIdMethod = 
+              io.grpc.MethodDescriptor.<com.footyandsweep.Common.Id, com.footyandsweep.ResultServiceOuterClass.FootballMatchResult>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(
+                  "com.footyandsweep.ResultService", "getResultsBySweepstakeId"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.footyandsweep.Common.Id.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.footyandsweep.ResultServiceOuterClass.FootballMatchResult.getDefaultInstance()))
+                  .setSchemaDescriptor(new ResultServiceMethodDescriptorSupplier("getResultsBySweepstakeId"))
+                  .build();
+          }
+        }
+     }
+     return getGetResultsBySweepstakeIdMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -93,6 +125,13 @@ public final class ResultServiceGrpc {
       asyncUnimplementedUnaryCall(getCheckForSweepstakeResultsMethod(), responseObserver);
     }
 
+    /**
+     */
+    public void getResultsBySweepstakeId(com.footyandsweep.Common.Id request,
+        io.grpc.stub.StreamObserver<com.footyandsweep.ResultServiceOuterClass.FootballMatchResult> responseObserver) {
+      asyncUnimplementedUnaryCall(getGetResultsBySweepstakeIdMethod(), responseObserver);
+    }
+
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
@@ -102,6 +141,13 @@ public final class ResultServiceGrpc {
                 com.google.protobuf.Empty,
                 com.google.protobuf.Empty>(
                   this, METHODID_CHECK_FOR_SWEEPSTAKE_RESULTS)))
+          .addMethod(
+            getGetResultsBySweepstakeIdMethod(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                com.footyandsweep.Common.Id,
+                com.footyandsweep.ResultServiceOuterClass.FootballMatchResult>(
+                  this, METHODID_GET_RESULTS_BY_SWEEPSTAKE_ID)))
           .build();
     }
   }
@@ -131,6 +177,14 @@ public final class ResultServiceGrpc {
       asyncUnaryCall(
           getChannel().newCall(getCheckForSweepstakeResultsMethod(), getCallOptions()), request, responseObserver);
     }
+
+    /**
+     */
+    public void getResultsBySweepstakeId(com.footyandsweep.Common.Id request,
+        io.grpc.stub.StreamObserver<com.footyandsweep.ResultServiceOuterClass.FootballMatchResult> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getGetResultsBySweepstakeIdMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -156,6 +210,13 @@ public final class ResultServiceGrpc {
     public com.google.protobuf.Empty checkForSweepstakeResults(com.google.protobuf.Empty request) {
       return blockingUnaryCall(
           getChannel(), getCheckForSweepstakeResultsMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public com.footyandsweep.ResultServiceOuterClass.FootballMatchResult getResultsBySweepstakeId(com.footyandsweep.Common.Id request) {
+      return blockingUnaryCall(
+          getChannel(), getGetResultsBySweepstakeIdMethod(), getCallOptions(), request);
     }
   }
 
@@ -184,9 +245,18 @@ public final class ResultServiceGrpc {
       return futureUnaryCall(
           getChannel().newCall(getCheckForSweepstakeResultsMethod(), getCallOptions()), request);
     }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.footyandsweep.ResultServiceOuterClass.FootballMatchResult> getResultsBySweepstakeId(
+        com.footyandsweep.Common.Id request) {
+      return futureUnaryCall(
+          getChannel().newCall(getGetResultsBySweepstakeIdMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_CHECK_FOR_SWEEPSTAKE_RESULTS = 0;
+  private static final int METHODID_GET_RESULTS_BY_SWEEPSTAKE_ID = 1;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -208,6 +278,10 @@ public final class ResultServiceGrpc {
         case METHODID_CHECK_FOR_SWEEPSTAKE_RESULTS:
           serviceImpl.checkForSweepstakeResults((com.google.protobuf.Empty) request,
               (io.grpc.stub.StreamObserver<com.google.protobuf.Empty>) responseObserver);
+          break;
+        case METHODID_GET_RESULTS_BY_SWEEPSTAKE_ID:
+          serviceImpl.getResultsBySweepstakeId((com.footyandsweep.Common.Id) request,
+              (io.grpc.stub.StreamObserver<com.footyandsweep.ResultServiceOuterClass.FootballMatchResult>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -271,6 +345,7 @@ public final class ResultServiceGrpc {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new ResultServiceFileDescriptorSupplier())
               .addMethod(getCheckForSweepstakeResultsMethod())
+              .addMethod(getGetResultsBySweepstakeIdMethod())
               .build();
         }
       }
