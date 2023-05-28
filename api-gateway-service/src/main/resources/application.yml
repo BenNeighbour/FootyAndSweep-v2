@@ -52,16 +52,16 @@ spring:
       client:
         registration:
           google:
-            clientId: 741479066693-5r73putvt12rf6flqphppn6181hu9ldg.apps.googleusercontent.com
-            clientSecret: HzucWNSw6jgqcwp1EiJL6Omn
+            clientId: <CLIENT_ID_HERE>
+            clientSecret: <CLIENT_SECRET_HERE>
             authorization-grant-type: authorization_code
             scope:
               - email
               - profile
 
           facebook:
-            clientId: 695015954517496
-            clientSecret: 8a20fbf69495879823be75828d0f2ab4
+            clientId: <CLIENT_ID_HERE>
+            clientSecret: <CLIENT_SECRET_HERE>
             scope:
               - email
               - public_profile
