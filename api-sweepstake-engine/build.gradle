@@ -97,9 +97,11 @@ dependencies {
 
     compile group: 'org.postgresql', name: 'postgresql', version: '42.1.1'
 
-    testImplementation('org.springframework.boot:spring-boot-starter-test') {
-        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-    }
+    testCompile "io.eventuate.tram.sagas:eventuate-tram-sagas-spring-testing-support:$eventuateTramSagasVersion"
+    testCompile "junit:junit:4.12"
+    testCompile "org.mockito:mockito-core:2.28.2"
+    testCompile "com.h2database:h2"
+    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.5.0'
 }
 
 test {

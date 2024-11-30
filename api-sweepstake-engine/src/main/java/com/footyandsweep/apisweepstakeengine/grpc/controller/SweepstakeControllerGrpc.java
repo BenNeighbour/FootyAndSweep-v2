@@ -33,7 +33,6 @@ import io.grpc.protobuf.StatusProto;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.beanutils.BeanUtils;
-import org.springframework.beans.factory.annotation.Required;
 
 import javax.validation.ValidationException;
 import java.lang.reflect.InvocationTargetException;
@@ -181,8 +180,7 @@ public class SweepstakeControllerGrpc extends SweepstakeServiceGrpc.SweepstakeSe
 
   @Override
   public void resultHelper(
-      SweepstakeServiceOuterClass.Sweepstake request,
-      StreamObserver<SweepstakeServiceOuterClass.PairList> responseObserver) {
+      Common.Id request, StreamObserver<SweepstakeServiceOuterClass.PairList> responseObserver) {
     FootballMatchSweepstake footballMatchSweepstake =
         sweepstakeDao.findFootballMatchSweepstakeById(request.getId());
     SweepstakeServiceOuterClass.PairList.Builder pairList =

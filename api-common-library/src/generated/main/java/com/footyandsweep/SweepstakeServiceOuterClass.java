@@ -5537,7 +5537,7 @@ public final class SweepstakeServiceOuterClass {
       "\026\n\006CLOSED\020\002\032\n\302\270\002\006CLOSED*p\n\024SweepstakeTyp" +
       "eCommon\022+\n\020Correct_Score_FT\020\000\032\025\312\270\002\021Corre" +
       "ct Score F/T\022+\n\020Correct_Score_HT\020\001\032\025\312\270\002\021" +
-      "Correct Score H/T2\322\004\n\021SweepstakeService\022" +
+      "Correct Score H/T2\312\004\n\021SweepstakeService\022" +
       "V\n\030findSweepstakeByJoinCode\022\033.com.footya" +
       "ndsweep.JoinCode\032\035.com.footyandsweep.Swe" +
       "epstake\022[\n\037findSweepstakeByFootballMatch" +
@@ -5550,12 +5550,12 @@ public final class SweepstakeServiceOuterClass {
       "com.footyandsweep.Sweepstake\032\035.com.footy" +
       "andsweep.Sweepstake\022M\n\034getAllSweepstakeP" +
       "articipants\022\025.com.footyandsweep.Id\032\026.com" +
-      ".footyandsweep.Ids\022J\n\014resultHelper\022\035.com" +
-      ".footyandsweep.Sweepstake\032\033.com.footyand" +
-      "sweep.PairList:<\n\020sweepstakeStatus\022!.goo" +
-      "gle.protobuf.EnumValueOptions\030\210\' \001(\t::\n\016" +
-      "sweepstakeType\022!.google.protobuf.EnumVal" +
-      "ueOptions\030\211\' \001(\tb\006proto3"
+      ".footyandsweep.Ids\022B\n\014resultHelper\022\025.com" +
+      ".footyandsweep.Id\032\033.com.footyandsweep.Pa" +
+      "irList:<\n\020sweepstakeStatus\022!.google.prot" +
+      "obuf.EnumValueOptions\030\210\' \001(\t::\n\016sweepsta" +
+      "keType\022!.google.protobuf.EnumValueOption" +
+      "s\030\211\' \001(\tb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

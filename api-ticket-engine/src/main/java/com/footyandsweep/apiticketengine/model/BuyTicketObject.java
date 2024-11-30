@@ -21,6 +21,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -40,6 +41,7 @@ public class BuyTicketObject implements Serializable {
   private String joinCode;
 
   @Min(value = 1, message = "You must buy at least 1 ticket!")
+  @Max(value = 19, message = "You cannot buy more than 19 tickets!")
   @NotNull(message = "Please select the number of tickets you want to buy!")
   private int numberOfTickets;
 }

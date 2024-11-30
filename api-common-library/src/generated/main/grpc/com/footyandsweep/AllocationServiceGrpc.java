@@ -59,6 +59,38 @@ public final class AllocationServiceGrpc {
      return getAllocateSweepstakeMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<com.footyandsweep.Common.Id,
+      com.footyandsweep.AllocationServiceOuterClass.Allocation> getGetAllocationByIdMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "getAllocationById",
+      requestType = com.footyandsweep.Common.Id.class,
+      responseType = com.footyandsweep.AllocationServiceOuterClass.Allocation.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.footyandsweep.Common.Id,
+      com.footyandsweep.AllocationServiceOuterClass.Allocation> getGetAllocationByIdMethod() {
+    io.grpc.MethodDescriptor<com.footyandsweep.Common.Id, com.footyandsweep.AllocationServiceOuterClass.Allocation> getGetAllocationByIdMethod;
+    if ((getGetAllocationByIdMethod = AllocationServiceGrpc.getGetAllocationByIdMethod) == null) {
+      synchronized (AllocationServiceGrpc.class) {
+        if ((getGetAllocationByIdMethod = AllocationServiceGrpc.getGetAllocationByIdMethod) == null) {
+          AllocationServiceGrpc.getGetAllocationByIdMethod = getGetAllocationByIdMethod = 
+              io.grpc.MethodDescriptor.<com.footyandsweep.Common.Id, com.footyandsweep.AllocationServiceOuterClass.Allocation>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(
+                  "com.footyandsweep.AllocationService", "getAllocationById"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.footyandsweep.Common.Id.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.footyandsweep.AllocationServiceOuterClass.Allocation.getDefaultInstance()))
+                  .setSchemaDescriptor(new AllocationServiceMethodDescriptorSupplier("getAllocationById"))
+                  .build();
+          }
+        }
+     }
+     return getGetAllocationByIdMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -93,6 +125,13 @@ public final class AllocationServiceGrpc {
       asyncUnimplementedUnaryCall(getAllocateSweepstakeMethod(), responseObserver);
     }
 
+    /**
+     */
+    public void getAllocationById(com.footyandsweep.Common.Id request,
+        io.grpc.stub.StreamObserver<com.footyandsweep.AllocationServiceOuterClass.Allocation> responseObserver) {
+      asyncUnimplementedUnaryCall(getGetAllocationByIdMethod(), responseObserver);
+    }
+
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
@@ -102,6 +141,13 @@ public final class AllocationServiceGrpc {
                 com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake,
                 com.google.protobuf.Empty>(
                   this, METHODID_ALLOCATE_SWEEPSTAKE)))
+          .addMethod(
+            getGetAllocationByIdMethod(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                com.footyandsweep.Common.Id,
+                com.footyandsweep.AllocationServiceOuterClass.Allocation>(
+                  this, METHODID_GET_ALLOCATION_BY_ID)))
           .build();
     }
   }
@@ -131,6 +177,14 @@ public final class AllocationServiceGrpc {
       asyncUnaryCall(
           getChannel().newCall(getAllocateSweepstakeMethod(), getCallOptions()), request, responseObserver);
     }
+
+    /**
+     */
+    public void getAllocationById(com.footyandsweep.Common.Id request,
+        io.grpc.stub.StreamObserver<com.footyandsweep.AllocationServiceOuterClass.Allocation> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getGetAllocationByIdMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -156,6 +210,13 @@ public final class AllocationServiceGrpc {
     public com.google.protobuf.Empty allocateSweepstake(com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake request) {
       return blockingUnaryCall(
           getChannel(), getAllocateSweepstakeMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public com.footyandsweep.AllocationServiceOuterClass.Allocation getAllocationById(com.footyandsweep.Common.Id request) {
+      return blockingUnaryCall(
+          getChannel(), getGetAllocationByIdMethod(), getCallOptions(), request);
     }
   }
 
@@ -184,9 +245,18 @@ public final class AllocationServiceGrpc {
       return futureUnaryCall(
           getChannel().newCall(getAllocateSweepstakeMethod(), getCallOptions()), request);
     }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.footyandsweep.AllocationServiceOuterClass.Allocation> getAllocationById(
+        com.footyandsweep.Common.Id request) {
+      return futureUnaryCall(
+          getChannel().newCall(getGetAllocationByIdMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_ALLOCATE_SWEEPSTAKE = 0;
+  private static final int METHODID_GET_ALLOCATION_BY_ID = 1;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -208,6 +278,10 @@ public final class AllocationServiceGrpc {
         case METHODID_ALLOCATE_SWEEPSTAKE:
           serviceImpl.allocateSweepstake((com.footyandsweep.SweepstakeServiceOuterClass.Sweepstake) request,
               (io.grpc.stub.StreamObserver<com.google.protobuf.Empty>) responseObserver);
+          break;
+        case METHODID_GET_ALLOCATION_BY_ID:
+          serviceImpl.getAllocationById((com.footyandsweep.Common.Id) request,
+              (io.grpc.stub.StreamObserver<com.footyandsweep.AllocationServiceOuterClass.Allocation>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -271,6 +345,7 @@ public final class AllocationServiceGrpc {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new AllocationServiceFileDescriptorSupplier())
               .addMethod(getAllocateSweepstakeMethod())
+              .addMethod(getGetAllocationByIdMethod())
               .build();
         }
       }

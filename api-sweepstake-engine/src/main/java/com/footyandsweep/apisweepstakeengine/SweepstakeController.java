@@ -42,10 +42,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SweepstakeController {
 
-  private final ResultHelper resultHelper;
   private final SweepstakeDao sweepstakeDao;
   private final SweepstakeEngine sweepstakeEngine;
-  private final ParticipantIdDao participantIdDao;
 
   private final CreateSweepstakeSaga createSweepstakeSaga;
   private final DeleteSweepstakeSaga deleteSweepstakeSaga;

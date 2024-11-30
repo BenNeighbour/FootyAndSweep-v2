@@ -40,4 +40,6 @@ public class Sweepstake extends SweepstakeCommon {
   private List<SweepstakeHashtag> hashtags;
 
   @Transient private UserCommon owner;
+
+
 }

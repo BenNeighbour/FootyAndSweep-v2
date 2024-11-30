@@ -16,7 +16,6 @@
 
 package com.footyandsweep.apicommonlibrary.model.sweepstake;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.gson.annotations.Expose;
 import jakarta.validation.constraints.DecimalMin;
@@ -93,7 +92,7 @@ public class SweepstakeCommon implements Serializable {
     return null;
   }
 
-  private String generateSweepstakeCode() {
+  public static String generateSweepstakeCode() {
     String alphabet = "abcdefghijklmnopqrstuvwxyz";
     String alphabetUppercase = alphabet.toUpperCase();
     String possibleNumbers = "0123456789";
